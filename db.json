@@ -5,14 +5,14 @@
          "name": "General",
          "lmu": "john@domain.im.priv",
          "lmt": 1748450030,
-         "books": []
+         "books": ["TVG", "BookMaker"]
       },
       {
          "id": 2,
          "name": "PrimeSports",
          "lmu": "phill@domain.im.priv",
          "lmt": 1748453030,
-         "books": []
+         "books": ["PrimeSports"]
       },
       {
          "id": 3,
