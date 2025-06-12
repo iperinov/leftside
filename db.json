@@ -1,0 +1,18 @@
+ {
+   "configs": [
+      {
+         "id": 1,
+         "name": "Basketball",
+         "lmu": "john@domain.im.priv",
+         "lmt": 1748450030,
+         "books": []
+      },
+      {
+         "id": 2,
+         "name": "Soccer",
+         "lmu": "phill@domain.im.priv",
+         "lmt": 1748453030,
+         "books": []
+      }
+   ]
+ }
