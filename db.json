@@ -3,21 +3,21 @@
       {
          "id": 1,
          "name": "General",
-         "lmu": "john@domain.im.priv",
+         "lmu": "John Doe",
          "lmt": 1748450030,
          "books": ["TVG", "BookMaker"]
       },
       {
          "id": 2,
          "name": "PrimeSports",
-         "lmu": "phill@domain.im.priv",
+         "lmu": "Phil Naggy",
          "lmt": 1748453030,
          "books": ["PrimeSports"]
       },
       {
          "id": 3,
          "name": "TGV",
-         "lmu": "ivo.perinov@domain.im.priv",
+         "lmu": "Ivo Perinov",
          "lmt": 1748453030,
          "books": []
       }
