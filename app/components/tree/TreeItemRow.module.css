@@ -1,0 +1,13 @@
+.treeItemRow {
+    background-color: var(--accent-3);
+    border: 1px solid var(--accent-8);
+    border-radius: 0.375rem;
+}
+
+.treeItemRow:hover {
+    background-color: var(--accent-4);
+}
+
+.treeItemRow[data-selected] {
+    background-color: var(--accent-5);
+}
