@@ -4,10 +4,15 @@
     border-radius: 0.375rem;
 }
 
-.treeItemRow:hover {
+.treeItemRow:hover[data-selectable] {
     background-color: var(--accent-4);
 }
 
-.treeItemRow[data-selected] {
+.treeItemRow[data-selected],
+.treeItemRow[data-selected]:hover {
     background-color: var(--accent-5);
+}
+
+.noselect {
+  user-select: none;
 }

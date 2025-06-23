@@ -8,10 +8,12 @@ import styles from "./TreeItemRow.module.css"; // Assuming you have a CSS file f
 interface TreeItemRowProps {
   data: TreeItemData;
   parentID?: string;
+  level: number;
 }
 
-export default function TreeItemRow({ data, parentID, ...config }: TreeItemRowProps & TreeConfig) {
-  return (
+export default function TreeItemRow({ data, parentID, level, ...config }: TreeItemRowProps & TreeConfig) {
+  const isSelectable = config.selectionEnabledOnLevels.includes(level);
+    return (
     <Flex
       align="center"
       py="2"
@@ -19,8 +21,9 @@ export default function TreeItemRow({ data, parentID, ...config }: TreeItemRowPr
       justify="between"
       width="100%"
       className={styles.treeItemRow}
-      onClick={() => config.onSelected && config.onSelected(parentID)}
+      onClick={ isSelectable ? () => config.onSelected && config.onSelected(parentID) : undefined}
       draggable="true"
+      data-selectable={isSelectable ? "true" : undefined}
       data-selected={config.selectedID === data.id ? "true" : undefined}
     >
       <Flex align="center" gap="1">

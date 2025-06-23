@@ -30,7 +30,7 @@ export default function TreeItem({ data, level = 0, expand, parentID, ...config 
           {expanded ? <MinusIcon /> : <PlusIcon />}
         </IconButton>
 
-        <TreeItemRow data={data} parentID={data.id} {...config} />
+        <TreeItemRow data={data} parentID={data.id} level={level + 1} {...config} />
       </Flex>
 
       {shouldShowExpandButton && expanded && (
