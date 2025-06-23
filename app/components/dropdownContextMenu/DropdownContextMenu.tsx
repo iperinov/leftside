@@ -4,7 +4,7 @@ import "../../../styles/DropdownContextMenu.css";
 
 export interface MenuItem {
   name: string;
-  action: (context?: any) => void;
+  action: (context: any) => void;
 }
 
 export interface DropdownContextMenuProps {
