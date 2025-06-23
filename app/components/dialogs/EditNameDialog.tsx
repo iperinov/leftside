@@ -1,6 +1,5 @@
 import { Button, Dialog, Text, Flex, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import styles from "./Dialog.module.css";
 
 interface EditNameDialogProps {
   title?: string;

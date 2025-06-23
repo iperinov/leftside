@@ -6,10 +6,7 @@ import type TreeItemData from "~/components/tree/TreeItemData";
 import Tree from "~/components/tree/Tree";
 import { Flex } from "@radix-ui/themes";
 import styles from "./ConfigurationPage.module.css";
-import SportConfigRenameDialog from "~/components/dialogs/EditNameDialog";
-import { findItem, findItemBy, findItemSiblings, findItemTrail } from "~/common/findItem";
-import { deleteSportFilter, renameSportFilter } from "~/api/configs/sportFiltersApi";
-import ConfirmDialog from "~/components/dialogs/ConfimDialog";
+import { findItem, findItemSiblings, findItemTrail } from "~/common/findItem";
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
 
 // TODO: remove
