@@ -3,6 +3,7 @@ import { Box, Button, Flex, Text } from "@radix-ui/themes";
 import DropdownContextMenu from "../dropdownContextMenu/DropdownContextMenu";
 import type TreeItemData from "./TreeItemData";
 import type TreeConfig from "./TreeConfig";
+import styles from "./TreeItemRow.module.css"; // Assuming you have a CSS file for tree styles
 
 interface TreeItemRowProps {
   data: TreeItemData;
@@ -17,14 +18,10 @@ export default function TreeItemRow({ data, parentID, ...config }: TreeItemRowPr
       px="1"
       justify="between"
       width="100%"
-      className={`
-        ${config.selectedID === data.id ? "bg-[var(--accent-5)]" : "bg-[var(--accent-3)]"}
-        hover:bg-[var(--accent-5)]
-        rounded-md
-        border
-        border-[var(--accent-8)]
-      `}
+      className={styles.treeItemRow}
       onClick={() => config.onSelected && config.onSelected(parentID)}
+      draggable="true"
+      data-selected={config.selectedID === data.id ? "true" : undefined}
     >
       <Flex align="center" gap="1">
         {/* Reorder Button */}

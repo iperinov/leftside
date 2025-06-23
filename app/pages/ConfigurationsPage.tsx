@@ -4,6 +4,8 @@ import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextM
 import useSportFilters, { useAddFilter } from "~/hooks/useSportFilters";
 import type TreeItemData from "~/components/tree/TreeItemData";
 import Tree from "~/components/tree/Tree";
+import { Flex } from "@radix-ui/themes";
+import styles from "./ConfigurationPage.module.css"
 
 let index = 0;
 
@@ -40,7 +42,11 @@ export default function ConfigurationsPage() {
   };
 
   const onSelected = (id?: string) => {
-    console.log(`Selected item with id: ${id}`);
+    if (selectedID === id) {
+      // If the same item is clicked again, deselect it
+      setSelectedID("");
+      return;
+    }
     setSelectedID(id || "");
   };
 
@@ -51,18 +57,18 @@ export default function ConfigurationsPage() {
   ];
 
   return (
-    <div className="flex h-screen p-3">
-      <aside className="w-[400px] bg-gray-100 border-r border-gray-200 p-4 rounded-l-lg">
+    <Flex p="3" className={ styles.configurationPage }>
+      <aside className={ styles.sideBar }>
         <LoadDataDecorator error={error} isLoading={isLoading}>
           <Tree rootItems={sportFilters} menuItems={menuItems} onAddLevel={onAddLevel} selectedID={selectedID} onSelected={onSelected} mutationInProgress={isPending} />
         </LoadDataDecorator>
       </aside>
 
       {/* Content Area */}
-      <main className="flex-1 w-full h-full bg-gray-300 rounded-r-lg">
+      <main className={ styles.mainContent }>
         {/* Placeholder for future content */}
         {/* <div className=" rounded-xl" /> */}
       </main>
-    </div>
+    </Flex>
   );
 }
