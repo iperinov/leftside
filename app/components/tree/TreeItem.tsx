@@ -8,11 +8,12 @@ import TreeItemRow from "./TreeItemRow";
 
 interface TreeItemProps {
   data: TreeItemData;
+  level?: number;
   expand?: boolean;
-  crumbs: string[];
+  parentID?: string;
 }
 
-export default function TreeItem({ data, expand, crumbs = [], ...config }: TreeItemProps & TreeConfig) {
+export default function TreeItem({ data, level = 0, expand, parentID, ...config }: TreeItemProps & TreeConfig) {
   const [expanded, setExapanded] = useState(expand || false);
   const hasChildren = data.children && data.children.length > 0;
 
@@ -29,9 +30,11 @@ export default function TreeItem({ data, expand, crumbs = [], ...config }: TreeI
       {hasChildren && expanded && (
         <Flex direction="column" gap="2" ml="5">
           {data.children!.map((child) => (
-            <TreeItem key={child.id} data={child} crumbs={[...crumbs, data.id]} {...config} />
+            <TreeItem key={child.id} data={child} level={level + 1} parentID={data.id} {...config} />
           ))}
-          {config.onAddLevel && <AddTreeItemButton crumbs={[...crumbs, data.id]} onAddLevel={config.onAddLevel} />}
+          {config.onAddLevel && (
+            <AddTreeItemButton parentID={data.id} onAddLevel={config.onAddLevel} level={level + 1} mutationInProgress={config.mutationInProgress} />
+          )}
         </Flex>
       )}
     </>

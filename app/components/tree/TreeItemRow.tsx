@@ -6,10 +6,10 @@ import type TreeConfig from "./TreeConfig";
 
 interface TreeItemRowProps {
   data: TreeItemData;
-  crumbs: string[];
+  parentID?: string;
 }
 
-export default function TreeItemRow({ data, crumbs, ...config }: TreeItemRowProps & TreeConfig) {
+export default function TreeItemRow({ data, parentID, ...config }: TreeItemRowProps & TreeConfig) {
   return (
     <Flex
       align="center"
@@ -24,11 +24,13 @@ export default function TreeItemRow({ data, crumbs, ...config }: TreeItemRowProp
         border
         border-[var(--accent-8)]
       `}
-      onClick={() => config.onSelected && config.onSelected(crumbs)}
+      onClick={() => config.onSelected && config.onSelected(parentID)}
     >
       <Flex align="center" gap="1">
         {/* Reorder Button */}
         <Button
+          data-disabled="true"
+          style={{ cursor: "inherit" }}
           variant="ghost"
           onClick={(event) => {
             event.stopPropagation();
@@ -47,7 +49,7 @@ export default function TreeItemRow({ data, crumbs, ...config }: TreeItemRowProp
       {/* Context menu */}
       {config.menuItems && config.menuItems.length > 0 && (
         <Box pr="3" pl="2">
-          <DropdownContextMenu items={config.menuItems} crumbs={crumbs} />
+          <DropdownContextMenu items={config.menuItems} context={data.id} />
         </Box>
       )}
     </Flex>

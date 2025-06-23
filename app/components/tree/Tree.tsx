@@ -12,9 +12,9 @@ export default function Tree({ rootItems, ...config }: TreeProps & TreeConfig) {
   return (
     <Flex direction={"column"} gap="2">
       {rootItems.map((item) => (
-        <TreeItem key={item.id} data={item} crumbs={[]} {...config} />
+        <TreeItem key={item.id} data={item} {...config} />
       ))}
-      {config.onAddLevel && <AddTreeItemButton onAddLevel={config.onAddLevel} crumbs={[]} />}
+      {config.onAddLevel && <AddTreeItemButton onAddLevel={config.onAddLevel} mutationInProgress={config.mutationInProgress} />}
     </Flex>
   );
 }

@@ -2,9 +2,11 @@ import type { MenuItem } from "../dropdownContextMenu/DropdownContextMenu";
 
 export default interface TreeConfig {
   selectedID?: string;
-  onSelected?: (crumbs: string[]) => void;
+  onSelected?: (parentID?: string) => void;
 
-  onAddLevel?: (crumbs: string[]) => void;
+  onAddLevel?: (parentID?: string) => void;
 
   menuItems?: MenuItem[];
+
+  mutationInProgress?: boolean;
 }
