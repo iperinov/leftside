@@ -11,7 +11,8 @@ interface TreeItemRowProps {
 }
 
 export default function TreeItemRow({ data, parentID, ...config }: TreeItemRowProps & TreeConfig) {
-  const isSelectable = config.isFinalNode?.(data) || false;
+  const isSelectable = config.isFinalNode ? config.isFinalNode(data) : true;
+  
   return (
     <Flex
       align="center"
@@ -20,7 +21,7 @@ export default function TreeItemRow({ data, parentID, ...config }: TreeItemRowPr
       justify="between"
       width="100%"
       className={styles.treeItemRow}
-      onClick={ isSelectable ? () => config.onSelected && config.onSelected(parentID) : undefined}
+      onClick={isSelectable ? () => config.onSelected && config.onSelected(parentID) : undefined}
       draggable="true"
       data-selectable={isSelectable ? "true" : undefined}
       data-selected={config.selectedID === data.id ? "true" : undefined}

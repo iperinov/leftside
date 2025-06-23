@@ -6,6 +6,9 @@ export default interface TreeConfig {
   selectedID?: string;
   onSelected?: (parentID?: string) => void;
 
+  expandedItems: string[];
+  expandItem: (id: string, expand: boolean) => void;
+
   onAddLevel?: (parentID?: string) => void;
 
   menuItems?: MenuItem[];

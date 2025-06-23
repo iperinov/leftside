@@ -19,10 +19,11 @@ export default function ConfigurationsPage() {
   const { isLoading, data: sportFilters, error } = useSportFilters();
   const [selectedID, setSelectedID] = useState<string>("");
   const [addItemData, setAddItemData] = useState<{ parentID?: string }>();
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const resetAddItemData = () => setAddItemData(undefined);
   const [renameItemData, setRenameItemData] = useState<{ id: string; name: string }>();
   const resetRenameItemData = () => setRenameItemData(undefined);
-  const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string, parent?: TreeItemData }>();
+  const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parent?: TreeItemData }>();
   const resetDuplicateItemData = () => setDuplicateItemData(undefined);
   const { mutate: addFilter, isPending: isAddPending } = useAddFilter(resetAddItemData);
   const { mutate: renameFilter, isPending: isRenamePending } = useRenameFilter(resetRenameItemData);
@@ -83,12 +84,16 @@ export default function ConfigurationsPage() {
           <LoadDataDecorator error={error} isLoading={isLoading}>
             <Tree
               rootItems={sportFilters}
+              expandedItems={expandedItems}
+              expandItem={(id, expand) => {
+                setExpandedItems((prev) => (expand ? [...prev, id] : prev.filter((item) => item !== id)));
+              }}
               menuItems={menuItems}
               onAddLevel={onAddLevel}
               selectedID={selectedID}
               onSelected={onSelected}
               mutationInProgress={isAddPending}
-              isFinalNode={(item) => !item.children} 
+              isFinalNode={(item) => !item.children}
             />
           </LoadDataDecorator>
         </aside>
@@ -102,16 +107,17 @@ export default function ConfigurationsPage() {
       {addItemData && (
         <EditNameDialog
           title="Add Item"
-          description="Enter a name for the new item:"  
+          description="Enter a name for the new item:"
           confirmText="Add"
           open={true}
           currentName=""
           onConfirm={(name) => addFilter({ ...addItemData, name })}
           onCancel={resetAddItemData}
-          validName={(name) => 
-            !addItemData.parentID ? 
-              sportFilters.find(item => item.name === name) === undefined : 
-              findItem(addItemData.parentID, sportFilters)?.children?.find(item => item.name === name) === undefined}
+          validName={(name) =>
+            !addItemData.parentID
+              ? sportFilters.find((item) => item.name === name) === undefined
+              : findItem(addItemData.parentID, sportFilters)?.children?.find((item) => item.name === name) === undefined
+          }
         />
       )}
       {renameItemData && (
@@ -123,7 +129,7 @@ export default function ConfigurationsPage() {
           currentName={renameItemData.name}
           onConfirm={(name) => renameFilter({ ...renameItemData, name })}
           onCancel={resetRenameItemData}
-          validName={(name) => findItemSiblings(renameItemData.id, sportFilters)?.find(item => item.name === name) === undefined}
+          validName={(name) => findItemSiblings(renameItemData.id, sportFilters)?.find((item) => item.name === name) === undefined}
         />
       )}
       {duplicateItemData && (
@@ -133,9 +139,9 @@ export default function ConfigurationsPage() {
           confirmText="Duplicate"
           open={true}
           currentName={duplicateItemData.name}
-          onConfirm={(name) => duplicateFilter({...duplicateItemData, name })}
+          onConfirm={(name) => duplicateFilter({ ...duplicateItemData, name })}
           onCancel={resetDuplicateItemData}
-          validName={(name) => findItemSiblings(duplicateItemData.id, sportFilters)?.find(item => item.name === name) === undefined}
+          validName={(name) => findItemSiblings(duplicateItemData.id, sportFilters)?.find((item) => item.name === name) === undefined}
         />
       )}
     </>
