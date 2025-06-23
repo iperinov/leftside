@@ -9,10 +9,10 @@ import TreeItemRow from "./TreeItemRow";
 interface TreeItemProps {
   data: TreeItemData;
   expand?: boolean;
-  parentIDs: string[];
+  crumbs: string[];
 }
 
-export default function TreeItem({ data, expand, parentIDs = [], ...config }: TreeItemProps & TreeConfig) {
+export default function TreeItem({ data, expand, crumbs = [], ...config }: TreeItemProps & TreeConfig) {
   const [expanded, setExapanded] = useState(expand || false);
   const hasChildren = data.children && data.children.length > 0;
 
@@ -23,15 +23,15 @@ export default function TreeItem({ data, expand, parentIDs = [], ...config }: Tr
           {expanded ? <MinusIcon /> : <PlusIcon />}
         </IconButton>
 
-        <TreeItemRow data={data} parentIDs={parentIDs} {...config} />
+        <TreeItemRow data={data} parentID={data.id} {...config} />
       </Flex>
 
       {hasChildren && expanded && (
         <Flex direction="column" gap="2" ml="5">
           {data.children!.map((child) => (
-            <TreeItem key={child.id} data={child} parentIDs={[...parentIDs, data.id]} {...config} />
+            <TreeItem key={child.id} data={child} crumbs={[...crumbs, data.id]} {...config} />
           ))}
-          {config.onAddLevel && <AddTreeItemButton parentIDs={[...parentIDs, data.id]} onAddLevel={config.onAddLevel} />}
+          {config.onAddLevel && <AddTreeItemButton crumbs={[...crumbs, data.id]} onAddLevel={config.onAddLevel} />}
         </Flex>
       )}
     </>

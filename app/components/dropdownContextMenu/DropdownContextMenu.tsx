@@ -4,16 +4,15 @@ import "../../../styles/DropdownContextMenu.css";
 
 export interface MenuItem {
   name: string;
-  action: (parentIDs: string[], id: string) => void;
+  action: (crumbs: string[]) => void;
 }
 
 export interface DropdownContextMenuProps {
   items: MenuItem[];
-  id: string;
-  parentIDs: string[];
+  crumbs: string[];
 }
 
-export default function DropdownContextMenu({ items, id, parentIDs }: DropdownContextMenuProps) {
+export default function DropdownContextMenu({ items, crumbs }: DropdownContextMenuProps) {
   if (items.length === 0) {
     return null; // No items to display
   }
@@ -30,7 +29,7 @@ export default function DropdownContextMenu({ items, id, parentIDs }: DropdownCo
             key={item.name}
             onClick={(event) => {
               event.stopPropagation();
-              item.action(parentIDs, id);
+              item.action(crumbs);
             }}
           >
             {item.name}

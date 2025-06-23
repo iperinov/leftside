@@ -1,95 +1,99 @@
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import ConfigList from "~/components/configList/ConfigList";
-import ConfigListHeader from "~/components/configList/ConfigListHeader";
-import useConfiguration from "~/hooks/useConfigurations";
 import { useState, type ReactNode } from "react";
-import { Navigate } from "react-router";
-import DialogRenameConfig from "~/components/configList/dialogs/DialogRenameConfig";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
+import useSportFilters from "~/hooks/useSportFilters";
+import type TreeItemData from "~/components/tree/TreeItemData";
+import Tree from "~/components/tree/Tree";
 
-const operations = {
-  create: "Create",
-  edit: "Edit",
-  rename: "Rename",
-  duplicate: "Duplicate",
-  delete: "Delete",
-};
-
-interface ContextMenuOperation {
-  operation: string;
-  id: string;
-}
-
-function renderCreateDialog(onClose: () => void): ReactNode {
-  return  <DialogRenameConfig currentName="" onClose={(newName: string) => onClose() } />
-}
-
-function renderRenameDialog(id: string, onClose: () => void): ReactNode {
-  return <></>;
-}
-
-function renderDuplicateDialog(id: string, onClose: () => void): ReactNode {
-  return <></>;
-}
-
-function renderDeleteDialog(id: string, onClose: () => void): ReactNode {
-  return <></>;
-}
-
-function renderDialog({ operation, id, onClose }: { operation: string; id: string; onClose: () => void }): ReactNode {
-  switch (operation) {
-    case operations.create:
-      return renderCreateDialog(onClose);
-    case operations.edit:
-      return <Navigate to={`/configurations/${id}`} replace />;
-    case operations.rename:
-      return renderRenameDialog(id, onClose);
-    case operations.duplicate:
-      return renderDuplicateDialog(id, onClose);
-    case operations.delete:
-      return renderDeleteDialog(id, onClose);
-    default:
-      throw new Error(`Invalid operation: ${operation} requested for ${id}`);
-  }
-}
-
-interface ContextMenuItem {
-  text: string;
-  action: () => void;
-} 
-
-function generateContextMenuItem(
-  operation: string,
-  setContextMenuOp: React.Dispatch<React.SetStateAction<ContextMenuOperation | null>>,
-): MenuItem {
-  return {
-    name: operation,
-    action: (context?: string) => setContextMenuOp({ operation: operation, id: context || "" }),
-  };
-}
+let index = 0;
 
 export default function ConfigurationsPage() {
-  const { data, error, isLoading } = useConfiguration();
-  const [contextMenuOp, setContextMenuOp] = useState<ContextMenuOperation | null>(null);
-  const configs = data || [];
+  const { isLoading, data, error } = useSportFilters();
+  const [selectedID, setSelectedID] = useState<string>("2");
 
-  const contextMenuItems = [
-    generateContextMenuItem(operations.edit, setContextMenuOp),
-    generateContextMenuItem(operations.rename, setContextMenuOp),
-    generateContextMenuItem(operations.duplicate, setContextMenuOp),
-    generateContextMenuItem(operations.delete, setContextMenuOp),
+  if (isLoading || !data) {
+    return <div>Loading...</div>;
+  }
+
+  const getTrailTreeItems = (crumbs: string[]) => {
+    let trail: TreeItemData[] = [];
+
+    if (crumbs.length === 0 || !data || data.length === 0) {
+      return trail;
+    }
+
+    let item: TreeItemData | undefined = data.find((i) => i.id === crumbs[0]);
+    let i = 0;
+
+    while (item && i < crumbs.length) {
+      trail.push(item);
+      i++;
+      item = item.children?.find((child) => child.id === crumbs[i]);
+    }
+    return trail;
+  };
+
+ const onAddLevel = (crumbs: string[]) => {
+    console.log(`Add level clicked for item with id: ${crumbs}`);
+
+    const trail = getTrailTreeItems(crumbs);
+    console.log(trail);
+
+    const parent = trail.at(-1);
+    if (!parent) {
+      console.error("No parent found for the given crumbs");
+      return;
+    }
+
+    const newItem: TreeItemData = {
+      id: `${parent.id}-${index++}`,
+      name: `${parent.name} ${index}`,
+      children: [],
+    };
+
+    if (!parent.children) {
+      parent.children = [];
+    }
+
+    parent.children.push(newItem);
+  };
+
+  const onRename = (crumbs: string[]) => {
+    console.log(`Rename clicked for item with id: ${crumbs}`);
+  };
+
+  const onDelete = (crumbs: string[]) => {
+    console.log(`Delete clicked for item with id: ${crumbs}`);
+  };
+
+  const onDuplicate = (crumbs: string[]) => {
+    console.log(`Duplicate clicked for item with id: ${crumbs}`);
+  };
+
+  const onSelected = (crumbs: string[]) => {
+    console.log(`Selected item with id: ${crumbs}`);
+    setSelectedID(crumbs[crumbs.length - 1]);
+  };
+
+  const menuItems: MenuItem[] = [
+    { name: "Rename", action: onRename },
+    { name: "Delete", action: onDelete },
+    { name: "Duplicate", action: onDuplicate },
   ];
 
   return (
-    <>
-      <div className="flex flex-col bg-stone-100 m-3 rounded-md border border-stone-300 text-stone-500 h-screen">
-        <ConfigListHeader createNewConfig={() => setContextMenuOp({ operation: operations.create, id: "" })} />
+    <div className="flex h-screen p-3">
+      <aside className="w-[400px] bg-gray-100 border-r border-gray-200 p-4 rounded-l-lg">
         <LoadDataDecorator error={error} isLoading={isLoading}>
-          <ConfigList configs={configs} contextMenuItems={contextMenuItems} />
+          <Tree rootItems={data!} menuItems={menuItems} onAddLevel={onAddLevel} selectedID={selectedID} onSelected={onSelected} />
         </LoadDataDecorator>
-      </div>
+      </aside>
 
-      {!!contextMenuOp?.operation && renderDialog({ ...contextMenuOp!, onClose: () => setContextMenuOp(null) })}
-    </>
+      {/* Content Area */}
+      <main className="flex-1 w-full h-full bg-gray-300 rounded-r-lg">
+        {/* Placeholder for future content */}
+        {/* <div className=" rounded-xl" /> */}
+      </main>
+    </div>
   );
 }
