@@ -1,14 +1,14 @@
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import { useState, type ReactNode } from "react";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
-import useSportFilters, { useAddFilter, useDuplicateFilter, useRenameFilter } from "~/hooks/useSportFilters";
+import useSportFilters, { useAddFilter, useDeleteFilter, useDuplicateFilter, useRenameFilter } from "~/hooks/useSportFilters";
 import type TreeItemData from "~/components/tree/TreeItemData";
 import Tree from "~/components/tree/Tree";
 import { Flex } from "@radix-ui/themes";
 import styles from "./ConfigurationPage.module.css";
 import SportConfigRenameDialog from "~/components/dialogs/EditNameDialog";
 import { findItem, findItemBy, findItemSiblings, findItemTrail } from "~/common/findItem";
-import { renameSportFilter } from "~/api/configs/sportFiltersApi";
+import { deleteSportFilter, renameSportFilter } from "~/api/configs/sportFiltersApi";
 import ConfirmDialog from "~/components/dialogs/ConfimDialog";
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
 
@@ -25,9 +25,12 @@ export default function ConfigurationsPage() {
   const resetRenameItemData = () => setRenameItemData(undefined);
   const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parent?: TreeItemData }>();
   const resetDuplicateItemData = () => setDuplicateItemData(undefined);
+  const [deleteItemData, setDeleteItemData] = useState<{ id: string }>();
+  const resetDeleteItemData = () => setDeleteItemData(undefined);
   const { mutate: addFilter, isPending: isAddPending } = useAddFilter(resetAddItemData);
   const { mutate: renameFilter, isPending: isRenamePending } = useRenameFilter(resetRenameItemData);
   const { mutate: duplicateFilter, isPending: isDuplicatePending } = useDuplicateFilter(resetDuplicateItemData);
+  const { mutate: deleteFilter, isPending: isDeletePending } = useDeleteFilter(resetDeleteItemData);
 
   if (isLoading || !sportFilters) {
     return <div>Loading...</div>;
@@ -63,11 +66,11 @@ export default function ConfigurationsPage() {
   };
 
   const onDelete = (context: any) => {
-    console.log(`Delete clicked for item with id: ${context}`);
+    const id = String(context);
+    setDeleteItemData({id});
   };
 
   const onSelected = (id?: string) => {
-    console.log(`Selected item with id: ${id}`);
     setSelectedID(selectedID === id ? "" : id || "");
   };
 
@@ -142,6 +145,18 @@ export default function ConfigurationsPage() {
           onConfirm={(name) => duplicateFilter({ ...duplicateItemData, name })}
           onCancel={resetDuplicateItemData}
           validName={(name) => findItemSiblings(duplicateItemData.id, sportFilters)?.find((item) => item.name === name) === undefined}
+        />
+      )}
+      {deleteItemData && (
+        <EditNameDialog
+          title="Delete Item"
+          description="Enter 'DELETE' to delete the item:"
+          confirmText="Delete"
+          destructive={true}
+          open={true}
+          onConfirm={(name) => deleteFilter(deleteItemData)}
+          onCancel={resetDeleteItemData}
+          validName={(name) => name === "DELETE"}
         />
       )}
     </>

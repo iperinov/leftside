@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addSportFilter, duplicateSportFilter, getListOfSportFilters, renameSportFilter } from "~/api/configs/sportFiltersApi";
+import { addSportFilter, deleteSportFilter, duplicateSportFilter, getListOfSportFilters, renameSportFilter } from "~/api/configs/sportFiltersApi";
 import { duplicateItem } from "~/common/duplicateItem";
-import { findItem } from "~/common/findItem";
+import { findItem, findItemParent, findItemSiblings } from "~/common/findItem";
 import type TreeItemData from "~/components/tree/TreeItemData";
 
 const sportFiltersQueryKey = ["sportFilters"];
@@ -105,6 +105,43 @@ export function useDuplicateFilter(onComplete?: () => void) {
       const previousFilters = queryClient.getQueryData<TreeItemData[]>(sportFiltersQueryKey);
       if (previousFilters) {
         const newSportFilters = optimisticDuplicateSportFilter(previousFilters, { id, parentID });
+        queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);
+      }
+      return { previousFilters };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: sportFiltersQueryKey });
+    },
+    onError: (err, newFilter, context) => {
+      queryClient.setQueryData(sportFiltersQueryKey, context?.previousFilters);
+    },
+    onSettled: () => {
+      onComplete?.();
+    },
+  });
+}
+
+export function useDeleteFilter(onComplete?: () => void) {
+  const queryClient = useQueryClient();
+
+  const optimisticDeleteSportFilter = (oldSportFilters: TreeItemData[], { id }: { id: string }) => {
+    const siblings = findItemSiblings<TreeItemData>(id, oldSportFilters);
+    if (!siblings) {
+      throw new Error(`Item with ID ${id} not found`);
+    }
+    const itemIndex = siblings.findIndex(item => item.id === id);
+    if (itemIndex === -1) {
+      throw new Error(`Item with ID ${id} not found in siblings`);
+    }
+    siblings.splice(itemIndex, 1);
+  };
+
+  return useMutation({
+    mutationFn: deleteSportFilter,
+    onMutate: ({ id }: { id: string }) => {
+      const previousFilters = queryClient.getQueryData<TreeItemData[]>(sportFiltersQueryKey);
+      if (previousFilters) {
+        const newSportFilters = optimisticDeleteSportFilter(previousFilters, { id });
         queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);
       }
       return { previousFilters };

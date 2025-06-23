@@ -1,10 +1,12 @@
 import { Button, Dialog, Text, Flex, TextField } from "@radix-ui/themes";
 import { useState } from "react";
+import styles from "./Dialog.module.css";
 
 interface EditNameDialogProps {
   title?: string;
   description?: string;
   confirmText?: string;
+  destructive?: boolean;
   cancelText?: string;
   open?: boolean;
   currentName?: string; 
@@ -17,6 +19,7 @@ export default function EditNameDialog({
   title = "Edit Name",
   description = "Enter a new name below:",
   confirmText = "Confirm",
+  destructive = false,
   cancelText = "Cancel",
   open = true, 
   currentName = "", 
@@ -49,7 +52,10 @@ export default function EditNameDialog({
               {cancelText}
             </Button>
           </Dialog.Close>
-          <Button onClick={handleRename} disabled={name === "" || name === currentName || !validName(name)}>
+          <Button 
+            color={destructive ? "red" : undefined} 
+            onClick={handleRename} 
+            disabled={name === "" || name === currentName || !validName(name)}>
             {confirmText}
           </Button>
         </Flex>

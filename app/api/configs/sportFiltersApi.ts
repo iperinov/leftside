@@ -1,5 +1,5 @@
 import { duplicateItem } from "~/common/duplicateItem";
-import { findItem } from "~/common/findItem";
+import { findItem, findItemSiblings } from "~/common/findItem";
 import type TreeItemData from "~/components/tree/TreeItemData";
 
 let sportFiltersJSON = `[
@@ -192,8 +192,6 @@ interface DuplicateSportFilterProps {
 }
 
 export async function duplicateSportFilter({id, name, parentID}: DuplicateSportFilterProps): Promise<void> {
-  console.log(`API call: Duplicating sport filter with ID: ${id}`);
-
   await new Promise((resolve) => (setTimeout(resolve, 500)))
 
   let sportFilters = JSON.parse(sportFiltersJSON);
@@ -219,8 +217,30 @@ export async function duplicateSportFilter({id, name, parentID}: DuplicateSportF
   siblings.push(newItem);
 
   sportFiltersJSON = JSON.stringify(sportFilters);
+  return Promise.resolve();
+}
 
-  console.log(`API call completed: Sport filter with ID: ${id} duplicated to ${newItem}`);
+interface DeleteSportFilterProps {
+  id: string;
+}
 
+export async function deleteSportFilter({id}: DeleteSportFilterProps): Promise<void> {
+  console.log(`API call: Deleting sport filter with ID: ${id}`);
+
+  await new Promise((resolve) => (setTimeout(resolve, 500)))
+
+  let sportFilters = JSON.parse(sportFiltersJSON);
+  const siblings = findItemSiblings<TreeItemData>(id, sportFilters);
+
+  if (!siblings) {
+    throw new Error(`Item with ID ${id} not found`);
+  }
+
+  const itemIndex = siblings.findIndex(item => item.id === id);
+  if (itemIndex === -1) {
+    throw new Error(`Item with ID ${id} not found in siblings`);
+  } 
+  siblings.splice(itemIndex, 1);
+  sportFiltersJSON = JSON.stringify(sportFilters);
   return Promise.resolve();
 }
