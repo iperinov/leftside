@@ -17,7 +17,7 @@ interface TreeItemProps {
 export default function TreeItem({ data, level = 0, expand, parentID, ...config }: TreeItemProps & TreeConfig) {
   const [expanded, setExapanded] = useState(expand || false);
   const hasChildren = data.children && data.children.length > 0;
-  const shouldShowExpandButton = level < maxLevel - 1 && (config.onAddLevel || hasChildren);
+  const shouldShowExpandButton = !config.isFinalNode?.(data) && (config.onAddLevel || hasChildren);
 
   return (
     <>
@@ -30,7 +30,7 @@ export default function TreeItem({ data, level = 0, expand, parentID, ...config 
           {expanded ? <MinusIcon /> : <PlusIcon />}
         </IconButton>
 
-        <TreeItemRow data={data} parentID={data.id} level={level + 1} {...config} />
+        <TreeItemRow data={data} parentID={data.id} {...config} />
       </Flex>
 
       {shouldShowExpandButton && expanded && (

@@ -1,7 +1,8 @@
 import type { MenuItem } from "../dropdownContextMenu/DropdownContextMenu";
+import type TreeItemData from "./TreeItemData";
 
 export default interface TreeConfig {
-  selectionEnabledOnLevels: number[];
+  isFinalNode?: (item: TreeItemData) => boolean;
   selectedID?: string;
   onSelected?: (parentID?: string) => void;
 

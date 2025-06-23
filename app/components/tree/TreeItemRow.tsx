@@ -8,12 +8,11 @@ import styles from "./TreeItemRow.module.css"; // Assuming you have a CSS file f
 interface TreeItemRowProps {
   data: TreeItemData;
   parentID?: string;
-  level: number;
 }
 
-export default function TreeItemRow({ data, parentID, level, ...config }: TreeItemRowProps & TreeConfig) {
-  const isSelectable = config.selectionEnabledOnLevels.includes(level);
-    return (
+export default function TreeItemRow({ data, parentID, ...config }: TreeItemRowProps & TreeConfig) {
+  const isSelectable = config.isFinalNode?.(data) || false;
+  return (
     <Flex
       align="center"
       py="2"

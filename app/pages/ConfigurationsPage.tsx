@@ -88,7 +88,7 @@ export default function ConfigurationsPage() {
               selectedID={selectedID}
               onSelected={onSelected}
               mutationInProgress={isAddPending}
-              selectionEnabledOnLevels={[3]}
+              isFinalNode={(item) => !item.children} 
             />
           </LoadDataDecorator>
         </aside>
