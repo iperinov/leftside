@@ -135,6 +135,7 @@ let sportFiltersJSON = `[
   ]`;
 
 export async function getListOfSportFilters(): Promise<TreeItemData[]> {
+  console.log("API call: Fetching list of sport filters");
   await new Promise((resolve) => (setTimeout(resolve, 500)))
   return JSON.parse(sportFiltersJSON);
 }
@@ -186,10 +187,11 @@ export async function renameSportFilter({id, name}: RenameSportFilterProps): Pro
 
 interface DuplicateSportFilterProps {
   id: string;
+  name: string;
   parentID?: string;
 }
 
-export async function duplicateSportFilter({id, parentID}: DuplicateSportFilterProps): Promise<void> {
+export async function duplicateSportFilter({id, name, parentID}: DuplicateSportFilterProps): Promise<void> {
   console.log(`API call: Duplicating sport filter with ID: ${id}`);
 
   await new Promise((resolve) => (setTimeout(resolve, 500)))
@@ -202,8 +204,18 @@ export async function duplicateSportFilter({id, parentID}: DuplicateSportFilterP
     throw new Error(`Item with ID ${id} not found`);
   }
   
-  const newItem = duplicateItem<TreeItemData>(item);
-  newItem.name = `${newItem.name} Copy`;
+  const newItem = duplicateItem<TreeItemData>(item, crypto.randomUUID);
+  let nameExists = true;
+  while (nameExists) {
+    newItem.name = `${newItem.name} Copy`;
+    nameExists = false;
+    for (const item of siblings) {
+      if (item.name === newItem.name) {
+        nameExists = true;
+        console.log(`Name ${newItem.name} already exists, generating a new name`);
+      }
+    }
+  }
   siblings.push(newItem);
 
   sportFiltersJSON = JSON.stringify(sportFilters);

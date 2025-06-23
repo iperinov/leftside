@@ -2,17 +2,27 @@ import { Button, Dialog, Text, Flex, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 
 interface EditNameDialogProps {
+  title?: string;
+  description?: string;
+  confirmText?: string;
+  cancelText?: string;
   open?: boolean;
-  onConfirm: (newName: string) => void;
+  currentName?: string; 
+  onConfirm: (name: string) => void;
   onCancel?: () => void;
-  currentName?: string;
+  validName?: (name: string) => boolean;
 }
 
 export default function EditNameDialog({ 
+  title = "Edit Name",
+  description = "Enter a new name below:",
+  confirmText = "Confirm",
+  cancelText = "Cancel",
   open = true, 
-  onConfirm, 
+  currentName = "", 
+  onConfirm,
   onCancel = () => {}, 
-  currentName = "" 
+  validName = (name) => true 
 }: EditNameDialogProps) {
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState(currentName);
@@ -24,25 +34,24 @@ export default function EditNameDialog({
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
-      <Dialog.Content style={{maxWidth: 400}} size="3">
+      <Dialog.Content style={{ maxWidth: 400 }} size="3">
         {/* Title and description */}
-        <Dialog.Title>Rename Item</Dialog.Title>
-        <Dialog.Description>Enter a new name below:</Dialog.Description>
+        <Dialog.Title>{title}</Dialog.Title>
+        <Dialog.Description>{description}</Dialog.Description>
 
         {/* Input fields */}
-        <TextField.Root 
-            value={name} 
-            placeholder="New name" 
-            mt="3"    
-            onChange={(e) => setName(e.target.value)} 
-        />
+        <TextField.Root value={name} placeholder="New name" mt="3" onChange={(e) => setName(e.target.value)} />
 
         {/* Buttons */}
         <Flex justify="end" gap="3" mt="4">
           <Dialog.Close>
-            <Button onClick={onCancel} variant="soft"> Cancel </Button>
+            <Button onClick={onCancel} variant="soft">
+              {cancelText}
+            </Button>
           </Dialog.Close>
-          <Button onClick={handleRename} disabled={name === "" || name === currentName}> Rename </Button>
+          <Button onClick={handleRename} disabled={name === "" || name === currentName || !validName(name)}>
+            {confirmText}
+          </Button>
         </Flex>
       </Dialog.Content>
     </Dialog.Root>
