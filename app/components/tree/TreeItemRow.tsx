@@ -25,6 +25,7 @@ export default function TreeItemRow({ data, parentID, ...config }: TreeItemRowPr
       draggable="true"
       data-selectable={isSelectable ? "true" : undefined}
       data-selected={config.selectedID === data.id ? "true" : undefined}
+      data-pending={data.pending ? "true" : undefined}
     >
       <Flex align="center" gap="1">
         {/* Reorder Button */}

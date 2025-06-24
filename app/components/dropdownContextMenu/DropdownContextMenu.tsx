@@ -1,6 +1,6 @@
 import { DropdownMenu } from "@radix-ui/themes";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import "../../../styles/DropdownContextMenu.css";
+import styles from "./DropdownContextMenu.module.css"; 
 
 export interface MenuItem {
   name: string;
@@ -19,7 +19,7 @@ export default function DropdownContextMenu({ items, context = undefined }: Drop
 
   return (
     <DropdownMenu.Root modal={true}>
-      <DropdownMenu.Trigger className="place-content-center">
+      <DropdownMenu.Trigger className={styles.icon}>
         <DotsHorizontalIcon />
       </DropdownMenu.Trigger>
 

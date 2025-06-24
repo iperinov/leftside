@@ -5,21 +5,19 @@ import useSportFilters from "~/hooks/sportConfigs/useSportFilters";
 import type TreeItemData from "~/components/tree/TreeItemData";
 import Tree from "~/components/tree/Tree";
 import { Flex } from "@radix-ui/themes";
-import styles from "./ConfigurationPage.module.css";
 import { findItem, findItemSiblings, findItemTrail } from "~/common/findItem";
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
 import useAddItemState from "~/hooks/sportConfigs/useAddItemState";
 import useRenameItemState from "~/hooks/sportConfigs/useRenameItemState";
 import useDuplicateItemState from "~/hooks/sportConfigs/useDuplicateItemState";
 import useDeleteItemState from "~/hooks/sportConfigs/useDeleteItemState";
-
-// TODO: remove
-let index = 0;
+import styles from "./ConfigurationsPage.module.css";
 
 export default function ConfigurationsPage() {
   const { isLoading, data: sportFilters, error } = useSportFilters();
-  const [selectedID, setSelectedID] = useState<string>("");
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [ selectedID, setSelectedID ] = useState<string>("");
+  const [ expandedItems, setExpandedItems ] = useState<string[]>([]);
+
   const { addItemData, setAddItemData, resetAddItemData, addFilter, isAddPending } = useAddItemState();
   const { renameItemData, setRenameItemData, resetRenameItemData, renameFilter, isRenamePending } = useRenameItemState();
   const { duplicateItemData, setDuplicateItemData, resetDuplicateItemData, duplicateFilter, isDuplicatePending } = useDuplicateItemState();
@@ -36,7 +34,7 @@ export default function ConfigurationsPage() {
 
   const onRename = (context: any) => {
     const itemID = String(context);
-    const renameItem = findItem<TreeItemData>(itemID, sportFilters);
+    const renameItem = findItem(itemID, sportFilters);
     if (!renameItem) {
       throw new Error(`Item with id ${itemID} not found`);
     }
@@ -45,7 +43,7 @@ export default function ConfigurationsPage() {
 
   const onDuplicate = (context: any) => {
     const itemID = String(context);
-    const duplicateItemsTrail = findItemTrail<TreeItemData>(itemID, sportFilters);
+    const duplicateItemsTrail = findItemTrail(itemID, sportFilters);
     if (!duplicateItemsTrail || duplicateItemsTrail.length === 0) {
       throw new Error(`Item with id ${itemID} not found`);
     }
@@ -107,7 +105,6 @@ export default function ConfigurationsPage() {
           description="Enter a name for the new item:"
           confirmText="Add"
           open={true}
-          currentName=""
           onConfirm={(name) => addFilter({ ...addItemData, name })}
           onCancel={resetAddItemData}
           validName={(name) =>

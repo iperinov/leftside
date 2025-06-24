@@ -9,36 +9,27 @@ function useDeleteFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
   const optimisticDeleteSportFilter = (oldSportFilters: TreeItemData[], { id }: { id: string }) => {
-    const siblings = findItemSiblings<TreeItemData>(id, oldSportFilters);
-    if (!siblings) {
-      throw new Error(`Item with ID ${id} not found`);
-    }
+    let newSportFilters = structuredClone(oldSportFilters);
+    const siblings = findItemSiblings(id, newSportFilters);
+    if (!siblings) throw new Error(`Item with ID ${id} not found`);
     const itemIndex = siblings.findIndex((item) => item.id === id);
-    if (itemIndex === -1) {
-      throw new Error(`Item with ID ${id} not found in siblings`);
-    }
+    if (itemIndex === -1) throw new Error(`Item with ID ${id} not found in siblings`);
     siblings.splice(itemIndex, 1);
+    return newSportFilters;
   };
 
   return useMutation({
     mutationFn: deleteSportFilter,
     onMutate: ({ id }: { id: string }) => {
       const previousFilters = queryClient.getQueryData<TreeItemData[]>(sportFiltersQueryKey);
-      if (previousFilters) {
-        const newSportFilters = optimisticDeleteSportFilter(previousFilters, { id });
-        queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);
-      }
+      if (!previousFilters) throw new Error("No existing filters to delete");
+      const newSportFilters = optimisticDeleteSportFilter(previousFilters, { id });
+      queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);
       return { previousFilters };
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: sportFiltersQueryKey });
-    },
-    onError: (err, newFilter, context) => {
-      queryClient.setQueryData(sportFiltersQueryKey, context?.previousFilters);
-    },
-    onSettled: () => {
-      onComplete?.();
-    },
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: sportFiltersQueryKey }); },
+    onError: (err, newFilter, context) => { queryClient.setQueryData(sportFiltersQueryKey, context?.previousFilters); },
+    onSettled: () => { onComplete?.()},
   });
 }
 

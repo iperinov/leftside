@@ -1,3 +1,4 @@
+import { Button, Flex, Text } from "@radix-ui/themes";
 import clsx from "clsx";
 import { NavigationMenu, Separator } from "radix-ui";
 import { NavLink, type NavLinkProps, useNavigate } from "react-router";
@@ -29,30 +30,28 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-stone-300 px-6 py-2 flex items-center justify-between text-sm select-none">
+    <Flex align="center" justify="between" style={{ backgroundColor: "var(--accent-5)" }}>
       {/* Left navigation section */}
-      <NavigationMenu.Root className="flex gap-6">
-        <NavigationMenu.List className="flex gap-6">
-          <NavItem to="/catalog">Sports catalog</NavItem>
-          <NavItem to="/configurations">Configurations</NavItem>
+      <NavigationMenu.Root>
+        <NavigationMenu.List>
+          <Flex direction="row" gap="6">
+            <NavItem to="/catalog">Sports catalog</NavItem>
+            <NavItem to="/configurations">Configurations</NavItem>
+          </Flex>
         </NavigationMenu.List>
       </NavigationMenu.Root>
-
+      
       {/* Right user section */}
-      <div className="flex items-center gap-4 text-gray-900">
-        <span className="font-medium">{email}</span>
+      <Flex align="center" gap="4" px="4">
+        <Text>{email}</Text>
         <Separator.Root
           orientation="vertical"
           className="h-4 bg-stone-900 w-px"
         />
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="underline text-gray-600 hover:text-gray-800 cursor-pointer"
-        >
+        <Button onClick={handleLogout}>
           Logout
-        </button>
-      </div>
-    </header>
+        </Button>
+      </Flex>
+    </Flex>
   );
 }

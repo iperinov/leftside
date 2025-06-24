@@ -1,11 +1,11 @@
-import type TreeStruct from "./TreeStruct";
+import type TreeItemData from "~/components/tree/TreeItemData";
 
 
-export function findItem<T extends TreeStruct<T>>(id: string, subtree: T[]): T | undefined {
-  return findItemBy<T>((item => item.id === id), subtree);
+export function findItem(id: string, subtree: TreeItemData[]): TreeItemData | undefined {
+  return findItemBy((item => item.id === id), subtree);
 }
 
-export function findItemBy<T extends TreeStruct<T>>(compare: (item: T) => boolean, subtree: T[]): T | undefined {
+export function findItemBy(compare: (item: TreeItemData) => boolean, subtree: TreeItemData[]): TreeItemData | undefined {
   for (const item of subtree) {
     if (compare(item)) {
       return item;
@@ -14,7 +14,7 @@ export function findItemBy<T extends TreeStruct<T>>(compare: (item: T) => boolea
       continue;
     }
 
-    const found = findItemBy<T>(compare, item.children);
+    const found = findItemBy(compare, item.children);
     if (found) {
       return found;
     }
@@ -23,7 +23,7 @@ export function findItemBy<T extends TreeStruct<T>>(compare: (item: T) => boolea
   return undefined;
 }
 
-export function findItemTrail<T extends TreeStruct<T>>(id: string, subtree: T[]): T[] | undefined {
+export function findItemTrail(id: string, subtree: TreeItemData[]): TreeItemData[] | undefined {
   for (const item of subtree) {
     if (item.id === id) {
       return [item];
@@ -32,7 +32,7 @@ export function findItemTrail<T extends TreeStruct<T>>(id: string, subtree: T[])
       continue;
     }
 
-    const found = findItemTrail<T>(id, item.children);
+    const found = findItemTrail(id, item.children);
     if (found) {
       return [item, ...found];
     }
@@ -41,8 +41,8 @@ export function findItemTrail<T extends TreeStruct<T>>(id: string, subtree: T[])
   return undefined;
 }
 
-export function findItemSiblings<T extends TreeStruct<T>>(id: string, subtree: T[]): T[] | undefined {
-  const itemParent = findItemParent<T>(id, subtree)
+export function findItemSiblings(id: string, subtree: TreeItemData[]): TreeItemData[] | undefined {
+  const itemParent = findItemParent(id, subtree)
   if (itemParent?.children) {
     return itemParent.children
   }
@@ -54,7 +54,7 @@ export function findItemSiblings<T extends TreeStruct<T>>(id: string, subtree: T
   return undefined;
 }
 
-export function findItemParent<T extends TreeStruct<T>>(id: string, subtree: T[]): T | undefined {
+export function findItemParent<T extends TreeItemData>(id: string, subtree: TreeItemData[]): TreeItemData | undefined {
   for (const item of subtree) {
     if (item.id === id) {
       return undefined; // The item itself cannot be its own parent

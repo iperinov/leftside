@@ -1,43 +1,56 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { duplicateSportFilter } from "~/api/configs/sportFiltersApi";
-import { duplicateItem } from "~/common/duplicateItem";
+import { cleanOptimisticUpdate } from "~/common/cleanOptimisticCacheChanges";
 import { findItem } from "~/common/findItem";
+import iterateItem from "~/common/iterateItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
 import type TreeItemData from "~/components/tree/TreeItemData";
 
 function useDuplicateFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
-  const optimisticDuplicateSportFilter = (oldSportFilters: TreeItemData[], { id, parentID }: { id: string; parentID?: string }) => {
-    const siblings = parentID ? findItem<TreeItemData>(parentID, oldSportFilters)?.children || oldSportFilters : oldSportFilters;
-    const item = findItem<TreeItemData>(id, siblings);
-    if (!item) {
-      throw new Error(`Item with ID ${id} not found`);
-    }
-    const newItem = duplicateItem(item);
-    newItem.name = `${newItem.name} Copy`;
+  const optimisticDuplicateSportFilter = (
+    oldSportFilters: TreeItemData[],
+    { id, name, parentID }: { id: string; name: string; parentID?: string }
+  ) => {
+    const newSportFilters = structuredClone(oldSportFilters);
+    const siblings = parentID ? findItem(parentID, newSportFilters)?.children || newSportFilters : newSportFilters;
+    const item = findItem(id, siblings);
+    if (!item) throw new Error(`Item with ID ${id} not found`);
+    const newItem = { ...structuredClone(item), name }
+    iterateItem(newItem, (item) => {
+      item.id = `duplicate-${item.id}`
+      item.pending = true; 
+    });
     siblings.push(newItem);
+    return { newSportFilters, newItemID: newItem.id };
   };
 
   return useMutation({
     mutationFn: duplicateSportFilter,
-    onMutate: ({ id, parentID }: { id: string; parentID?: string }) => {
+    onMutate: ({ id, name, parentID }) => {
       const previousFilters = queryClient.getQueryData<TreeItemData[]>(sportFiltersQueryKey);
-      if (previousFilters) {
-        const newSportFilters = optimisticDuplicateSportFilter(previousFilters, { id, parentID });
-        queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);
-      }
-      return { previousFilters };
+      if (!previousFilters) throw new Error("No existing filters to duplicate");
+
+      const clone = structuredClone(previousFilters);
+      const { newSportFilters, newItemID } = optimisticDuplicateSportFilter(clone, { id, name, parentID });
+
+      queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);
+      return { previousFilters, newItemID };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: sportFiltersQueryKey });
     },
     onError: (err, newFilter, context) => {
-      queryClient.setQueryData(sportFiltersQueryKey, context?.previousFilters);
+      if (context?.previousFilters) {
+        queryClient.setQueryData(sportFiltersQueryKey, context.previousFilters);
+      }
     },
-    onSettled: () => {
-      onComplete?.();
+    onSettled: (data, error, variables, context) => {
+      if (context?.newItemID) {
+        cleanOptimisticUpdate(queryClient, sportFiltersQueryKey, [context.newItemID], onComplete);
+      }
     },
   });
 }

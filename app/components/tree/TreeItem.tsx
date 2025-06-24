@@ -1,11 +1,9 @@
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
-import { Text, Flex, IconButton, Button } from "@radix-ui/themes";
-import { useState } from "react";
+import { Flex, IconButton } from "@radix-ui/themes";
 import AddTreeItemButton from "./AddTreeItemButton";
 import type TreeItemData from "./TreeItemData";
 import type TreeConfig from "./TreeConfig";
 import TreeItemRow from "./TreeItemRow";
-
 interface TreeItemProps {
   data: TreeItemData;
   level?: number;
@@ -34,10 +32,10 @@ export default function TreeItem({ data, level = 0, parentID, ...config }: TreeI
       {shouldShowExpandButton && itemExpanded && (
         <Flex direction="column" gap="2" ml="5">
           {hasChildren && data.children!.map((child) => (
-            <TreeItem key={child.id} data={child} parentID={data.id} {...config} />
+            <TreeItem key={child.id} data={child} parentID={data.id} level={level + 1} {...config} />
           ))}
           {config.onAddLevel && (
-            <AddTreeItemButton parentID={data.id} onAddLevel={config.onAddLevel} mutationInProgress={config.mutationInProgress} />
+            <AddTreeItemButton parentID={data.id} level={level + 1} onAddLevel={config.onAddLevel} mutationInProgress={config.mutationInProgress} />
           )}
         </Flex>
       )}
