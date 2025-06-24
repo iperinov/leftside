@@ -1,13 +1,17 @@
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
-import useSportFilters, { useAddFilter, useDeleteFilter, useDuplicateFilter, useRenameFilter } from "~/hooks/useSportFilters";
+import useSportFilters from "~/hooks/sportConfigs/useSportFilters";
 import type TreeItemData from "~/components/tree/TreeItemData";
 import Tree from "~/components/tree/Tree";
 import { Flex } from "@radix-ui/themes";
 import styles from "./ConfigurationPage.module.css";
 import { findItem, findItemSiblings, findItemTrail } from "~/common/findItem";
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
+import useAddItemState from "~/hooks/sportConfigs/useAddItemState";
+import useRenameItemState from "~/hooks/sportConfigs/useRenameItemState";
+import useDuplicateItemState from "~/hooks/sportConfigs/useDuplicateItemState";
+import useDeleteItemState from "~/hooks/sportConfigs/useDeleteItemState";
 
 // TODO: remove
 let index = 0;
@@ -15,19 +19,12 @@ let index = 0;
 export default function ConfigurationsPage() {
   const { isLoading, data: sportFilters, error } = useSportFilters();
   const [selectedID, setSelectedID] = useState<string>("");
-  const [addItemData, setAddItemData] = useState<{ parentID?: string }>();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
-  const resetAddItemData = () => setAddItemData(undefined);
-  const [renameItemData, setRenameItemData] = useState<{ id: string; name: string }>();
-  const resetRenameItemData = () => setRenameItemData(undefined);
-  const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parent?: TreeItemData }>();
-  const resetDuplicateItemData = () => setDuplicateItemData(undefined);
-  const [deleteItemData, setDeleteItemData] = useState<{ id: string }>();
-  const resetDeleteItemData = () => setDeleteItemData(undefined);
-  const { mutate: addFilter, isPending: isAddPending } = useAddFilter(resetAddItemData);
-  const { mutate: renameFilter, isPending: isRenamePending } = useRenameFilter(resetRenameItemData);
-  const { mutate: duplicateFilter, isPending: isDuplicatePending } = useDuplicateFilter(resetDuplicateItemData);
-  const { mutate: deleteFilter, isPending: isDeletePending } = useDeleteFilter(resetDeleteItemData);
+  const { addItemData, setAddItemData, resetAddItemData, addFilter, isAddPending } = useAddItemState();
+  const { renameItemData, setRenameItemData, resetRenameItemData, renameFilter, isRenamePending } = useRenameItemState();
+  const { duplicateItemData, setDuplicateItemData, resetDuplicateItemData, duplicateFilter, isDuplicatePending } = useDuplicateItemState();
+  const { deleteItemData, setDeleteItemData, resetDeleteItemData, deleteFilter, isDeletePending } = useDeleteItemState();
+  
 
   if (isLoading || !sportFilters) {
     return <div>Loading...</div>;

@@ -128,7 +128,8 @@ let sportFiltersJSON = `[
         },
         {
           "id": "Others-Tennis",
-          "name": "Tennis ATP"
+          "name": "Tennis ATP",
+          "children": []
         }
       ]
     }

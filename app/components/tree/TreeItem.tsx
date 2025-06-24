@@ -5,7 +5,6 @@ import AddTreeItemButton from "./AddTreeItemButton";
 import type TreeItemData from "./TreeItemData";
 import type TreeConfig from "./TreeConfig";
 import TreeItemRow from "./TreeItemRow";
-import { maxLevel } from "~/common/constants";
 
 interface TreeItemProps {
   data: TreeItemData;
