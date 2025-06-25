@@ -1,6 +1,6 @@
-import { findItem, findItemSiblings } from "~/common/findItem";
-import iterateItem from "~/common/iterateItem";
-import type TreeItemData from "~/components/tree/TreeItemData";
+import { findItem, findItemSiblings } from "~/components/tree/common/findItem";
+import iterateItem from "~/components/tree/common/iterateItem";
+import type TreeItemData from "~/components/tree/common/TreeItemData";
 
 let sportFiltersJSON = `[
     {
@@ -135,9 +135,9 @@ let sportFiltersJSON = `[
     }
   ]`;
 
-export async function getListOfSportFilters(): Promise<TreeItemData[]> {
+export async function getSportFilters(): Promise<TreeItemData[]> {
   console.log("API call: Fetching list of sport filters");
-  await new Promise((resolve) => (setTimeout(resolve, 500)))
+  await new Promise((resolve) => (setTimeout(resolve, 1000)))
   const filters = JSON.parse(sportFiltersJSON);
   console.log("API response: ", filters);
   return filters;
@@ -151,13 +151,13 @@ interface AddSportFilterProps {
 export async function addSportFilter({name, parentID}: AddSportFilterProps): Promise<void> {
   console.log(`API call: Adding sport filter with Name: ${name}, Parent ID: ${parentID}`);
 
-  await new Promise((resolve) => (setTimeout(resolve, 5000)))
+  await new Promise((resolve) => (setTimeout(resolve, 50000)))
 
   let sportFilters = JSON.parse(sportFiltersJSON)
 
   const newFilter = {name: name, id: crypto.randomUUID()};
   if (!parentID) {  // root filter
-    sportFilters.push(newFilter);
+    sportFilters.push({ newFilter, children: [] });
   } else {          // sub-filter filter
     let parent = findItem(parentID, sportFilters)
     if (!parent) {
@@ -214,7 +214,7 @@ export async function duplicateSportFilter({id, name, parentID}: DuplicateSportF
 
   const newItem = { ...structuredClone(item), name };
   iterateItem(newItem, (item) => {
-    item.id = Math.random().toString(36).substring(2, 8); // Generate a new unique ID
+    item.id = crypto.randomUUID(); 
   });
   siblings.push(newItem);
 

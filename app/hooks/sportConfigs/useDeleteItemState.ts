@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { deleteSportFilter } from "~/api/configs/sportFiltersApi";
-import { findItemSiblings } from "~/common/findItem";
+import { findItemSiblings } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/TreeItemData";
+import type TreeItemData from "~/components/tree/common/TreeItemData";
 
 function useDeleteFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();

@@ -1,7 +1,7 @@
 import type { QueryClient } from "@tanstack/react-query";
-import type TreeItemData from "~/components/tree/TreeItemData";
+import type TreeItemData from "~/components/tree/common/TreeItemData";
 
-export function cleanOptimisticUpdate(queryClient: QueryClient, queryKey: string[], idsToClean: [string], onComplete?: () => void) {
+export function cleanOptimisticUpdates(queryClient: QueryClient, queryKey: string[], idsToClean: [string], onComplete?: () => void) {
     if (idsToClean.length <= 0) return;
     const current = queryClient.getQueryData<TreeItemData[]>(queryKey);
     if (current) {

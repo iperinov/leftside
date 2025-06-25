@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { duplicateSportFilter } from "~/api/configs/sportFiltersApi";
-import { cleanOptimisticUpdate } from "~/common/cleanOptimisticCacheChanges";
-import { findItem } from "~/common/findItem";
-import iterateItem from "~/common/iterateItem";
+import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimisticUpdates";
+import { findItem } from "~/components/tree/common/findItem";
+import iterateItem from "~/components/tree/common/iterateItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/TreeItemData";
+import type TreeItemData from "~/components/tree/common/TreeItemData";
 
 function useDuplicateFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
@@ -49,14 +49,14 @@ function useDuplicateFilter(onComplete?: () => void) {
     },
     onSettled: (data, error, variables, context) => {
       if (context?.newItemID) {
-        cleanOptimisticUpdate(queryClient, sportFiltersQueryKey, [context.newItemID], onComplete);
+        cleanOptimisticUpdates(queryClient, sportFiltersQueryKey, [context.newItemID], onComplete);
       }
     },
   });
 }
 
 export default function useDuplicateItemState() {
-  const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parent?: TreeItemData }>();
+  const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parentID?: string }>();
   const resetDuplicateItemData = () => setDuplicateItemData(undefined);
   const { mutate: duplicateFilter, isPending: isDuplicatePending } = useDuplicateFilter(resetDuplicateItemData);
 

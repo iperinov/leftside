@@ -1,10 +1,10 @@
 import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { renameSportFilter } from "~/api/configs/sportFiltersApi";
-import { cleanOptimisticUpdate } from "~/common/cleanOptimisticCacheChanges";
-import { findItem } from "~/common/findItem";
+import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimisticUpdates";
+import { findItem } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/TreeItemData";
+import type TreeItemData from "~/components/tree/common/TreeItemData";
 
 function useRenameFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
@@ -38,7 +38,7 @@ function useRenameFilter(onComplete?: () => void) {
     },
     onSettled: (data, error, variables, context) => {
       if (context?.id) {
-        cleanOptimisticUpdate(queryClient, sportFiltersQueryKey, [context.id], onComplete);
+        cleanOptimisticUpdates(queryClient, sportFiltersQueryKey, [context.id], onComplete);
       }
     },
   });

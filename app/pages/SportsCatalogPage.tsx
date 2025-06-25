@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
-import Tree from "~/components/tree/Tree";
+import Tree from "~/components/tree/components/Tree";
 import useSportFilters from "~/hooks/sportConfigs/useSportFilters";
-import type TreeItemData from "~/components/tree/TreeItemData";
+import type TreeItemData from "~/components/tree/common/TreeItemData";
 
 export default function SportsCatalogPage() {
   return <></>

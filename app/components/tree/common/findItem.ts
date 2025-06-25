@@ -1,4 +1,4 @@
-import type TreeItemData from "~/components/tree/TreeItemData";
+import type TreeItemData from "./TreeItemData";
 
 
 export function findItem(id: string, subtree: TreeItemData[]): TreeItemData | undefined {

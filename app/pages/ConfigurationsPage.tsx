@@ -1,51 +1,50 @@
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import { useState } from "react";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
-import useSportFilters from "~/hooks/sportConfigs/useSportFilters";
-import type TreeItemData from "~/components/tree/TreeItemData";
-import Tree from "~/components/tree/Tree";
+import Tree from "~/components/tree/components/Tree";
 import { Flex } from "@radix-ui/themes";
-import { findItem, findItemSiblings, findItemTrail } from "~/common/findItem";
+import { findItem, findItemSiblings, findItemTrail } from "~/components/tree/common/findItem";
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
 import useAddItemState from "~/hooks/sportConfigs/useAddItemState";
 import useRenameItemState from "~/hooks/sportConfigs/useRenameItemState";
 import useDuplicateItemState from "~/hooks/sportConfigs/useDuplicateItemState";
 import useDeleteItemState from "~/hooks/sportConfigs/useDeleteItemState";
 import styles from "./ConfigurationsPage.module.css";
+import useSports from "~/hooks/useSports";
+import AddNewFilterDialog from "~/components/dialogs/AddNewFilterDialog";
+import makeRoot from "~/components/tree/common/makeRoot";
+import formatOrdinal from "~/common/formatOrdinal";
+import type TreeItemData from "~/components/tree/common/TreeItemData";
 
 export default function ConfigurationsPage() {
-  const { isLoading, data: sportFilters, error } = useSportFilters();
-  const [ selectedID, setSelectedID ] = useState<string>("");
-  const [ expandedItems, setExpandedItems ] = useState<string[]>([]);
+  const { isLoading, error, filters, catalog } = useSports();
 
-  const { addItemData, setAddItemData, resetAddItemData, addFilter, isAddPending } = useAddItemState();
+  const [selectedID, setSelectedID] = useState<string>("");
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
+  const { addItemData, setAddItemData, resetAddItemData, addFilter, isAddPending, addInProgressForParentID, setAddInProgressForParentID } = useAddItemState();
   const { renameItemData, setRenameItemData, resetRenameItemData, renameFilter, isRenamePending } = useRenameItemState();
   const { duplicateItemData, setDuplicateItemData, resetDuplicateItemData, duplicateFilter, isDuplicatePending } = useDuplicateItemState();
   const { deleteItemData, setDeleteItemData, resetDeleteItemData, deleteFilter, isDeletePending } = useDeleteItemState();
-  
 
-  if (isLoading || !sportFilters) {
-    return <div>Loading...</div>;
-  }
-
-  const onAddLevel = (parentID?: string) => {
-    setAddItemData({ parentID });
+  const onAddLevel = (level: number, parent: TreeItemData) => {
+    setAddItemData({ level, parentID: parent.id });
   };
 
-  const onRename = (context: any) => {
-    const itemID = String(context);
-    const renameItem = findItem(itemID, sportFilters);
+  const onRename = (context?: TreeItemData) => {
+    if (!context) throw new Error("Context is required for renaming an item");
+    const renameItem = findItem(context.id, filters!);
     if (!renameItem) {
-      throw new Error(`Item with id ${itemID} not found`);
+      throw new Error(`Item with id ${context.id} not found`);
     }
-    setRenameItemData({ id: itemID, name: renameItem.name });
+    setRenameItemData({ id: context.id, name: renameItem.name });
   };
 
-  const onDuplicate = (context: any) => {
-    const itemID = String(context);
-    const duplicateItemsTrail = findItemTrail(itemID, sportFilters);
+  const onDuplicate = (context?: TreeItemData) => {
+    if (!context) throw new Error("Context is required for duplicating an item");
+    const duplicateItemsTrail = findItemTrail(context.id, filters!);
     if (!duplicateItemsTrail || duplicateItemsTrail.length === 0) {
-      throw new Error(`Item with id ${itemID} not found`);
+      throw new Error(`Item with id ${context.id} not found`);
     }
 
     if (duplicateItemsTrail.length === 1) {
@@ -53,20 +52,20 @@ export default function ConfigurationsPage() {
     } else {
       const item = duplicateItemsTrail.at(-1)!;
       const parent = duplicateItemsTrail.at(-2)!;
-      setDuplicateItemData({ id: item.id, name: item.name, parent: parent });
+      setDuplicateItemData({ id: item.id, name: item.name, parentID: parent.id });
     }
   };
 
-  const onDelete = (context: any) => {
-    const id = String(context);
-    setDeleteItemData({id});
+  const onDelete = (context?: TreeItemData) => {
+    if (!context) throw new Error("Context is required for deleting an item");
+    setDeleteItemData({ id: context.id });
   };
 
-  const onSelected = (id?: string) => {
-    setSelectedID(selectedID === id ? "" : id || "");
+  const onSelected = (item: TreeItemData) => {
+    setSelectedID(selectedID === item.id ? "" : item.id);
   };
 
-  const menuItems: MenuItem[] = [
+  const menuItems: MenuItem<TreeItemData>[] = [
     { name: "Rename", action: onRename },
     { name: "Delete", action: onDelete },
     { name: "Duplicate", action: onDuplicate },
@@ -78,17 +77,31 @@ export default function ConfigurationsPage() {
         <aside className={styles.sideBar}>
           <LoadDataDecorator error={error} isLoading={isLoading}>
             <Tree
-              rootItems={sportFilters}
-              expandedItems={expandedItems}
-              expandItem={(id, expand) => {
-                setExpandedItems((prev) => (expand ? [...prev, id] : prev.filter((item) => item !== id)));
-              }}
+              root={makeRoot(filters!)}
               menuItems={menuItems}
-              onAddLevel={onAddLevel}
-              selectedID={selectedID}
-              onSelected={onSelected}
-              mutationInProgress={isAddPending}
-              isFinalNode={(item) => !item.children}
+              level={0}
+              reorder={{
+                allowed: (item, parent) => true,
+                handler: (item, oldParent, newParent) => {
+                  // TODO: Implement reorder logic here
+                },
+              }}
+              expand={{
+                allowed: (item, level) => !!item.children,
+                itemIDs: expandedItems,
+                handler: (item, expand) => setExpandedItems((prev) => (expand ? [...prev, item.id] : prev.filter((id) => id !== item.id))),
+              }}
+              addToParent={{
+                allowed: (level, parentID) => level < 2,
+                handler: onAddLevel,
+                toString: (level, parentID) => `Add ${formatOrdinal(level + 1)} level`,
+                inProgressID: addInProgressForParentID,
+              }}
+              selection={{
+                allowed: (item) => !item.pending && !item.children,
+                selectedID: selectedID,
+                handler: onSelected,
+              }}
             />
           </LoadDataDecorator>
         </aside>
@@ -99,18 +112,21 @@ export default function ConfigurationsPage() {
           {/* <div className=" rounded-xl" /> */}
         </main>
       </Flex>
+
       {addItemData && (
-        <EditNameDialog
-          title="Add Item"
-          description="Enter a name for the new item:"
-          confirmText="Add"
+        <AddNewFilterDialog
+          level={addItemData.level}
+          //parentID={addItemData.parentID}
           open={true}
-          onConfirm={(name) => addFilter({ ...addItemData, name })}
+          onConfirm={(name) => {
+            addFilter({ ...addItemData, name });
+            setAddInProgressForParentID(addItemData.parentID);
+          }}
           onCancel={resetAddItemData}
           validName={(name) =>
             !addItemData.parentID
-              ? sportFilters.find((item) => item.name === name) === undefined
-              : findItem(addItemData.parentID, sportFilters)?.children?.find((item) => item.name === name) === undefined
+              ? filters!.find((item) => item.name === name) === undefined
+              : findItem(addItemData.parentID, filters!)?.children?.find((item) => item.name === name) === undefined
           }
         />
       )}
@@ -123,7 +139,7 @@ export default function ConfigurationsPage() {
           currentName={renameItemData.name}
           onConfirm={(name) => renameFilter({ ...renameItemData, name })}
           onCancel={resetRenameItemData}
-          validName={(name) => findItemSiblings(renameItemData.id, sportFilters)?.find((item) => item.name === name) === undefined}
+          validName={(name) => findItemSiblings(renameItemData.id, filters!)?.find((item) => item.name === name) === undefined}
         />
       )}
       {duplicateItemData && (
@@ -135,7 +151,7 @@ export default function ConfigurationsPage() {
           currentName={duplicateItemData.name}
           onConfirm={(name) => duplicateFilter({ ...duplicateItemData, name })}
           onCancel={resetDuplicateItemData}
-          validName={(name) => findItemSiblings(duplicateItemData.id, sportFilters)?.find((item) => item.name === name) === undefined}
+          validName={(name) => findItemSiblings(duplicateItemData.id, filters!)?.find((item) => item.name === name) === undefined}
         />
       )}
       {deleteItemData && (

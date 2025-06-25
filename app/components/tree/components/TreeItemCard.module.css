@@ -1,24 +1,32 @@
-.treeItemRow {
+.treeItemCard {
     background-color: var(--accent-3);
     border: 1px solid var(--accent-8);
     border-radius: 0.375rem;
 }
 
-.treeItemRow:not([data-selected]):not([data-pending]):hover[data-selectable] {
+.treeItemCard:not([data-selected]):not([data-pending]):hover[data-selectable] {
     background-color: var(--accent-4);
 }
 
-.treeItemRow[data-selected] {
+.treeItemCard[data-selected] {
     background-color: var(--accent-5);
+}
+
+.treeItemCard[data-pending] {
+    background-color: var(--accent-6);
+    animation: blink 1s ease-in-out infinite;
+}
+
+.reorderButton {
+  background-color: inherit; 
+}
+
+.reorderButton[data-hidden] {
+  visibility: hidden;
 }
 
 .noselect {
   user-select: none;
-}
-
-.treeItemRow[data-pending] {
-    background-color: var(--accent-6);
-    animation: blink 1s ease-in-out infinite;
 }
 
 @keyframes blink {

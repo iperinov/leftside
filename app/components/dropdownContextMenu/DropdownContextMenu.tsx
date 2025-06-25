@@ -2,17 +2,18 @@ import { DropdownMenu } from "@radix-ui/themes";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import styles from "./DropdownContextMenu.module.css"; 
 
-export interface MenuItem {
+export interface MenuItem<T> {
   name: string;
-  action: (context: any) => void;
+  action: (context?: T) => void;
+  disabled?: boolean;
 }
 
-export interface DropdownContextMenuProps {
-  items: MenuItem[];
-  context?: any
+export interface DropdownContextMenuProps<T> {
+  items: MenuItem<T>[];
+  context?: T
 }
 
-export default function DropdownContextMenu({ items, context = undefined }: DropdownContextMenuProps) {
+export default function DropdownContextMenu<T>({ items, context }: DropdownContextMenuProps<T>) {
   if (items.length === 0) {
     return null; // No items to display
   }
@@ -27,7 +28,9 @@ export default function DropdownContextMenu({ items, context = undefined }: Drop
         {items.map((item) => (
           <DropdownMenu.Item
             key={item.name}
-            onClick={(event) => {
+            disabled={item.disabled}
+            onSelect={(event) => {
+              if (item.disabled) return;
               event.stopPropagation();
               item.action(context);
             }}
