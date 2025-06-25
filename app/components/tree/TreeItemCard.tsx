@@ -1,16 +1,16 @@
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, Text } from "@radix-ui/themes";
-import DropdownContextMenu from "../../dropdownContextMenu/DropdownContextMenu";
-import type TreeItemData from "../common/TreeItemData";
-import type TreeConfig from "../common/TreeConfig";
+import DropdownContextMenu from "../dropdownContextMenu/DropdownContextMenu";
+import type TreeItemData from "./TreeItemData";
+import type TreeConfig from "./TreeConfig";
 import styles from "./TreeItemCard.module.css";
 
-interface TreeItemCardProps {
-  item: TreeItemData;
-  parent: TreeItemData;
+interface TreeItemCardProps<T extends TreeItemData> {
+  item: T;
+  parent: T;
 }
 
-export default function TreeItemCard({ item, parent, ...config }: TreeItemCardProps & TreeConfig) {
+export default function TreeItemCard<T extends TreeItemData>({ item, parent, ...config }: TreeItemCardProps<T> & TreeConfig<T>) {
   const isSelectable = config.selection?.allowed(item)
   const enableReorder = config.reorder && config.reorder.allowed(item, parent) && !item.pending;
 
@@ -48,9 +48,9 @@ export default function TreeItemCard({ item, parent, ...config }: TreeItemCardPr
       </Flex>
 
       {/* Context menu */}
-      {config.menuItems && config.menuItems.length > 0 && (
+      {config.contextMenu && config.contextMenu.menuItems.length > 0 && (
         <Box pr="3" pl="2">
-          <DropdownContextMenu items={config.menuItems} context={item} />
+          <DropdownContextMenu items={config.contextMenu.menuItems} context={item} />
         </Box>
       )}
     </Flex>

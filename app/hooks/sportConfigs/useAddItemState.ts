@@ -4,7 +4,7 @@ import { addSportFilter } from "~/api/configs/sportFiltersApi";
 import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimisticUpdates";
 import { findItem } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/common/TreeItemData";
+import type TreeItemData from "~/components/tree/TreeItemData";
 
 function useAddFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();

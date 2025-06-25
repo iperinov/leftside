@@ -1,7 +1,7 @@
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Flex, IconButton } from "@radix-ui/themes";
-import type TreeItemData from "../common/TreeItemData";
-import type TreeConfig from "../common/TreeConfig";
+import type TreeItemData from "./TreeItemData";
+import type TreeConfig from "./TreeConfig";
 import TreeItemCard from "./TreeItemCard";
 import Tree from "./Tree";
 

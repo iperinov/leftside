@@ -1,4 +1,4 @@
-import type TreeItemData from "./TreeItemData";
+import type TreeItemData from "../TreeItemData";
 
 export default function iterateItem(item: TreeItemData, callback: (item: TreeItemData) => void): void {
   callback(item);

@@ -1,7 +1,7 @@
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import { useState } from "react";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
-import Tree from "~/components/tree/components/Tree";
+import Tree from "~/components/tree/Tree";
 import { Flex } from "@radix-ui/themes";
 import { findItem, findItemSiblings, findItemTrail } from "~/components/tree/common/findItem";
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
@@ -14,7 +14,7 @@ import useSports from "~/hooks/useSports";
 import AddNewFilterDialog from "~/components/dialogs/AddNewFilterDialog";
 import makeRoot from "~/components/tree/common/makeRoot";
 import formatOrdinal from "~/common/formatOrdinal";
-import type TreeItemData from "~/components/tree/common/TreeItemData";
+import type TreeItemData from "~/components/tree/TreeItemData";
 
 export default function ConfigurationsPage() {
   const { isLoading, error, filters, catalog } = useSports();
@@ -78,7 +78,6 @@ export default function ConfigurationsPage() {
           <LoadDataDecorator error={error} isLoading={isLoading}>
             <Tree
               root={makeRoot(filters!)}
-              menuItems={menuItems}
               level={0}
               reorder={{
                 allowed: (item, parent) => true,
@@ -101,6 +100,10 @@ export default function ConfigurationsPage() {
                 allowed: (item) => !item.pending && !item.children,
                 selectedID: selectedID,
                 handler: onSelected,
+              }}
+              contextMenu={{
+                canItemHaveContextMenu: (item) => true,
+                menuItems: menuItems,
               }}
             />
           </LoadDataDecorator>

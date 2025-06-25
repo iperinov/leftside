@@ -1,15 +1,15 @@
 import { Box, Flex } from "@radix-ui/themes";
-import type TreeConfig from "../common/TreeConfig";
-import type TreeItemData from "../common/TreeItemData";
+import type TreeConfig from "./TreeConfig";
+import type TreeItemData from "./TreeItemData";
 import TreeItem from "./TreeItem";
 import AddTreeItemButton from "./AddTreeItemButton";
 
-interface TreeProps {
-  root: TreeItemData;
+interface TreeProps<T extends TreeItemData> {
+  root: T;
   level: number;
 }
 
-export default function Tree({ root, level, ...config }: TreeProps & TreeConfig) {
+export default function Tree<T extends TreeItemData>({ root, level, ...config }: TreeProps<T> & TreeConfig<T>) {
   return (
     <Flex direction={"column"} gap="2" ml={level === 0 ? undefined : "5"}>
       {/* Render items in section */}

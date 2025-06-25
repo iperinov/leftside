@@ -5,7 +5,7 @@ import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimistic
 import { findItem } from "~/components/tree/common/findItem";
 import iterateItem from "~/components/tree/common/iterateItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/common/TreeItemData";
+import type TreeItemData from "~/components/tree/TreeItemData";
 
 function useDuplicateFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();

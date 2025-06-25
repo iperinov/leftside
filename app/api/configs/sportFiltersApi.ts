@@ -1,6 +1,6 @@
 import { findItem, findItemSiblings } from "~/components/tree/common/findItem";
 import iterateItem from "~/components/tree/common/iterateItem";
-import type TreeItemData from "~/components/tree/common/TreeItemData";
+import type TreeItemData from "~/components/tree/TreeItemData";
 
 let sportFiltersJSON = `[
     {
@@ -151,7 +151,7 @@ interface AddSportFilterProps {
 export async function addSportFilter({name, parentID}: AddSportFilterProps): Promise<void> {
   console.log(`API call: Adding sport filter with Name: ${name}, Parent ID: ${parentID}`);
 
-  await new Promise((resolve) => (setTimeout(resolve, 50000)))
+  await new Promise((resolve) => (setTimeout(resolve, 5000)))
 
   let sportFilters = JSON.parse(sportFiltersJSON)
 

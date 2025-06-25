@@ -1,4 +1,4 @@
-import type TreeItemData from "./TreeItemData";
+import type TreeItemData from "../TreeItemData";
 
 export default function makeRoot(children: TreeItemData[] = []): TreeItemData {
     return {
