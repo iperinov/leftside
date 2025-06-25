@@ -4,12 +4,12 @@ import type TreeConfig from "./TreeConfig";
 import TreeItem from "./TreeItem";
 import type TreeItemData from "./TreeItemData";
 
-interface TreeProps<T extends TreeItemData> {
+interface TreeProps<T extends TreeItemData<T>> {
   root: T;
   level: number;
 }
 
-export default function Tree<T extends TreeItemData>({
+export default function Tree<T extends TreeItemData<T>>({
   root,
   level,
   ...config

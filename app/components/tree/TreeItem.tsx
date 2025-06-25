@@ -5,18 +5,18 @@ import type TreeConfig from "./TreeConfig";
 import TreeItemCard from "./TreeItemCard";
 import type TreeItemData from "./TreeItemData";
 
-interface TreeItemProps {
-  item: TreeItemData;
+interface TreeItemProps<T extends TreeItemData<T>> {
+  item: T;
   level: number;
-  parent: TreeItemData;
+  parent: T;
 }
 
-export default function TreeItem({
+export default function TreeItem<T extends TreeItemData<T>>({
   item,
   level,
   parent,
   ...config
-}: TreeItemProps & TreeConfig) {
+}: TreeItemProps<T> & TreeConfig<T>) {
   const hasChildren = item.children && item.children.length > 0;
   const canExpandItem =
     (config.expand?.allowed(item, level) || false) &&

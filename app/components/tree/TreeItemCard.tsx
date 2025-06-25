@@ -5,12 +5,12 @@ import type TreeConfig from "./TreeConfig";
 import styles from "./TreeItemCard.module.css";
 import type TreeItemData from "./TreeItemData";
 
-interface TreeItemCardProps<T extends TreeItemData> {
+interface TreeItemCardProps<T extends TreeItemData<T>> {
   item: T;
   parent: T;
 }
 
-export default function TreeItemCard<T extends TreeItemData>({
+export default function TreeItemCard<T extends TreeItemData<T>>({
   item,
   parent,
   ...config
