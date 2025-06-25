@@ -1,6 +1,6 @@
-import { DropdownMenu } from "@radix-ui/themes";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import styles from "./DropdownContextMenu.module.css"; 
+import { DropdownMenu } from "@radix-ui/themes";
+import styles from "./DropdownContextMenu.module.css";
 
 export interface MenuItem<T> {
   name: string;
@@ -10,10 +10,13 @@ export interface MenuItem<T> {
 
 export interface DropdownContextMenuProps<T> {
   items: MenuItem<T>[];
-  context?: T
+  context?: T;
 }
 
-export default function DropdownContextMenu<T>({ items, context }: DropdownContextMenuProps<T>) {
+export default function DropdownContextMenu<T>({
+  items,
+  context,
+}: DropdownContextMenuProps<T>) {
   if (items.length === 0) {
     return null; // No items to display
   }

@@ -1,18 +1,25 @@
-import { Button, Flex, Text } from "@radix-ui/themes";
-import clsx from "clsx";
-import { NavigationMenu, Separator } from "radix-ui";
+import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import { Box, Button, Flex, Separator, Text } from "@radix-ui/themes";
 import { NavLink, type NavLinkProps, useNavigate } from "react-router";
 import { useAuthStore } from "~/stores/useAuthStore";
 
 function NavItem({ to, children, ...props }: NavLinkProps) {
   return (
-    <NavigationMenu.Item>
+    <NavigationMenu.Item style={{ listStyle: "none" }}>
       <NavLink
         to={to}
         {...props}
-        className={({ isActive }: { isActive: boolean }) =>
-          clsx("nav-item", isActive && "nav-item-active")
-        }
+        style={({ isActive }: { isActive: boolean }) => ({
+          textDecoration: "none",
+          color: isActive ? "var(--accent-a11)" : "var(--gray-a11)",
+          fontWeight: isActive ? 500 : 400,
+          borderBottom: isActive
+            ? "2px solid var(--accent-a11)"
+            : "2px solid transparent",
+          paddingBottom: "10px",
+          fontSize: "14px",
+          cursor: "pointer",
+        })}
       >
         {children}
       </NavLink>
@@ -30,28 +37,58 @@ export default function Header() {
   };
 
   return (
-    <Flex align="center" justify="between" style={{ backgroundColor: "var(--accent-5)" }}>
-      {/* Left navigation section */}
-      <NavigationMenu.Root>
-        <NavigationMenu.List>
-          <Flex direction="row" gap="6">
+    <Box
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        backgroundColor: "var(--gray-3)",
+        borderBottom: "1px solid var(--gray-6)",
+        padding: "0.25rem 2rem",
+      }}
+    >
+      <Flex align="center" justify="between" style={{ height: "2.25rem" }}>
+        <NavigationMenu.Root>
+          <NavigationMenu.List
+            style={{
+              display: "flex",
+              gap: "2rem",
+              margin: 0,
+              padding: 0,
+              listStyle: "none",
+            }}
+          >
             <NavItem to="/catalog">Sports catalog</NavItem>
             <NavItem to="/configurations">Configurations</NavItem>
-          </Flex>
-        </NavigationMenu.List>
-      </NavigationMenu.Root>
-      
-      {/* Right user section */}
-      <Flex align="center" gap="4" px="4">
-        <Text>{email}</Text>
-        <Separator.Root
-          orientation="vertical"
-          className="h-4 bg-stone-900 w-px"
-        />
-        <Button onClick={handleLogout}>
-          Logout
-        </Button>
+          </NavigationMenu.List>
+        </NavigationMenu.Root>
+
+        <Flex align="center" gap="3">
+          <Text size="2" weight="medium" color="gray">
+            {email}
+          </Text>
+          <Separator
+            orientation="vertical"
+            style={{
+              height: "1rem",
+              backgroundColor: "var(--gray-10)",
+              width: 1,
+            }}
+          />
+          <Button
+            variant="ghost"
+            size="1"
+            onClick={handleLogout}
+            style={{
+              textDecoration: "underline",
+              color: "var(--gray-11)",
+              padding: 0,
+            }}
+          >
+            Log out
+          </Button>
+        </Flex>
       </Flex>
-    </Flex>
+    </Box>
   );
 }

@@ -1,18 +1,22 @@
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, Text } from "@radix-ui/themes";
 import DropdownContextMenu from "../dropdownContextMenu/DropdownContextMenu";
-import type TreeItemData from "./TreeItemData";
 import type TreeConfig from "./TreeConfig";
 import styles from "./TreeItemCard.module.css";
+import type TreeItemData from "./TreeItemData";
 
 interface TreeItemCardProps<T extends TreeItemData> {
   item: T;
   parent: T;
 }
 
-export default function TreeItemCard<T extends TreeItemData>({ item, parent, ...config }: TreeItemCardProps<T> & TreeConfig<T>) {
-  const isSelectable = config.selection?.allowed(item)
-  const enableReorder = config.reorder && config.reorder.allowed(item, parent) && !item.pending;
+export default function TreeItemCard<T extends TreeItemData>({
+  item,
+  parent,
+  ...config
+}: TreeItemCardProps<T> & TreeConfig<T>) {
+  const isSelectable = config.selection?.allowed(item);
+  const enableReorder = config.reorder?.allowed(item, parent) && !item.pending;
 
   return (
     <Flex
@@ -22,10 +26,12 @@ export default function TreeItemCard<T extends TreeItemData>({ item, parent, ...
       justify="between"
       width="100%"
       className={`${styles.treeItemCard}  ${styles.noselect}`}
-      onClick={isSelectable ? () => config.selection && config.selection.handler(item) : undefined}
+      onClick={isSelectable ? () => config.selection?.handler(item) : undefined}
       draggable={enableReorder ? "true" : undefined}
       data-selectable={isSelectable ? "true" : undefined}
-      data-selected={config.selection?.selectedID === item.id ? "true" : undefined}
+      data-selected={
+        config.selection?.selectedID === item.id ? "true" : undefined
+      }
       data-pending={item.pending ? "true" : undefined}
     >
       <Flex align="center" gap="1">
@@ -50,7 +56,10 @@ export default function TreeItemCard<T extends TreeItemData>({ item, parent, ...
       {/* Context menu */}
       {config.contextMenu && config.contextMenu.menuItems.length > 0 && (
         <Box pr="3" pl="2">
-          <DropdownContextMenu items={config.contextMenu.menuItems} context={item} />
+          <DropdownContextMenu
+            items={config.contextMenu.menuItems}
+            context={item}
+          />
         </Box>
       )}
     </Flex>

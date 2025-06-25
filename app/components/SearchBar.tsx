@@ -1,14 +1,23 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { Flex, TextField } from "@radix-ui/themes";
 
 export default function SearchBar() {
   return (
-    <div className="flex items-center gap-2 border-b border-gray-300 rounded">
-      <MagnifyingGlassIcon />
-      <input
-        type="text"
+    <Flex px="0" py="0" style={{ backgroundColor: "var(--gray-3)" }}>
+      <TextField.Root
         placeholder="Search"
-        className="outline-none bg-transparent text-sm text-gray-700"
-      />
-    </div>
+        size="2"
+        variant="soft"
+        style={{
+          backgroundColor: "var(--gray-3)",
+          width: "100%",
+          boxShadow: "none",
+        }}
+      >
+        <TextField.Slot>
+          <MagnifyingGlassIcon height="16" width="16" />
+        </TextField.Slot>
+      </TextField.Root>
+    </Flex>
   );
 }
