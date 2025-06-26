@@ -1,5 +1,4 @@
 .multiSelectDropdown {
-  position: relative;
   width: 100%;
 }
 
@@ -9,14 +8,13 @@
 }
 
 .multiSelectDropdownTextFieldSlot {
-  max-width: 80%;
+  max-width: 85%;
   overflow-x: auto;
 }
 
 .popUpList {
   position: absolute;
-  top: 100%;
-  left: 0;
+  max-height: 400px;
   margin-top: 4px;
   z-index: 1000;
   overflow-y: auto;

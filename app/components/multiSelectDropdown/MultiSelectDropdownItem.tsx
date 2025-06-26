@@ -1,5 +1,5 @@
 import { Text, Checkbox, Flex } from "@radix-ui/themes";
-import type MultiSelectDropdownItemData from "./MultiSelectDropdownItemData";
+import type MultiSelectDropdownItemData from "../../common/ItemData";
 
 interface MultiSelectDropdownItemProps {
   item: MultiSelectDropdownItemData;
@@ -12,7 +12,7 @@ export default function MultiSelectDropdownItem({ item, isSelected, onSelect }: 
     <Text as="label" size="2" className="noselect">
       <Flex gap="2">
         <Checkbox defaultChecked={isSelected} onCheckedChange={(checked) => onSelect(!!checked, item.id)} />
-        {item.label}
+        {item.name}
       </Flex>
     </Text>
   );
