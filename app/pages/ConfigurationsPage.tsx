@@ -1,5 +1,5 @@
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
 import Tree from "~/components/tree/Tree";
 import { Flex } from "@radix-ui/themes";
@@ -27,20 +27,20 @@ export default function ConfigurationsPage() {
   const { duplicateItemData, setDuplicateItemData, resetDuplicateItemData, duplicateFilter, isDuplicatePending } = useDuplicateItemState();
   const { deleteItemData, setDeleteItemData, resetDeleteItemData, deleteFilter, isDeletePending } = useDeleteItemState();
 
-  const onAddLevel = (level: number, parent: FilterItem) => {
+  const onAddLevel = useCallback((level: number, parent: FilterItem) => {
     setAddItemData({ level, parentID: parent.id });
-  };
+  }, [setAddItemData]);
 
-  const onRename = (context?: FilterItem) => {
+  const onRename = useCallback((context?: FilterItem) => {
     if (!context) throw new Error("Context is required for renaming an item");
     const renameItem = findItem(context.id, filters!);
     if (!renameItem) {
       throw new Error(`Item with id ${context.id} not found`);
     }
     setRenameItemData({ id: context.id, name: renameItem.name });
-  };
+  }, [filters, renameItemData]);
 
-  const onDuplicate = (context?: FilterItem) => {
+  const onDuplicate = useCallback((context?: FilterItem) => {
     if (!context) throw new Error("Context is required for duplicating an item");
     const duplicateItemsTrail = findItemTrail(context.id, filters!);
     if (!duplicateItemsTrail || duplicateItemsTrail.length === 0) {
@@ -54,16 +54,16 @@ export default function ConfigurationsPage() {
       const parent = duplicateItemsTrail.at(-2)!;
       setDuplicateItemData({ id: item.id, name: item.name, parentID: parent.id });
     }
-  };
+  }, [filters, duplicateItemData]);
 
-  const onDelete = (context?: FilterItem) => {
+  const onDelete = useCallback((context?: FilterItem) => {
     if (!context) throw new Error("Context is required for deleting an item");
     setDeleteItemData({ id: context.id });
-  };
+  }, [deleteItemData]);
 
-  const onSelected = (item: FilterItem) => {
+  const onSelected = useCallback((item: FilterItem) => {
     setSelectedID(selectedID === item.id ? "" : item.id);
-  };
+  }, [selectedID]);
 
   const menuItems: MenuItem<FilterItem>[] = [
     { name: "Rename", action: onRename },

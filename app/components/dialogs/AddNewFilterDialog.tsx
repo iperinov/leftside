@@ -73,32 +73,27 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
 
   const title = `Add ${formatOrdinal(level + 1)} level`;
 
-  const handleClose = (open: boolean) => {
+  const handleClose = useCallback((open: boolean) => {
     setIsOpen(open);
     setName("");
     onCancel();
-  };
+  }, [open, name]);
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     onConfirm(name.trim());
     setIsOpen(false);
-  };
+  }, [name, open]);
 
-  const handleSportsSelectionChange = useCallback(
-    (selectedIDs: string[]) => {
+  const handleSportsSelectionChange = useCallback((selectedIDs: string[]) => {
+      console.log("Selected sports IDs:", selectedIDs);
       const leaguesIDs = leaguesForSports(selectedIDs).map((l) => l.id);
       setSelectedSportsID(selectedIDs);
       setSelectedLeaguesID(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)))
-    },[selectedSportIDs, selectedLeagueIDs]
-  );
+  },[selectedSportIDs, selectedLeagueIDs]);
 
-  const handleLeaguesSelectionChange = useCallback(
-    (selectedIDs: string[]) => {
+  const handleLeaguesSelectionChange = useCallback((selectedIDs: string[]) => {
       setSelectedLeaguesID(selectedIDs);
-    },[selectedLeagueIDs]
-  );
-
-  console.log("leagues:  ", selectedLeagueIDs);
+  },[selectedLeagueIDs]);
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>

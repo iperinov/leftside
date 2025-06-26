@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Box, Button, Flex, TextField } from "@radix-ui/themes";
 import { PlusIcon } from "@radix-ui/react-icons";
 import MultiSelectDropdownList from "./MultiSelectDropdownItemList";
@@ -36,20 +36,20 @@ export default function MultiSelectDropdown({
       : items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
   const preventShowingDropdownList = filteredItems.length === 0;
 
-  const onAddItemClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onAddItemClicked = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setOpen((prev) => !prev);
-  };
+  }, [open]) ;
 
-  const onSelect = (selected: boolean, id: string) => {
+  const onSelect = useCallback((selected: boolean, id: string) => {
     onSelectionChange?.(selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id));
-  };
+  }, [selectedIDs]);
 
   useEffect(() => {
     if (!open && filteredItems.length > 0 && searchValue.length > 0) {
       setOpen(filteredItems.length > 0);
     }
-  }, [searchValue]);
+  }, [open, searchValue]);
 
   return (
     <Box as="div" className="multiSelectDropdown" ref={triggerRef}>
