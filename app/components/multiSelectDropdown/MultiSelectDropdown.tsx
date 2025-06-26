@@ -8,9 +8,9 @@ import PillsSelections from "./PillsSelections";
 import "./MultiSelectDropdown.css";
 
 export interface ResultsSelectionProps {
-    selectedIDs: string[];
-    items: ItemData[];
-    onSelectionChange?: (selectedIDs: string[]) => void;
+  selectedIDs: string[];
+  items: ItemData[];
+  onSelectionChange?: (selectedIDs: string[]) => void;
 }
 interface MultiSelectDropdownProps {
   items?: ItemData[];
@@ -19,7 +19,12 @@ interface MultiSelectDropdownProps {
   ResultsPanel?: (props: ResultsSelectionProps) => React.ReactNode;
 }
 
-export default function MultiSelectDropdown({ items = [], selectedIDs = [], onSelectionChange, ResultsPanel = PillsSelections }: MultiSelectDropdownProps) {
+export default function MultiSelectDropdown({
+  items = [],
+  selectedIDs = [],
+  onSelectionChange,
+  ResultsPanel = PillsSelections,
+}: MultiSelectDropdownProps) {
   const triggerRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
@@ -28,8 +33,17 @@ export default function MultiSelectDropdown({ items = [], selectedIDs = [], onSe
   const filteredItems =
     searchValue.length === 0
       ? items
-      : items.filter((item) => !selectedIDs.includes(item.id) && item.name.toLowerCase().includes(searchValue.toLowerCase()));
+      : items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
   const preventShowingDropdownList = filteredItems.length === 0;
+
+  const onAddItemClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setOpen((prev) => !prev);
+  };
+
+  const onSelect = (selected: boolean, id: string) => {
+    onSelectionChange?.(selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id));
+  };
 
   useEffect(() => {
     if (!open && filteredItems.length > 0 && searchValue.length > 0) {
@@ -37,21 +51,23 @@ export default function MultiSelectDropdown({ items = [], selectedIDs = [], onSe
     }
   }, [searchValue]);
 
-  const onButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setOpen((prev) => !prev);
-  };
+  console.log("MultiSelectDropdown", selectedIDs);
 
   return (
     <Box as="div" className="multiSelectDropdown" ref={triggerRef}>
       <Flex gap="2" align="center" justify="between">
         {/* Selected results */}
-        <TextField.Root disabled={items.length === 0} value={searchValue} onChange={(e) => setSearchValue(e.target.value)} className="multiSelectDropdownTextField">
+        <TextField.Root
+          disabled={items.length === 0}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className="multiSelectDropdownTextField"
+        >
           <TextField.Slot className="multiSelectDropdownTextFieldSlot">
             <ResultsPanel selectedIDs={selectedIDs} items={items} onSelectionChange={onSelectionChange} />
           </TextField.Slot>
           <TextField.Slot>
-            <Button disabled={preventShowingDropdownList} variant="ghost" onClick={onButtonClick}>
+            <Button disabled={preventShowingDropdownList} variant="ghost" onClick={onAddItemClicked} className="nohover">
               <PlusIcon />
             </Button>
           </TextField.Slot>
@@ -62,10 +78,13 @@ export default function MultiSelectDropdown({ items = [], selectedIDs = [], onSe
       {!preventShowingDropdownList && (
         <MultiSelectDropdownList
           open={open}
-          onOpenChange={(opened) => {setOpen(opened); setSearchValue("");}}
+          onOpenChange={(opened) => {
+            setOpen(opened);
+            setSearchValue("");
+          }}
           items={filteredItems}
           selectedIDs={selectedIDs}
-          onSelect={(selected, id) => onSelectionChange?.(selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id))}
+          onSelect={onSelect}
           showOnPosition={position}
         />
       )}

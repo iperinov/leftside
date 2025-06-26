@@ -92,7 +92,7 @@ export default function ConfigurationsPage() {
                 handler: (item, expand) => setExpandedItems((prev) => (expand ? [...prev, item.id] : prev.filter((id) => id !== item.id))),
               }}
               addToParent={{
-                allowed: (level, parentID) => level < 2,
+                allowed: (level, parentID) => true,
                 handler: onAddLevel,
                 toString: (level, parentID) => `Add ${formatOrdinal(level + 1)} level`,
                 inProgressID: addInProgressForParentID,

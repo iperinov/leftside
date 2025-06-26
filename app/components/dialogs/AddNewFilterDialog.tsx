@@ -1,12 +1,9 @@
 import { Button, Dialog, Text, Flex, TextField, Select } from "@radix-ui/themes";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ItemType } from "~/common/itemTypes";
 import formatOrdinal from "~/common/formatOrdinal";
 import useSportCatalog from "~/hooks/sportCatalog/useSportCatalog";
-import { type Sport, type League } from "~/common/sport";
-import styles from "./AddNewFilterDialog.module.css";
 import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
-import { Item } from "@radix-ui/themes/components/checkbox-group.primitive";
 
 interface AddNewFilterDialogProps {
   open?: boolean;
@@ -42,6 +39,21 @@ function ItemTypeSelect({ value, onChange }: ItemTypeSelectProps) {
   );
 }
 
+interface FormRowProps {
+  label: string;
+}
+
+function FormRow({ label, children }: React.PropsWithChildren<FormRowProps>) {
+  return (
+    <Flex direction="column" gap="1">
+      <Text as="div" size="2" mb="1">
+        {label}
+      </Text>
+      {children}
+    </Flex>
+  );
+}
+
 export default function AddNewFilterDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewFilterDialogProps) {
   const { error, data, isLoading: areSportsLoading } = useSportCatalog();
   const sports = data || [];
@@ -51,7 +63,13 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
   const [selectedSportIDs, setSelectedSportsID] = useState<string[]>([]);
   const [selectedLeagueIDs, setSelectedLeaguesID] = useState<string[]>([]);
 
-  const title = `Add ${formatOrdinal(level)} level`;
+  const title = `Add ${formatOrdinal(level + 1)} level`;
+
+  const handleClose = (open: boolean) => {
+    setIsOpen(open);
+    setName("");
+    onCancel();
+  };
 
   const handleSave = () => {
     onConfirm(name.trim());
@@ -68,6 +86,7 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
 
   const onSportsChange = (selectedIDs: string[]) => {
     setSelectedSportsID(selectedIDs);
+    console.log("Selected sports:", selectedIDs);
   };
 
   const onLeaguesChange = (selectedIDs: string[]) => {
@@ -75,39 +94,27 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
   };
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog.Root open={isOpen} onOpenChange={handleClose}>
       <Dialog.Content style={{ maxWidth: 400 }} size="3">
         {/* Title and description */}
         <Dialog.Title>{title}</Dialog.Title>
 
         <Flex direction="column" gap="2">
-          <Flex direction="column" gap="1">
-            <Text as="div" size="2">
-              Title
-            </Text>
+          <FormRow label="Title">
             <TextField.Root value={name} placeholder="Enter name" mt="3" onChange={(e) => setName(e.target.value)} />
-          </Flex>
-          <Flex direction="column" gap="1">
-            <Text as="div" size="2" mb="1">
-              Type
-            </Text>
+          </FormRow>
+          <FormRow label="Type">
             <ItemTypeSelect value={type} onChange={(type) => setType(type)} />
-          </Flex>
+          </FormRow>
           {(type === ItemType.All || type === ItemType.LiveAndUpcoming) && (
             <>
-              <Flex direction="column" gap="1">
-                <Text as="div" size="2" mb="1">
-                  Select sport
-                </Text>
+              <FormRow label="Select sport">
                 <MultiSelectDropdown items={sports} selectedIDs={selectedSportIDs} onSelectionChange={onSportsChange} />
-              </Flex>
+              </FormRow>
 
-              <Flex direction="column" gap="1">
-                <Text as="div" size="2" mb="1">
-                  Select league
-                </Text>
+              <FormRow label="Select league">
                 <MultiSelectDropdown items={leaguesForSelectedSports()} selectedIDs={selectedLeagueIDs} onSelectionChange={onLeaguesChange} />
-              </Flex>
+              </FormRow>
             </>
           )}
         </Flex>
@@ -116,8 +123,7 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
         <Flex justify="end" gap="3" mt="4">
           <Dialog.Close>
             <Button onClick={onCancel} variant="soft">
-              {" "}
-              Cancel{" "}
+              Cancel
             </Button>
           </Dialog.Close>
           <Button onClick={handleSave} disabled={name === "" || !validName(name)}>

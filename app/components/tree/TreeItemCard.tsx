@@ -37,11 +37,9 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       <Flex align="center" gap="1">
         {/* Reorder Button */}
         <Button
-          className={styles.reorderButton}
+          className="nohover"
           variant="ghost"
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
+          onClick={(event) => {event.stopPropagation();}}
           data-hidden={enableReorder ? undefined : "true"}
         >
           <CaretSortIcon />

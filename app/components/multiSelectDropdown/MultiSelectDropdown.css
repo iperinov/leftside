@@ -22,4 +22,20 @@
   color: var(--accent-12);
   box-shadow: 0 2px 8px var(--gray-8);
   border-radius: 0.4rem;
+  animation: slideUpAndFade 150ms ease-in-out;
 }
+
+
+
+@keyframes slideUpAndFade {
+	from {
+		opacity: 0;
+		transform: translateY(2px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+
