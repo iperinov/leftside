@@ -51,8 +51,6 @@ export default function MultiSelectDropdown({
     }
   }, [searchValue]);
 
-  console.log("MultiSelectDropdown", selectedIDs);
-
   return (
     <Box as="div" className="multiSelectDropdown" ref={triggerRef}>
       <Flex gap="2" align="center" justify="between">

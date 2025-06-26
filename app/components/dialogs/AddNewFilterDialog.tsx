@@ -63,6 +63,14 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
   const [selectedSportIDs, setSelectedSportsID] = useState<string[]>([]);
   const [selectedLeagueIDs, setSelectedLeaguesID] = useState<string[]>([]);
 
+  const leaguesForSports = (sportIDs: string[]) => {
+    if (!sports) throw new Error("Sports data is not available");
+    return sportIDs.flatMap((id) => {
+      const sport = sports.find((s) => s.id === id);
+      return sport ? sport.leagues : [];
+    });
+  };
+
   const title = `Add ${formatOrdinal(level + 1)} level`;
 
   const handleClose = (open: boolean) => {
@@ -76,22 +84,21 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
     setIsOpen(false);
   };
 
-  const leaguesForSelectedSports = () => {
-    if (!sports) throw new Error("Sports data is not available");
-    return selectedSportIDs.flatMap((id) => {
-      const sport = sports.find((s) => s.id === id);
-      return sport ? sport.leagues : [];
-    });
-  };
+  const handleSportsSelectionChange = useCallback(
+    (selectedIDs: string[]) => {
+      const leaguesIDs = leaguesForSports(selectedIDs).map((l) => l.id);
+      setSelectedSportsID(selectedIDs);
+      setSelectedLeaguesID(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)))
+    },[selectedSportIDs, selectedLeagueIDs]
+  );
 
-  const onSportsChange = (selectedIDs: string[]) => {
-    setSelectedSportsID(selectedIDs);
-    console.log("Selected sports:", selectedIDs);
-  };
+  const handleLeaguesSelectionChange = useCallback(
+    (selectedIDs: string[]) => {
+      setSelectedLeaguesID(selectedIDs);
+    },[selectedLeagueIDs]
+  );
 
-  const onLeaguesChange = (selectedIDs: string[]) => {
-    setSelectedLeaguesID(selectedIDs);
-  };
+  console.log("leagues:  ", selectedLeagueIDs);
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>
@@ -109,11 +116,11 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
           {(type === ItemType.All || type === ItemType.LiveAndUpcoming) && (
             <>
               <FormRow label="Select sport">
-                <MultiSelectDropdown items={sports} selectedIDs={selectedSportIDs} onSelectionChange={onSportsChange} />
+                <MultiSelectDropdown items={sports} selectedIDs={selectedSportIDs} onSelectionChange={handleSportsSelectionChange} />
               </FormRow>
 
               <FormRow label="Select league">
-                <MultiSelectDropdown items={leaguesForSelectedSports()} selectedIDs={selectedLeagueIDs} onSelectionChange={onLeaguesChange} />
+                <MultiSelectDropdown items={leaguesForSports(selectedSportIDs)} selectedIDs={selectedLeagueIDs} onSelectionChange={handleLeaguesSelectionChange} />
               </FormRow>
             </>
           )}
