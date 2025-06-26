@@ -1,17 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { duplicateSportFilter } from "~/api/configs/sportFiltersApi";
+import { duplicateSportFilter, type FilterItem } from "~/api/configs/sportFiltersApi";
 import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimisticUpdates";
 import { findItem } from "~/components/tree/common/findItem";
 import iterateItem from "~/components/tree/common/iterateItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/TreeItemData";
 
 function useDuplicateFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
   const optimisticDuplicateSportFilter = (
-    oldSportFilters: TreeItemData[],
+    oldSportFilters: FilterItem[],
     { id, name, parentID }: { id: string; name: string; parentID?: string }
   ) => {
     const newSportFilters = structuredClone(oldSportFilters);
@@ -30,7 +29,7 @@ function useDuplicateFilter(onComplete?: () => void) {
   return useMutation({
     mutationFn: duplicateSportFilter,
     onMutate: ({ id, name, parentID }) => {
-      const previousFilters = queryClient.getQueryData<TreeItemData[]>(sportFiltersQueryKey);
+      const previousFilters = queryClient.getQueryData<FilterItem[]>(sportFiltersQueryKey);
       if (!previousFilters) throw new Error("No existing filters to duplicate");
 
       const clone = structuredClone(previousFilters);

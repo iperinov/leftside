@@ -4,7 +4,9 @@ import { ItemType } from "~/common/itemTypes";
 import formatOrdinal from "~/common/formatOrdinal";
 import useSportCatalog from "~/hooks/sportCatalog/useSportCatalog";
 import { type Sport, type League } from "~/common/sport";
-
+import styles from "./AddNewFilterDialog.module.css";
+import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
+import { Item } from "@radix-ui/themes/components/checkbox-group.primitive";
 
 interface AddNewFilterDialogProps {
   open?: boolean;
@@ -37,64 +39,17 @@ function ItemTypeSelect({ value, onChange }: ItemTypeSelectProps) {
         </Select.Group>
       </Select.Content>
     </Select.Root>
-  )
+  );
 }
 
-interface SportsSelectProps {
-  value?: string;
-  onChange?: (value: string) => void;
-  sports?: Sport[];
-}
-
-function SportsSelect({ value, onChange, sports }: SportsSelectProps) {
-  return (
-    <Select.Root value={value} onValueChange={onChange}>
-      <Select.Trigger />
-      <Select.Content>
-        <Select.Group>
-          {sports?.map((sport) => (
-            <Select.Item value={sport.id} key={sport.id}>{sport.name}</Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
-  )
-}
-
-
-interface SportsSelectProps {
-  value?: string;
-  onChange?: (value: string) => void;
-  leagues?: League[];
-}
-function LeaguesSelect({ value, onChange, leagues }: SportsSelectProps) {
-  return (
-    <Select.Root value={value} onValueChange={onChange}>
-      <Select.Trigger />
-      <Select.Content>
-        <Select.Group>
-          {leagues?.map((league) => (
-            <Select.Item value={league.id} key={league.id}>{league.name}</Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
-  )
-}
-
-export default function AddNewFilterDialog({ 
-  open = true, 
-  level,  
-  onConfirm,
-  onCancel = () => {}, 
-  validName = () => true
-}: AddNewFilterDialogProps) {
-  const {error, data: sports, isLoading: areSportsLoading} = useSportCatalog()
+export default function AddNewFilterDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewFilterDialogProps) {
+  const { error, data, isLoading: areSportsLoading } = useSportCatalog();
+  const sports = data || [];
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState("");
-  const [type, setType] = useState<ItemType>();
-  const [sportID, setSportID] = useState<string>();
-  const [leagueID, setLeagueID] = useState<string>();
+  const [type, setType] = useState<ItemType>(ItemType.All);
+  const [selectedSportIDs, setSelectedSportsID] = useState<string[]>([]);
+  const [selectedLeagueIDs, setSelectedLeaguesID] = useState<string[]>([]);
 
   const title = `Add ${formatOrdinal(level)} level`;
 
@@ -103,9 +58,20 @@ export default function AddNewFilterDialog({
     setIsOpen(false);
   };
 
-  const leaguesForSport = () => {
-    const sport = sports?.find(s => s.id === sportID);
-    return sport ? sport.leagues : [];
+  const leaguesForSelectedSports = () => {
+    if (!sports) throw new Error("Sports data is not available");
+    return selectedSportIDs.flatMap((id) => {
+      const sport = sports.find((s) => s.id === id);
+      return sport ? sport.leagues : [];
+    });
+  };
+
+  const onSportsChange = (selectedIDs: string[]) => {
+    setSelectedSportsID(selectedIDs);
+  };
+
+  const onLeaguesChange = (selectedIDs: string[]) => {
+    setSelectedLeaguesID(selectedIDs);
   };
 
   return (
@@ -113,37 +79,50 @@ export default function AddNewFilterDialog({
       <Dialog.Content style={{ maxWidth: 400 }} size="3">
         {/* Title and description */}
         <Dialog.Title>{title}</Dialog.Title>
-        
-        <Flex direction="column" gap="3">
-          <label>
-            <Text as="div" size="2" mb="1" weight="bold"> Title </Text>
+
+        <Flex direction="column" gap="2">
+          <Flex direction="column" gap="1">
+            <Text as="div" size="2">
+              Title
+            </Text>
             <TextField.Root value={name} placeholder="Enter name" mt="3" onChange={(e) => setName(e.target.value)} />
-          </label>
-          <label>
-            <Text as="div" size="2" mb="1" weight="bold"> Type </Text>
+          </Flex>
+          <Flex direction="column" gap="1">
+            <Text as="div" size="2" mb="1">
+              Type
+            </Text>
             <ItemTypeSelect value={type} onChange={(type) => setType(type)} />
-          </label>
-          {(type === ItemType.All || type === ItemType.LiveAndUpcoming) && (<>
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold"> Select sport </Text>
-              <SportsSelect value={sportID} onChange={(sport) => setSportID(sport)} sports={sports}/>
-            </label>
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold"> Select league </Text>
-              <LeaguesSelect value={leagueID} onChange={(leagueID) => setLeagueID(leagueID)} leagues={leaguesForSport()}/>
-            </label>
-          </>)}
+          </Flex>
+          {(type === ItemType.All || type === ItemType.LiveAndUpcoming) && (
+            <>
+              <Flex direction="column" gap="1">
+                <Text as="div" size="2" mb="1">
+                  Select sport
+                </Text>
+                <MultiSelectDropdown items={sports} selectedIDs={selectedSportIDs} onSelectionChange={onSportsChange} />
+              </Flex>
+
+              {selectedSportIDs.length > 0 && (
+                <Flex direction="column" gap="1">
+                  <Text as="div" size="2" mb="1">
+                    Select league
+                  </Text>
+                  <MultiSelectDropdown items={leaguesForSelectedSports()} selectedIDs={selectedLeagueIDs} onSelectionChange={onLeaguesChange} />
+                </Flex>
+              )}
+            </>
+          )}
         </Flex>
 
         {/* Buttons */}
         <Flex justify="end" gap="3" mt="4">
           <Dialog.Close>
-            <Button onClick={onCancel} variant="soft"> Cancel </Button>
+            <Button onClick={onCancel} variant="soft">
+              {" "}
+              Cancel{" "}
+            </Button>
           </Dialog.Close>
-          <Button 
-            onClick={handleSave} 
-            disabled={name === "" || !validName(name)
-          }>
+          <Button onClick={handleSave} disabled={name === "" || !validName(name)}>
             Save
           </Button>
         </Flex>

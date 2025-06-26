@@ -1,14 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { deleteSportFilter } from "~/api/configs/sportFiltersApi";
+import { deleteSportFilter, type FilterItem } from "~/api/configs/sportFiltersApi";
 import { findItemSiblings } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/TreeItemData";
 
 function useDeleteFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
-  const optimisticDeleteSportFilter = (oldSportFilters: TreeItemData[], { id }: { id: string }) => {
+  const optimisticDeleteSportFilter = (oldSportFilters: FilterItem[], { id }: { id: string }) => {
     let newSportFilters = structuredClone(oldSportFilters);
     const siblings = findItemSiblings(id, newSportFilters);
     if (!siblings) throw new Error(`Item with ID ${id} not found`);
@@ -21,7 +20,7 @@ function useDeleteFilter(onComplete?: () => void) {
   return useMutation({
     mutationFn: deleteSportFilter,
     onMutate: ({ id }: { id: string }) => {
-      const previousFilters = queryClient.getQueryData<TreeItemData[]>(sportFiltersQueryKey);
+      const previousFilters = queryClient.getQueryData<FilterItem[]>(sportFiltersQueryKey);
       if (!previousFilters) throw new Error("No existing filters to delete");
       const newSportFilters = optimisticDeleteSportFilter(previousFilters, { id });
       queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);

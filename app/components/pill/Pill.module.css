@@ -1,0 +1,16 @@
+
+.closeButton {
+  /*background-color: inherit;*/
+  border: none;
+  color: var(--accent-11);
+  cursor: pointer;
+}
+
+.pill {
+  background-color: var(--accent-3);
+  border: 1px solid var(--accent-11);
+  color: var(--accent-11); 
+  border-radius: 0.3rem;
+  user-select: none;
+  white-space: nowrap;
+}

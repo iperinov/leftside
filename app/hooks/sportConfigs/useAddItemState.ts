@@ -1,15 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { addSportFilter } from "~/api/configs/sportFiltersApi";
+import { addSportFilter, type FilterItem } from "~/api/configs/sportFiltersApi";
 import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimisticUpdates";
 import { findItem } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/TreeItemData";
 
 function useAddFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
-  const optimisticAddSportFilter = (oldSportFilters: TreeItemData[], { name, parentID }: { name: string; parentID?: string }) => {
+  const optimisticAddSportFilter = (oldSportFilters: FilterItem[], { name, parentID }: { name: string; parentID?: string }) => {
     let newSportFilters = structuredClone(oldSportFilters);
     const newItemID = `child-of-${parentID || "root"}`;
     const newItem = { name: name, id: newItemID, pending: true };
@@ -28,7 +27,7 @@ function useAddFilter(onComplete?: () => void) {
   return useMutation({
     mutationFn: addSportFilter,
     onMutate: ({ name, parentID }: { name: string; parentID?: string }) => {
-      const previousFilters = queryClient.getQueryData<TreeItemData[]>(sportFiltersQueryKey);
+      const previousFilters = queryClient.getQueryData<FilterItem[]>(sportFiltersQueryKey);
       if (!previousFilters && parentID) throw new Error("No existing filters to add a new filter");
       const { newSportFilters, id } = optimisticAddSportFilter(previousFilters ?? [], { name, parentID });
       queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);

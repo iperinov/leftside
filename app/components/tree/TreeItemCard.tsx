@@ -25,7 +25,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       px="1"
       justify="between"
       width="100%"
-      className={`${styles.treeItemCard}  ${styles.noselect}`}
+      className={styles.treeItemCard}
       onClick={isSelectable ? () => config.selection?.handler(item) : undefined}
       draggable={enableReorder ? "true" : undefined}
       data-selectable={isSelectable ? "true" : undefined}

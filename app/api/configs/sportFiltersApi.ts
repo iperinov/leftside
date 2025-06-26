@@ -135,9 +135,11 @@ let sportFiltersJSON = `[
     }
   ]`;
 
-export async function getSportFilters(): Promise<TreeItemData[]> {
+export interface FilterItem extends TreeItemData<FilterItem> {}
+
+export async function getSportFilters(): Promise<FilterItem[]> {
   console.log("API call: Fetching list of sport filters");
-  await new Promise((resolve) => (setTimeout(resolve, 1000)))
+  await new Promise((resolve) => (setTimeout(resolve, 10)))
   const filters = JSON.parse(sportFiltersJSON);
   console.log("API response: ", filters);
   return filters;
@@ -204,8 +206,8 @@ export async function duplicateSportFilter({id, name, parentID}: DuplicateSportF
   await new Promise((resolve) => (setTimeout(resolve, 5000)))
 
   let sportFilters = JSON.parse(sportFiltersJSON);
-  const siblings = parentID ? findItem(parentID, sportFilters)?.children || sportFilters : sportFilters;
-  const item = findItem(id, sportFilters);
+  const siblings = parentID ? findItem<FilterItem>(parentID, sportFilters)?.children || sportFilters : sportFilters;
+  const item = findItem<FilterItem>(id, sportFilters);
 
   if (!item) {
     console.log(`Item with ID ${id} not found`);

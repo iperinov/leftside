@@ -1,10 +1,8 @@
-export interface League {
-  id: string;
-  name: string;
+import type ItemData from "./ItemData";
+
+export interface League extends ItemData {
 }
 
-export interface Sport {
-  id: string;
-  name: string;
+export interface Sport extends ItemData {
   leagues: League[];
 }

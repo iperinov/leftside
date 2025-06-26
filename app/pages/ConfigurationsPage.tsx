@@ -14,7 +14,7 @@ import useSports from "~/hooks/useSports";
 import AddNewFilterDialog from "~/components/dialogs/AddNewFilterDialog";
 import makeRoot from "~/components/tree/common/makeRoot";
 import formatOrdinal from "~/common/formatOrdinal";
-import type TreeItemData from "~/components/tree/TreeItemData";
+import type { FilterItem } from "~/api/configs/sportFiltersApi";
 
 export default function ConfigurationsPage() {
   const { isLoading, error, filters, catalog } = useSports();
@@ -27,11 +27,11 @@ export default function ConfigurationsPage() {
   const { duplicateItemData, setDuplicateItemData, resetDuplicateItemData, duplicateFilter, isDuplicatePending } = useDuplicateItemState();
   const { deleteItemData, setDeleteItemData, resetDeleteItemData, deleteFilter, isDeletePending } = useDeleteItemState();
 
-  const onAddLevel = (level: number, parent: TreeItemData) => {
+  const onAddLevel = (level: number, parent: FilterItem) => {
     setAddItemData({ level, parentID: parent.id });
   };
 
-  const onRename = (context?: TreeItemData) => {
+  const onRename = (context?: FilterItem) => {
     if (!context) throw new Error("Context is required for renaming an item");
     const renameItem = findItem(context.id, filters!);
     if (!renameItem) {
@@ -40,7 +40,7 @@ export default function ConfigurationsPage() {
     setRenameItemData({ id: context.id, name: renameItem.name });
   };
 
-  const onDuplicate = (context?: TreeItemData) => {
+  const onDuplicate = (context?: FilterItem) => {
     if (!context) throw new Error("Context is required for duplicating an item");
     const duplicateItemsTrail = findItemTrail(context.id, filters!);
     if (!duplicateItemsTrail || duplicateItemsTrail.length === 0) {
@@ -56,16 +56,16 @@ export default function ConfigurationsPage() {
     }
   };
 
-  const onDelete = (context?: TreeItemData) => {
+  const onDelete = (context?: FilterItem) => {
     if (!context) throw new Error("Context is required for deleting an item");
     setDeleteItemData({ id: context.id });
   };
 
-  const onSelected = (item: TreeItemData) => {
+  const onSelected = (item: FilterItem) => {
     setSelectedID(selectedID === item.id ? "" : item.id);
   };
 
-  const menuItems: MenuItem<TreeItemData>[] = [
+  const menuItems: MenuItem<FilterItem>[] = [
     { name: "Rename", action: onRename },
     { name: "Delete", action: onDelete },
     { name: "Duplicate", action: onDuplicate },
@@ -74,6 +74,7 @@ export default function ConfigurationsPage() {
   return (
     <>
       <Flex p="3" className={styles.configurationPage}>
+        {/* Sidebar with Tree */}
         <aside className={styles.sideBar}>
           <LoadDataDecorator error={error} isLoading={isLoading}>
             <Tree
@@ -129,7 +130,7 @@ export default function ConfigurationsPage() {
           validName={(name) =>
             !addItemData.parentID
               ? filters!.find((item) => item.name === name) === undefined
-              : findItem(addItemData.parentID, filters!)?.children?.find((item) => item.name === name) === undefined
+              : findItem<FilterItem>(addItemData.parentID, filters!)?.children?.find((item) => item.name === name) === undefined
           }
         />
       )}

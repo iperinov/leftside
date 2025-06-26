@@ -1,15 +1,14 @@
 import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { renameSportFilter } from "~/api/configs/sportFiltersApi";
+import { renameSportFilter, type FilterItem } from "~/api/configs/sportFiltersApi";
 import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimisticUpdates";
 import { findItem } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
-import type TreeItemData from "~/components/tree/TreeItemData";
 
 function useRenameFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
-  const optimisticRenameSportFilter = (oldSportFilters: TreeItemData[], { id, name }: { id: string; name: string }) => {
+  const optimisticRenameSportFilter = (oldSportFilters: FilterItem[], { id, name }: { id: string; name: string }) => {
     let newSportFilters = structuredClone(oldSportFilters);
     const item = findItem(id, newSportFilters);
     if (!item) {
@@ -23,7 +22,7 @@ function useRenameFilter(onComplete?: () => void) {
   return useMutation({
     mutationFn: renameSportFilter,
     onMutate: ({ id, name }: { id: string; name: string }) => {
-      const previousFilters = queryClient.getQueryData<TreeItemData[]>(sportFiltersQueryKey);
+      const previousFilters = queryClient.getQueryData<FilterItem[]>(sportFiltersQueryKey);
       if (previousFilters) {
         const newSportFilters = optimisticRenameSportFilter(previousFilters, { id, name });
         queryClient.setQueryData(sportFiltersQueryKey, newSportFilters);
