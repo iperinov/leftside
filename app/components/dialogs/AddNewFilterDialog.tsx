@@ -102,14 +102,12 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
                 <MultiSelectDropdown items={sports} selectedIDs={selectedSportIDs} onSelectionChange={onSportsChange} />
               </Flex>
 
-              {selectedSportIDs.length > 0 && (
-                <Flex direction="column" gap="1">
-                  <Text as="div" size="2" mb="1">
-                    Select league
-                  </Text>
-                  <MultiSelectDropdown items={leaguesForSelectedSports()} selectedIDs={selectedLeagueIDs} onSelectionChange={onLeaguesChange} />
-                </Flex>
-              )}
+              <Flex direction="column" gap="1">
+                <Text as="div" size="2" mb="1">
+                  Select league
+                </Text>
+                <MultiSelectDropdown items={leaguesForSelectedSports()} selectedIDs={selectedLeagueIDs} onSelectionChange={onLeaguesChange} />
+              </Flex>
             </>
           )}
         </Flex>

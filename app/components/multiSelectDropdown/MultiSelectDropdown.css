@@ -13,7 +13,7 @@
 }
 
 .popUpList {
-  position: absolute;
+  position: fixed;
   max-height: 400px;
   margin-top: 4px;
   z-index: 1000;

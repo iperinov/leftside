@@ -1,4 +1,4 @@
-import type ItemData from "./ItemData";
+import type ItemData from "./IdAndLabelData";
 
 export interface League extends ItemData {
 }

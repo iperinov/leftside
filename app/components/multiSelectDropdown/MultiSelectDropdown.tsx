@@ -1,44 +1,35 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Pill } from "../pill/Pill";
+import { useEffect, useRef, useState } from "react";
 import { Box, Button, Flex, TextField } from "@radix-ui/themes";
 import { PlusIcon } from "@radix-ui/react-icons";
-import "./MultiSelectDropdown.css";
 import MultiSelectDropdownList from "./MultiSelectDropdownItemList";
-import type MultiSelectDropdownItemData from "../../common/ItemData";
-import usePositionUnderElement from "~/hooks/common/usePositionUnderElelement";
+import usePositionToElement from "~/hooks/common/usePositionUnderElelement";
+import type ItemData from "../../common/IdAndLabelData";
+import PillsSelections from "./PillsSelections";
+import "./MultiSelectDropdown.css";
 
+export interface ResultsSelectionProps {
+    selectedIDs: string[];
+    items: ItemData[];
+    onSelectionChange?: (selectedIDs: string[]) => void;
+}
 interface MultiSelectDropdownProps {
-  items?: MultiSelectDropdownItemData[];
+  items?: ItemData[];
   selectedIDs?: string[];
   onSelectionChange?: (selectedIDs: string[]) => void;
+  ResultsPanel?: (props: ResultsSelectionProps) => React.ReactNode;
 }
 
-interface Position {
-    top: number;
-    left: number;
-}
-
-export default function MultiSelectDropdown({ items = [], selectedIDs = [], onSelectionChange }: MultiSelectDropdownProps) {
+export default function MultiSelectDropdown({ items = [], selectedIDs = [], onSelectionChange, ResultsPanel = PillsSelections }: MultiSelectDropdownProps) {
   const triggerRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState<Position>();
+  const position = usePositionToElement(triggerRef, [open]);
+
   const filteredItems =
     searchValue.length === 0
       ? items
       : items.filter((item) => !selectedIDs.includes(item.id) && item.name.toLowerCase().includes(searchValue.toLowerCase()));
   const preventShowingDropdownList = filteredItems.length === 0;
-
-  useLayoutEffect(() => {
-    const rect = triggerRef.current?.getBoundingClientRect();
-    if (rect) {
-      console.log("useEffect called for ref ", { top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
-      setPosition({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
-      });
-    }
-  }, [open]);
 
   useEffect(() => {
     if (!open && filteredItems.length > 0 && searchValue.length > 0) {
@@ -55,15 +46,9 @@ export default function MultiSelectDropdown({ items = [], selectedIDs = [], onSe
     <Box as="div" className="multiSelectDropdown" ref={triggerRef}>
       <Flex gap="2" align="center" justify="between">
         {/* Selected results */}
-        <TextField.Root value={searchValue} onChange={(e) => setSearchValue(e.target.value)} className="multiSelectDropdownTextField">
+        <TextField.Root disabled={items.length === 0} value={searchValue} onChange={(e) => setSearchValue(e.target.value)} className="multiSelectDropdownTextField">
           <TextField.Slot className="multiSelectDropdownTextFieldSlot">
-            <Flex gap="2">
-              {selectedIDs.map((id) => {
-                const item = items.find((s) => s.id === id);
-                if (!item) return null;
-                return <Pill key={id} text={item.name || ""} onClose={() => onSelectionChange?.(selectedIDs.filter((s) => s !== id))} />;
-              })}
-            </Flex>
+            <ResultsPanel selectedIDs={selectedIDs} items={items} onSelectionChange={onSelectionChange} />
           </TextField.Slot>
           <TextField.Slot>
             <Button disabled={preventShowingDropdownList} variant="ghost" onClick={onButtonClick}>
@@ -77,15 +62,11 @@ export default function MultiSelectDropdown({ items = [], selectedIDs = [], onSe
       {!preventShowingDropdownList && (
         <MultiSelectDropdownList
           open={open}
-          onOpenChange={(opened) => {
-            setOpen(opened);
-            setSearchValue("");
-            console.log("open changed", opened, searchValue);
-          }}
+          onOpenChange={(opened) => {setOpen(opened); setSearchValue("");}}
           items={filteredItems}
           selectedIDs={selectedIDs}
           onSelect={(selected, id) => onSelectionChange?.(selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id))}
-          position={position}
+          showOnPosition={position}
         />
       )}
     </Box>

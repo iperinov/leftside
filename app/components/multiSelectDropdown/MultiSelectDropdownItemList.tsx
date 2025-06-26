@@ -2,7 +2,7 @@ import { useControlledComponentClickOutside } from "~/hooks/common/useControlled
 import type { ControlledComponentProps } from "../shared/ControlledComponent";
 import { useLayoutEffect, useRef, useState } from "react";
 import { Flex } from "@radix-ui/themes";
-import type MultiSelectDropdownItemData from "../../common/ItemData";
+import type MultiSelectDropdownItemData from "../../common/IdAndLabelData";
 import MultiSelectDropdownItem from "./MultiSelectDropdownItem";
 import { Portal } from "radix-ui";
 import usePositionUnderElement from "~/hooks/common/usePositionUnderElelement";
@@ -11,7 +11,7 @@ interface MultiSelectDropdownItemListProps {
   items: MultiSelectDropdownItemData[];
   selectedIDs: string[];
   onSelect: (selected: boolean, id: string) => void;
-  position?: { top: number; left: number };
+  showOnPosition?: { top: number; left: number };
 }
 
 export default function MultiSelectDropdownItemList({
@@ -20,14 +20,14 @@ export default function MultiSelectDropdownItemList({
   items,
   selectedIDs,
   onSelect,
-  position,
+  showOnPosition,
 }: MultiSelectDropdownItemListProps & ControlledComponentProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   useControlledComponentClickOutside(panelRef, open, onOpenChange);
-  if (panelRef && position) {
-    panelRef.current?.style.setProperty("position", "fixed");
-    panelRef.current?.style.setProperty("top", `${position.top}px`);
-    panelRef.current?.style.setProperty("left", `${position.left}px`);
+
+  if (panelRef && showOnPosition && panelRef.current) {
+    panelRef.current.style.setProperty("top", `${showOnPosition.top}px`);
+    panelRef.current.style.setProperty("left", `${showOnPosition.left}px`);
   }
 
   return (

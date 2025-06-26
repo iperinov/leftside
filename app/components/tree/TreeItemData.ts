@@ -1,4 +1,4 @@
-import type ItemData from "~/common/ItemData";
+import type ItemData from "~/common/IdAndLabelData";
 
 interface TreeItemInternalStateFlags {
   expanded?: boolean;

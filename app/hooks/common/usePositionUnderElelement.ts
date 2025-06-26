@@ -1,21 +1,18 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
+import type Position from "~/common/Position";
 
-interface UsePositionUnderElementProps {
-  ref: React.RefObject<HTMLDivElement | null>;
-  setPosition: (position: { top: number; left: number }) => void;
-  open?: boolean;
-}
+export default function usePositionToElement(elementRef: React.RefObject<HTMLDivElement | null>, deps?: React.DependencyList) {
+   const [position, setPosition] = useState<Position>();
 
-export default function usePositionUnderElement({ ref, setPosition }: UsePositionUnderElementProps) {
-  console.log("layout effect ", ref.current);
-  useLayoutEffect(() => {
-    console.log("layout effect called for ref ", ref.current?.getBoundingClientRect());
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setPosition({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
-      });
-    }
-  });
+    useLayoutEffect(() => {
+      const rect = elementRef.current?.getBoundingClientRect();
+      if (rect) {
+        setPosition({
+          top: rect.bottom + window.scrollY,
+          left: rect.left + window.scrollX,
+        });
+      }
+    }, deps);
+
+    return position
 }
