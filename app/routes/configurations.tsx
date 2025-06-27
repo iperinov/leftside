@@ -10,14 +10,6 @@ export function meta() {
   return [{ title: "Schedule Admin - Configurations" }];
 }
 
-export async function clientLoader({ params }: Route.ClientLoaderArgs) {
-  queryClient.ensureQueryData({
-    queryKey: queryKeys.books(),
-    queryFn: () => getBooks([]),
-  });
-  return;
-}
-
 export default function Configurations() {
   return <ConfigurationsPage />;
 }

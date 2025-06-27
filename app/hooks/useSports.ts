@@ -1,5 +1,5 @@
 import useSportCatalog from "./sportCatalog/useSportCatalog";
-import useSportFilters from "./sportConfigs/useSportFilters";
+import useSportFilters from "./configurations/useSportFilters";
 
 export default function useSports() {
   const { isLoading: isSportFiltersLoading, data: sportFilters, error: sportFilterError } = useSportFilters();

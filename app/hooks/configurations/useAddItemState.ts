@@ -5,7 +5,7 @@ import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimistic
 import { findItem } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
 
-function useAddFilter(onComplete?: () => void) {
+export default function useAddFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
   const optimisticAddSportFilter = (oldSportFilters: FilterItem[], { name, parentID }: { name: string; parentID?: string }) => {
@@ -45,13 +45,4 @@ function useAddFilter(onComplete?: () => void) {
         }
     },
   });
-}
-
-export default function useAddItemState() {
-  const [addItemData, setAddItemData] = useState<{ parentID?: string, level: number }>();
-  const [addInProgressForParentID, setAddInProgressForParentID] = useState<string>();
-  const resetAddItemData = () => { setAddItemData(undefined); setAddInProgressForParentID(undefined); };
-  const { mutate: addFilter, isPending: isAddPending } = useAddFilter(resetAddItemData);
-
-  return { addItemData, setAddItemData, resetAddItemData, addFilter, isAddPending, addInProgressForParentID, setAddInProgressForParentID };
 }

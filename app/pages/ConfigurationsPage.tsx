@@ -5,8 +5,10 @@ import { CreateConfiguration } from "../components/configurations/CreateConfigur
 import { DeleteConfiguration } from "../components/configurations/DeleteConfiguration";
 import { DuplicateConfiguration } from "../components/configurations/DuplicateConfiguration";
 import { RenameConfiguration } from "../components/configurations/RenameConfiguration";
+import { useNavigate } from "react-router";
 
 export default function ConfigurationsPage() {
+  const navigate = useNavigate();
   const [createAction, setCreateAction] = useState(false);
   const [editAction, setEditAction] = useState<string | null>(null);
   const [renameAction, setRenameAction] = useState<{
@@ -64,27 +66,17 @@ export default function ConfigurationsPage() {
           <Separator size="4" my="3" />
 
           <ConfigurationList
-            onEdit={(id, name) => setEditAction(id)}
+            onEdit={(id, name) => navigate(`/configurations/${id}`)} 
             onRename={(id, rev, name) => setRenameAction({ id, rev, name })}
-            onDuplicate={(id, rev, name) =>
-              setDuplicateAction({ id, rev, name })
-            }
+            onDuplicate={(id, rev, name) => setDuplicateAction({ id, rev, name })}
             onDelete={(id, rev, name) => setDeleteAction({ id, rev, name })}
           />
         </Box>
 
-        <CreateConfiguration
-          open={createAction}
-          onClose={() => setCreateAction(false)}
-        />
+        <CreateConfiguration open={createAction} onClose={() => setCreateAction(false)} />
 
         {renameAction && (
-          <RenameConfiguration
-            open={!!renameAction}
-            onClose={() => setRenameAction(null)}
-            uuid={renameAction.id}
-            rev={renameAction.rev}
-          />
+          <RenameConfiguration open={!!renameAction} onClose={() => setRenameAction(null)} uuid={renameAction.id} rev={renameAction.rev} />
         )}
 
         {duplicateAction && (

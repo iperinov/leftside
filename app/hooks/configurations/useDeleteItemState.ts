@@ -1,10 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import { deleteSportFilter, type FilterItem } from "~/api/configs/sportFiltersApi";
 import { findItemSiblings } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
 
-function useDeleteFilter(onComplete?: () => void) {
+export function useDeleteFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
   const optimisticDeleteSportFilter = (oldSportFilters: FilterItem[], { id }: { id: string }) => {
@@ -30,12 +29,4 @@ function useDeleteFilter(onComplete?: () => void) {
     onError: (err, newFilter, context) => { queryClient.setQueryData(sportFiltersQueryKey, context?.previousFilters); },
     onSettled: () => { onComplete?.()},
   });
-}
-
-export default function useDeleteItemState() {
-  const [deleteItemData, setDeleteItemData] = useState<{ id: string }>();
-  const resetDeleteItemData = () => setDeleteItemData(undefined);
-  const { mutate: deleteFilter, isPending: isDeletePending } = useDeleteFilter(resetDeleteItemData);
-
-  return { deleteItemData, setDeleteItemData, resetDeleteItemData, deleteFilter, isDeletePending };
 }

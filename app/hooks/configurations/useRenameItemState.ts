@@ -5,7 +5,7 @@ import { cleanOptimisticUpdates } from "~/components/tree/common/cleanOptimistic
 import { findItem } from "~/components/tree/common/findItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
 
-function useRenameFilter(onComplete?: () => void) {
+export function useRenameFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
   const optimisticRenameSportFilter = (oldSportFilters: FilterItem[], { id, name }: { id: string; name: string }) => {
@@ -41,12 +41,4 @@ function useRenameFilter(onComplete?: () => void) {
       }
     },
   });
-}
-
-export default function useRenameItemState() {
-  const [renameItemData, setRenameItemData] = useState<{ id: string; name: string }>();
-  const resetRenameItemData = () => setRenameItemData(undefined);
-  const { mutate: renameFilter, isPending: isRenamePending } = useRenameFilter(resetRenameItemData);
-
-  return { renameItemData, setRenameItemData, resetRenameItemData, renameFilter, isRenamePending };
 }

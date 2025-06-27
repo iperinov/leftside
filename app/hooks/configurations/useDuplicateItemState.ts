@@ -6,7 +6,7 @@ import { findItem } from "~/components/tree/common/findItem";
 import iterateItem from "~/components/tree/common/iterateItem";
 import { sportFiltersQueryKey } from "~/common/queryKeys";
 
-function useDuplicateFilter(onComplete?: () => void) {
+export function useDuplicateFilter(onComplete?: () => void) {
   const queryClient = useQueryClient();
 
   const optimisticDuplicateSportFilter = (
@@ -52,12 +52,4 @@ function useDuplicateFilter(onComplete?: () => void) {
       }
     },
   });
-}
-
-export default function useDuplicateItemState() {
-  const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parentID?: string }>();
-  const resetDuplicateItemData = () => setDuplicateItemData(undefined);
-  const { mutate: duplicateFilter, isPending: isDuplicatePending } = useDuplicateFilter(resetDuplicateItemData);
-
-  return { duplicateItemData, setDuplicateItemData, resetDuplicateItemData, duplicateFilter, isDuplicatePending };
 }

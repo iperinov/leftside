@@ -5,13 +5,6 @@ import formatOrdinal from "~/common/formatOrdinal";
 import useSportCatalog from "~/hooks/sportCatalog/useSportCatalog";
 import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
 import styles from "./AddNewFilterDialog.module.css";
-interface AddNewFilterDialogProps {
-  open?: boolean;
-  level: number;
-  onConfirm: (name: string) => void;
-  onCancel?: () => void;
-  validName?: (name: string) => boolean;
-}
 
 interface ItemTypeSelectProps {
   value?: ItemType;
@@ -52,6 +45,14 @@ function FormRow({ label, children }: React.PropsWithChildren<FormRowProps>) {
       {children}
     </Flex>
   );
+}
+
+interface AddNewFilterDialogProps {
+  open?: boolean;
+  level: number;
+  onConfirm: (name: string) => void;
+  onCancel?: () => void;
+  validName?: (name: string) => boolean;
 }
 
 export default function AddNewFilterDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewFilterDialogProps) {
