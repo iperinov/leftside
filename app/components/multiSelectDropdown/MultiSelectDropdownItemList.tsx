@@ -1,17 +1,47 @@
 import { useControlledComponentClickOutside } from "~/hooks/common/useControlledComponnetClickOutside";
 import type { ControlledComponentProps } from "../shared/ControlledComponent";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { Flex } from "@radix-ui/themes";
 import type MultiSelectDropdownItemData from "../../common/IdAndLabelData";
 import MultiSelectDropdownItem from "./MultiSelectDropdownItem";
-import { Portal } from "radix-ui";
-import usePositionUnderElement from "~/hooks/common/usePositionUnderElelement";
+import useRectOfElement from "~/hooks/common/useRectOfElement";
 
 interface MultiSelectDropdownItemListProps {
   items: MultiSelectDropdownItemData[];
   selectedIDs: string[];
   onSelect: (selected: boolean, id: string) => void;
-  showOnPosition?: { top: number; left: number };
+  triggerRef: React.RefObject<HTMLDivElement | null>;
+}
+
+function positionItemsList(rectOfTrigger: DOMRect, rectOfItemsList: DOMRect, itemsListRef: React.RefObject<HTMLDivElement | null>) {
+    if (!itemsListRef.current) return;  
+
+    const offset = 3; // px
+    const availableHeightBelowTrigger = window.innerHeight - rectOfTrigger.bottom;
+    const availableHeightAboveTrigger = rectOfTrigger.top - offset;
+    const canPositionBelowTrigger = availableHeightBelowTrigger + offset >= rectOfItemsList.height;
+    const canPositionAboveTrigger = availableHeightAboveTrigger + offset >= rectOfItemsList.height;
+     
+    console.log("Available height below trigger: ", availableHeightBelowTrigger, availableHeightAboveTrigger, canPositionBelowTrigger, canPositionAboveTrigger);
+
+    switch(true) {
+      case canPositionBelowTrigger: 
+        itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
+        break;
+      case canPositionAboveTrigger:
+        itemsListRef.current.style.setProperty("top", `${rectOfTrigger.top - rectOfItemsList.height + window.scrollY - offset}px`);
+        break;
+      case availableHeightBelowTrigger >= availableHeightAboveTrigger:
+        itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
+        itemsListRef.current.style.setProperty("height", `${availableHeightBelowTrigger - offset}px`);
+        break;
+      default:
+        itemsListRef.current.style.setProperty("top", `${rectOfTrigger.top - rectOfItemsList.height + window.scrollY - offset}px`);
+        itemsListRef.current.style.setProperty("height", `${availableHeightAboveTrigger - offset}px`);
+    }
+
+    itemsListRef.current.style.setProperty("left", `${rectOfTrigger.left + window.scrollX}px`);
+    itemsListRef.current.style.setProperty("width", `${rectOfTrigger.width}px`);
 }
 
 export default function MultiSelectDropdownItemList({
@@ -20,20 +50,21 @@ export default function MultiSelectDropdownItemList({
   items,
   selectedIDs,
   onSelect,
-  showOnPosition,
+  triggerRef,
 }: MultiSelectDropdownItemListProps & ControlledComponentProps) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  useControlledComponentClickOutside(panelRef, open, onOpenChange);
+  const itemsListRef = useRef<HTMLDivElement>(null);
+  const rectOfTrigger = useRectOfElement(triggerRef, [open]);
+  const rectOfItemsList = useRectOfElement(itemsListRef, [open]);
+  useControlledComponentClickOutside(itemsListRef, open, onOpenChange);
 
-  if (panelRef && showOnPosition && panelRef.current) {
-    panelRef.current.style.setProperty("top", `${showOnPosition.top}px`);
-    panelRef.current.style.setProperty("left", `${showOnPosition.left}px`);
+  if (itemsListRef && itemsListRef.current && rectOfTrigger && rectOfItemsList) {
+    positionItemsList(rectOfTrigger, rectOfItemsList, itemsListRef);
   }
 
   return (
     <>
       {open && (
-        <Flex ref={panelRef} direction="column" gap="2" p="3" overflow="auto" className="popUpList">
+        <Flex ref={itemsListRef} direction="column" px="3" py="2" overflow="auto" className="multiSelectDropdownItemList">
           {items.map((item) => (
             <MultiSelectDropdownItem key={item.id} item={item} isSelected={selectedIDs.includes(item.id)} onSelect={onSelect} />
           ))}

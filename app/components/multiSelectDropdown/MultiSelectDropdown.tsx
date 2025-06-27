@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Box, Button, Flex, TextField } from "@radix-ui/themes";
 import { PlusIcon } from "@radix-ui/react-icons";
 import MultiSelectDropdownList from "./MultiSelectDropdownItemList";
-import usePositionToElement from "~/hooks/common/usePositionUnderElelement";
+import useRectOfElement from "~/hooks/common/useRectOfElement";
 import type ItemData from "../../common/IdAndLabelData";
 import PillsSelections from "./PillsSelections";
 import "./MultiSelectDropdown.css";
@@ -28,7 +28,6 @@ export default function MultiSelectDropdown({
   const triggerRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
-  const position = usePositionToElement(triggerRef, [open]);
 
   const filteredItems =
     searchValue.length === 0
@@ -83,7 +82,7 @@ export default function MultiSelectDropdown({
           items={filteredItems}
           selectedIDs={selectedIDs}
           onSelect={onSelect}
-          showOnPosition={position}
+          triggerRef={triggerRef}
         />
       )}
     </Box>

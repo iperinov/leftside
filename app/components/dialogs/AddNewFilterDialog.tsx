@@ -4,7 +4,7 @@ import { ItemType } from "~/common/itemTypes";
 import formatOrdinal from "~/common/formatOrdinal";
 import useSportCatalog from "~/hooks/sportCatalog/useSportCatalog";
 import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
-
+import styles from "./AddNewFilterDialog.module.css";
 interface AddNewFilterDialogProps {
   open?: boolean;
   level: number;
@@ -97,13 +97,13 @@ export default function AddNewFilterDialog({ open = true, level, onConfirm, onCa
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>
-      <Dialog.Content style={{ maxWidth: 400 }} size="3">
+      <Dialog.Content className={styles.content} size="3">
         {/* Title and description */}
-        <Dialog.Title>{title}</Dialog.Title>
+        <Dialog.Title className={styles.title}>{title}</Dialog.Title>
 
-        <Flex direction="column" gap="2">
+        <Flex direction="column" gap="3" mt="4">
           <FormRow label="Title">
-            <TextField.Root value={name} placeholder="Enter name" mt="3" onChange={(e) => setName(e.target.value)} />
+            <TextField.Root value={name} placeholder="Enter name" onChange={(e) => setName(e.target.value)} />
           </FormRow>
           <FormRow label="Type">
             <ItemTypeSelect value={type} onChange={(type) => setType(type)} />
