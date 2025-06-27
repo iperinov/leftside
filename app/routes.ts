@@ -11,6 +11,5 @@ export default [
   layout("./layouts/main.tsx", [
     route("/catalog", "./routes/catalog.tsx"),
     route("/configurations", "./routes/configurations.tsx"),
-    route("/configurations/:id", "./routes/configuration.tsx")
   ]),
 ] satisfies RouteConfig;

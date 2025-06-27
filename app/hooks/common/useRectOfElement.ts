@@ -1,11 +1,13 @@
 import { useLayoutEffect, useState } from "react";
 
-export default function useRectOfElement(elementRef: React.RefObject<HTMLDivElement | null>, deps?: React.DependencyList) {
-   const [rect, setRect] = useState<DOMRect>();
+export default function useRectOfElement(
+  elementRef: React.RefObject<HTMLDivElement | null>,
+) {
+  const [rect, setRect] = useState<DOMRect>();
 
-    useLayoutEffect(() => {
-      setRect(elementRef.current?.getBoundingClientRect());
-    }, deps);
+  useLayoutEffect(() => {
+    setRect(elementRef.current?.getBoundingClientRect());
+  }, [elementRef]);
 
-    return rect
+  return rect;
 }

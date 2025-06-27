@@ -1,3 +1,5 @@
+import "@radix-ui/themes/styles.css";
+
 import {
   Links,
   Meta,
@@ -7,12 +9,14 @@ import {
   isRouteErrorResponse,
 } from "react-router";
 
-import type { Route } from "./+types/root";
-import "./app.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Theme, ThemePanel } from "@radix-ui/themes";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Theme } from "@radix-ui/themes";
-
+import { Toaster } from "sonner";
+import { queryClient } from "~/lib/queryClient";
+import type { Route } from "./+types/root";
+import "~/styles/global.css";
+import { useBooks } from "./hooks/useBooks";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -37,25 +41,33 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <Theme
+          appearance="light"
+          accentColor="gray"
+          radius="large"
+          grayColor="gray"
+          scaling="100%"
+        >
+          {children}
+          <ThemePanel defaultOpen={false} />
+          <Toaster richColors position="top-right" />
+          <ScrollRestoration />
+          <Scripts />
+        </Theme>
       </body>
     </html>
   );
 }
 
-const queryClient = new QueryClient();
-
 export default function App() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Theme accentColor="green">
+      {
+        <QueryClientProvider client={queryClient}>
           <Outlet />
-        </Theme>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      }
     </>
   );
 }

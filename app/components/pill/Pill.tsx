@@ -1,7 +1,6 @@
-import { Cross1Icon, Cross2Icon, CrossCircledIcon } from "@radix-ui/react-icons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button, Flex, Text } from "@radix-ui/themes";
 import styles from "./Pill.module.css";
-import { useEffect, useState } from "react";
 
 interface PillProps {
   text: string;

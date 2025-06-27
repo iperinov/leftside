@@ -2,7 +2,6 @@
   background-color: var(--accent-3);
   border: 1px solid var(--accent-8);
   border-radius: 0.375rem;
-  user-select: none;
 }
 
 .treeItemCard:not([data-selected]):not([data-pending]):hover[data-selectable] {
@@ -18,8 +17,16 @@
   animation: blink 1s ease-in-out infinite;
 }
 
+.reorderButton {
+  background-color: inherit;
+}
+
 .reorderButton[data-hidden] {
   visibility: hidden;
+}
+
+.noselect {
+  user-select: none;
 }
 
 @keyframes blink {

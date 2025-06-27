@@ -2,7 +2,6 @@ import * as Popover from "@radix-ui/react-popover";
 import { Box, Button, Card, Flex, Separator, Text } from "@radix-ui/themes";
 import React from "react";
 import { useBooks } from "~/hooks/useBooks";
-import { getAppConfig } from "~/lib/runtimeConfig";
 import { formatDateTime } from "~/utils/date";
 import type { Configuration } from "../../api/scs/configurations/getConfigurations";
 import { useConfigurations } from "../../hooks/useConfigurations";
@@ -13,12 +12,14 @@ export interface ConfigurationListProps {
   onEdit: (id: string, name: string) => void;
   onRename: (id: string, rev: string, name: string) => void;
   onDuplicate: (id: string, rev: string, name: string) => void;
+  onDelete: (id: string, rev: string, name: string) => void;
 }
 
 export const ConfigurationList = ({
   onEdit,
   onRename,
   onDuplicate,
+  onDelete,
 }: ConfigurationListProps) => {
   const { data: booksData = [] } = useBooks();
   const { data = [], isLoading, error } = useConfigurations();
@@ -110,6 +111,19 @@ export const ConfigurationList = ({
                     >
                       Duplicate
                     </Button>
+                    {config.books.length === 0 && (
+                      <>
+                        <Separator my="1" size="1" />
+                        <Button
+                          onClick={() =>
+                            onDelete(config.uuid, config.rev, config.name)
+                          }
+                          className={styles.actionButton}
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    )}
                   </Popover.Content>
                 </Popover.Portal>
               </Popover.Root>

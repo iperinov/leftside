@@ -1,0 +1,124 @@
+import { getAppConfig } from "~/lib/runtimeConfig";
+
+const ocsBaseUrl = getAppConfig().ocs.baseUrl;
+
+export interface Book {
+  id: number; // maps from 'bid'
+  name: string; // maps from 'name'
+  webColumnId: number; // maps from 'wcid'
+  enabled: boolean; // maps from 'enabled'
+}
+
+export const getBooks = async (bookIds?: number[]): Promise<Book[]> => {
+  const url = new URL(`${ocsBaseUrl}/config/books/`);
+  console.log("getBooks: ", url, bookIds);
+  await new Promise((res) => setTimeout(res, 2000)); // Simulate delay
+
+  // TODO:
+  //    * Replace with real API call
+  //    * Handle error codes
+  //   if (bookIds?.length) {
+  //     bookIds.forEach(id => url.searchParams.append('bid', id.toString()));
+  //   }
+
+  //   const response = await fetch(url.toString());
+
+  //   if (!response.ok) {
+  //     const errorText = await response.text();
+  //     throw new Error(`Failed to fetch books: ${response.status} ${errorText}`);
+  //   }
+
+  //   const rawData = await response.json();
+
+  //   return rawData.map((book: any) => ({
+  //     id: book.bid,
+  //     name: book.name,
+  //     webColumnId: book.wcid,
+  //     enabled: book.enabled,
+  //   })) as Book[];
+  return [
+    { id: 1, name: "DEFAULT", webColumnId: 1, enabled: true },
+    { id: 2, name: "GALAXY", webColumnId: 31, enabled: true },
+    { id: 3, name: "DSI", webColumnId: 1, enabled: true },
+    { id: 5, name: "X-TEST", webColumnId: 32, enabled: true },
+    { id: 10, name: "OPS", webColumnId: 1, enabled: true },
+    { id: 11, name: "ACR", webColumnId: 27, enabled: true },
+    { id: 13, name: "FUNTIMEBINGO", webColumnId: 1, enabled: true },
+    { id: 16, name: "BETCRIS-PANAMA", webColumnId: 12, enabled: true },
+    { id: 22, name: "BETMAKER", webColumnId: 1, enabled: true },
+    { id: 23, name: "BIGONSPORTS", webColumnId: 31, enabled: true },
+    { id: 26, name: "BOOKMAKER", webColumnId: 1, enabled: true },
+    { id: 27, name: "BETCRIS-NICARAGUA", webColumnId: 12, enabled: true },
+    { id: 28, name: "BETCRIS-GUATEMALA", webColumnId: 12, enabled: true },
+    { id: 29, name: "BETCRIS-ECUADOR", webColumnId: 12, enabled: true },
+    { id: 30, name: "BETCRIS-MEXRIO", webColumnId: 8, enabled: true },
+    { id: 31, name: "BETCRIS-PERU", webColumnId: 12, enabled: true },
+    { id: 33, name: "BETCRIS-VENEZUELA", webColumnId: 12, enabled: true },
+    { id: 34, name: "BETCRIS-ELSALVADOR", webColumnId: 12, enabled: true },
+    { id: 35, name: "BETCRIS-RWANDA", webColumnId: 12, enabled: true },
+    { id: 39, name: "BETCRIS-POLAND", webColumnId: 12, enabled: true },
+    { id: 40, name: "BETCRIS-MALTA", webColumnId: 12, enabled: true },
+    { id: 41, name: "BETCRIS-MEXICO", webColumnId: 8, enabled: true },
+    { id: 42, name: "BETCRIS", webColumnId: 12, enabled: true },
+    { id: 44, name: "GOLDEN", webColumnId: 1, enabled: true },
+    { id: 45, name: "LASPALMAS", webColumnId: 1, enabled: true },
+    { id: 48, name: "BETCRIS-MEXGRAND", webColumnId: 8, enabled: true },
+    { id: 49, name: "PRIVATE OFFICE", webColumnId: 1, enabled: true },
+    { id: 50, name: "BETCRIS-DOMREP", webColumnId: 12, enabled: true },
+    { id: 51, name: "BETCRIS-PARAGUAY", webColumnId: 12, enabled: true },
+    { id: 53, name: "BETCRIS-CHILE", webColumnId: 12, enabled: true },
+    { id: 54, name: "BETCRIS-MEXCROWN", webColumnId: 8, enabled: true },
+    { id: 55, name: "HOUSE", webColumnId: 1, enabled: true },
+    { id: 56, name: "DSIFREE", webColumnId: 1, enabled: true },
+    { id: 58, name: "BETCRIS-MEXKASH", webColumnId: 8, enabled: true },
+    { id: 60, name: "BETCRIS-XARG", webColumnId: 12, enabled: true },
+    { id: 64, name: "BETCRIS-HONDURAS", webColumnId: 12, enabled: true },
+    { id: 65, name: "ACR2", webColumnId: 27, enabled: true },
+    { id: 70, name: "BETCRIS-PANAMAOFF", webColumnId: 12, enabled: true },
+    { id: 71, name: "JUST BET", webColumnId: 1, enabled: true },
+    { id: 72, name: "BETCRIS-JAPAN", webColumnId: 15, enabled: true },
+    { id: 73, name: "BETCRIS-BRASIL", webColumnId: 17, enabled: true },
+    { id: 80, name: "BETCRIS-BKR", webColumnId: 12, enabled: true },
+    { id: 81, name: "BETCRIS-ARGENTINA", webColumnId: 12, enabled: true },
+    { id: 89, name: "BETCRIS-COLOMBIA", webColumnId: 12, enabled: true },
+    { id: 90, name: "BETCRIS-CANADA", webColumnId: 12, enabled: true },
+    { id: 100, name: "BETCRIS-JAMAICA", webColumnId: 12, enabled: true },
+    { id: 101, name: "BETCRIS-JUSTBET", webColumnId: 12, enabled: true },
+    { id: 104, name: "BETLUCKYS", webColumnId: 1, enabled: true },
+    { id: 106, name: "BETCRIS-JA", webColumnId: 12, enabled: true },
+    { id: 107, name: "BETCRIS-PHIL", webColumnId: 17, enabled: true },
+    { id: 108, name: "BETCRIS-888", webColumnId: 15, enabled: true },
+    { id: 109, name: "BC-XCHANGEBET", webColumnId: 16, enabled: true },
+    { id: 110, name: "BETCRIS-SOLAIRE", webColumnId: 17, enabled: true },
+    { id: 111, name: "BETCRIS-CASABLANCA", webColumnId: 15, enabled: true },
+    { id: 112, name: "BETCRIS-KOREA", webColumnId: 15, enabled: true },
+    { id: 113, name: "BETCRIS-THAILAND", webColumnId: 15, enabled: true },
+    { id: 114, name: "BETCRIS-VENE", webColumnId: 12, enabled: true },
+    { id: 115, name: "BOOKMAKER - CRC", webColumnId: 1, enabled: true },
+    { id: 119, name: "BETCRIS-MXLIC", webColumnId: 8, enabled: true },
+    { id: 120, name: "BETCRIS-DROFF", webColumnId: 12, enabled: true },
+    { id: 121, name: "BETCRIS-MMX", webColumnId: 1, enabled: true },
+    { id: 122, name: "PIVOT", webColumnId: 12, enabled: true },
+    { id: 123, name: "MANAGEMENT", webColumnId: 1, enabled: true },
+    { id: 124, name: "BC-MOBILEXCHANGEBET", webColumnId: 16, enabled: true },
+    { id: 126, name: "PLANATECH", webColumnId: 12, enabled: true },
+    { id: 127, name: "WINNATION", webColumnId: 1, enabled: true },
+    { id: 128, name: "BETCRIS-SYSTST", webColumnId: 12, enabled: true },
+    { id: 129, name: "BETCRIS-COSTA RICA", webColumnId: 12, enabled: true },
+    { id: 130, name: "BETCRIS-HANNBET", webColumnId: 17, enabled: true },
+    { id: 131, name: "WEBDEV", webColumnId: 1, enabled: true },
+    { id: 132, name: "BC - INPLAY", webColumnId: 16, enabled: true },
+    { id: 133, name: "BETCRIS-STAGING", webColumnId: 12, enabled: true },
+    { id: 134, name: "ADS", webColumnId: 1, enabled: true },
+    { id: 137, name: "GOGOBANKA", webColumnId: 1, enabled: true },
+    { id: 140, name: "PTOH", webColumnId: 1, enabled: true },
+    { id: 141, name: "NOTREDAME", webColumnId: 0, enabled: true },
+    { id: 142, name: "APPSTORE", webColumnId: 1, enabled: true },
+    { id: 143, name: "BIGONSPORTS-P", webColumnId: 31, enabled: true },
+    { id: 144, name: "LASPALMASPU", webColumnId: 1, enabled: true },
+    { id: 145, name: "GALAXYPU", webColumnId: 31, enabled: true },
+    { id: 146, name: "GALAXY-P", webColumnId: 31, enabled: true },
+    { id: 147, name: "BETCRIS-PERUOFF", webColumnId: 12, enabled: true },
+    { id: 148, name: "BETCRIS-SALVADOR", webColumnId: 12, enabled: true },
+  ];
+};

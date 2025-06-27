@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Box, Button, Flex, TextField } from "@radix-ui/themes";
 import { PlusIcon } from "@radix-ui/react-icons";
-import MultiSelectDropdownList from "./MultiSelectDropdownItemList";
-import useRectOfElement from "~/hooks/common/useRectOfElement";
-import type ItemData from "../../common/IdAndLabelData";
+import { Box, Button, Flex, TextField } from "@radix-ui/themes";
+import { useCallback, useEffect, useRef, useState } from "react";
+import MultiSelectDropdownItemList from "./MultiSelectDropdownItemList";
 import PillsSelections from "./PillsSelections";
 import "./MultiSelectDropdown.css";
+import type ItemData from "~/common/IdAndLabelData";
 
 export interface ResultsSelectionProps {
   selectedIDs: string[];
@@ -32,23 +31,33 @@ export default function MultiSelectDropdown({
   const filteredItems =
     searchValue.length === 0
       ? items
-      : items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
+      : items.filter((item) =>
+          item.name.toLowerCase().includes(searchValue.toLowerCase()),
+        );
   const preventShowingDropdownList = filteredItems.length === 0;
 
-  const onAddItemClicked = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setOpen((prev) => !prev);
-  }, [open]) ;
+  const onAddItemClicked = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      setOpen((prev) => !prev);
+    },
+    [],
+  );
 
-  const onSelect = useCallback((selected: boolean, id: string) => {
-    onSelectionChange?.(selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id));
-  }, [selectedIDs]);
+  const onSelect = useCallback(
+    (selected: boolean, id: string) => {
+      onSelectionChange?.(
+        selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id),
+      );
+    },
+    [selectedIDs, onSelectionChange],
+  );
 
   useEffect(() => {
     if (!open && filteredItems.length > 0 && searchValue.length > 0) {
       setOpen(filteredItems.length > 0);
     }
-  }, [open, searchValue]);
+  }, [open, searchValue, filteredItems]);
 
   return (
     <Box as="div" className="multiSelectDropdown" ref={triggerRef}>
@@ -61,10 +70,19 @@ export default function MultiSelectDropdown({
           className="multiSelectDropdownTextField"
         >
           <TextField.Slot className="multiSelectDropdownTextFieldSlot">
-            <ResultsPanel selectedIDs={selectedIDs} items={items} onSelectionChange={onSelectionChange} />
+            <ResultsPanel
+              selectedIDs={selectedIDs}
+              items={items}
+              onSelectionChange={onSelectionChange}
+            />
           </TextField.Slot>
           <TextField.Slot>
-            <Button disabled={preventShowingDropdownList} variant="ghost" onClick={onAddItemClicked} className="nohover">
+            <Button
+              disabled={preventShowingDropdownList}
+              variant="ghost"
+              onClick={onAddItemClicked}
+              className="nohover"
+            >
               <PlusIcon />
             </Button>
           </TextField.Slot>
@@ -73,9 +91,9 @@ export default function MultiSelectDropdown({
 
       {/* Dropdown List */}
       {!preventShowingDropdownList && (
-        <MultiSelectDropdownList
+        <MultiSelectDropdownItemList
           open={open}
-          onOpenChange={(opened) => {
+          onOpenChange={(opened: boolean) => {
             setOpen(opened);
             setSearchValue("");
           }}

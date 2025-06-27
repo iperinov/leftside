@@ -1,0 +1,25 @@
+import type { TakeBackProfile } from "../ocs.types";
+
+export const mockTakeBackProfiles: TakeBackProfile[] = [
+  { id: 1, moneyLine: -105, spread: -110, total: -110 },
+  { id: 2, moneyLine: -115, spread: -115, total: -115 },
+  { id: 1002, moneyLine: -115, spread: -110, total: -115 },
+  { id: 1003, moneyLine: -110, spread: -110, total: -110 },
+  { id: 1004, moneyLine: -115, spread: -110, total: -110 },
+  { id: 1005, moneyLine: -110, spread: -110, total: -115 },
+  { id: 1006, moneyLine: -110, spread: -115, total: -110 },
+  { id: 1007, moneyLine: -110, spread: -115, total: -115 },
+  { id: 1008, moneyLine: -115, spread: -115, total: -110 },
+  { id: 1009, moneyLine: -105, spread: -105, total: -105 },
+  { id: 1010, moneyLine: -108, spread: -108, total: -108 },
+  { id: 1011, moneyLine: -111, spread: -111, total: -111 },
+  { id: 1012, moneyLine: -113, spread: -113, total: -113 },
+  { id: 1013, moneyLine: -117, spread: -117, total: -117 },
+  { id: 1014, moneyLine: -120, spread: -120, total: -120 },
+  { id: 1015, moneyLine: -122, spread: -122, total: -122 },
+  { id: 1016, moneyLine: -125, spread: -125, total: -125 },
+  { id: 1017, moneyLine: -115, spread: -115, total: -115 },
+  { id: 1018, moneyLine: -101, spread: -101, total: -101 },
+  { id: 1019, moneyLine: -102, spread: -102, total: -102 },
+  { id: 1020, moneyLine: -106, spread: -106, total: -106 },
+];

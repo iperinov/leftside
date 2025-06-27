@@ -1,8 +1,8 @@
+import { Flex } from "@radix-ui/themes";
 import { Outlet } from "react-router";
 import { redirect } from "react-router";
 import Header from "~/components/Header";
 import { useAuthStore } from "../stores/useAuthStore";
-import { Flex } from "@radix-ui/themes";
 
 export async function clientLoader() {
   const loggedIn = useAuthStore.getState().loadAuth();
@@ -17,7 +17,8 @@ export async function clientLoader() {
 export default function MainLayout() {
   return (
     <>
-      <Flex direction="column" overflow-y="auto" height="100vh">
+      {/* Use minHeight: '100dvh' (viewport height with dynamic safe area) */}
+      <Flex direction="column" style={{ minHeight: "100dvh" }}>
         <Header />
         <Outlet />
       </Flex>

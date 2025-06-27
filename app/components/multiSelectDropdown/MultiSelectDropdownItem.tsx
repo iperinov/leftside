@@ -1,18 +1,25 @@
-import { Text, Checkbox, Flex } from "@radix-ui/themes";
-import type MultiSelectDropdownItemData from "../../common/IdAndLabelData";
+import { Checkbox, Flex, Text } from "@radix-ui/themes";
 import "./MultiSelectDropdown.css";
+import type ItemData from "~/common/IdAndLabelData";
 
 interface MultiSelectDropdownItemProps {
-  item: MultiSelectDropdownItemData;
+  item: ItemData;
   isSelected: boolean;
   onSelect: (selected: boolean, id: string) => void;
 }
 
-export default function MultiSelectDropdownItem({ item, isSelected, onSelect }: MultiSelectDropdownItemProps) {
+export default function MultiSelectDropdownItem({
+  item,
+  isSelected,
+  onSelect,
+}: MultiSelectDropdownItemProps) {
   return (
     <Text as="label" size="2" className="noselect multiSelectDropdownItem">
       <Flex gap="2">
-        <Checkbox defaultChecked={isSelected} onCheckedChange={(checked) => onSelect(!!checked, item.id)} />
+        <Checkbox
+          defaultChecked={isSelected}
+          onCheckedChange={(checked) => onSelect(!!checked, item.id)}
+        />
         {item.name}
       </Flex>
     </Text>

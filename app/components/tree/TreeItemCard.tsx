@@ -25,7 +25,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       px="1"
       justify="between"
       width="100%"
-      className={styles.treeItemCard}
+      className={`${styles.treeItemCard}  ${styles.noselect}`}
       onClick={isSelectable ? () => config.selection?.handler(item) : undefined}
       draggable={enableReorder ? "true" : undefined}
       data-selectable={isSelectable ? "true" : undefined}
@@ -37,9 +37,11 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       <Flex align="center" gap="1">
         {/* Reorder Button */}
         <Button
-          className="nohover"
+          className={styles.reorderButton}
           variant="ghost"
-          onClick={(event) => {event.stopPropagation();}}
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
           data-hidden={enableReorder ? undefined : "true"}
         >
           <CaretSortIcon />
