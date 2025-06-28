@@ -21,7 +21,7 @@ export default function TreeItem<T extends TreeItemData<T>>({
   const canExpandItem =
     (config.expand?.allowed(item, level) || false) &&
     (hasChildren || config.addToParent?.allowed(level + 1, item) || false);
-  const itemExpanded = config.expand?.itemIDs.includes(item.id);
+  const itemExpanded = config.expand?.itemIDs.includes(item.uuid);
 
   return (
     <>

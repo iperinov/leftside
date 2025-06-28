@@ -4,16 +4,16 @@ import type { League } from "./ocs.types";
 
 const ocsUrl = getAppConfig().ocs.baseUrl;
 
-export async function getLeagues(rsids: number[] = []): Promise<League[]> {
+export async function getLeagues(sportIDs: number[] = []): Promise<League[]> {
   const url = new URL("/config/leagues/", ocsUrl);
   console.log("getLeagues: ", url);
-  await new Promise((res) => setTimeout(res, 2000)); // Simulate delay
+  await new Promise((res) => setTimeout(res, 1000)); // Simulate delay
 
   // TODO:
   //    * Replace with real API call
   //    * Handle error codes
-  // if (rsids.length > 0) {
-  //   rsids.forEach((id) => url.searchParams.append("rsid", id.toString()));
+  // if (sportIDs.length > 0) {
+  //   sportIDs.forEach((id) => url.searchParams.append("rsid", id.toString()));
   // }
 
   // const response = await fetch(url.toString());

@@ -15,14 +15,6 @@ function positionItemsList(rectOfTrigger: DOMRect, rectOfItemsList: DOMRect, ite
   const canPositionBelowTrigger = availableHeightBelowTrigger + offset >= rectOfItemsList.height;
   const canPositionAboveTrigger = availableHeightAboveTrigger + offset >= rectOfItemsList.height;
 
-  console.log(
-    "Available height below trigger: ",
-    availableHeightBelowTrigger,
-    availableHeightAboveTrigger,
-    canPositionBelowTrigger,
-    canPositionAboveTrigger
-  );
-
   switch (true) {
     case canPositionBelowTrigger:
       itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
@@ -63,18 +55,18 @@ export default function MultiSelectDropdownItemList({
   const rectOfItemsList = useRectOfElement(itemsListRef);
   useControlledComponentClickOutside(itemsListRef, open, onOpenChange);
 
-  console.log("MultiSelectDropdownItemList: rectOfTrigger", rectOfTrigger, rectOfItemsList, itemsListRef?.current);
-
   if (itemsListRef?.current && rectOfTrigger && rectOfItemsList) {
     positionItemsList(rectOfTrigger, rectOfItemsList, itemsListRef);
   }
+
+  console.log(open, Boolean(itemsListRef?.current), Boolean(rectOfTrigger), Boolean(rectOfItemsList), items.length)
 
   return (
     <>
       {open && (
         <Flex ref={itemsListRef} direction="column" px="3" py="2" overflow="auto" className="multiSelectDropdownItemList">
           {items.map((item) => (
-            <MultiSelectDropdownItem key={item.id} item={item} isSelected={selectedIDs.includes(item.id)} onSelect={onSelect} />
+            <MultiSelectDropdownItem key={item.uuid} item={item} isSelected={selectedIDs.includes(item.uuid)} onSelect={onSelect} />
           ))}
         </Flex>
       )}

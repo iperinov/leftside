@@ -1,6 +1,6 @@
 import type { RealSport } from "../ocs.types";
 
-export const mockRealSport: RealSport[] = [
+export const mockSports: RealSport[] = [
   {
     id: 1,
     uuid: "09fba3a5-73b2-4003-8c62-739db04ff51a",

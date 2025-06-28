@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getRealSports } from "../api/ocs/getRealSports";
 import { queryKeys } from "../lib/queryKeys";
+import { getRealSports } from "~/api/ocs/getRealSports";
 
-export const useRealSport = () => {
+export const useRealSports = () => {
   return useQuery({
-    queryKey: queryKeys.realSports(),
+    queryKey: queryKeys.sports(),
     queryFn: () => getRealSports(),
   });
 };

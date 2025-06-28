@@ -18,7 +18,7 @@ export default function MultiSelectDropdownItem({
       <Flex gap="2">
         <Checkbox
           defaultChecked={isSelected}
-          onCheckedChange={(checked) => onSelect(!!checked, item.id)}
+          onCheckedChange={(checked) => onSelect(!!checked, item.uuid)}
         />
         {item.name}
       </Flex>

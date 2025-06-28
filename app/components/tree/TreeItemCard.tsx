@@ -30,7 +30,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       draggable={enableReorder ? "true" : undefined}
       data-selectable={isSelectable ? "true" : undefined}
       data-selected={
-        config.selection?.selectedID === item.id ? "true" : undefined
+        config.selection?.selectedID === item.uuid ? "true" : undefined
       }
       data-pending={item.pending ? "true" : undefined}
     >

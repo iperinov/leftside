@@ -1,14 +1,15 @@
-import useSports from "~/hooks/useSports";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
 import Tree from "../tree/Tree";
-import makeRoot from "../tree/common/makeRoot";
-import type { FilterItem } from "~/api/configs/sportFiltersApi";
 import type { MenuItem } from "../dropdownContextMenu/DropdownContextMenu";
 import formatOrdinal from "~/common/formatOrdinal";
 import { useState } from "react";
+import type { FilterItem } from "./FilterItem";
+import { useConfigurationCategories } from "~/hooks/configurationCategories/useConfigurationCategories";
+import type { Category } from "~/api/scs/configurations/config.types";
 
 interface ConfigurationSidebarProps {
-    selectedID: string;
+    configUUID?: string;
+    selectedUUID: string;
     onSelected: (item: FilterItem) => void;
     onAdd: (level: number, parentID: string) => void;
     onRename: (item: FilterItem) => void;
@@ -16,10 +17,10 @@ interface ConfigurationSidebarProps {
     onDelete: (item: FilterItem) => void;
 }
 
-export default function ConfigurationSidebar({ selectedID, onSelected, onAdd, onRename, onDuplicate, onDelete}: ConfigurationSidebarProps) {
+export default function ConfigurationSidebar({ configUUID, selectedUUID, onSelected, onAdd, onRename, onDuplicate, onDelete}: ConfigurationSidebarProps) {
+  const {data: categories, isLoading, error} = configUUID ? useConfigurationCategories(configUUID) : { data: [], isLoading: false, error: null };
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
-  const { isLoading, error, filters } = useSports();
-
+  
   const menuItems: MenuItem<FilterItem>[] = [
     { name: "Rename", action: (context) => context && onRename(context) },
     { name: "Delete", action: (context) => context && onDelete(context) },
@@ -28,8 +29,8 @@ export default function ConfigurationSidebar({ selectedID, onSelected, onAdd, on
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading}>
-      <Tree
-        root={makeRoot(filters)}
+      <Tree<Category>
+        root={{ uuid: "root-uuid", name:"",  children: categories} as Category}
         level={0}
         reorder={{
           allowed: (item, parent) => true,
@@ -40,16 +41,16 @@ export default function ConfigurationSidebar({ selectedID, onSelected, onAdd, on
         expand={{
           allowed: (item, level) => !!item.children,
           itemIDs: expandedItems,
-          handler: (item, expand) => setExpandedItems((prev) => (expand ? [...prev, item.id] : prev.filter((id) => id !== item.id))),
+          handler: (item, expand) => setExpandedItems((prev) => (expand ? [...prev, item.uuid] : prev.filter((uuid) => uuid !== item.uuid))),
         }}
         addToParent={{
           allowed: (level, parentID) => true,
-          handler: (level, parent) => onAdd(level, parent.id),
+          handler: (level, parent) => onAdd(level, parent.uuid),
           toString: (level, parentID) => `Add ${formatOrdinal(level + 1)} level`,
         }}
         selection={{
           allowed: (item) => !item.pending && !item.children,
-          selectedID: selectedID,
+          selectedID: selectedUUID,
           handler: onSelected,
         }}
         contextMenu={{

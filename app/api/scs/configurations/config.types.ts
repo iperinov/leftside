@@ -1,3 +1,4 @@
+import type TreeItemData from "~/components/tree/TreeItemData";
 import type { ExitCodes } from "./config.exitCodes";
 
 /* Common */
@@ -53,17 +54,17 @@ export interface Filter {
 
 export interface FilterGroup {
   filters: Filter[];
-  "group-by": string;
-  order: "asc" | "desc";
-  limit: number;
+  "group-by"?: string;
+  order?: "asc" | "desc";
+  limit?: number;
 }
 
 export interface Category {
   uuid: string;
   name: string;
+  children?: Category[];
   type: "flat" | "nested";
-  "filter-groups": FilterGroup[];
-  children: Category[];
+  "filter-groups"?: FilterGroup[];
 }
 
 export interface CreateConfigApiIn {

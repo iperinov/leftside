@@ -1,12 +1,12 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import { mockRealSports } from "./mock/mockRealSports";
 import type { RealSport } from "./ocs.types";
+import { mockSports } from "./mock/mockRealSports";
 
 const ocsUrl = getAppConfig().ocs.baseUrl;
 
 export const getRealSports = async (): Promise<RealSport[]> => {
   const url = new URL(`${ocsUrl}/config/realsports/`);
-  console.log("getRealSports: ", url);
+  console.log("getSports: ", url);
 
   // TODO:
   //    * Replace with real API call
@@ -20,6 +20,6 @@ export const getRealSports = async (): Promise<RealSport[]> => {
   //   const data: RealSport[] = await response.json();
   //   return data;
 
-  await new Promise((res) => setTimeout(res, 2000)); // Simulate delay
-  return mockRealSports;
+  await new Promise((res) => setTimeout(res, 1000)); // Simulate delay
+  return mockSports;
 };
