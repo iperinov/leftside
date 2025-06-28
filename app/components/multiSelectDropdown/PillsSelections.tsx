@@ -2,11 +2,11 @@ import { Flex } from "@radix-ui/themes";
 import { Pill } from "../pill/Pill";
 import type { ResultsSelectionProps } from "./MultiSelectDropdown";
 
-export default function PillsSelections({
+export default function PillsSelections<T extends string | number>({
   selectedIDs,
   items,
   onSelectionChange,
-}: ResultsSelectionProps) {
+}: ResultsSelectionProps<T>) {
   return (
     <Flex gap="2">
       {selectedIDs.map((id) => {

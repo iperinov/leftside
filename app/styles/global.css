@@ -56,3 +56,12 @@ body {
   background-color: var(--gray-4);
   color: var(--gray-9);
 }
+
+
+.customDialogContent {
+  width: 400px;
+}
+
+.customDialogTitle {
+  text-align: center;
+}

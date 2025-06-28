@@ -36,9 +36,9 @@ export default function EditNameDialog({
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
-      <Dialog.Content style={{ maxWidth: 400 }} size="3">
+      <Dialog.Content className={"customDialogContent"} size="3">
         {/* Title and description */}
-        <Dialog.Title>{title}</Dialog.Title>
+        <Dialog.Title className={"customDialogTitle"}>{title}</Dialog.Title>
         <Dialog.Description>{description}</Dialog.Description>
 
         {/* Input fields */}

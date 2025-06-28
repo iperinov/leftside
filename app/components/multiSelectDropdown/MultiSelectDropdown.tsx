@@ -4,26 +4,26 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import MultiSelectDropdownItemList from "./MultiSelectDropdownItemList";
 import PillsSelections from "./PillsSelections";
 import "./MultiSelectDropdown.css";
-import type ItemData from "~/common/IdAndLabelData";
+import type ItemData from "~/common/ItemData";
 
-export interface ResultsSelectionProps {
-  selectedIDs: string[];
-  items: ItemData[];
-  onSelectionChange?: (selectedIDs: string[]) => void;
+export interface ResultsSelectionProps<T extends string | number> {
+  selectedIDs: T[];
+  items: ItemData<T>[];
+  onSelectionChange?: (selectedIDs: T[]) => void;
 }
-interface MultiSelectDropdownProps {
-  items?: ItemData[];
-  selectedIDs?: string[];
-  onSelectionChange?: (selectedIDs: string[]) => void;
-  ResultsPanel?: (props: ResultsSelectionProps) => React.ReactNode;
+interface MultiSelectDropdownProps<T extends string | number> {
+  items?: ItemData<T>[];
+  selectedIDs?: T[];
+  onSelectionChange?: (selectedIDs: T[]) => void;
+  ResultsPanel?: (props: ResultsSelectionProps<T>) => React.ReactNode;
 }
 
-export default function MultiSelectDropdown({
+export default function MultiSelectDropdown<T extends string | number>({
   items = [],
   selectedIDs = [],
   onSelectionChange,
   ResultsPanel = PillsSelections,
-}: MultiSelectDropdownProps) {
+}: MultiSelectDropdownProps<T>) {
   const triggerRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function MultiSelectDropdown({
   );
 
   const onSelect = useCallback(
-    (selected: boolean, id: string) => {
+    (selected: boolean, id: T) => {
       onSelectionChange?.(
         selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id),
       );
@@ -91,7 +91,7 @@ export default function MultiSelectDropdown({
 
       {/* Dropdown List */}
       {!preventShowingDropdownList && (
-        <MultiSelectDropdownItemList
+        <MultiSelectDropdownItemList<T>
           open={open}
           onOpenChange={(opened: boolean) => {
             setOpen(opened);

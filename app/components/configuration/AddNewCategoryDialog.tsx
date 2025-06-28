@@ -1,33 +1,36 @@
 import { Button, Dialog, Text, Flex, TextField, Select } from "@radix-ui/themes";
 import { useCallback, useState } from "react";
-import { ItemType } from "~/common/itemTypes";
 import formatOrdinal from "~/common/formatOrdinal";
 import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
-import styles from "./AddNewConfigurationDialog.module.css";
+import styles from "./AddNewCategoryDialog.module.css";
 import { useLeagues } from "~/hooks/useLeagues";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
 import { useRealSports } from "~/hooks/useRealSport";
+import type ItemData from "~/common/ItemData";
+import type { League } from "~/api/ocs/ocs.types";
+import { TemplateType } from "./TemplateType";
 
 interface ItemTypeSelectProps {
-  value?: ItemType;
-  onChange?: (value: ItemType) => void;
+  value?: TemplateType;
+  level: number;
+  onChange?: (value: TemplateType) => void;
 }
 
-function ItemTypeSelect({ value, onChange }: ItemTypeSelectProps) {
+function ItemTypeSelect({ value, level, onChange }: ItemTypeSelectProps) {
   return (
-    <Select.Root value={value || ItemType.Parent} onValueChange={onChange}>
+    <Select.Root value={value || TemplateType.Parent} onValueChange={onChange}>
       <Select.Trigger />
       <Select.Content>
         <Select.Group>
           <Select.Label>Items</Select.Label>
-          <Select.Item value={ItemType.Parent}>{ItemType.Parent}</Select.Item>
-          <Select.Item value={ItemType.Child}>{ItemType.Child}</Select.Item>
+          <Select.Item value={TemplateType.Parent} disabled={level >= 3 ? true : undefined}>{TemplateType.Parent}</Select.Item>
+          <Select.Item value={TemplateType.Child}>{TemplateType.Child}</Select.Item>
         </Select.Group>
         <Select.Separator />
         <Select.Group>
           <Select.Label>Predefined templates</Select.Label>
-          <Select.Item value={ItemType.All}>{ItemType.All}</Select.Item>
-          <Select.Item value={ItemType.LiveAndUpcoming}>{ItemType.LiveAndUpcoming}</Select.Item>
+          <Select.Item value={TemplateType.AllLeagues}>{TemplateType.AllLeagues}</Select.Item>
+          <Select.Item value={TemplateType.LiveAndUpcoming}>{TemplateType.LiveAndUpcoming}</Select.Item>
         </Select.Group>
       </Select.Content>
     </Select.Root>
@@ -49,22 +52,22 @@ function FormRow({ label, children }: React.PropsWithChildren<FormRowProps>) {
   );
 }
 
-interface AddNewFilterDialogProps {
+interface AddNewCategoryDialogProps {
   open?: boolean;
   level: number;
-  onConfirm: (name: string, type: ItemType, sports: string[], leagues: string[]) => void;
+  onConfirm: (name: string, type: TemplateType, sports: string[], leagues: string[]) => void;
   onCancel?: () => void;
   validName?: (name: string) => boolean;
 }
 
-export default function AddNewConfigurationDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewFilterDialogProps) {
+export default function AddNewCategoryDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewCategoryDialogProps) {
   const { error: sportsError, data: sports, isLoading: isSportsLoading } = useRealSports();
   const { error: leaguesError, data: leagues, isLoading: isLeaguesLoading } = useLeagues();
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState("");
-  const [type, setType] = useState<ItemType>(ItemType.All);
-  const [selectedSportUUIDs, setSelectedSportsUUIDs] = useState<string[]>([]);
-  const [selectedLeagueUUIDs, setSelectedLeaguesUUIDs] = useState<string[]>([]);
+  const [type, setType] = useState<TemplateType>(TemplateType.Child);
+  const [selectedSportIDs, setSelectedSportsIDs] = useState<string[]>([]);
+  const [selectedLeagueIDs, setSelectedLeaguesIDs] = useState<string[]>([]);
 
   
   const handleClose = useCallback(
@@ -77,32 +80,44 @@ export default function AddNewConfigurationDialog({ open = true, level, onConfir
   );
 
   const handleSave = useCallback(() => {
-    onConfirm(name.trim(), type, selectedSportUUIDs, selectedLeagueUUIDs);
+    onConfirm(name.trim(), type, selectedSportIDs, selectedLeagueIDs);
     setIsOpen(false);
   }, [name, open]);
 
   const handleSportsSelectionChange = useCallback(
-    (selectedUUIDs: string[]) => {
-      const leaguesIDs = leaguesForSports(selectedUUIDs).map((l) => l.uuid);
-      setSelectedSportsUUIDs(selectedUUIDs);
-      setSelectedLeaguesUUIDs(selectedLeagueUUIDs.filter((uuid) => leaguesIDs.includes(uuid)));
+    (selectedIDs: string[]) => {
+      const leaguesIDs = leaguesForSports(selectedIDs).map((l) => l.uuid);
+      setSelectedSportsIDs(selectedIDs);
+      setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
     },
-    [selectedSportUUIDs, selectedLeagueUUIDs]
+    [selectedSportIDs, selectedLeagueIDs]
   );
 
   const handleLeaguesSelectionChange = useCallback(
-    (selectedUUIDs: string[]) => {
-      setSelectedLeaguesUUIDs(selectedUUIDs);
+    (selectedIDs: string[]) => {
+      setSelectedLeaguesIDs(selectedIDs);
     },
-    [selectedLeagueUUIDs]
+    [selectedLeagueIDs]
   );
 
-
-  const leaguesForSports = (sportUUIDs: string[]) => {
-    return sportUUIDs.flatMap((sportUUID) => leagues?.filter((league) => league.sportId === sportUUID) || []);
+  const getSportItems = (): ItemData<string>[] => {
+    return sports?.map((sport) => ({
+      id: String(sport.id),
+      name: sport.name,
+    })) || [];
   };
 
-  console.log("leaguesForSports ", selectedSportUUIDs, leaguesForSports(selectedSportUUIDs), leagues);
+  const leaguesForSports = (sportIDs: string[]): League[] => {
+    return sportIDs.flatMap((sportID) => leagues?.filter((league) => String(league.realSportId) === sportID) || []);
+  };
+
+  const getLeagueItems = (sportIDs: string[]): ItemData<string>[] => {
+    const filteredLeagues = leaguesForSports(sportIDs);
+    return filteredLeagues.map((league) => ({
+      id: league.uuid,
+      name: league.name
+    })) || [];
+  };
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>
@@ -116,22 +131,21 @@ export default function AddNewConfigurationDialog({ open = true, level, onConfir
               <TextField.Root value={name} placeholder="Enter name" onChange={(e) => setName(e.target.value)} />
             </FormRow>
             <FormRow label="Type">
-              <ItemTypeSelect value={type} onChange={(type) => setType(type)} />
+              <ItemTypeSelect value={type} level={level + 1} onChange={(type) => setType(type)} />
             </FormRow>
-            {(type === ItemType.All || type === ItemType.LiveAndUpcoming) && (
-              <>
+            {(type === TemplateType.AllLeagues || type === TemplateType.LiveAndUpcoming) && (
                 <FormRow label="Select sport">
-                  <MultiSelectDropdown items={sports} selectedIDs={selectedSportUUIDs} onSelectionChange={handleSportsSelectionChange} />
+                  <MultiSelectDropdown items={getSportItems()} selectedIDs={selectedSportIDs} onSelectionChange={handleSportsSelectionChange} />
                 </FormRow>
-
+            )}
+            {(type === TemplateType.LiveAndUpcoming) && (
                 <FormRow label="Select league">
                   <MultiSelectDropdown
-                    items={leaguesForSports(selectedSportUUIDs)}
-                    selectedIDs={selectedLeagueUUIDs}
+                    items={getLeagueItems(selectedSportIDs)}
+                    selectedIDs={selectedLeagueIDs}
                     onSelectionChange={handleLeaguesSelectionChange}
                   />
                 </FormRow>
-              </>
             )}
           </Flex>
         </LoadDataDecorator>

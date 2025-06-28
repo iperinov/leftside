@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Heading, Separator } from "@radix-ui/themes";
-import React, { useState } from "react";
+import { useState } from "react";
 import { ConfigurationList } from "../components/configurations/ConfigurationList";
 import { CreateConfiguration } from "../components/configurations/CreateConfiguration";
 import { DeleteConfiguration } from "../components/configurations/DeleteConfiguration";
@@ -66,7 +66,7 @@ export default function ConfigurationsPage() {
           <Separator size="4" my="3" />
 
           <ConfigurationList
-            onEdit={(id, name) => navigate(`/configurations/${id}`)} 
+            onEdit={(id, name) => navigate(`/configuration/${id}`)} 
             onRename={(id, rev, name) => setRenameAction({ id, rev, name })}
             onDuplicate={(id, rev, name) => setDuplicateAction({ id, rev, name })}
             onDelete={(id, rev, name) => setDeleteAction({ id, rev, name })}

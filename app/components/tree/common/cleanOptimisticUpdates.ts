@@ -7,7 +7,7 @@ export function cleanOptimisticUpdates<T extends TreeItemData<T>>(queryClient: Q
     if (current) {
         const updated = structuredClone(current);
         for (const id of idsToClean) {
-            const item = updated.find((item) => item.uuid === id);
+            const item = updated.find((item) => item.id === id);
             if (item) {
                 item.pending = false;
                 queryClient.setQueryData(queryKey, updated);

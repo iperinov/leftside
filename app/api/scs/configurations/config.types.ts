@@ -49,7 +49,7 @@ export interface Filter {
     | "market"
     | "time"
     | "status";
-  value: string;
+  values: string[];
 }
 
 export interface FilterGroup {

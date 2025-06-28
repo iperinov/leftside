@@ -19,7 +19,7 @@ export default function Tree<T extends TreeItemData<T>>({
       {/* Render items in section */}
       {root.children?.map((child) => (
         <TreeItem
-          key={child.uuid}
+          key={child.id}
           item={child}
           level={level}
           parent={root}
@@ -34,7 +34,7 @@ export default function Tree<T extends TreeItemData<T>>({
           addLevelText={config.addToParent.toString}
           level={level}
           parent={root}
-          isInProgress={config.addToParent.inProgressID === root.uuid}
+          isInProgress={config.addToParent.inProgressID === root.id}
         />
       )}
     </Flex>

@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
 import { useRef } from "react";
-import type ItemData from "~/common/IdAndLabelData";
+import type ItemData from "~/common/ItemData";
 import { useControlledComponentClickOutside } from "~/hooks/common/useControlledComponnetClickOutside";
 import useRectOfElement from "~/hooks/common/useRectOfElement";
 import type { ControlledComponentProps } from "../shared/ControlledComponent";
@@ -35,21 +35,21 @@ function positionItemsList(rectOfTrigger: DOMRect, rectOfItemsList: DOMRect, ite
   itemsListRef.current.style.setProperty("width", `${rectOfTrigger.width}px`);
 }
 
-interface MultiSelectDropdownItemListProps {
-  items: ItemData[];
-  selectedIDs: string[];
-  onSelect: (selected: boolean, id: string) => void;
+interface MultiSelectDropdownItemListProps<T extends string | number> {
+  items: ItemData<T>[];
+  selectedIDs: T[];
+  onSelect: (selected: boolean, id: T) => void;
   triggerRef: React.RefObject<HTMLDivElement | null>;
 }
 
-export default function MultiSelectDropdownItemList({
+export default function MultiSelectDropdownItemList<T extends string | number>({
   open = false,
   onOpenChange = (open: boolean) => {},
   items,
   selectedIDs,
   onSelect,
   triggerRef,
-}: MultiSelectDropdownItemListProps & ControlledComponentProps) {
+}: MultiSelectDropdownItemListProps<T> & ControlledComponentProps) {
   const itemsListRef = useRef<HTMLDivElement>(null);
   const rectOfTrigger = useRectOfElement(triggerRef);
   const rectOfItemsList = useRectOfElement(itemsListRef);
@@ -66,7 +66,7 @@ export default function MultiSelectDropdownItemList({
       {open && (
         <Flex ref={itemsListRef} direction="column" px="3" py="2" overflow="auto" className="multiSelectDropdownItemList">
           {items.map((item) => (
-            <MultiSelectDropdownItem key={item.uuid} item={item} isSelected={selectedIDs.includes(item.uuid)} onSelect={onSelect} />
+            <MultiSelectDropdownItem key={item.id} item={item} isSelected={selectedIDs.includes(item.id)} onSelect={onSelect} />
           ))}
         </Flex>
       )}

@@ -1,26 +1,30 @@
 import { useState } from "react";
 import { Flex } from "@radix-ui/themes";
 import { findItemParent } from "~/components/tree/common/findItem";
-import styles from "./ModifyConfigurationPage.module.css";
-import AddNewConfigurationCategory from "~/components/configuration/AddNewConfigurationCategory";
-import RenameConfiguration from "~/components/configuration/RenameConfiguration";
-import DuplicateConfiguration from "~/components/configuration/DuplicateConfiguration";
-import DeleteConfiguration from "~/components/configuration/DeleteConfiguration";
-import ConfigurationSidebar from "~/components/configuration/ConfigurationSidebar";
 import { useConfigurationCategories } from "~/hooks/configurationCategories/useConfigurationCategories";
+import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
+import ConfigurationSidebar from "~/components/configuration/ConfigurationSidebar";
+import AddNewCategory from "~/components/configuration/AddNewCategory";
+import RenameCategory from "~/components/configuration/RenameCategory";
+import DuplicateCategory from "~/components/configuration/DuplicateCategory";
+import DeleteCategory from "~/components/configuration/DeleteCategory";
+import styles from "./ModifyConfigurationPage.module.css";
 
 interface ModifyConfigurationPageProps {
-  configUUID?: string;
+  configID?: string;
 }
 
-export default function ModifyConfigurationPage({ configUUID }: ModifyConfigurationPageProps) {
-  const { error, isLoading, data: categories } = useConfigurationCategories(configUUID!);
-  const [selectedUUID, setSelectedUUID] = useState<string>("");
-  const [addItemData, setAddItemData] = useState<{ level: number; parentUUID: string }>();
-  const [renameItemData, setRenameItemData] = useState<{ uuid: string; name: string }>();
-  const [duplicateItemData, setDuplicateItemData] = useState<{ uuid: string; name: string; parentUUID: string }>();
-  const [deleteItemData, setDeleteItemData] = useState<{ uuid: string }>();
+export default function ModifyConfigurationPage({ configID }: ModifyConfigurationPageProps) {
+  const { error, isLoading } = useConfigurationCategories(configID!);
+  const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
+  const [selectedID, setSelectedID] = useState<string>("");
+  const [addItemData, setAddItemData] = useState<{ level: number; parentID: string }>();
+  const [renameItemData, setRenameItemData] = useState<{ id: string; name: string }>();
+  const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parentID: string }>();
+  const [deleteItemData, setDeleteItemData] = useState<{ id: string }>();
+
+  console.log("ModifyConfigurationPage categories: ", error, isLoading, rootCategory.children);
 
   return (
     <>
@@ -28,25 +32,24 @@ export default function ModifyConfigurationPage({ configUUID }: ModifyConfigurat
         <Flex p="3" className={styles.configurationPage}>
           <aside className={styles.sideBar}>
             <ConfigurationSidebar
-              configUUID={configUUID}
-              selectedUUID={selectedUUID}
-              onSelected={(item) => setSelectedUUID(selectedUUID === item.uuid ? "" : item.uuid)}
-              onAdd={(level, parentUUID) => setAddItemData({ level, parentUUID })}
-              onRename={(item) => setRenameItemData({ uuid: item.uuid, name: item.name })}
+              selectedID={selectedID}
+              onSelected={(item) => setSelectedID(selectedID === item.id ? "" : item.id)}
+              onAdd={(level, parentID) => setAddItemData({ level, parentID })}
+              onRename={(item) => setRenameItemData({ id: item.id, name: item.name })}
               onDuplicate={(item) =>
-                setDuplicateItemData({ uuid: item.uuid, name: item.name, parentUUID: findItemParent(item.uuid, categories!)?.uuid || "" })
+                setDuplicateItemData({ id: item.id, name: item.name, parentID: findItemParent(item.id, rootCategory)?.id || "" })
               }
-              onDelete={(item) => setDeleteItemData({ uuid: item.uuid })}
+              onDelete={(item) => setDeleteItemData({ id: item.id })}
             />
           </aside>
 
           <main className={styles.mainContent}></main>
         </Flex>
 
-        {addItemData && <AddNewConfigurationCategory configUUID={configUUID!} {...addItemData} onCompleted={() => setAddItemData(undefined)} />}
-        {renameItemData && <RenameConfiguration {...renameItemData} onCompleted={() => setRenameItemData(undefined)} />}
-        {duplicateItemData && <DuplicateConfiguration {...duplicateItemData} onCompleted={() => setDuplicateItemData(undefined)} />}
-        {deleteItemData && <DeleteConfiguration {...deleteItemData} onCompleted={() => setDeleteItemData(undefined)} />}
+        {addItemData && <AddNewCategory {...addItemData} onCompleted={() => setAddItemData(undefined)} onCanceled={() => setAddItemData(undefined)}/>}
+        {renameItemData && <RenameCategory {...renameItemData} onCompleted={() => setRenameItemData(undefined)}  onCanceled={() => setRenameItemData(undefined)}/>}
+        {duplicateItemData && <DuplicateCategory {...duplicateItemData} onCompleted={() => setDuplicateItemData(undefined)} onCanceled={() => setDuplicateItemData(undefined)} />}
+        {deleteItemData && <DeleteCategory {...deleteItemData} onCompleted={() => setDeleteItemData(undefined)} onCanceled={() => setDeleteItemData(undefined)}/>}
       </LoadDataDecorator>
     </>
   );

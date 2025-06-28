@@ -9,6 +9,6 @@ export function meta() {
 export default function Configuration({ params }: Route.ComponentProps) {
   const { id } = params;
   return (
-    <ModifyConfigurationPage configUUID={id} />
+    <ModifyConfigurationPage configID={id} />
   )
 }
