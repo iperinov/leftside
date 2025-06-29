@@ -8,7 +8,9 @@ export function meta() {
 
 export default function Configuration({ params }: Route.ComponentProps) {
   const { id } = params;
+  const name = "TVG 2";
+  const edit = !!id;
   return (
-    <ModifyConfigurationPage configID={id} />
+    <ModifyConfigurationPage id={id} name={name} edit={edit} />
   )
 }

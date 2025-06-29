@@ -1,6 +1,6 @@
 import { Checkbox, Flex, Text } from "@radix-ui/themes";
 import "./MultiSelectDropdown.css";
-import type ItemData from "~/common/ItemData";
+import type ItemData from "~/components/categories/ItemData";
 
 interface MultiSelectDropdownItemProps<T extends string | number> {
   item: ItemData<T>;

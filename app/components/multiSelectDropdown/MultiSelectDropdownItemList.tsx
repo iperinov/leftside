@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
 import { useRef } from "react";
-import type ItemData from "~/common/ItemData";
+import type ItemData from "~/components/categories/ItemData";
 import { useControlledComponentClickOutside } from "~/hooks/common/useControlledComponnetClickOutside";
 import useRectOfElement from "~/hooks/common/useRectOfElement";
 import type { ControlledComponentProps } from "../shared/ControlledComponent";
@@ -14,6 +14,8 @@ function positionItemsList(rectOfTrigger: DOMRect, rectOfItemsList: DOMRect, ite
   const availableHeightAboveTrigger = rectOfTrigger.top - offset;
   const canPositionBelowTrigger = availableHeightBelowTrigger + offset >= rectOfItemsList.height;
   const canPositionAboveTrigger = availableHeightAboveTrigger + offset >= rectOfItemsList.height;
+
+  console.log("availableHeightBelowTrigger", availableHeightBelowTrigger, "availableHeightAboveTrigger", availableHeightAboveTrigger, "canPositionBelowTrigger", canPositionBelowTrigger, "canPositionAboveTrigger", canPositionAboveTrigger);
 
   switch (true) {
     case canPositionBelowTrigger:

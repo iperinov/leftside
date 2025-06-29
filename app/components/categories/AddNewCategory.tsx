@@ -1,5 +1,5 @@
 import { findItem, findItemParent, findItemSiblings } from "../tree/common/findItem";
-import { TemplateType } from "~/components/configuration/TemplateType";
+import { TemplateType } from "~/components/categories/TemplateType";
 import type CategoryTreeItem from "./CategoryTreeItem";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import AddNewCategoryDialog from "./AddNewCategoryDialog";

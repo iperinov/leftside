@@ -6,9 +6,9 @@ import styles from "./AddNewCategoryDialog.module.css";
 import { useLeagues } from "~/hooks/useLeagues";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
 import { useRealSports } from "~/hooks/useRealSport";
-import type ItemData from "~/common/ItemData";
 import type { League } from "~/api/ocs/ocs.types";
 import { TemplateType } from "./TemplateType";
+import type ItemData from "./ItemData";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;

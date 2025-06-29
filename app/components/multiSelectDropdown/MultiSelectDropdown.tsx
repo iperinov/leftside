@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import MultiSelectDropdownItemList from "./MultiSelectDropdownItemList";
 import PillsSelections from "./PillsSelections";
 import "./MultiSelectDropdown.css";
-import type ItemData from "~/common/ItemData";
+import type ItemData from "~/components/categories/ItemData";
 
 export interface ResultsSelectionProps<T extends string | number> {
   selectedIDs: T[];

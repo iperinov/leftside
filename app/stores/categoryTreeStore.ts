@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { Category } from "~/api/scs/configurations/config.types";
-import type CategoryTreeItem from "~/components/configuration/CategoryTreeItem";
+import type CategoryTreeItem from "~/components/categories/CategoryTreeItem";
 import { findItem, findItemSiblings } from "~/components/tree/common/findItem";
 import iterateItem from "~/components/tree/common/iterateItem";
 
