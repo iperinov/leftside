@@ -18,7 +18,7 @@ export default function MainLayout() {
   return (
     <>
       {/* Use minHeight: '100dvh' (viewport height with dynamic safe area) */}
-      <Flex direction="column" style={{ minHeight: "100dvh" }}>
+      <Flex direction="column" style={{ height: "100vh" }}>
         <Header />
         <Outlet />
       </Flex>

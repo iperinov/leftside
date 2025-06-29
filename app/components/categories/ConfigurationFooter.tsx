@@ -9,8 +9,8 @@ interface ConfigurationHeaderProps {
 export default function ConfigurationHeader({onCanceled, onCompleted, className}: ConfigurationHeaderProps & ClassNameProps) {
     return (
         <Flex align="end" className={className} >
-            <Button onClick={onCanceled}>Cancel</Button>
             <Button onClick={onCompleted}>Save changes</Button>
+            <Button onClick={onCanceled}>Cancel</Button>
         </Flex>
     )
 }

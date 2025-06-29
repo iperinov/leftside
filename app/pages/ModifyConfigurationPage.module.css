@@ -1,36 +1,23 @@
 .page {
-  height: 100vh;
+  height: 100%;
+  padding: 0.5rem;
 }
 
 .header {
   padding: 1rem;
   background-color: var(--accent-9);
   color: var(--accent-contrast);
+  border-radius: 0.5rem 0.5rem 0 0 ;
 }
 
 .content {
   flex: 1;
-  margin: 0.5rem;
 }
 
-.sideBar {
-  flex: 1;
-  min-width: 300px;
-  background-color: var(--accent-5);
-  border-right-width: 1px;
-  border-color: var(--accent-3);
-  border-radius: 0.5rem 0 0 0.5rem;
-  padding: 0.7rem;
-}
-
-.main {
-  flex: 2;
-  background-color: var(--accent-4);
-}
-
-.context {
-  flex: 1.5;
+.footer {
   padding: 1rem;
-  background-color: var(--accent-5);
-  border-radius: 0 0.5rem 0.5rem 0;
+  flex-direction: row-reverse;
+  background-color: var(--accent-9);
+  color: var(--accent-contrast);
+  border-radius: 0 0 0.5rem 0.5rem;
 }
