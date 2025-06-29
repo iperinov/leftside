@@ -42,7 +42,7 @@ export type DuplicateConfigApiResponse = DuplicateConfigApiSuccess | ApiError;
 export interface Filter {
   type:
     | "sport"
-    | "region"
+//  | "region"
     | "league"
     | "game"
     | "period"
@@ -53,8 +53,9 @@ export interface Filter {
 }
 
 export interface FilterGroup {
+  uuid: string;
   filters: Filter[];
-  "group-by"?: string;
+  groupBy?: string;
   order?: "asc" | "desc";
   limit?: number;
 }
@@ -64,7 +65,7 @@ export interface Category {
   name: string;
   children?: Category[];
   type: "flat" | "nested";
-  "filter-groups"?: FilterGroup[];
+  filterGroups?: FilterGroup[];
 }
 
 export interface CreateConfigApiIn {

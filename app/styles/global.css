@@ -65,3 +65,7 @@ body {
 .customDialogTitle {
   text-align: center;
 }
+
+.nohover {
+  background-color: transparent;
+} 

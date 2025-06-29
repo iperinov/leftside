@@ -1,3 +1,4 @@
+import type ClassNameProps from "../shared/ClassNameProps";
 import LoadingErrorSection from "./LoadingErrorSection";
 import LoadingSection from "./LoadingSection";
 
@@ -7,13 +8,13 @@ interface LoadDataDecoratorProps {
   children: React.ReactNode;
 }
 
-export default function LoadDataDecorator({children, error, isLoading}: LoadDataDecoratorProps) {
+export default function LoadDataDecorator({children, error, isLoading, className}: LoadDataDecoratorProps & ClassNameProps) {
   return (
     <>
       { error ? 
-          <LoadingErrorSection error={error}/> :
+          <LoadingErrorSection error={error} className={className}/> :
           isLoading ? 
-            <LoadingSection /> :
+            <LoadingSection className={className}/> :
             children
       }
     </>

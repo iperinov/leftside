@@ -6,7 +6,7 @@ import useRectOfElement from "~/hooks/common/useRectOfElement";
 import type { ControlledComponentProps } from "../shared/ControlledComponent";
 import MultiSelectDropdownItem from "./MultiSelectDropdownItem";
 
-function positionItemsList(rectOfTrigger: DOMRect, rectOfItemsList: DOMRect, itemsListRef: React.RefObject<HTMLDivElement | null>) {
+function positionItemsList(rectOfTrigger: DOMRect, rectOfItemsList: DOMRect, itemsListRef: React.RefObject<HTMLDivElement | null>, positionPreference: "above" | "below") {
   if (!itemsListRef.current) return;
 
   const offset = 3; // px
@@ -18,6 +18,12 @@ function positionItemsList(rectOfTrigger: DOMRect, rectOfItemsList: DOMRect, ite
   console.log("availableHeightBelowTrigger", availableHeightBelowTrigger, "availableHeightAboveTrigger", availableHeightAboveTrigger, "canPositionBelowTrigger", canPositionBelowTrigger, "canPositionAboveTrigger", canPositionAboveTrigger);
 
   switch (true) {
+    case positionPreference === "below" && canPositionBelowTrigger:
+      itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
+      break;
+    case positionPreference === "above" && canPositionAboveTrigger:
+      itemsListRef.current.style.setProperty("top", `${rectOfTrigger.top - rectOfItemsList.height + window.scrollY - offset}px`);
+      break;
     case canPositionBelowTrigger:
       itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
       break;
@@ -41,6 +47,7 @@ interface MultiSelectDropdownItemListProps<T extends string | number> {
   items: ItemData<T>[];
   selectedIDs: T[];
   onSelect: (selected: boolean, id: T) => void;
+  positionPreference: "above" | "below";
   triggerRef: React.RefObject<HTMLDivElement | null>;
 }
 
@@ -50,6 +57,7 @@ export default function MultiSelectDropdownItemList<T extends string | number>({
   items,
   selectedIDs,
   onSelect,
+  positionPreference,
   triggerRef,
 }: MultiSelectDropdownItemListProps<T> & ControlledComponentProps) {
   const itemsListRef = useRef<HTMLDivElement>(null);
@@ -58,7 +66,7 @@ export default function MultiSelectDropdownItemList<T extends string | number>({
   useControlledComponentClickOutside(itemsListRef, open, onOpenChange);
 
   if (itemsListRef?.current && rectOfTrigger && rectOfItemsList) {
-    positionItemsList(rectOfTrigger, rectOfItemsList, itemsListRef);
+    positionItemsList(rectOfTrigger, rectOfItemsList, itemsListRef, positionPreference);
   }
 
   console.log(open, Boolean(itemsListRef?.current), Boolean(rectOfTrigger), Boolean(rectOfItemsList), items.length)

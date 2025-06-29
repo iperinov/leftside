@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Flex } from "@radix-ui/themes";
-import { useConfigurationCategories } from "~/hooks/configurationCategories/useConfigurationCategories";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import styles from "./ModifyConfigurationPage.module.css";
 import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
 import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 import ConfigurationContent from "~/components/categories/ConfigurationContent";
+import { useCategories } from "~/hooks/configurationCategories/useCategories";
 
 interface ModifyConfigurationPageProps {
   id: string;
@@ -14,7 +14,7 @@ interface ModifyConfigurationPageProps {
 }
 
 export default function ModifyConfigurationPage({ id, name, edit }: ModifyConfigurationPageProps) {
-  const { error, isLoading } = useConfigurationCategories(id!);
+  const { error, isLoading } = useCategories(id!);
   const [selectedID, setSelectedID] = useState<string>("");
 
   return (

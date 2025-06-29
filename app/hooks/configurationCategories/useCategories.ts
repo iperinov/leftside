@@ -13,15 +13,15 @@ function toCategoryTree(categories: Category[]): CategoryTreeItem[] {
         id: category.uuid,
         name: category.name,
         type: category.type,
-        "filter-groups": category["filter-groups"],
+        filterGroups: category.filterGroups,
         children: category.type == "flat" ? undefined : toCategoryTree(category.children || []),
       } as CategoryTreeItem)
   );
 }
 
-export const useConfigurationCategories = (configID: string) => {
+export const useCategories = (configID: string) => {
   const resetTreeStore = useCategoryTreeStore((state) => state.reset);
-  const rootCategories = useCategoryTreeStore((state) => state.rootCategories);
+  const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
 
   return useQuery({
     queryKey: queryKeys.configurationCategories(configID),
@@ -29,8 +29,7 @@ export const useConfigurationCategories = (configID: string) => {
       const categories = await getConfigurationCategories(configID);
       const tree = toCategoryTree(categories)
       resetTreeStore(tree);
-      console.log("rootCategories: ", categories, tree, rootCategories());
-      return rootCategories();
+      return {root: rootCategory};
     },
   });
 };

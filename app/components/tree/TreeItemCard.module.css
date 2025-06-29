@@ -17,10 +17,6 @@
   animation: blink 1s ease-in-out infinite;
 }
 
-.reorderButton {
-  background-color: inherit;
-}
-
 .reorderButton[data-hidden] {
   visibility: hidden;
 }

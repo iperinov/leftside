@@ -15,6 +15,7 @@ interface MultiSelectDropdownProps<T extends string | number> {
   items?: ItemData<T>[];
   selectedIDs?: T[];
   onSelectionChange?: (selectedIDs: T[]) => void;
+  positionPreference?: "above" | "below";
   ResultsPanel?: (props: ResultsSelectionProps<T>) => React.ReactNode;
 }
 
@@ -22,6 +23,7 @@ export default function MultiSelectDropdown<T extends string | number>({
   items = [],
   selectedIDs = [],
   onSelectionChange,
+  positionPreference = "below",
   ResultsPanel = PillsSelections,
 }: MultiSelectDropdownProps<T>) {
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -100,6 +102,7 @@ export default function MultiSelectDropdown<T extends string | number>({
           items={filteredItems}
           selectedIDs={selectedIDs}
           onSelect={onSelect}
+          positionPreference={positionPreference}
           triggerRef={triggerRef}
         />
       )}

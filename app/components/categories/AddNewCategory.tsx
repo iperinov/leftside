@@ -27,13 +27,14 @@ export default function AddNewCategory({ parentID, level, onCompleted, onCancele
         addCategory(parentID, { ...baseCategory, type: "nested", children: [] });
         break;
       case TemplateType.Child:
-        addCategory(parentID, { ...baseCategory, "filter-groups": [] });
+        addCategory(parentID, { ...baseCategory, filterGroups: [] });
         break;
       case TemplateType.LiveAndUpcoming:
         addCategory(parentID, {
           ...baseCategory,
-          "filter-groups": [
+          filterGroups: [
             {
+              uuid: crypto.randomUUID(),
               filters: [
                 { type: "sport", values: sports },
                 { type: "league", values: leagues },
@@ -45,8 +46,9 @@ export default function AddNewCategory({ parentID, level, onCompleted, onCancele
       case TemplateType.AllLeagues:
         addCategory(parentID, {
           ...baseCategory,
-          "filter-groups": [
+          filterGroups: [
             {
+              uuid: crypto.randomUUID(),
               filters: [
                 { type: "sport", values: sports },
                 { type: "league", values: ["All"] },

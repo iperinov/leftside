@@ -1,9 +1,10 @@
 import { Flex } from "@radix-ui/themes";
 import styles from "./LoadingSection.module.css";
+import type ClassNameProps from "../shared/ClassNameProps";
 
-export default function LoadingSection() {
+export default function LoadingSection({className}: ClassNameProps) {
   return (
-    <Flex direction="column" align="center" justify="center" width="100%" height="100%">
+    <Flex direction="column" align="center" justify="center" width="100%" height="100%" className={className}>
       <svg className={styles.spinnerIcon} viewBox="0 0 24 24" fill="none">
         <circle
           className={styles.spinnerBg}
