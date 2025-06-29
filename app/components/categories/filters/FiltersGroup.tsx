@@ -11,10 +11,10 @@ export interface FilterGroupProps {
 }
 
 export default function FiltersGroup(props: FilterGroupProps) {
-   return (
+  return (
     <Flex className={styles.filtersGroup} gap="2" align="center">
-      <SportsFilter {...props}/>
-      <LeaguesFilter {...props}/>
+      <SportsFilter {...props} />
+      <LeaguesFilter {...props} />
     </Flex>
   );
 }

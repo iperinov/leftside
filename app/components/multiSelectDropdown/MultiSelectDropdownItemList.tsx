@@ -15,8 +15,6 @@ function positionItemsList(rectOfTrigger: DOMRect, rectOfItemsList: DOMRect, ite
   const canPositionBelowTrigger = availableHeightBelowTrigger + offset >= rectOfItemsList.height;
   const canPositionAboveTrigger = availableHeightAboveTrigger + offset >= rectOfItemsList.height;
 
-  console.log("availableHeightBelowTrigger", availableHeightBelowTrigger, "availableHeightAboveTrigger", availableHeightAboveTrigger, "canPositionBelowTrigger", canPositionBelowTrigger, "canPositionAboveTrigger", canPositionAboveTrigger);
-
   switch (true) {
     case positionPreference === "below" && canPositionBelowTrigger:
       itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
@@ -68,8 +66,6 @@ export default function MultiSelectDropdownItemList<T extends string | number>({
   if (itemsListRef?.current && rectOfTrigger && rectOfItemsList) {
     positionItemsList(rectOfTrigger, rectOfItemsList, itemsListRef, positionPreference);
   }
-
-  console.log(open, Boolean(itemsListRef?.current), Boolean(rectOfTrigger), Boolean(rectOfItemsList), items.length)
 
   return (
     <>

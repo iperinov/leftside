@@ -1,6 +1,6 @@
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import Filter from "./Filter";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import type ItemData from "../ItemData";
 import type { League } from "~/api/ocs/ocs.types";
@@ -19,7 +19,6 @@ export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroup
   const { data, isLoading, error } = useLeaguesForSports(sportsSelections);
   const updateLeaguesFilter = useCategoryTreeStore((state) => state.updateLeaguesFilter);
   const [show, setShow] = useState(false);
-  //const filteredSelections = selections.filter((uuid) => data?.some((item) => item.uuid === uuid));
   
   return (
     <>
@@ -29,7 +28,7 @@ export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroup
           label={"Leagues"}
           values={selections.map((id) => {
             const league = data?.find((item) => item.uuid === id);
-            return league ? league.name : "Unknown";
+            return league ? league.name : "";
           })}
           onClick={() => setShow(true)}
           className={`${styles.filter}`}

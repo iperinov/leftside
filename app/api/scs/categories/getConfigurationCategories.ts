@@ -6,7 +6,6 @@ const scsUrl = getAppConfig().scs.baseUrl;
 
 export const getConfigurationCategories = async (configID: string): Promise<Category[]> => {
   const url = new URL(`${scsUrl}/config/${configID}`);
-  console.log("get config categories: ", url);
   // TODO:
 
   await new Promise((resolve) => setTimeout(resolve, 1000));

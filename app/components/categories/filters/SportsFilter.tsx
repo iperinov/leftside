@@ -15,7 +15,7 @@ interface SportFilterProps {
 }
 
 function toItemData(sports: RealSport[]): ItemData<string>[] {
-  return sports.map((sport) => ({ id: String(sport.uuid), name: sport.name }));
+  return sports.map((sport) => ({ id: String(sport.id), name: sport.name }));
 }
 
 export default function SportsFilter({ categoryID, filterGroupID, onChange }: SportFilterProps & FilterGroupProps) {
@@ -31,7 +31,7 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
           key={"sport"}
           label={"Sports"}
           values={selections.map((id) => {
-            const realSport = data?.find((item) => item.uuid === id);
+            const realSport = data?.find((item) => String(item.id) === id);
             return realSport ? realSport.name : "Unknown";
           })}
           onClick={() => setShow(true)}
