@@ -13,11 +13,15 @@ export default function MultiSelectDropdownItem<T extends string | number>({
   isSelected,
   onSelect,
 }: MultiSelectDropdownItemProps<T>) {
+
+  if (item.name == "BASKETBALL")
+    console.log("MultiSelectDropdownItem ", item, " - ", isSelected);
+
   return (
     <Text as="label" size="2" className="noselect multiSelectDropdownItem">
       <Flex gap="2">
         <Checkbox
-          defaultChecked={isSelected}
+          checked={isSelected}
           onCheckedChange={(checked) => onSelect(!!checked, item.id)}
         />
         {item.name}

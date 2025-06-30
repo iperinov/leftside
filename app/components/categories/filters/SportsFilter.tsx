@@ -32,6 +32,7 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
           key={"sport"}
           label={"Sports"}
           values={selections.map((id) => {
+            if (id === allStringItemData.id) return "All";
             const realSport = data?.find((item) => String(item.id) === id);
             return realSport ? realSport.name : "";
           })}
@@ -44,6 +45,7 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
         <MultiSelectDialog<string>
           items={toItemData(data)}
           onConfirm={(selectedIDs) => {
+            if (selectedIDs.includes(allStringItemData.id)) selectedIDs = [allStringItemData.id];
             updateSportsFilters(categoryID, filterGroupID, selectedIDs);
             setShow(false);
           }}
@@ -51,6 +53,7 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
           title="Select Sports"
           valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
           defaultSelectedIDs={selections}
+          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allStringItemData.id) ? selectedIDs : [allStringItemData.id]}
         />
       )}
     </>

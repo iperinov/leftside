@@ -1,3 +1,4 @@
+import { allStringItemData } from "~/components/categories/ItemData";
 import { useEvents } from "./useEvents";
 import { useLeagueByEvents } from "./useLeagueByEvent";
 
@@ -13,6 +14,9 @@ export interface EventEx extends Event {
 export default function useMarketsForLeagues(leagues: string[]) {
   const { data: events, isLoading: isLoadingEvents, error: errorEvents } = useEvents();
   const { data: leagueByEvents, isLoading: isLoadingLeagueByEvents, error: errorLeagueByEvents } = useLeagueByEvents();
+  if (leagues?.length === 1 && leagues[0] === allStringItemData.id) {
+      return { data: events, isLoading: isLoadingEvents, error: errorEvents } 
+  }
 
   const combinedEvents = events
     ?.map((event) => {

@@ -67,6 +67,9 @@ export default function MultiSelectDropdownItemList<T extends string | number>({
     positionItemsList(rectOfTrigger, rectOfItemsList, itemsListRef, positionPreference);
   }
 
+console.log("selected ", selectedIDs);
+
+
   return (
     <>
       {open && (

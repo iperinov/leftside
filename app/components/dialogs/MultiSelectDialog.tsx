@@ -13,6 +13,7 @@ interface MultiSelectDialogProps<T extends string | number> {
   open?: boolean;
   items: ItemData<T>[];
   defaultSelectedIDs?: T[];
+  onSelectionChange?: (selectedIDs: T[]) => T[];
   onConfirm: (selectedIDs: T[]) => void;
   onCancel?: () => void;
   valid?: (values: T[]) => boolean;
@@ -28,6 +29,7 @@ export default function MultiSelectDialog<T extends string | number>({
   items,
   defaultSelectedIDs = [],
   onConfirm,
+  onSelectionChange = () => [],
   onCancel = () => {},
   valid = () => true,
 }: MultiSelectDialogProps<T>) {
@@ -41,7 +43,8 @@ export default function MultiSelectDialog<T extends string | number>({
 
   const handleSelectionChange = useCallback(
     (selectedIDs: T[]) => {
-      setSelectedIDs(selectedIDs);
+      const modifiedSelection = onSelectionChange?.(selectedIDs);
+      setSelectedIDs(modifiedSelection);
     },
     [selectedIDs]
   );

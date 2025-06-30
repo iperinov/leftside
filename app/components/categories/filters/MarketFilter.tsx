@@ -34,6 +34,7 @@ export default function MarketFilter({ categoryID, filterGroupID, onChange }: Ma
           key={"market"}
           label={"Markets"}
           values={selections.map((id) => {
+            if (id === allStringItemData.id) return "All";
             const event = data?.find((event) => String(event.id) === id);
             return event ? event.description : "";
           })}
@@ -54,6 +55,7 @@ export default function MarketFilter({ categoryID, filterGroupID, onChange }: Ma
           title="Select Markets"
           valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
           defaultSelectedIDs={selections}
+          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allStringItemData.id) ? selectedIDs : [allStringItemData.id]}
         />
       )}
     </>

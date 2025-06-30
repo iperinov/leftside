@@ -22,7 +22,7 @@ export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroup
   const updateLeaguesFilter = useCategoryTreeStore((state) => state.updateLeaguesFilter);
   const [show, setShow] = useState(false);
   const selections = leagueFilters(categoryID, filterGroupID);
-  
+
   return (
     <>
       <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
@@ -30,6 +30,7 @@ export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroup
           key={"league"}
           label={"Leagues"}
           values={selections.map((id) => {
+            if (id === allStringItemData.id) return "All";
             const league = data?.find((item) => item.uuid === id);
             return league ? league.name : "";
           })}
@@ -50,6 +51,7 @@ export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroup
           title="Select Leagues"
           valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
           defaultSelectedIDs={selections}
+          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allStringItemData.id) ? selectedIDs : [allStringItemData.id]}
         />
       )}
     </>
