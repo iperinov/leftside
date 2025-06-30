@@ -19,21 +19,13 @@ function toItemData(events: Event[]): ItemData<string>[] {
 }
 
 export default function MarketFilter({ categoryID, filterGroupID, onChange }: MarketFilterProps & FilterGroupProps) {
-  const selections = useCategoryTreeStore((state) => state.marketFilters(categoryID, filterGroupID));
-  const selectedLeagues = useCategoryTreeStore((state) => state.leagueFilters(categoryID, filterGroupID));
+  const marketFilters = useCategoryTreeStore((state) => state.marketFilters);
+  const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
+  const selectedLeagues = leagueFilters(categoryID, filterGroupID);
   const { data, isLoading, error } = useMarketsForLeagues(selectedLeagues);
   const updateMarketsFilter = useCategoryTreeStore((state) => state.updateMarketsFilter);
   const [show, setShow] = useState(false);
-
-    console.log("MarketFilter", {
-      categoryID,
-      filterGroupID,
-      selections,
-      selectedLeagues,
-      data,
-      isLoading,
-      error,
-    });
+  const selections = marketFilters(categoryID, filterGroupID);
 
   return (
     <>
@@ -47,6 +39,7 @@ export default function MarketFilter({ categoryID, filterGroupID, onChange }: Ma
           })}
           onClick={() => setShow(true)}
           className={`${styles.filter}`}
+          disabled={selectedLeagues.length === 0}
         />
       </LoadDataDecorator>
 

@@ -24,10 +24,11 @@ function toItemData(): ItemData<string>[] {
 }
 
 export default function TimeFilter({ categoryID, filterGroupID }: FilterGroupProps) {
-  const selection = useCategoryTreeStore((state) => state.timeFilter(categoryID, filterGroupID));
+  const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
   const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
   const [show, setShow] = useState(false);
   const items = toItemData();
+  const selection = timeFilter(categoryID, filterGroupID);
   const value = items.find((item) => item.id === selection)?.name;
 
   return (

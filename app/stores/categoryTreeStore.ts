@@ -10,9 +10,11 @@ interface CategoryTreeState {
 
 interface CategoryTreeGetters {
   getFilterGroup: (categoryID: string, filterID: string) => FilterGroup | undefined;
+
   findCategory: (id: string) => CategoryTreeItem | undefined;
   findParentCategory: (id: string) => CategoryTreeItem | undefined;
   findCategorySiblings: (id: string) => CategoryTreeItem[] | undefined;
+
   filters: (categoryID: string, filterID: string, type: string) => string[];
   sportFilters: (categoryID: string, filterID: string) => string[];
   leagueFilters: (categoryID: string, filterID: string) => string[];
@@ -31,6 +33,7 @@ interface CategoryTreeMutations {
   deleteCategory: (id: string) => boolean;
   duplicateCategory: (id: string, name: string, parentID: string) => boolean;
 
+  addEmptyFilterGroup: (categoryID: string) => boolean;
   deleteFilterGroup: (categoryID: string, groupID: string) => boolean;
   duplicateFilterGroup: (categoryID: string, groupID: string) => boolean;
 
@@ -137,6 +140,21 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     } else {
       parent.children = [newItem];
     }
+    set({ rootCategory: rootCategory });
+    return true;
+  },
+
+  addEmptyFilterGroup: (categoryID: string) => {
+    const rootCategory = structuredClone(get().rootCategory);
+    const category = findItem(categoryID, rootCategory);
+    if (!category) return false;
+    const emptyFilterGroup = {uuid: crypto.randomUUID(), filters: []} as FilterGroup;
+    if (category.filterGroups) {
+      category.filterGroups.push(emptyFilterGroup);
+    } else {
+      category.filterGroups = [emptyFilterGroup];
+    }
+    console.log("Add empty filter group: ", emptyFilterGroup.uuid);
     set({ rootCategory: rootCategory });
     return true;
   },

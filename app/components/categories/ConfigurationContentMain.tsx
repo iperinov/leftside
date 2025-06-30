@@ -1,4 +1,4 @@
-import { Flex } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import type ClassNameProps from "../shared/ClassNameProps";
 import FiltersGroupRow from "./filters/FilterGroupRow";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
@@ -6,6 +6,7 @@ import { useState } from "react";
 import DuplicateFilterGroup from "./DuplicateFilterGroup";
 import DeleteFilterGroup from "./DeleteFilterGroup";
 import EmptyFilterGroupRow from "./filters/EmptyFilterGroupRow";
+import { findItem } from "../tree/common/findItem";
 
 interface ConfigurationContentMainProps {
   categoryID: string;
@@ -13,13 +14,13 @@ interface ConfigurationContentMainProps {
 
 export default function ConfigurationContentMain({ categoryID, className }: ConfigurationContentMainProps & ClassNameProps) {
   const category = useCategoryTreeStore((state) => state.findCategory(categoryID));
-  const [duplicateItemData, setDuplicateItemData] = useState<{categoryID: string, filterGroupID: string}>();
-  const [deleteItemData, setDeleteItemData] = useState<{categoryID: string, filterGroupID: string}>();
-  const [addNewFilterGroup, setAddNewFilterGroup] = useState<boolean>(false);
+  const addEmptyFilterGroup = useCategoryTreeStore((state) => state.addEmptyFilterGroup);
+  const [duplicateItemData, setDuplicateItemData] = useState<{ categoryID: string; filterGroupID: string }>();
+  const [deleteItemData, setDeleteItemData] = useState<{ categoryID: string; filterGroupID: string }>();
   const hasFilters = category?.filterGroups ? category.filterGroups.length > 0 : false;
+  const showAddNewFilterGroup = category?.type === "flat";
 
   console.log("ConfigurationContentMain", duplicateItemData);
-  
 
   return (
     <>
@@ -30,17 +31,25 @@ export default function ConfigurationContentMain({ categoryID, className }: Conf
               key={filterGroup.uuid}
               categoryID={category.id}
               filterGroupID={filterGroup.uuid}
-              onDuplicate={(categoryID, filterGroupID) => setDuplicateItemData({categoryID, filterGroupID})}
-              onDelete={(categoryID, filterGroupID) => setDeleteItemData({categoryID, filterGroupID})}
+              onDuplicate={(categoryID, filterGroupID) => setDuplicateItemData({ categoryID, filterGroupID })}
+              onDelete={(categoryID, filterGroupID) => setDeleteItemData({ categoryID, filterGroupID })}
               onReorder={() => console.log("Reorder filter group", filterGroup)}
             />
-          ))) : (
-            <EmptyFilterGroupRow
-              text={category?.type === "flat" ?
-                "No filters in this group. Click 'Add Filter' to create a new filter. Select child navigation item to proceed." :
-                "Select child navigation item to proceed."
-            }/>
-          )}
+          ))
+        ) : (
+          <EmptyFilterGroupRow
+            text={
+              category?.type === "flat"
+                ? "No filters in this group. Click 'Add Filter' to create a new filter. Select child navigation item to proceed."
+                : "Select child navigation item to proceed."
+            }
+          />
+        )}
+        {showAddNewFilterGroup && (
+          <Flex align="center" justify="center">
+            <Button onClick={() => addEmptyFilterGroup(categoryID)}>Add New Group</Button>
+          </Flex>
+        )}
       </Flex>
 
       {duplicateItemData && (
@@ -51,10 +60,7 @@ export default function ConfigurationContentMain({ categoryID, className }: Conf
         />
       )}
       {deleteItemData && (
-        <DeleteFilterGroup 
-          {...deleteItemData} 
-          onCompleted={() => setDeleteItemData(undefined)} 
-          onCanceled={() => setDeleteItemData(undefined)} />
+        <DeleteFilterGroup {...deleteItemData} onCompleted={() => setDeleteItemData(undefined)} onCanceled={() => setDeleteItemData(undefined)} />
       )}
     </>
   );

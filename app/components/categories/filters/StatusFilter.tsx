@@ -16,10 +16,11 @@ function toItemData(): ItemData<string>[] {
 }
 
 export default function StatusFilter({ categoryID, filterGroupID }: FilterGroupProps) {
-  const selection = useCategoryTreeStore((state) => state.statusFilter(categoryID, filterGroupID));
+  const statusFilter = useCategoryTreeStore((state) => state.statusFilter);
   const updateStatusFilters = useCategoryTreeStore((state) => state.updateStatusFilter);
   const [show, setShow] = useState(false);
   const items = toItemData();
+  const selection = statusFilter(categoryID, filterGroupID)
   const value = items.find((item) => item.id === selection)?.name;
 
   return (

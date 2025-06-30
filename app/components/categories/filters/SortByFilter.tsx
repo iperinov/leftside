@@ -14,10 +14,11 @@ function toItemData(): ItemData<string>[] {
 }
 
 export default function SortByFilter({ categoryID, filterGroupID }: FilterGroupProps) {
-  const selection = useCategoryTreeStore((state) => state.sortByFilter(categoryID, filterGroupID));
+  const sortByFilter = useCategoryTreeStore((state) => state.sortByFilter);
   const updateSortByFilters = useCategoryTreeStore((state) => state.updateSortByFilter);
   const [show, setShow] = useState(false);
   const items = toItemData();
+  const selection = sortByFilter(categoryID, filterGroupID);
   const value = items.find((item) => item.id === String(selection))?.name;
 
   return (

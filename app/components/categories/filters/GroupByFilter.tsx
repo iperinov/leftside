@@ -26,11 +26,14 @@ function toItemData(sportsSelected: number, marketsSelected: number): ItemData<s
 }
 
 export default function GroupByFilter({ categoryID, filterGroupID }: FilterGroupProps) {
-  const selection = useCategoryTreeStore((state) => state.groupByFilter(categoryID, filterGroupID));
-  const sportsSelection = useCategoryTreeStore((state) => state.sportFilters(categoryID, filterGroupID));
-  // const marketsSelection = useCategoryTreeStore((state) => state.marketFilters(categoryID, filterGroupID));
+  const groupByFilter = useCategoryTreeStore((state) => state.groupByFilter);
+  const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
+  const marketFilters = useCategoryTreeStore((state) => state.marketFilters);
   const updateGroupByFilters = useCategoryTreeStore((state) => state.updateGroupByFilter);
   const [show, setShow] = useState(false);
+  const selection = groupByFilter(categoryID, filterGroupID);
+  const sportsSelection = sportFilters(categoryID, filterGroupID);
+  const marketsSelection = marketFilters(categoryID, filterGroupID);
   const items = toItemData(sportsSelection.length, 0/*marketsSelection.length*/);
   const value = items.find((item) => item.id === selection)?.name;
   

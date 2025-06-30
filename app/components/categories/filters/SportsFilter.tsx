@@ -20,10 +20,11 @@ function toItemData(sports: RealSport[]): ItemData<string>[] {
 
 export default function SportsFilter({ categoryID, filterGroupID, onChange }: SportFilterProps & FilterGroupProps) {
   const { data, isLoading, error } = useRealSports();
-  const selections = useCategoryTreeStore((state) => state.sportFilters(categoryID, filterGroupID));
+  const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const updateSportsFilters = useCategoryTreeStore((state) => state.updateSportsFilter);
   const [show, setShow] = useState(false);
-
+  const selections = sportFilters(categoryID, filterGroupID);
+  
   return (
     <>
       <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>

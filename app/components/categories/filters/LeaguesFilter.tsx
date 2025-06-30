@@ -15,11 +15,13 @@ function toItemData(leagues: League[]): ItemData<string>[] {
 }
 
 export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroupProps) {
-  const selections = useCategoryTreeStore((state) => state.leagueFilters(categoryID, filterGroupID));
-  const sportsSelections = useCategoryTreeStore((state) => state.sportFilters(categoryID, filterGroupID));
+  const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
+  const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
+  const sportsSelections = sportFilters(categoryID, filterGroupID);
   const { data, isLoading, error } = useLeaguesForSports(sportsSelections);
   const updateLeaguesFilter = useCategoryTreeStore((state) => state.updateLeaguesFilter);
   const [show, setShow] = useState(false);
+  const selections = leagueFilters(categoryID, filterGroupID);
   
   return (
     <>

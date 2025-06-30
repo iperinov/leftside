@@ -19,7 +19,7 @@ export default function FiltersGroup(props: FilterGroupProps) {
     <Flex className={styles.filtersGroup} gap="1" align="center" wrap={"wrap"}>
       <SportsFilter {...props} />
       <LeaguesFilter {...props} />
-      {/*<MarketFilter {...props} />*/}
+      <MarketFilter {...props} />
       <StatusFilter {...props} />
       <TimeFilter {...props} />
       <GroupByFilter {...props} />

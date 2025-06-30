@@ -19,10 +19,11 @@ function toItemData(): ItemData<string>[] {
 }
 
 export default function LimitFilter({ categoryID, filterGroupID }: FilterGroupProps) {
-  const selection = useCategoryTreeStore((state) => state.limitFilter(categoryID, filterGroupID));
+  const limitFilter = useCategoryTreeStore((state) => state.limitFilter);
   const updateLimitFilters = useCategoryTreeStore((state) => state.updateLimitFilter);
   const [show, setShow] = useState(false);
   const items = toItemData();
+  const selection = limitFilter(categoryID, filterGroupID);
   const value = items.find((item) => item.id === String(selection))?.name;
 
   return (
