@@ -22,8 +22,6 @@ export default function StatusFilter({ categoryID, filterGroupID }: FilterGroupP
   const items = toItemData();
   const value = items.find((item) => item.id === selection)?.name;
 
-  console.log("StatusFilter ", items, selection, value);
-
   return (
     <>
       <Filter key={"status"} label={"Status"} values={value ? [value] : []} onClick={() => setShow(true)} className={`${styles.filter}`} />

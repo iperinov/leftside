@@ -19,7 +19,7 @@ export default function ConfigurationContent({ className, selectedID, setSelecte
         onSelected={(item) => setSelectedID(selectedID === item.id ? "" : item.id)}
       />
 
-      <ConfigurationContentMain className={styles.main} />
+      <ConfigurationContentMain categoryID={selectedID} className={styles.main} />
 
       <ConfigurationContentContext className={styles.context}/>
     </Flex>

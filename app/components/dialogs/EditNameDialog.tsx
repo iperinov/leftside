@@ -34,8 +34,16 @@ export default function EditNameDialog({
     setIsOpen(false);
   };
 
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      onCancel();
+      setName(currentName); 
+    }
+  };
+
   return (
-    <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Content className={"customDialogContent"} size="3">
         {/* Title and description */}
         <Dialog.Title className={"customDialogTitle"}>{title}</Dialog.Title>

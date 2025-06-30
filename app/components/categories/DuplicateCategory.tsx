@@ -16,8 +16,8 @@ export default function DuplicateCategory({ id, name, parentID, onCompleted, onC
   
   return (
     <EditNameDialog
-      title="Duplicate Item"
-      description="Enter a new name for the duplicated item:"
+      title="Duplicate category"
+      description="Enter a new name for the duplicated category:"
       confirmText="Duplicate"
       open={true}
       currentName={name}

@@ -10,13 +10,16 @@ import styles from "./Filters.module.css";
 interface FilterGroupRowProps {
   categoryID: string;
   filterGroupID: string;
+  
+  onDuplicate?: (categoryID: string, filterGroupID: string) => void;
+  onDelete?: (categoryID: string, filterGroupID: string) => void;
   onReorder?: () => void;
 }
 
-export default function FiltersGroupRow({ categoryID, filterGroupID, onReorder }: FilterGroupRowProps & ClassNameProps) {
-  const menuItems: MenuItem<FilterGroup>[] = [
-    { name: "Duplicate", action: (context) => console.log("Duplicate", context) },
-    { name: "Delete", action: (context) => console.log("Delete", context) },
+export default function FiltersGroupRow({ categoryID, filterGroupID, onDuplicate, onDelete, onReorder }: FilterGroupRowProps & ClassNameProps) {
+  const menuItems: MenuItem<{categoryID:string, filterGroupID:string}>[] = [
+    { name: "Duplicate", action: (context) => context && onDuplicate?.(context.categoryID, context.filterGroupID) },
+    { name: "Delete", action: (context) => context && onDelete?.(context.categoryID, context.filterGroupID) },
   ];
 
   return (
@@ -28,7 +31,7 @@ export default function FiltersGroupRow({ categoryID, filterGroupID, onReorder }
       <FiltersGroup categoryID={categoryID} filterGroupID={filterGroupID} />
 
       <Box pr="3" pl="2">
-        <DropdownContextMenu items={menuItems}/>
+        <DropdownContextMenu items={menuItems} context={{categoryID, filterGroupID}}/>
       </Box>
     </Flex>
   );

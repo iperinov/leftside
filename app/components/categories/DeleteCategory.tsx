@@ -12,8 +12,8 @@ export default function DeleteCategory({ id, onCompleted, onCanceled }: DeleteCa
  
   return (
     <EditNameDialog
-      title="Delete Item"
-      description="Enter 'DELETE' to delete the item:"
+      title="Delete category"
+      description="Enter 'DELETE' to delete the category:"
       confirmText="Delete"
       destructive={true}
       open={true}

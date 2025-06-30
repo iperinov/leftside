@@ -31,6 +31,9 @@ interface CategoryTreeMutations {
   deleteCategory: (id: string) => boolean;
   duplicateCategory: (id: string, name: string, parentID: string) => boolean;
 
+  deleteFilterGroup: (categoryID: string, groupID: string) => boolean;
+  duplicateFilterGroup: (categoryID: string, groupID: string) => boolean;
+
   updateSportsFilter: (categoryID: string, filterID: string, selected: string[]) => void;
   updateLeaguesFilter: (categoryID: string, filterID: string, selected: string[]) => void;
   updateMarketsFilter: (categoryID: string, filterID: string, selected: string[]) => void;
@@ -134,6 +137,28 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     } else {
       parent.children = [newItem];
     }
+    set({ rootCategory: rootCategory });
+    return true;
+  },
+
+  deleteFilterGroup: (categoryID: string, groupID: string) => {
+    const rootCategory = structuredClone(get().rootCategory);
+    const category = findItem(categoryID, rootCategory);
+    if (!category) return false;
+    category.filterGroups = category.filterGroups?.filter((item) => item.uuid !== groupID);
+    set({ rootCategory: rootCategory });
+    return true;
+  },
+
+  duplicateFilterGroup: (categoryID: string, groupID: string) => {
+    const rootCategory = structuredClone(get().rootCategory);
+    const category = findItem(categoryID, rootCategory);
+    if (!category) return false;
+    const filterGroup = category.filterGroups?.find((item) => item.uuid === groupID);
+    if (!filterGroup) return false;
+    const newFilterGroup = {...structuredClone(filterGroup), uuid: crypto.randomUUID()}
+    category.filterGroups?.push(newFilterGroup);
+    console.log("Duplicate filter group: ", category.filterGroups);
     set({ rootCategory: rootCategory });
     return true;
   },

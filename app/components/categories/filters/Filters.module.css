@@ -25,6 +25,6 @@
     padding: 0.3rem;
 }
 
-.filtersGroupRow {
-
+.emptyFiltersGroupRow {
+    max-height: 100px;
 }

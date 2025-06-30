@@ -15,8 +15,8 @@ export default function RenameCategory({ id, name, onCompleted, onCanceled }: Re
 
   return (
     <EditNameDialog
-      title="Rename Item"
-      description="Enter a new name for the item:"
+      title="Rename category"
+      description="Enter a new name for the categort:"
       confirmText="Rename"
       open={true}
       currentName={name}
