@@ -40,7 +40,7 @@ export interface Event {
 }
 
 export interface LeagueByEvent {
-  eventId: number; // maps from `eid`
+  id: number; // maps from `eid`
   leagueId: number; // maps from `lid`
   realSportId: number; // maps from `rsid`
   gameTypeId: number; // maps from `gtid`

@@ -1,10 +1,10 @@
 import type ItemData from "../ItemData";
 import styles from "./Filters.module.css";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import type { FilterGroupProps } from "./FiltersGroup";
 import SelectDialog from "~/components/dialogs/SelectDialog";
 import Filter from "./Filter";
 import { useState } from "react";
+import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 
 function toItemData(): ItemData<string>[] {
   return [

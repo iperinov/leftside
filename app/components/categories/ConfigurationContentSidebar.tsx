@@ -6,10 +6,10 @@ import type CategoryTreeItem from "./CategoryTreeItem";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ClassNameProps from "../shared/ClassNameProps";
 import { findItemParent } from "../tree/common/findItem";
-import AddNewCategory from "./AddNewCategory";
-import RenameCategory from "./RenameCategory";
-import DuplicateCategory from "./DuplicateCategory";
-import DeleteCategory from "./DeleteCategory";
+import AddNewCategory from "./category/AddNewCategory";
+import RenameCategory from "./category/RenameCategory";
+import DeleteCategory from "./category/DeleteCategory";
+import DuplicateCategory from "./category/DuplicateCategory";
 
 interface ConfigurationContentSidebarProps {
   selectedID: string;

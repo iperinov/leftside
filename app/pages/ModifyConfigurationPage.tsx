@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Flex } from "@radix-ui/themes";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import styles from "./ModifyConfigurationPage.module.css";
-import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
-import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
-import ConfigurationContent from "~/components/categories/ConfigurationContent";
 import { useCategories } from "~/hooks/configurationCategories/useCategories";
+import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
+import ConfigurationContent from "~/components/categories/ConfigurationContent";
+import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 
 interface ModifyConfigurationPageProps {
   id: string;

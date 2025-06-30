@@ -7,15 +7,15 @@ import type ItemData from "../ItemData";
 import type { RealSport } from "~/api/ocs/ocs.types";
 import styles from "./Filters.module.css";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import type { FilterGroupProps } from "./FiltersGroup";
-import { allStringItemData } from "../ItemData";
+import { allItemData } from "../ItemData";
+import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 
 interface SportFilterProps {
     onChange?: (selectedIDs: string[]) => void;
 }
 
 function toItemData(sports: RealSport[]): ItemData<string>[] {
-  return [allStringItemData, ...sports.map((sport) => ({ id: String(sport.id), name: sport.name }))];
+  return [allItemData, ...sports.map((sport) => ({ id: String(sport.id), name: sport.name }))];
 }
 
 export default function SportsFilter({ categoryID, filterGroupID, onChange }: SportFilterProps & FilterGroupProps) {
@@ -32,7 +32,7 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
           key={"sport"}
           label={"Sports"}
           values={selections.map((id) => {
-            if (id === allStringItemData.id) return "All";
+            if (id === allItemData.id) return "All";
             const realSport = data?.find((item) => String(item.id) === id);
             return realSport ? realSport.name : "";
           })}
@@ -45,7 +45,6 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
         <MultiSelectDialog<string>
           items={toItemData(data)}
           onConfirm={(selectedIDs) => {
-            if (selectedIDs.includes(allStringItemData.id)) selectedIDs = [allStringItemData.id];
             updateSportsFilters(categoryID, filterGroupID, selectedIDs);
             setShow(false);
           }}
@@ -53,7 +52,7 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
           title="Select Sports"
           valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
           defaultSelectedIDs={selections}
-          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allStringItemData.id) ? selectedIDs : [allStringItemData.id]}
+          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allItemData.id) ? selectedIDs : [allItemData.id]}
         />
       )}
     </>

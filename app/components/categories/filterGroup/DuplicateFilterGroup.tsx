@@ -1,6 +1,5 @@
-import ConfirmDialog from "../dialogs/ConfirmDialog.";
-import EditNameDialog from "../dialogs/EditNameDialog";
-import { findItemSiblings } from "../tree/common/findItem";
+
+import ConfirmDialog from "~/components/dialogs/ConfirmDialog.";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 
 interface DuplicateFilterGroupProps {
@@ -10,7 +9,7 @@ interface DuplicateFilterGroupProps {
   onCanceled?: () => void;
 }
 
-export default function DuplicateCategory({ categoryID, filterGroupID, onCompleted, onCanceled }: DuplicateFilterGroupProps) {
+export default function DuplicateFilterGroup({ categoryID, filterGroupID, onCompleted, onCanceled }: DuplicateFilterGroupProps) {
   const duplicateFilterGroup = useCategoryTreeStore((state) => state.duplicateFilterGroup);
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   

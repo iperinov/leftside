@@ -1,5 +1,6 @@
-import EditNameDialog from "../dialogs/EditNameDialog";
-import { findItemSiblings } from "../tree/common/findItem";
+
+import EditNameDialog from "~/components/dialogs/EditNameDialog";
+import { findItemSiblings } from "~/components/tree/common/findItem";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 
 interface RenameCategoryProps {

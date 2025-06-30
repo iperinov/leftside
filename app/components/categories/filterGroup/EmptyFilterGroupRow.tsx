@@ -1,5 +1,5 @@
 import { Flex, Text } from "@radix-ui/themes";
-import styles from "./Filters.module.css";
+import styles from "../filters/Filters.module.css";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 interface EmptyFilterGroupRowProps {

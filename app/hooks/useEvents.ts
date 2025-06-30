@@ -4,7 +4,7 @@ import { queryKeys } from "../lib/queryKeys";
 
 export const useEvents = () => {
   return useQuery({
-    queryKey: queryKeys.leagueByEvent(),
+    queryKey: queryKeys.events(),
     queryFn: () => getEvents(),
   });
 };

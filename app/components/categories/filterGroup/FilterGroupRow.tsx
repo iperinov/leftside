@@ -3,9 +3,8 @@ import { Box, Button, Flex } from "@radix-ui/themes";
 import type { MenuItem } from "../../dropdownContextMenu/DropdownContextMenu";
 import DropdownContextMenu from "../../dropdownContextMenu/DropdownContextMenu";
 import FiltersGroup from "./FiltersGroup";
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import type ClassNameProps from "~/components/shared/ClassNameProps";
-import styles from "./Filters.module.css";
+import styles from "../filters/Filters.module.css";
 
 interface FilterGroupRowProps {
   categoryID: string;

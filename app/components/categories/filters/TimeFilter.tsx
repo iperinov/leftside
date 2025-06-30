@@ -1,15 +1,15 @@
 import type ItemData from "../ItemData";
 import styles from "./Filters.module.css";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import type { FilterGroupProps } from "./FiltersGroup";
 import SelectDialog from "~/components/dialogs/SelectDialog";
 import Filter from "./Filter";
 import { useState } from "react";
-import { allStringItemData } from "../ItemData";
+import { allItemData } from "../ItemData";
+import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 
 function toItemData(): ItemData<string>[] {
   return [
-    allStringItemData, 
+    allItemData, 
     { id: "1", name: "1h" },
     { id: "3",name: "3h"},
     { id: "6", name: "6h" },

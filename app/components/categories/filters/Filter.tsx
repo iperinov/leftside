@@ -1,7 +1,6 @@
 import { Button, Flex, Text } from "@radix-ui/themes";
 import type ClassNameProps from "../../shared/ClassNameProps";
 import { Pencil1Icon, PlusIcon } from "@radix-ui/react-icons";
-import styles from "./Filters.module.css";
 
 interface FilterProps {
   label: string;

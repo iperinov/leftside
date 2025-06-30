@@ -1,11 +1,11 @@
 import type ItemData from "../ItemData";
 import styles from "./Filters.module.css";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import type { FilterGroupProps } from "./FiltersGroup";
 import SelectDialog from "~/components/dialogs/SelectDialog";
 import Filter from "./Filter";
 import { useState } from "react";
-import { allStringItemData } from "../ItemData";
+import { allItemData } from "../ItemData";
+import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 
 function toItemData(): ItemData<string>[] {
   let items: ItemData<string>[] = [];
@@ -15,7 +15,7 @@ function toItemData(): ItemData<string>[] {
       name: `${i}`,
     });
   }
-  return [allStringItemData, ...items];
+  return [allItemData, ...items];
 }
 
 export default function LimitFilter({ categoryID, filterGroupID }: FilterGroupProps) {

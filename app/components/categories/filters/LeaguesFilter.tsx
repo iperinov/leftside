@@ -1,17 +1,17 @@
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import Filter from "./Filter";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import type ItemData from "../ItemData";
 import type { League } from "~/api/ocs/ocs.types";
 import styles from "./Filters.module.css";
 import useLeaguesForSports from "~/hooks/useLeaguesForSports";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import type { FilterGroupProps } from "./FiltersGroup";
-import { allStringItemData } from "../ItemData";
+import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
+import { allItemData } from "../ItemData";
 
 function toItemData(leagues: League[]): ItemData<string>[] {
-  return [allStringItemData, ...leagues.map((league) => ({ id: league.uuid, name: league.name }))];
+  return [allItemData, ...leagues.map((league) => ({ id: String(league.id), name: league.name }))];
 }
 
 export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroupProps) {
@@ -30,8 +30,8 @@ export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroup
           key={"league"}
           label={"Leagues"}
           values={selections.map((id) => {
-            if (id === allStringItemData.id) return "All";
-            const league = data?.find((item) => item.uuid === id);
+            if (id === allItemData.id) return "All";
+            const league = data?.find((item) => String(item.id) === id);
             return league ? league.name : "";
           })}
           onClick={() => setShow(true)}
@@ -51,7 +51,7 @@ export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroup
           title="Select Leagues"
           valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
           defaultSelectedIDs={selections}
-          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allStringItemData.id) ? selectedIDs : [allStringItemData.id]}
+          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allItemData.id) ? selectedIDs : [allItemData.id]}
         />
       )}
     </>

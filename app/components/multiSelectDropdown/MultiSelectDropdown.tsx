@@ -30,6 +30,9 @@ export default function MultiSelectDropdown<T extends string | number>({
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
 
+  console.log("items0 ", items.slice(0, 3));
+
+
   const filteredItems =
     searchValue.length === 0
       ? items

@@ -1,12 +1,11 @@
 import { Button, Flex } from "@radix-ui/themes";
 import type ClassNameProps from "../shared/ClassNameProps";
-import FiltersGroupRow from "./filters/FilterGroupRow";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { useState } from "react";
-import DuplicateFilterGroup from "./DuplicateFilterGroup";
-import DeleteFilterGroup from "./DeleteFilterGroup";
-import EmptyFilterGroupRow from "./filters/EmptyFilterGroupRow";
-import { findItem } from "../tree/common/findItem";
+import FiltersGroupRow from "./filterGroup/FilterGroupRow";
+import EmptyFilterGroupRow from "./filterGroup/EmptyFilterGroupRow";
+import DuplicateFilterGroup from "./filterGroup/DuplicateFilterGroup";
+import DeleteFilterGroup from "./filterGroup/DeleteFilterGroup";
 
 interface ConfigurationContentMainProps {
   categoryID: string;

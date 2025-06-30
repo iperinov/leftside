@@ -1,14 +1,14 @@
 import { Button, Dialog, Text, Flex, TextField, Select } from "@radix-ui/themes";
 import { useCallback, useState } from "react";
 import formatOrdinal from "~/common/formatOrdinal";
-import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
+import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
 import styles from "./AddNewCategoryDialog.module.css";
 import { useLeagues } from "~/hooks/useLeagues";
-import LoadDataDecorator from "../loading/LoadDataDecorator";
+import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import { useRealSports } from "~/hooks/useRealSport";
 import type { League } from "~/api/ocs/ocs.types";
-import { TemplateType } from "./TemplateType";
-import type ItemData from "./ItemData";
+import { TemplateType } from "../TemplateType";
+import type ItemData from "../ItemData";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;

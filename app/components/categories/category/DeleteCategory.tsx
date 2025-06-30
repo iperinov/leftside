@@ -1,4 +1,5 @@
-import EditNameDialog from "../dialogs/EditNameDialog";
+
+import EditNameDialog from "~/components/dialogs/EditNameDialog";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 
 interface DeleteCategoryProps {
