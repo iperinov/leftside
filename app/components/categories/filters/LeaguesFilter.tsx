@@ -8,9 +8,10 @@ import styles from "./Filters.module.css";
 import useLeaguesForSports from "~/hooks/useLeaguesForSports";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type { FilterGroupProps } from "./FiltersGroup";
+import { allStringItemData } from "../ItemData";
 
 function toItemData(leagues: League[]): ItemData<string>[] {
-  return leagues.map((league) => ({ id: league.uuid, name: league.name }));
+  return [allStringItemData, ...leagues.map((league) => ({ id: league.uuid, name: league.name }))];
 }
 
 export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroupProps) {

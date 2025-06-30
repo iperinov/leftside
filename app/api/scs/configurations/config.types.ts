@@ -42,7 +42,7 @@ export type DuplicateConfigApiResponse = DuplicateConfigApiSuccess | ApiError;
 export interface Filter {
   type:
     | "sport"
-//  | "region"
+    | "region"
     | "league"
     | "game"
     | "period"

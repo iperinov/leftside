@@ -8,14 +8,14 @@ import type { RealSport } from "~/api/ocs/ocs.types";
 import styles from "./Filters.module.css";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type { FilterGroupProps } from "./FiltersGroup";
-import useLeaguesForSports from "~/hooks/useLeaguesForSports";
+import { allStringItemData } from "../ItemData";
 
 interface SportFilterProps {
     onChange?: (selectedIDs: string[]) => void;
 }
 
 function toItemData(sports: RealSport[]): ItemData<string>[] {
-  return sports.map((sport) => ({ id: String(sport.id), name: sport.name }));
+  return [allStringItemData, ...sports.map((sport) => ({ id: String(sport.id), name: sport.name }))];
 }
 
 export default function SportsFilter({ categoryID, filterGroupID, onChange }: SportFilterProps & FilterGroupProps) {
@@ -32,7 +32,7 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
           label={"Sports"}
           values={selections.map((id) => {
             const realSport = data?.find((item) => String(item.id) === id);
-            return realSport ? realSport.name : "Unknown";
+            return realSport ? realSport.name : "";
           })}
           onClick={() => setShow(true)}
           className={`${styles.filter}`}

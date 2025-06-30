@@ -16,6 +16,12 @@ interface CategoryTreeGetters {
   filters: (categoryID: string, filterID: string, type: string) => string[];
   sportFilters: (categoryID: string, filterID: string) => string[];
   leagueFilters: (categoryID: string, filterID: string) => string[];
+  marketFilters: (categoryID: string, filterID: string) => string[];
+  statusFilter: (categoryID: string, filterID: string) => string;
+  timeFilter: (categoryID: string, filterID: string) => string;
+  sortByFilter: (categoryID: string, filterID: string) => "asc" | "desc" | undefined;
+  limitFilter: (categoryID: string, filterID: string) => number | undefined;
+  groupByFilter: (categoryID: string, filterID: string) => string | undefined;
 }
 
 interface CategoryTreeMutations {
@@ -27,6 +33,19 @@ interface CategoryTreeMutations {
 
   updateSportsFilter: (categoryID: string, filterID: string, selected: string[]) => void;
   updateLeaguesFilter: (categoryID: string, filterID: string, selected: string[]) => void;
+  updateMarketsFilter: (categoryID: string, filterID: string, selected: string[]) => void;
+  updateStatusFilter: (categoryID: string, filterID: string, selected: string) => void;
+  updateTimeFilter: (categoryID: string, filterID: string, selected: string) => void;
+  updateSortByFilter: (categoryID: string, filterID: string, selected: "asc" | "desc") => void;
+  updateLimitFilter: (categoryID: string, filterID: string, selected: string) => void;
+  updateGroupByFilter: (categoryID: string, filterID: string, selected: string) => void;
+
+  updateFilters: (
+    categoryID: string,
+    filterID: string,
+    type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status",
+    selected: string[]
+  ) => void;
 }
 
 const rootCategoryID = "root-categories-id";
@@ -44,11 +63,21 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
   findParentCategory: (id: string) => findItemParent(id, get().rootCategory),
   findCategorySiblings: (id: string) => get().findParentCategory(id)?.children,
   getFilterGroup: (categoryID: string, filterID: string) =>
-    get().findCategory(categoryID)?.filterGroups?.find((group) => group.uuid === filterID),
+    get()
+      .findCategory(categoryID)
+      ?.filterGroups?.find((group) => group.uuid === filterID),
   filters: (categoryID: string, filterID: string, type: string) =>
-    get().getFilterGroup(categoryID, filterID)?.filters.find((filter) => filter.type === type)?.values || [],
+    get()
+      .getFilterGroup(categoryID, filterID)
+      ?.filters.find((filter) => filter.type === type)?.values || [],
   sportFilters: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "sport"),
   leagueFilters: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "league"),
+  marketFilters: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "market"),
+  statusFilter: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "status")[0],
+  timeFilter: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "time")[0],
+  sortByFilter: (categoryID: string, filterID: string) => get().getFilterGroup(categoryID, filterID)?.order,
+  limitFilter: (categoryID: string, filterID: string) => get().getFilterGroup(categoryID, filterID)?.limit,
+  groupByFilter: (categoryID: string, filterID: string) => get().getFilterGroup(categoryID, filterID)?.groupBy,
 
   // Mutations
   reset: (categories) => {
@@ -109,41 +138,80 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     return true;
   },
 
-  updateSportsFilter: (categoryID: string, filterID: string, selected: string[], selectedLeagues?: string[]) => {
+  updateFilters: (
+    categoryID: string,
+    filterID: string,
+    type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status",
+    selected: string[]
+  ) => {
     const rootCategory = structuredClone(get().rootCategory);
     const category = findItem(categoryID, rootCategory);
     if (!category) return;
     const filterGroup = category.filterGroups?.find((group) => group.uuid === filterID);
     if (!filterGroup) return;
 
-    const sportFilter = filterGroup.filters.find((filter) => filter.type === "sport");
-    if (!sportFilter) return;
-      
-    sportFilter.values = selected;
-
-    if (selectedLeagues && selectedLeagues.length > 0) {
-      const leaguesFilter = filterGroup.filters.find((filter) => filter.type === "league");
-      if (leaguesFilter) {
-        leaguesFilter.values = selectedLeagues;
-      }
+    const existingFilter = filterGroup.filters.find((filter) => filter.type === type);
+    if (existingFilter) {
+      existingFilter.values = selected;
+    } else {
+      filterGroup.filters.push({ type: type, values: selected });
     }
     set({ rootCategory: rootCategory });
   },
 
+  updateSportsFilter: (categoryID: string, filterID: string, selected: string[]) => {
+    get().updateFilters(categoryID, filterID, "sport", selected);
+  },
+
   updateLeaguesFilter: (categoryID: string, filterID: string, selected: string[]) => {
+    get().updateFilters(categoryID, filterID, "league", selected);
+  },
+
+  updateMarketsFilter: (categoryID: string, filterID: string, selected: string[]) => {
+    get().updateFilters(categoryID, filterID, "market", selected);
+  },
+
+  updateStatusFilter: (categoryID: string, filterID: string, selected: string) => {
+    get().updateFilters(categoryID, filterID, "status", [selected]);
+  },
+
+  updateTimeFilter: (categoryID: string, filterID: string, selected: string) => {
+    get().updateFilters(categoryID, filterID, "time", [selected]);
+  },
+
+  updateSortByFilter: (categoryID: string, filterID: string, selected: "asc" | "desc") => {
     const rootCategory = structuredClone(get().rootCategory);
     const category = findItem(categoryID, rootCategory);
     if (!category) return;
     const filterGroup = category.filterGroups?.find((group) => group.uuid === filterID);
     if (!filterGroup) return;
 
-    const leaguesFilter = filterGroup.filters.find((filter) => filter.type === "league");
-    if (!leaguesFilter) return;
-    
-    leaguesFilter.values = selected;
+    filterGroup.order = selected;
+    set({ rootCategory: rootCategory });
+  },
+
+  updateLimitFilter: (categoryID: string, filterID: string, selected: string) => {
+    const rootCategory = structuredClone(get().rootCategory);
+    const category = findItem(categoryID, rootCategory);
+    if (!category) return;
+    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterID);
+    if (!filterGroup) return;
+
+    filterGroup.limit = Number(selected);
+    set({ rootCategory: rootCategory });
+  },
+
+  updateGroupByFilter: (categoryID: string, filterID: string, selected: string) => {
+    const rootCategory = structuredClone(get().rootCategory);
+    const category = findItem(categoryID, rootCategory);
+    if (!category) return;
+    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterID);
+    if (!filterGroup) return;
+
+    filterGroup.groupBy = selected;
     set({ rootCategory: rootCategory });
   },
 }));
 
 // export const useCategoryTreeStore = (selector: (state: CategoryTreeState & CategoryTreeGetters & CategoryTreeMutations) => any) =>
-  // useStore(categoryTreeStore, selector);
+// useStore(categoryTreeStore, selector);

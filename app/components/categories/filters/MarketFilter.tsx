@@ -1,0 +1,68 @@
+import type ItemData from "../ItemData";
+import type { Event } from "~/api/ocs/ocs.types";
+import type { FilterGroupProps } from "./FiltersGroup";
+import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import useMarketsForLeagues from "~/hooks/useMarketsForLeagues";
+import { useState } from "react";
+import Filter from "./Filter";
+import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
+import styles from "./Filters.module.css";
+import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
+import { allStringItemData } from "../ItemData";
+
+interface MarketFilterProps {
+  onChange?: (selectedIDs: string[]) => void;
+}
+
+function toItemData(events: Event[]): ItemData<string>[] {
+  return [allStringItemData, ...events.map((event) => ({ id: String(event.id), name: event.description }))];
+}
+
+export default function MarketFilter({ categoryID, filterGroupID, onChange }: MarketFilterProps & FilterGroupProps) {
+  const selections = useCategoryTreeStore((state) => state.marketFilters(categoryID, filterGroupID));
+  const selectedLeagues = useCategoryTreeStore((state) => state.leagueFilters(categoryID, filterGroupID));
+  const { data, isLoading, error } = useMarketsForLeagues(selectedLeagues);
+  const updateMarketsFilter = useCategoryTreeStore((state) => state.updateMarketsFilter);
+  const [show, setShow] = useState(false);
+
+    console.log("MarketFilter", {
+      categoryID,
+      filterGroupID,
+      selections,
+      selectedLeagues,
+      data,
+      isLoading,
+      error,
+    });
+
+  return (
+    <>
+      <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
+        <Filter
+          key={"market"}
+          label={"Markets"}
+          values={selections.map((id) => {
+            const event = data?.find((event) => String(event.id) === id);
+            return event ? event.description : "";
+          })}
+          onClick={() => setShow(true)}
+          className={`${styles.filter}`}
+        />
+      </LoadDataDecorator>
+
+      {show && data && (
+        <MultiSelectDialog<string>
+          items={toItemData(data)}
+          onConfirm={(selectedIDs) => {
+            updateMarketsFilter(categoryID, filterGroupID, selectedIDs);
+            setShow(false);
+          }}
+          onCancel={() => setShow(false)}
+          title="Select Markets"
+          valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
+          defaultSelectedIDs={selections}
+        />
+      )}
+    </>
+  );
+}
