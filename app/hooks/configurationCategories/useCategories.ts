@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { getConfigurationCategories } from "~/api/scs/categories/getConfigurationCategories";
 import type { Category } from "~/api/scs/configurations/config.types";
 import type CategoryTreeItem from "~/components/categories/CategoryTreeItem";
@@ -14,8 +13,11 @@ function toCategoryTree(categories: Category[]): CategoryTreeItem[] {
         name: category.name,
         type: category.type,
         filterGroups: category.filterGroups,
-        children: category.type == "flat" ? undefined : toCategoryTree(category.children || []),
-      } as CategoryTreeItem)
+        children:
+          category.type === "flat"
+            ? undefined
+            : toCategoryTree(category.children || []),
+      }) as CategoryTreeItem,
   );
 }
 
@@ -27,9 +29,9 @@ export const useCategories = (configID: string) => {
     queryKey: queryKeys.configurationCategories(configID),
     queryFn: async () => {
       const categories = await getConfigurationCategories(configID);
-      const tree = toCategoryTree(categories)
+      const tree = toCategoryTree(categories);
       resetTreeStore(tree);
-      return {root: rootCategory};
+      return { root: rootCategory };
     },
   });
 };

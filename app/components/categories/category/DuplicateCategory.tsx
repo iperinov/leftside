@@ -1,6 +1,4 @@
-
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
-import { findItemSiblings } from "~/components/tree/common/findItem";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 
 interface DuplicateCategoryProps {
@@ -11,10 +9,20 @@ interface DuplicateCategoryProps {
   onCanceled?: () => void;
 }
 
-export default function DuplicateCategory({ id, name, parentID, onCompleted, onCanceled }: DuplicateCategoryProps) {
-  const duplicateCategory = useCategoryTreeStore((state) => state.duplicateCategory);
-  const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
-  
+export default function DuplicateCategory({
+  id,
+  name,
+  parentID,
+  onCompleted,
+  onCanceled,
+}: DuplicateCategoryProps) {
+  const duplicateCategory = useCategoryTreeStore(
+    (state) => state.duplicateCategory,
+  );
+  const findCategorySiblings = useCategoryTreeStore(
+    (state) => state.findCategorySiblings,
+  );
+
   return (
     <EditNameDialog
       title="Duplicate category"
@@ -23,11 +31,13 @@ export default function DuplicateCategory({ id, name, parentID, onCompleted, onC
       open={true}
       currentName={name}
       onConfirm={(name) => {
-        duplicateCategory(id, name, parentID)
-        onCompleted?.()
+        duplicateCategory(id, name, parentID);
+        onCompleted?.();
       }}
       onCancel={onCanceled}
-      validName={(name) => findItemSiblings(id, rootCategory)?.find((item) => item.name === name) === undefined}
+      validName={(name) =>
+        !findCategorySiblings(id)?.find((item) => item.name === name.trim())
+      }
     />
   );
 }

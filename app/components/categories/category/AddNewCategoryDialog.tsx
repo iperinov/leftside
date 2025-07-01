@@ -1,14 +1,21 @@
-import { Button, Dialog, Text, Flex, TextField, Select } from "@radix-ui/themes";
+import {
+  Button,
+  Dialog,
+  Flex,
+  Select,
+  Text,
+  TextField,
+} from "@radix-ui/themes";
 import { useCallback, useState } from "react";
-import formatOrdinal from "~/common/formatOrdinal";
-import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
-import styles from "./AddNewCategoryDialog.module.css";
-import { useLeagues } from "~/hooks/useLeagues";
-import LoadDataDecorator from "../../loading/LoadDataDecorator";
-import { useRealSports } from "~/hooks/useRealSport";
 import type { League } from "~/api/ocs/ocs.types";
-import { TemplateType } from "../TemplateType";
+import { useLeagues } from "~/hooks/useLeagues";
+import { useRealSports } from "~/hooks/useRealSport";
+import formatOrdinal from "~/utils/formatOrdinal";
+import LoadDataDecorator from "../../loading/LoadDataDecorator";
+import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
 import type ItemData from "../ItemData";
+import { TemplateType } from "../TemplateType";
+import styles from "./AddNewCategoryDialog.module.css";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;
@@ -23,14 +30,25 @@ function ItemTypeSelect({ value, level, onChange }: ItemTypeSelectProps) {
       <Select.Content>
         <Select.Group>
           <Select.Label>Items</Select.Label>
-          <Select.Item value={TemplateType.Parent} disabled={level >= 3 ? true : undefined}>{TemplateType.Parent}</Select.Item>
-          <Select.Item value={TemplateType.Child}>{TemplateType.Child}</Select.Item>
+          <Select.Item
+            value={TemplateType.Parent}
+            disabled={level >= 3 ? true : undefined}
+          >
+            {TemplateType.Parent}
+          </Select.Item>
+          <Select.Item value={TemplateType.Child}>
+            {TemplateType.Child}
+          </Select.Item>
         </Select.Group>
         <Select.Separator />
         <Select.Group>
           <Select.Label>Predefined templates</Select.Label>
-          <Select.Item value={TemplateType.AllLeagues}>{TemplateType.AllLeagues}</Select.Item>
-          <Select.Item value={TemplateType.LiveAndUpcoming}>{TemplateType.LiveAndUpcoming}</Select.Item>
+          <Select.Item value={TemplateType.AllLeagues}>
+            {TemplateType.AllLeagues}
+          </Select.Item>
+          <Select.Item value={TemplateType.LiveAndUpcoming}>
+            {TemplateType.LiveAndUpcoming}
+          </Select.Item>
         </Select.Group>
       </Select.Content>
     </Select.Root>
@@ -55,97 +73,140 @@ function FormRow({ label, children }: React.PropsWithChildren<FormRowProps>) {
 interface AddNewCategoryDialogProps {
   open?: boolean;
   level: number;
-  onConfirm: (name: string, type: TemplateType, sports: string[], leagues: string[]) => void;
+  onConfirm: (
+    name: string,
+    type: TemplateType,
+    sports: string[],
+    leagues: string[],
+  ) => void;
   onCancel?: () => void;
   validName?: (name: string) => boolean;
 }
 
-export default function AddNewCategoryDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewCategoryDialogProps) {
-  const { error: sportsError, data: sports, isLoading: isSportsLoading } = useRealSports();
-  const { error: leaguesError, data: leagues, isLoading: isLeaguesLoading } = useLeagues();
+export default function AddNewCategoryDialog({
+  open = true,
+  level,
+  onConfirm,
+  onCancel = () => {},
+  validName = () => true,
+}: AddNewCategoryDialogProps) {
+  const {
+    error: sportsError,
+    data: sports,
+    isLoading: isSportsLoading,
+  } = useRealSports();
+  const {
+    error: leaguesError,
+    data: leagues,
+    isLoading: isLeaguesLoading,
+  } = useLeagues();
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState("");
   const [type, setType] = useState<TemplateType>(TemplateType.Child);
   const [selectedSportIDs, setSelectedSportsIDs] = useState<string[]>([]);
   const [selectedLeagueIDs, setSelectedLeaguesIDs] = useState<string[]>([]);
 
-  
   const handleClose = useCallback(
     (open: boolean) => {
       setIsOpen(open);
       //setName("");
       onCancel();
     },
-    [open, name]
+    [onCancel],
   );
 
   const handleSave = useCallback(() => {
     onConfirm(name.trim(), type, selectedSportIDs, selectedLeagueIDs);
     setIsOpen(false);
-  }, [name, open]);
+  }, [name, type, selectedLeagueIDs, selectedSportIDs, onConfirm]);
 
   const handleSportsSelectionChange = useCallback(
     (selectedIDs: string[]) => {
       const leaguesIDs = leaguesForSports(selectedIDs).map((l) => l.uuid);
       setSelectedSportsIDs(selectedIDs);
-      setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
+      setSelectedLeaguesIDs(
+        selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)),
+      );
     },
-    [selectedSportIDs, selectedLeagueIDs]
+    [selectedLeagueIDs],
   );
 
-  const handleLeaguesSelectionChange = useCallback(
-    (selectedIDs: string[]) => {
-      setSelectedLeaguesIDs(selectedIDs);
-    },
-    [selectedLeagueIDs]
-  );
+  const handleLeaguesSelectionChange = useCallback((selectedIDs: string[]) => {
+    setSelectedLeaguesIDs(selectedIDs);
+  }, []);
 
   const getSportItems = (): ItemData<string>[] => {
-    return sports?.map((sport) => ({
-      id: String(sport.id),
-      name: sport.name,
-    })) || [];
+    return (
+      sports?.map((sport) => ({
+        id: String(sport.id),
+        name: sport.name,
+      })) || []
+    );
   };
 
   const leaguesForSports = (sportIDs: string[]): League[] => {
-    return sportIDs.flatMap((sportID) => leagues?.filter((league) => String(league.realSportId) === sportID) || []);
+    return sportIDs.flatMap(
+      (sportID) =>
+        leagues?.filter((league) => String(league.realSportId) === sportID) ||
+        [],
+    );
   };
 
   const getLeagueItems = (sportIDs: string[]): ItemData<string>[] => {
     const filteredLeagues = leaguesForSports(sportIDs);
-    return filteredLeagues.map((league) => ({
-      id: league.uuid,
-      name: league.name
-    })) || [];
+    return (
+      filteredLeagues.map((league) => ({
+        id: league.uuid,
+        name: league.name,
+      })) || []
+    );
   };
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>
       <Dialog.Content className={styles.content} size="3">
         {/* Title and description */}
-        <Dialog.Title className={styles.title}>{`Add ${formatOrdinal(level + 1)} level`}</Dialog.Title>
+        <Dialog.Title
+          className={styles.title}
+        >{`Add ${formatOrdinal(level + 1)} level`}</Dialog.Title>
 
-        <LoadDataDecorator isLoading={isSportsLoading || isLeaguesLoading} error={sportsError && leaguesError}>
+        <LoadDataDecorator
+          isLoading={isSportsLoading || isLeaguesLoading}
+          error={sportsError && leaguesError}
+        >
           <Flex direction="column" gap="3" mt="4">
             <FormRow label="Title">
-              <TextField.Root value={name} placeholder="Enter name" onChange={(e) => setName(e.target.value)} />
+              <TextField.Root
+                value={name}
+                placeholder="Enter name"
+                onChange={(e) => setName(e.target.value)}
+              />
             </FormRow>
             <FormRow label="Type">
-              <ItemTypeSelect value={type} level={level + 1} onChange={(type) => setType(type)} />
+              <ItemTypeSelect
+                value={type}
+                level={level + 1}
+                onChange={(type) => setType(type)}
+              />
             </FormRow>
-            {(type === TemplateType.AllLeagues || type === TemplateType.LiveAndUpcoming) && (
-                <FormRow label="Select sport">
-                  <MultiSelectDropdown items={getSportItems()} selectedIDs={selectedSportIDs} onSelectionChange={handleSportsSelectionChange} />
-                </FormRow>
+            {(type === TemplateType.AllLeagues ||
+              type === TemplateType.LiveAndUpcoming) && (
+              <FormRow label="Select sport">
+                <MultiSelectDropdown
+                  items={getSportItems()}
+                  selectedIDs={selectedSportIDs}
+                  onSelectionChange={handleSportsSelectionChange}
+                />
+              </FormRow>
             )}
-            {(type === TemplateType.LiveAndUpcoming) && (
-                <FormRow label="Select league">
-                  <MultiSelectDropdown
-                    items={getLeagueItems(selectedSportIDs)}
-                    selectedIDs={selectedLeagueIDs}
-                    onSelectionChange={handleLeaguesSelectionChange}
-                  />
-                </FormRow>
+            {type === TemplateType.LiveAndUpcoming && (
+              <FormRow label="Select league">
+                <MultiSelectDropdown
+                  items={getLeagueItems(selectedSportIDs)}
+                  selectedIDs={selectedLeagueIDs}
+                  onSelectionChange={handleLeaguesSelectionChange}
+                />
+              </FormRow>
             )}
           </Flex>
         </LoadDataDecorator>
@@ -156,7 +217,10 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
               Cancel
             </Button>
           </Dialog.Close>
-          <Button onClick={handleSave} disabled={name === "" || !validName(name)}>
+          <Button
+            onClick={handleSave}
+            disabled={name === "" || !validName(name)}
+          >
             Save
           </Button>
         </Flex>

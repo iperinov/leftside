@@ -1,8 +1,8 @@
 .spinnerIcon {
   animation: spin 1s linear infinite;
-  height: 32px; 
-  width: 32px;  
-  color: var(--accent-8)
+  height: 32px;
+  width: 32px;
+  color: var(--accent-8);
 }
 
 .spinnerBg {

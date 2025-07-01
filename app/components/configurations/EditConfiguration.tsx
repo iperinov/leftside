@@ -1,106 +1,132 @@
-import type React from "react";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { Box, Button, Flex, Text } from "@radix-ui/themes";
 import { useState } from "react";
-import { useEditConfiguration } from "../../hooks/useEditConfiguration";
+import type { FilterGroup } from "~/api/ssm/ssm.types";
+import AssignedBooks from "./AssignedBooks";
+import ContentPreview from "./ContentPreview";
 
-export interface EditConfigurationProps {
-  onClose: () => void;
+interface EditConfigurationProps {
   uuid: string;
   name: string;
+  onClose: () => void;
 }
 
-export const EditConfiguration: React.FC<EditConfigurationProps> = ({
-  onClose,
+const mockFilterGroups: FilterGroup[] = [
+  {
+    filters: [{ type: "league", value: "ARGENTINA - COPA ARGENTINA" }],
+    groupBy: ["league"],
+    order: "asc",
+    limit: 5,
+  },
+];
+
+export function EditConfiguration({
   uuid,
   name,
-}) => {
-  const [assignedBooks, setAssignedBooks] = useState<number[]>([]);
-  const { update, isLoading } = useEditConfiguration();
-
-  const handleSave = async () => {
-    try {
-      await update(uuid, {
-        name: name,
-        books: assignedBooks,
-      });
-      onClose();
-    } catch (err) {
-      console.error("Failed to create configuration:", err);
-      // TODO: show toast error
-    }
-  };
+  onClose,
+}: EditConfigurationProps) {
+  const [configName, setValue] = useState(name);
+  const [assignedBooks, setAssignedBooks] = useState<number[]>([
+    1, 7, 11, 13, 20,
+  ]);
 
   return (
-    <div className="fixed inset-0 bg-white text-gray-700 flex flex-col">
+    <Box
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: "var(--gray-3)",
+        zIndex: 999,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       {/* Header */}
-      <div className="bg-stone-500 text-white px-6 py-3 text-sm font-medium shadow">
-        Edit: {name}
-      </div>
+      <Flex
+        justify="between"
+        align="center"
+        style={{ backgroundColor: "var(--gray-9)", padding: "1rem 1.5rem" }}
+      >
+        <Text size="3" weight="bold" style={{ color: "white" }}>
+          Edit:{" "}
+          <Text as="span" weight="medium">
+            {configName}
+          </Text>
+        </Text>
+        <Button variant="ghost" style={{ color: "white" }} onClick={onClose}>
+          <Cross2Icon />
+        </Button>
+      </Flex>
 
-      {/* Content */}
-      <div className="flex flex-1 overflow-hidden divide-x">
-        {/* Left Column */}
-        <div className="w-1/3 bg-stone-100 p-4 flex flex-col items-center justify-center text-center gap-4">
-          <div className="border border-gray-400 rounded p-4 w-full">
-            <p className="text-sm mb-4">
-              Start building your navigation structure by adding 1st level item
-            </p>
-            <button
-              type="button"
-              className="border border-gray-400 rounded px-4 py-1 text-sm"
-            >
-              Add 1st level
-            </button>
-          </div>
-        </div>
-
-        {/* Middle Column */}
-        <div className="w-1/3 bg-gray-200 p-4 flex items-center justify-center text-center">
-          <div className="border border-gray-400 rounded p-4 w-full text-sm">
-            Select child navigation item to proceed. Add content by assigning
-            data selections to navigation items.
-          </div>
-        </div>
-
-        {/* Right Column */}
-        <div className="w-1/3 bg-stone-50 p-4 flex flex-col gap-4">
-          <div className="border border-gray-400 rounded p-4 text-sm">
-            <label className="block mb-2">
-              Assigned to
-              <select multiple className="mt-1">
-                <option value="Book1">Book1</option>
-                <option value="Book2">Book2</option>
-                <option value="Book3">Book3</option>
-                <option value="Book4">Book4</option>
-              </select>
-            </label>
-          </div>
-          <div className="border border-gray-400 rounded p-4 text-sm text-center">
-            Preview how the data selection looks on website
-          </div>
-        </div>
-      </div>
+      {/* Body */}
+      <Flex direction="row" style={{ flexGrow: 1, padding: "1rem" }}>
+        <Box
+          style={{
+            flex: 1,
+            border: "1px solid var(--gray-6)",
+            marginRight: "0.5rem",
+          }}
+        >
+          {/* Left Column - Hierarchy UI */}
+        </Box>
+        <Box
+          style={{
+            flex: 2,
+            border: "1px solid var(--gray-6)",
+            marginRight: "0.5rem",
+          }}
+        >
+          {/* Center Column - Filters/Chips UI */}
+        </Box>
+        <Box
+          style={{
+            flex: 1,
+            border: "1px solid var(--gray-6)",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden", // TODO scrolling
+          }}
+        >
+          <AssignedBooks
+            assignedBooks={assignedBooks}
+            onUpdate={setAssignedBooks}
+          />
+          <ContentPreview filterGroups={mockFilterGroups} />
+        </Box>
+      </Flex>
 
       {/* Footer */}
-      <div className="bg-stone-500 text-sm text-right px-6 py-3 text-white flex justify-end gap-6">
-        <button
-          type="button"
+      <Flex
+        justify="end"
+        gap="4"
+        style={{
+          backgroundColor: "var(--gray-9)",
+          padding: "1rem",
+          borderTop: "1px solid var(--gray-5)",
+        }}
+      >
+        <Button
+          variant="ghost"
+          style={{ color: "white" }}
+          // disabled={isProcessing}
+          className="buttonGhost"
           onClick={onClose}
-          disabled={isLoading}
-          className="text-sm hover:underline cursor-pointer"
         >
           Cancel
-        </button>
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={isLoading}
-          className={`text-sm cursor-pointer ${
-            isLoading ? "opacity-50 pointer-events-none" : "hover:underline"
-          }`}
+        </Button>
+        <Button
+          variant="ghost"
+          style={{ color: "white" }}
+          // onClick={onConfirm}
+          className="buttonGhost"
+          disabled={!configName.trim()}
         >
-          {isLoading ? "Processing..." : "Save changes"}
-        </button>
-      </div>
-    </div>
+          Save changes
+        </Button>
+      </Flex>
+    </Box>
   );
-};
+}

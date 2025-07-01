@@ -1,10 +1,10 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, TextField } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef, useState } from "react";
+import type ItemData from "~/types/ItemData";
+import styles from "./MultiSelectDropdown.module.css";
 import MultiSelectDropdownItemList from "./MultiSelectDropdownItemList";
 import PillsSelections from "./PillsSelections";
-import "./MultiSelectDropdown.css";
-import type ItemData from "~/components/categories/ItemData";
 
 export interface ResultsSelectionProps<T extends string | number> {
   selectedIDs: T[];
@@ -29,9 +29,6 @@ export default function MultiSelectDropdown<T extends string | number>({
   const triggerRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
-
-  console.log("items0 ", items.slice(0, 3));
-
 
   const filteredItems =
     searchValue.length === 0
@@ -65,16 +62,17 @@ export default function MultiSelectDropdown<T extends string | number>({
   }, [open, searchValue, filteredItems]);
 
   return (
-    <Box as="div" className="multiSelectDropdown" ref={triggerRef}>
+    <Box as="div" className={styles.multiSelectDropdown} ref={triggerRef}>
       <Flex gap="2" align="center" justify="between">
         {/* Selected results */}
         <TextField.Root
+          size="3"
           disabled={items.length === 0}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          className="multiSelectDropdownTextField"
+          className={`${styles.multiSelectDropdownTextField} hide-scrollbar`}
         >
-          <TextField.Slot className="multiSelectDropdownTextFieldSlot">
+          <TextField.Slot className={styles.multiSelectDropdownTextFieldSlot}>
             <ResultsPanel
               selectedIDs={selectedIDs}
               items={items}

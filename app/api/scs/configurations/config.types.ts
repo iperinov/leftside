@@ -1,4 +1,3 @@
-import type TreeItemData from "~/components/tree/TreeItemData";
 import type { ExitCodes } from "./config.exitCodes";
 
 /* Common */
@@ -63,9 +62,9 @@ export interface FilterGroup {
 export interface Category {
   uuid: string;
   name: string;
-  children?: Category[];
   type: "flat" | "nested";
   filterGroups?: FilterGroup[];
+  children?: Category[];
 }
 
 export interface CreateConfigApiIn {
@@ -93,3 +92,12 @@ export interface DeleteConfigApiSuccess {
 }
 
 export type DeleteConfigApiResponse = DeleteConfigApiSuccess | ApiError;
+
+export interface Configuration {
+  uuid: string;
+  rev: string;
+  name: string;
+  books: number[];
+  lmt: number;
+  lmu: string;
+}

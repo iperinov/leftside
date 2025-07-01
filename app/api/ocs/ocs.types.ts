@@ -4,6 +4,15 @@ export interface RealSport {
   name: string; // maps from `rsd`
   gameDelayPregame: number; // maps from `gd`
   gameDelayLive: number; // maps from `gdl`
+
+  // TODO: Missing in ocs/realsports/
+  shortDesc?: string; // maps from `rssd`
+  enabled: boolean; // maps from `enabled`
+}
+
+export interface RenameRealSportApiIn {
+  uuid: string; // maps from `lruuid`
+  name: string; // maps from `rsd`
 }
 
 export interface LeagueRegion {
@@ -11,7 +20,12 @@ export interface LeagueRegion {
   uuid: string; // maps from `lruuid`
   name: string; // maps from `lrd`
   order: number; // maps from `lrro`
-  enabled: boolean; // maps from `lre`
+  enabled: boolean; // maps from `enabled`
+}
+
+export interface RenameLeagueRegionApiIn {
+  uuid: string; // maps from `lruuid`
+  name: string; // maps from `lrd`
 }
 
 export interface League {
@@ -25,6 +39,16 @@ export interface League {
   hideForMaster: boolean; // maps from `hfm`
   regionId: number; // maps from `rid`
   regionUUID: string; // maps from `ruuid`
+
+  // TODO: Missing in ocs/leagues/
+  order?: number; // maps from `lrro`
+  teamFKRequired?: boolean; // maps from `tfkr`
+  enabled?: boolean; // maps from `enabled`
+}
+
+export interface RenameLeagueApiIn {
+  uuid: string; // maps from `uuid`
+  name: string; // maps from `ln`
 }
 
 export interface Team {
@@ -42,7 +66,9 @@ export interface Event {
 export interface LeagueByEvent {
   id: number; // maps from `eid`
   leagueId: number; // maps from `lid`
+  leagueUUID: string; // maps from `luuid`
   realSportId: number; // maps from `rsid`
+  realSportUUID: string; // maps from `rsuuid`
   gameTypeId: number; // maps from `gtid`
 }
 
@@ -51,4 +77,7 @@ export interface TakeBackProfile {
   moneyLine: number; // maps from `ml`
   spread: number; // maps from `sp`
   total: number; // maps from `tot`
+
+  // TODO: Missing in ocs/realsports/
+  description: string; // maps from `tbpd`
 }

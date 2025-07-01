@@ -3,7 +3,7 @@ import { Box, Button, Card, Flex, Separator, Text } from "@radix-ui/themes";
 import React from "react";
 import { useBooks } from "~/hooks/useBooks";
 import { formatDateTime } from "~/utils/date";
-import type { Configuration } from "../../api/scs/configurations/getConfigurations";
+import type { Configuration } from "../../api/scs/configurations/config.types";
 import { useConfigurations } from "../../hooks/useConfigurations";
 import LoadingIndicator from "../shared/LoadingIndicator";
 import styles from "./ConfigurationList.module.css";

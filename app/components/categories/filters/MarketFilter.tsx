@@ -1,38 +1,52 @@
-import type ItemData from "../ItemData";
-import type { Event } from "~/api/ocs/ocs.types";
-import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import useMarketsForLeagues from "~/hooks/useMarketsForLeagues";
 import { useState } from "react";
-import Filter from "./Filter";
-import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import styles from "./Filters.module.css";
+import type { Event } from "~/api/ocs/ocs.types";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
-import { allItemData } from "../ItemData";
+import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
+import useMarketsForLeagues from "~/hooks/useMarketsForLeagues";
+import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import { allItemData } from "../AllItemData";
+import type ItemData from "../ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
+import Filter from "./Filter";
+import styles from "./Filters.module.css";
 
 interface MarketFilterProps {
   onChange?: (selectedIDs: string[]) => void;
 }
 
 function toItemData(events: Event[]): ItemData<string>[] {
-  return [allItemData, ...events.map((event) => ({ id: String(event.id), name: event.description }))];
+  return [
+    allItemData,
+    ...events.map((event) => ({
+      id: String(event.id),
+      name: event.description,
+    })),
+  ];
 }
 
-export default function MarketFilter({ categoryID, filterGroupID, onChange }: MarketFilterProps & FilterGroupProps) {
+export default function MarketFilter({
+  categoryID,
+  filterGroupID,
+  onChange,
+}: MarketFilterProps & FilterGroupProps) {
   const marketFilters = useCategoryTreeStore((state) => state.marketFilters);
   const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
   const selectedLeagues = leagueFilters(categoryID, filterGroupID);
   const { data, isLoading, error } = useMarketsForLeagues(selectedLeagues);
-  const updateMarketsFilter = useCategoryTreeStore((state) => state.updateMarketsFilter);
+  const updateMarketsFilter = useCategoryTreeStore(
+    (state) => state.updateMarketsFilter,
+  );
   const [show, setShow] = useState(false);
   const selections = marketFilters(categoryID, filterGroupID);
   const items = data ? toItemData(data) : [];
 
-  console.log("items1 ", items.slice(0, 3), " data ", data);
-
   return (
     <>
-      <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
+      <LoadDataDecorator
+        error={error}
+        isLoading={isLoading}
+        className={`${styles.filter}`}
+      >
         <Filter
           key={"market"}
           label={"Markets"}
@@ -56,9 +70,16 @@ export default function MarketFilter({ categoryID, filterGroupID, onChange }: Ma
           }}
           onCancel={() => setShow(false)}
           title="Select Markets"
-          valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
+          valid={(values) =>
+            values.length !== selections.length ||
+            values.some((v) => !selections.includes(v))
+          }
           defaultSelectedIDs={selections}
-          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allItemData.id) ? selectedIDs : [allItemData.id]}
+          onSelectionChange={(selectedIDs) =>
+            !selectedIDs.includes(allItemData.id)
+              ? selectedIDs
+              : [allItemData.id]
+          }
         />
       )}
     </>

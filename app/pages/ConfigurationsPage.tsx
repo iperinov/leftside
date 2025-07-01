@@ -1,16 +1,18 @@
 import { Box, Button, Flex, Heading, Separator } from "@radix-ui/themes";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ConfigurationList } from "../components/configurations/ConfigurationList";
 import { CreateConfiguration } from "../components/configurations/CreateConfiguration";
 import { DeleteConfiguration } from "../components/configurations/DeleteConfiguration";
 import { DuplicateConfiguration } from "../components/configurations/DuplicateConfiguration";
+import { EditConfiguration } from "../components/configurations/EditConfiguration";
 import { RenameConfiguration } from "../components/configurations/RenameConfiguration";
-import { useNavigate } from "react-router";
 
 export default function ConfigurationsPage() {
-  const navigate = useNavigate();
   const [createAction, setCreateAction] = useState(false);
-  const [editAction, setEditAction] = useState<string | null>(null);
+  const [editAction, setEditAction] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
   const [renameAction, setRenameAction] = useState<{
     id: string;
     rev: string;
@@ -66,17 +68,35 @@ export default function ConfigurationsPage() {
           <Separator size="4" my="3" />
 
           <ConfigurationList
-            onEdit={(id, name) => navigate(`/configuration/${id}`)} 
+            onEdit={(id, name) => setEditAction({ id, name })}
             onRename={(id, rev, name) => setRenameAction({ id, rev, name })}
-            onDuplicate={(id, rev, name) => setDuplicateAction({ id, rev, name })}
+            onDuplicate={(id, rev, name) =>
+              setDuplicateAction({ id, rev, name })
+            }
             onDelete={(id, rev, name) => setDeleteAction({ id, rev, name })}
           />
         </Box>
 
-        <CreateConfiguration open={createAction} onClose={() => setCreateAction(false)} />
+        <CreateConfiguration
+          open={createAction}
+          onClose={() => setCreateAction(false)}
+        />
+
+        {editAction && (
+          <EditConfiguration
+            uuid={editAction.id}
+            name={editAction.name}
+            onClose={() => setEditAction(null)}
+          />
+        )}
 
         {renameAction && (
-          <RenameConfiguration open={!!renameAction} onClose={() => setRenameAction(null)} uuid={renameAction.id} rev={renameAction.rev} />
+          <RenameConfiguration
+            open={!!renameAction}
+            onClose={() => setRenameAction(null)}
+            uuid={renameAction.id}
+            rev={renameAction.rev}
+          />
         )}
 
         {duplicateAction && (

@@ -7,6 +7,10 @@ export interface AppConfig {
     baseUrl: string;
     timeout: number;
   };
+  ssm: {
+    baseUrl: string;
+    timeout: number;
+  };
   features: {
     enableRename: boolean;
     enableDuplicate: boolean;
@@ -32,6 +36,10 @@ export const defaultAppConfig: AppConfig = {
   },
   ocs: {
     baseUrl: import.meta.env.VITE_SCS_BASE_URL || "http://localhost:4000",
+    timeout: 10000,
+  },
+  ssm: {
+    baseUrl: import.meta.env.VITE_SCS_BASE_URL || "http://localhost:5000",
     timeout: 10000,
   },
   features: {

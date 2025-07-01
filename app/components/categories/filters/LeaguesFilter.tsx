@@ -1,31 +1,43 @@
-import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import Filter from "./Filter";
 import { useState } from "react";
-import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
-import type ItemData from "../ItemData";
 import type { League } from "~/api/ocs/ocs.types";
-import styles from "./Filters.module.css";
+import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
+import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import useLeaguesForSports from "~/hooks/useLeaguesForSports";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import { allItemData } from "../AllItemData";
+import type ItemData from "../ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
-import { allItemData } from "../ItemData";
+import Filter from "./Filter";
+import styles from "./Filters.module.css";
 
 function toItemData(leagues: League[]): ItemData<string>[] {
-  return [allItemData, ...leagues.map((league) => ({ id: String(league.id), name: league.name }))];
+  return [
+    allItemData,
+    ...leagues.map((league) => ({ id: String(league.id), name: league.name })),
+  ];
 }
 
-export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroupProps) {
+export default function LeaguesFilter({
+  categoryID,
+  filterGroupID,
+}: FilterGroupProps) {
   const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const sportsSelections = sportFilters(categoryID, filterGroupID);
   const { data, isLoading, error } = useLeaguesForSports(sportsSelections);
-  const updateLeaguesFilter = useCategoryTreeStore((state) => state.updateLeaguesFilter);
+  const updateLeaguesFilter = useCategoryTreeStore(
+    (state) => state.updateLeaguesFilter,
+  );
   const [show, setShow] = useState(false);
   const selections = leagueFilters(categoryID, filterGroupID);
 
   return (
     <>
-      <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
+      <LoadDataDecorator
+        error={error}
+        isLoading={isLoading}
+        className={`${styles.filter}`}
+      >
         <Filter
           key={"league"}
           label={"Leagues"}
@@ -49,9 +61,16 @@ export default function LeaguesFilter({ categoryID, filterGroupID }: FilterGroup
           }}
           onCancel={() => setShow(false)}
           title="Select Leagues"
-          valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
+          valid={(values) =>
+            values.length !== selections.length ||
+            values.some((v) => !selections.includes(v))
+          }
           defaultSelectedIDs={selections}
-          onSelectionChange={(selectedIDs) => !selectedIDs.includes(allItemData.id) ? selectedIDs : [allItemData.id]}
+          onSelectionChange={(selectedIDs) =>
+            !selectedIDs.includes(allItemData.id)
+              ? selectedIDs
+              : [allItemData.id]
+          }
         />
       )}
     </>

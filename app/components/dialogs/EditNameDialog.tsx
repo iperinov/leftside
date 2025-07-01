@@ -1,30 +1,24 @@
-import { Button, Dialog, Text, Flex, TextField } from "@radix-ui/themes";
+import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { useState } from "react";
+import type DialogBasicProps from "./DialogBasicProps";
 
-interface EditNameDialogProps {
-  title?: string;
-  description?: string;
-  confirmText?: string;
-  destructive?: boolean;
-  cancelText?: string;
-  open?: boolean;
-  currentName?: string; 
+interface EditNameDialogProps extends DialogBasicProps {
+  currentName?: string;
   onConfirm: (name: string) => void;
-  onCancel?: () => void;
   validName?: (name: string) => boolean;
 }
 
-export default function EditNameDialog({ 
+export default function EditNameDialog({
   title = "Edit Name",
   description = "Enter a new name below:",
   confirmText = "Confirm",
   destructive = false,
   cancelText = "Cancel",
-  open = true, 
-  currentName = "", 
+  open = true,
+  currentName = "",
   onConfirm,
-  onCancel = () => {}, 
-  validName = (name) => true 
+  onCancel = () => {},
+  validName = (name) => true,
 }: EditNameDialogProps) {
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState(currentName);
@@ -38,7 +32,7 @@ export default function EditNameDialog({
     setIsOpen(open);
     if (!open) {
       onCancel();
-      setName(currentName); 
+      setName(currentName);
     }
   };
 
@@ -50,7 +44,12 @@ export default function EditNameDialog({
         <Dialog.Description>{description}</Dialog.Description>
 
         {/* Input fields */}
-        <TextField.Root value={name} placeholder="New name" mt="3" onChange={(e) => setName(e.target.value)} />
+        <TextField.Root
+          value={name}
+          placeholder="New name"
+          mt="3"
+          onChange={(e) => setName(e.target.value)}
+        />
 
         {/* Buttons */}
         <Flex justify="end" gap="3" mt="4">
@@ -59,10 +58,11 @@ export default function EditNameDialog({
               {cancelText}
             </Button>
           </Dialog.Close>
-          <Button 
-            color={destructive ? "red" : undefined} 
-            onClick={handleRename} 
-            disabled={name === "" || name === currentName || !validName(name)}>
+          <Button
+            color={destructive ? "red" : undefined}
+            onClick={handleRename}
+            disabled={name === "" || name === currentName || !validName(name)}
+          >
             {confirmText}
           </Button>
         </Flex>

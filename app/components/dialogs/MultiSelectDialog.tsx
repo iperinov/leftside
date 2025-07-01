@@ -1,21 +1,15 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
+import { useState } from "react";
+import type ItemData from "~/types/ItemData";
 import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
-import { useCallback, useState } from "react";
-import type ItemData from "../categories/ItemData";
-import LoadDataDecorator from "../loading/LoadDataDecorator";
+import type DialogBasicProps from "./DialogBasicProps";
 
-interface MultiSelectDialogProps<T extends string | number> {
-  title?: string;
-  description?: string;
-  confirmText?: string;
-  destructive?: boolean;
-  cancelText?: string;
-  open?: boolean;
+interface MultiSelectDialogProps<T extends string | number>
+  extends DialogBasicProps {
   items: ItemData<T>[];
   defaultSelectedIDs?: T[];
   onSelectionChange?: (selectedIDs: T[]) => T[];
   onConfirm: (selectedIDs: T[]) => void;
-  onCancel?: () => void;
   valid?: (values: T[]) => boolean;
 }
 
@@ -36,24 +30,21 @@ export default function MultiSelectDialog<T extends string | number>({
   const [isOpen, setIsOpen] = useState(open);
   const [selectedIDs, setSelectedIDs] = useState<T[]>(defaultSelectedIDs);
 
-  const handleConfirm = useCallback(() => {
+  const handleConfirm = () => {
     onConfirm(selectedIDs);
     setIsOpen(false);
-  }, [selectedIDs, open]);
+  };
 
-  const handleSelectionChange = useCallback(
-    (selectedIDs: T[]) => {
-      const modifiedSelection = onSelectionChange?.(selectedIDs);
-      setSelectedIDs(modifiedSelection);
-    },
-    [selectedIDs]
-  );
+  const handleSelectionChange = (selectedIDs: T[]) => {
+    const modifiedSelection = onSelectionChange?.(selectedIDs);
+    setSelectedIDs(modifiedSelection);
+  };
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (!open) {
       onCancel();
-      setSelectedIDs(defaultSelectedIDs); 
+      setSelectedIDs(defaultSelectedIDs);
     }
   };
 
@@ -65,7 +56,11 @@ export default function MultiSelectDialog<T extends string | number>({
         <Dialog.Description>{description}</Dialog.Description>
 
         {/* Input fields */}
-        <MultiSelectDropdown items={items} selectedIDs={selectedIDs} onSelectionChange={handleSelectionChange} />
+        <MultiSelectDropdown
+          items={items}
+          selectedIDs={selectedIDs}
+          onSelectionChange={handleSelectionChange}
+        />
 
         {/* Buttons */}
         <Flex justify="end" gap="3" mt="4">
@@ -74,7 +69,11 @@ export default function MultiSelectDialog<T extends string | number>({
               {cancelText}
             </Button>
           </Dialog.Close>
-          <Button color={destructive ? "red" : undefined} onClick={handleConfirm} disabled={!valid(selectedIDs)}>
+          <Button
+            color={destructive ? "red" : undefined}
+            onClick={handleConfirm}
+            disabled={!valid(selectedIDs)}
+          >
             {confirmText}
           </Button>
         </Flex>

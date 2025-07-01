@@ -1,4 +1,3 @@
-
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 
@@ -8,9 +7,13 @@ interface DeleteCategoryProps {
   onCanceled?: () => void;
 }
 
-export default function DeleteCategory({ id, onCompleted, onCanceled }: DeleteCategoryProps) {
+export default function DeleteCategory({
+  id,
+  onCompleted,
+  onCanceled,
+}: DeleteCategoryProps) {
   const deleteCategory = useCategoryTreeStore((state) => state.deleteCategory);
- 
+
   return (
     <EditNameDialog
       title="Delete category"
@@ -19,11 +22,11 @@ export default function DeleteCategory({ id, onCompleted, onCanceled }: DeleteCa
       destructive={true}
       open={true}
       onConfirm={() => {
-        deleteCategory(id)
+        deleteCategory(id);
         onCompleted?.();
       }}
       onCancel={onCanceled}
-      validName={(name) => name === "DELETE"}
+      validName={(name) => name.trim() === "DELETE"}
     />
   );
 }

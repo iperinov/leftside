@@ -30,10 +30,16 @@ interface ContextMenuConfig<T extends TreeItemData<T>> {
   menuItems: MenuItem<T>[];
 }
 
+interface FilterConfig<T extends TreeItemData<T>> {
+  allowed: (item: T) => boolean;
+  filter: string;
+}
+
 export default interface TreeConfig<T extends TreeItemData<T>> {
   addToParent?: AddToParentConfig<T>;
   expand?: ExpandConfig<T>;
   reorder?: ReorderConfig<T>;
   selection?: SelectionConfig<T>;
   contextMenu?: ContextMenuConfig<T>;
+  filter?: FilterConfig<T>;
 }

@@ -4,7 +4,9 @@ import { mockConfigurationCategories } from "./mock/mockCategories";
 
 const scsUrl = getAppConfig().scs.baseUrl;
 
-export const getConfigurationCategories = async (configID: string): Promise<Category[]> => {
+export const getConfigurationCategories = async (
+  configID: string,
+): Promise<Category[]> => {
   const url = new URL(`${scsUrl}/config/${configID}`);
   // TODO:
 

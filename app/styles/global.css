@@ -1,10 +1,12 @@
 /* global.css */
+html,
 body {
   font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
   background-color: var(--color-panel);
   color: var(--gray-12);
+  height: 100%;
 }
 
 .dialogOverlay {
@@ -18,7 +20,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--gray-1);
+  background-color: var(--gray-4);
   border-radius: 6px;
   padding: 1rem 1.5rem 1.25rem;
   width: 24rem;
@@ -31,19 +33,17 @@ body {
   text-align: center;
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 1rem;
   color: var(--gray-12);
 }
 
 .inputField {
-  border: 1px solid var(--gray-6);
+  border: 1px solid var(--gray-9);
   border-radius: 4px;
   padding: 0.5rem;
 }
 
 .buttonGhost {
   text-decoration: underline;
-  padding: 0.5rem 0.5rem 0 0;
   cursor: pointer;
 }
 
@@ -57,6 +57,13 @@ body {
   color: var(--gray-9);
 }
 
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
 .customDialogContent {
   width: 400px;
@@ -68,4 +75,4 @@ body {
 
 .nohover {
   background-color: transparent;
-} 
+}

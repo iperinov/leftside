@@ -1,12 +1,9 @@
 import type ClassNameProps from "../shared/ClassNameProps";
 
-interface ConfigurationContentContextProps {
-}
+//interface ConfigurationContentContextProps = {};
 
-export default function ConfigurationContentContext({className}: ConfigurationContentContextProps & ClassNameProps) {
-  return (
-    <div className={className}>
-      Context
-    </div>
-  );
+export default function ConfigurationContentContext({
+  className,
+}: /*ConfigurationContentContextProps &*/ ClassNameProps) {
+  return <div className={className}>Context</div>;
 }

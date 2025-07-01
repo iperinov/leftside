@@ -1,13 +1,22 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Flex, TextField } from "@radix-ui/themes";
 
-export default function SearchBar() {
+interface SearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
     <Flex px="0" py="0" style={{ backgroundColor: "var(--gray-3)" }}>
       <TextField.Root
-        placeholder="Search"
+        placeholder="ctrl+k"
         size="2"
         variant="soft"
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
         style={{
           backgroundColor: "var(--gray-3)",
           width: "100%",

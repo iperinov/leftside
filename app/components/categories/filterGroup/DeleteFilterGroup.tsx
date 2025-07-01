@@ -1,4 +1,3 @@
-
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 
@@ -9,9 +8,16 @@ interface DeleteFilterGroupProps {
   onCanceled?: () => void;
 }
 
-export default function DeleteFilterGroup({ categoryID, filterGroupID, onCompleted, onCanceled }: DeleteFilterGroupProps) {
-  const deleteFilterGroup = useCategoryTreeStore((state) => state.deleteFilterGroup);
- 
+export default function DeleteFilterGroup({
+  categoryID,
+  filterGroupID,
+  onCompleted,
+  onCanceled,
+}: DeleteFilterGroupProps) {
+  const deleteFilterGroup = useCategoryTreeStore(
+    (state) => state.deleteFilterGroup,
+  );
+
   return (
     <EditNameDialog
       title="Delete filter group"
@@ -24,7 +30,7 @@ export default function DeleteFilterGroup({ categoryID, filterGroupID, onComplet
         onCompleted?.();
       }}
       onCancel={onCanceled}
-      validName={(name) => name === "DELETE"}
+      validName={(name) => name.trim() === "DELETE"}
     />
   );
 }

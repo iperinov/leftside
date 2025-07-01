@@ -1,15 +1,7 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
+import type { Configuration } from "./config.types";
 
 const scsUrl = getAppConfig().scs.baseUrl;
-
-export interface Configuration {
-  uuid: string;
-  rev: string;
-  name: string;
-  books: number[];
-  lmt: number;
-  lmu: string;
-}
 
 export const getConfigurations = async (): Promise<Configuration[]> => {
   const url = new URL(`${scsUrl}/configs`);

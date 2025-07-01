@@ -1,41 +1,13 @@
 import { Button, Dialog, Flex, Select } from "@radix-ui/themes";
 import { useCallback, useState } from "react";
-import type ItemData from "../categories/ItemData";
+import type ItemData from "~/types/ItemData";
+import SelectComponent from "../shared/SelectComponent";
+import type DialogBasicProps from "./DialogBasicProps";
 
-interface ItemTypeSelectProps {
-  value?: string;
-  items: ItemData<string>[];
-  onChange?: (value: string) => void;
-}
-
-function SelectComponent({ value, items, onChange }: ItemTypeSelectProps) {
-  return (
-    <Select.Root value={value} onValueChange={onChange}>
-      <Select.Trigger />
-      <Select.Content>
-        <Select.Group>
-          {items.map((item) => (
-            <Select.Item key={item.id} value={item.id}>
-              {item.name}
-            </Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
-  );
-}
-
-interface SelectDialogProps {
-  title?: string;
-  description?: string;
-  confirmText?: string;
-  destructive?: boolean;
-  cancelText?: string;
-  open?: boolean;
+interface SelectDialogProps extends DialogBasicProps {
   items: ItemData<string>[];
   defaultSelectedID?: string;
   onConfirm: (selectedID: string) => void;
-  onCancel?: () => void;
   valid?: (value: string) => boolean;
 }
 
@@ -55,18 +27,14 @@ export default function SelectDialog({
   const [selectedID, setSelectedID] = useState(defaultSelectedID);
   const [isOpen, setIsOpen] = useState(open);
 
-  const handleConfirm = useCallback(() => {
+  const handleConfirm = () => {
     selectedID && onConfirm(selectedID);
     setIsOpen(false);
-  }, [selectedID, open]);
+  };
 
-  const handleSelectionChange = useCallback(
-    (selectedID: string) => {
-      console.log("SelectDialog handleSelectionChange", selectedID);
-      setSelectedID(selectedID);
-    },
-    [selectedID]
-  );
+  const handleSelectionChange = (selectedID: string) => {
+    setSelectedID(selectedID);
+  };
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
@@ -84,7 +52,11 @@ export default function SelectDialog({
           <Dialog.Description>{description}</Dialog.Description>
 
           {/* Input fields */}
-          <SelectComponent value={selectedID || ""} items={items} onChange={handleSelectionChange} />
+          <SelectComponent
+            value={selectedID || ""}
+            items={items}
+            onChange={handleSelectionChange}
+          />
 
           {/* Buttons */}
           <Flex justify="end" gap="3" mt="4">
@@ -93,7 +65,11 @@ export default function SelectDialog({
                 {cancelText}
               </Button>
             </Dialog.Close>
-            <Button color={destructive ? "red" : undefined} onClick={handleConfirm} disabled={selectedID ? !valid(selectedID) : true}>
+            <Button
+              color={destructive ? "red" : undefined}
+              onClick={handleConfirm}
+              disabled={selectedID ? !valid(selectedID) : true}
+            >
               {confirmText}
             </Button>
           </Flex>

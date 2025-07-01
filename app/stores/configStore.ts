@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Configuration } from "../api/scs/configurations/getConfigurations";
+import type { Configuration } from "../api/scs/configurations/config.types";
 
 interface ConfigState {
   configurations: Configuration[];

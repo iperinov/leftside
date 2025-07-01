@@ -1,14 +1,13 @@
 import { Flex } from "@radix-ui/themes";
 import styles from "../filters/Filters.module.css";
-import SportsFilter from "../filters/SportsFilter";
+import GroupByFilter from "../filters/GroupByFilter";
 import LeaguesFilter from "../filters/LeaguesFilter";
+import LimitFilter from "../filters/LimitFilter";
 import MarketFilter from "../filters/MarketFilter";
+import SortByFilter from "../filters/SortByFilter";
+import SportsFilter from "../filters/SportsFilter";
 import StatusFilter from "../filters/StatusFilter";
 import TimeFilter from "../filters/TimeFilter";
-import SortByFilter from "../filters/SortByFilter";
-import GroupByFilter from "../filters/GroupByFilter";
-import LimitFilter from "../filters/LimitFilter";
-
 
 export interface FilterGroupProps {
   categoryID: string;

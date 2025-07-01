@@ -1,20 +1,32 @@
-import { allItemData } from "~/components/categories/ItemData";
+import { allItemData } from "~/components/categories/AllItemData";
 import { useEvents } from "./useEvents";
-import { useLeagueByEvents } from "./useLeagueByEvent";
+import { useLeagueByEvent } from "./useLeagueByEvent";
 
 export default function useMarketsForLeagues(leagues: string[]) {
-  const { data: events, isLoading: isLoadingEvents, error: errorEvents } = useEvents();
-  const { data: leagueByEvents, isLoading: isLoadingLeagueByEvents, error: errorLeagueByEvents } = useLeagueByEvents();
+  const {
+    data: events,
+    isLoading: isLoadingEvents,
+    error: errorEvents,
+  } = useEvents();
+  const {
+    data: leagueByEvent,
+    isLoading: isLoadingLeagueByEvent,
+    error: errorLeagueByEvent,
+  } = useLeagueByEvent();
   if (leagues?.length === 1 && leagues[0] === allItemData.id) {
     return { data: events, isLoading: isLoadingEvents, error: errorEvents };
   }
 
-  const filteredLeaguesByEvents = leagueByEvents?.filter((lbe) => leagues.includes(String(lbe.leagueId)));
-  const marketsForLeagues = events?.filter((event) => filteredLeaguesByEvents?.find((lbe) => lbe.id === event.id) );
+  const filteredLeaguesByEvents = leagueByEvent?.filter((lbe) =>
+    leagues.includes(String(lbe.leagueId)),
+  );
+  const marketsForLeagues = events?.filter((event) =>
+    filteredLeaguesByEvents?.find((lbe) => lbe.id === event.id),
+  );
 
   return {
-    isLoading: isLoadingEvents || isLoadingLeagueByEvents,
-    error: errorEvents || errorLeagueByEvents,
+    isLoading: isLoadingEvents || isLoadingLeagueByEvent,
+    error: errorEvents || errorLeagueByEvent,
     data: marketsForLeagues || [],
   };
 }

@@ -1,6 +1,6 @@
 import { Checkbox, Flex, Text } from "@radix-ui/themes";
-import "./MultiSelectDropdown.css";
-import type ItemData from "~/components/categories/ItemData";
+import type ItemData from "~/types/ItemData";
+import styles from "./MultiSelectDropdown.module.css";
 
 interface MultiSelectDropdownItemProps<T extends string | number> {
   item: ItemData<T>;
@@ -13,12 +13,12 @@ export default function MultiSelectDropdownItem<T extends string | number>({
   isSelected,
   onSelect,
 }: MultiSelectDropdownItemProps<T>) {
-
-  if (item.name == "BASKETBALL")
-    console.log("MultiSelectDropdownItem ", item, " - ", isSelected);
-
   return (
-    <Text as="label" size="2" className="noselect multiSelectDropdownItem">
+    <Text
+      as="label"
+      size="2"
+      className={`${styles.multiSelectDropdownItem} noselect`}
+    >
       <Flex gap="2">
         <Checkbox
           checked={isSelected}

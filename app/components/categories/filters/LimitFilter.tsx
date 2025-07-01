@@ -1,14 +1,14 @@
-import type ItemData from "../ItemData";
-import styles from "./Filters.module.css";
-import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import SelectDialog from "~/components/dialogs/SelectDialog";
-import Filter from "./Filter";
 import { useState } from "react";
-import { allItemData } from "../ItemData";
+import SelectDialog from "~/components/dialogs/SelectDialog";
+import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import { allItemData } from "../AllItemData";
+import type ItemData from "../ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
+import Filter from "./Filter";
+import styles from "./Filters.module.css";
 
 function toItemData(): ItemData<string>[] {
-  let items: ItemData<string>[] = [];
+  const items: ItemData<string>[] = [];
   for (let i = 1; i <= 20; i++) {
     items.push({
       id: String(i),
@@ -18,9 +18,14 @@ function toItemData(): ItemData<string>[] {
   return [allItemData, ...items];
 }
 
-export default function LimitFilter({ categoryID, filterGroupID }: FilterGroupProps) {
+export default function LimitFilter({
+  categoryID,
+  filterGroupID,
+}: FilterGroupProps) {
   const limitFilter = useCategoryTreeStore((state) => state.limitFilter);
-  const updateLimitFilters = useCategoryTreeStore((state) => state.updateLimitFilter);
+  const updateLimitFilters = useCategoryTreeStore(
+    (state) => state.updateLimitFilter,
+  );
   const [show, setShow] = useState(false);
   const items = toItemData();
   const selection = limitFilter(categoryID, filterGroupID);
@@ -28,7 +33,13 @@ export default function LimitFilter({ categoryID, filterGroupID }: FilterGroupPr
 
   return (
     <>
-      <Filter key={"limit"} label={"Limit"} values={value ? [value] : []} onClick={() => setShow(true)} className={`${styles.filter}`} />
+      <Filter
+        key={"limit"}
+        label={"Limit"}
+        values={value ? [value] : []}
+        onClick={() => setShow(true)}
+        className={`${styles.filter}`}
+      />
 
       {show && (
         <SelectDialog

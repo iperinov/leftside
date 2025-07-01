@@ -1,15 +1,9 @@
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import { useState } from "react";
+import type DialogBasicProps from "./DialogBasicProps";
 
-interface ConfirmDialogProps {
-  title?: string;
-  description?: string;
-  confirmText?: string;
-  destructive?: boolean;
-  cancelText?: string;
-  open?: boolean;
+interface ConfirmDialogProps extends DialogBasicProps {
   onConfirm: () => void;
-  onCancel?: () => void;
 }
 
 export default function ConfirmDialog({
@@ -35,7 +29,9 @@ export default function ConfirmDialog({
     <AlertDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialog.Content maxWidth="450px">
         <AlertDialog.Title>{title}</AlertDialog.Title>
-        <AlertDialog.Description size="2">{description}</AlertDialog.Description>
+        <AlertDialog.Description size="2">
+          {description}
+        </AlertDialog.Description>
 
         <Flex gap="3" mt="4" justify="end">
           <AlertDialog.Cancel>
@@ -44,7 +40,11 @@ export default function ConfirmDialog({
             </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
-            <Button variant="solid" color={destructive ? "red" : undefined} onClick={onConfirm}>
+            <Button
+              variant="solid"
+              color={destructive ? "red" : undefined}
+              onClick={onConfirm}
+            >
               {confirmText}
             </Button>
           </AlertDialog.Action>

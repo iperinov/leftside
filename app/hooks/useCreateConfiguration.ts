@@ -6,7 +6,6 @@ import type {
   CreateConfigApiSuccess,
 } from "../api/scs/configurations/config.types";
 import { createConfiguration } from "../api/scs/configurations/createConfiguration";
-import type { Configuration } from "../api/scs/configurations/getConfigurations";
 import { queryKeys } from "../lib/queryKeys";
 
 export interface CreateConfigInput {

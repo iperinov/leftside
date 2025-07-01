@@ -2,15 +2,19 @@ import { Button, Flex } from "@radix-ui/themes";
 import type ClassNameProps from "../shared/ClassNameProps";
 
 interface ConfigurationHeaderProps {
-    onCanceled?: () => void;
-    onCompleted?: () => void;
+  onCanceled?: () => void;
+  onCompleted?: () => void;
 }
 
-export default function ConfigurationHeader({onCanceled, onCompleted, className}: ConfigurationHeaderProps & ClassNameProps) {
-    return (
-        <Flex align="end" className={className} >
-            <Button onClick={onCompleted}>Save changes</Button>
-            <Button onClick={onCanceled}>Cancel</Button>
-        </Flex>
-    )
+export default function ConfigurationHeader({
+  onCanceled,
+  onCompleted,
+  className,
+}: ConfigurationHeaderProps & ClassNameProps) {
+  return (
+    <Flex align="end" className={className}>
+      <Button onClick={onCompleted}>Save changes</Button>
+      <Button onClick={onCanceled}>Cancel</Button>
+    </Flex>
+  );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Configuration } from "../api/scs/configurations/getConfigurations";
+import type { Configuration } from "../api/scs/configurations/config.types";
 import { updateConfiguration } from "../api/scs/configurations/updateConfiguration";
 import { useConfigStore } from "../stores/configStore";
 

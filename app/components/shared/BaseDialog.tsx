@@ -1,5 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { Button, Flex } from "@radix-ui/themes";
+import { Button, Flex, Theme } from "@radix-ui/themes";
 import type React from "react";
 
 export interface BaseDialogProps {
@@ -9,9 +9,14 @@ export interface BaseDialogProps {
   title: string;
   confirmLabel?: string;
   cancelLabel?: string;
+  backLabel?: string;
   isProcessing?: boolean;
   disableConfirm?: boolean;
   children: React.ReactNode;
+
+  renderActionsStart?: React.ReactNode;
+  onBack?: () => void;
+  showCancel?: boolean;
 }
 
 export const BaseDialog: React.FC<BaseDialogProps> = ({
@@ -21,40 +26,76 @@ export const BaseDialog: React.FC<BaseDialogProps> = ({
   title,
   confirmLabel = "Proceed",
   cancelLabel = "Cancel",
+  backLabel = "Back",
   isProcessing = false,
   disableConfirm = false,
   children,
+  renderActionsStart,
+  onBack,
+  showCancel = true,
 }) => {
   return (
     <Dialog.Root open={open} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="dialogOverlay" />
-        <Dialog.Content className="dialogContent" aria-describedby={undefined}>
-          <Dialog.Title className="dialogTitle">{title}</Dialog.Title>
+        <Theme asChild>
+          <Dialog.Overlay className="dialogOverlay" />
+        </Theme>
+        <Theme asChild>
+          <Dialog.Content
+            className="dialogContent"
+            aria-describedby={undefined}
+          >
+            <Dialog.Title className="dialogTitle">{title}</Dialog.Title>
 
-          {children}
+            {children}
 
-          <Flex justify="end" gap="4" style={{ paddingTop: "1rem" }}>
-            <Button
-              variant="ghost"
-              color="gray"
-              onClick={onClose}
-              disabled={isProcessing}
-              className="buttonGhost"
+            <Flex
+              justify="between"
+              align="center"
+              style={{ paddingTop: "1rem" }}
             >
-              {cancelLabel}
-            </Button>
-            <Button
-              variant="ghost"
-              color="gray"
-              onClick={onConfirm}
-              disabled={isProcessing || disableConfirm}
-              className="buttonGhost"
-            >
-              {isProcessing ? "Processing…" : confirmLabel}
-            </Button>
-          </Flex>
-        </Dialog.Content>
+              {/* Left side */}
+              {renderActionsStart ?? <span />}
+
+              {/* Right side buttons */}
+              <Flex gap="4">
+                {showCancel && (
+                  <Button
+                    variant="ghost"
+                    color="gray"
+                    onClick={onClose}
+                    disabled={isProcessing}
+                    className="buttonGhost"
+                  >
+                    {cancelLabel}
+                  </Button>
+                )}
+
+                {onBack && (
+                  <Button
+                    variant="ghost"
+                    color="gray"
+                    onClick={onBack}
+                    disabled={isProcessing}
+                    className="buttonGhost"
+                  >
+                    {backLabel}
+                  </Button>
+                )}
+
+                <Button
+                  variant="ghost"
+                  color="gray"
+                  onClick={onConfirm}
+                  disabled={isProcessing || disableConfirm}
+                  className="buttonGhost"
+                >
+                  {isProcessing ? "Processing…" : confirmLabel}
+                </Button>
+              </Flex>
+            </Flex>
+          </Dialog.Content>
+        </Theme>
       </Dialog.Portal>
     </Dialog.Root>
   );

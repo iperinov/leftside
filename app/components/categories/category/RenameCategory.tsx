@@ -1,6 +1,4 @@
-
 import EditNameDialog from "~/components/dialogs/EditNameDialog";
-import { findItemSiblings } from "~/components/tree/common/findItem";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 
 interface RenameCategoryProps {
@@ -10,14 +8,21 @@ interface RenameCategoryProps {
   onCanceled?: () => void;
 }
 
-export default function RenameCategory({ id, name, onCompleted, onCanceled }: RenameCategoryProps) {
-  const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
+export default function RenameCategory({
+  id,
+  name,
+  onCompleted,
+  onCanceled,
+}: RenameCategoryProps) {
   const renameCategory = useCategoryTreeStore((state) => state.renameCategory);
+  const findCategorySiblings = useCategoryTreeStore(
+    (state) => state.findCategorySiblings,
+  );
 
   return (
     <EditNameDialog
       title="Rename category"
-      description="Enter a new name for the categort:"
+      description="Enter a new name for the category:"
       confirmText="Rename"
       open={true}
       currentName={name}
@@ -25,10 +30,12 @@ export default function RenameCategory({ id, name, onCompleted, onCanceled }: Re
         if (!renameCategory(id, name)) {
           throw new Error(`Failed to rename item with ID ${id}`);
         }
-        onCompleted?.()
+        onCompleted?.();
       }}
       onCancel={onCanceled}
-      validName={(name) => findItemSiblings(id, rootCategory)?.find((item) => item.name === name) === undefined}
+      validName={(name) =>
+        !findCategorySiblings(id)?.find((item) => item.name === name.trim())
+      }
     />
   );
 }

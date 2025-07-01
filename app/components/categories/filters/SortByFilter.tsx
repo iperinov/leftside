@@ -1,10 +1,10 @@
-import type ItemData from "../ItemData";
-import styles from "./Filters.module.css";
-import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import SelectDialog from "~/components/dialogs/SelectDialog";
-import Filter from "./Filter";
 import { useState } from "react";
+import SelectDialog from "~/components/dialogs/SelectDialog";
+import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import type ItemData from "../ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
+import Filter from "./Filter";
+import styles from "./Filters.module.css";
 
 function toItemData(): ItemData<string>[] {
   return [
@@ -13,9 +13,14 @@ function toItemData(): ItemData<string>[] {
   ];
 }
 
-export default function SortByFilter({ categoryID, filterGroupID }: FilterGroupProps) {
+export default function SortByFilter({
+  categoryID,
+  filterGroupID,
+}: FilterGroupProps) {
   const sortByFilter = useCategoryTreeStore((state) => state.sortByFilter);
-  const updateSortByFilters = useCategoryTreeStore((state) => state.updateSortByFilter);
+  const updateSortByFilters = useCategoryTreeStore(
+    (state) => state.updateSortByFilter,
+  );
   const [show, setShow] = useState(false);
   const items = toItemData();
   const selection = sortByFilter(categoryID, filterGroupID);
@@ -23,13 +28,23 @@ export default function SortByFilter({ categoryID, filterGroupID }: FilterGroupP
 
   return (
     <>
-      <Filter key={"sortBy"} label={"Sort By"} values={value ? [value] : []} onClick={() => setShow(true)} className={`${styles.filter}`} />
+      <Filter
+        key={"sortBy"}
+        label={"Sort By"}
+        values={value ? [value] : []}
+        onClick={() => setShow(true)}
+        className={`${styles.filter}`}
+      />
 
       {show && (
         <SelectDialog
           items={toItemData()}
           onConfirm={(selectedID) => {
-            updateSortByFilters(categoryID, filterGroupID, selectedID as "asc" | "desc");
+            updateSortByFilters(
+              categoryID,
+              filterGroupID,
+              selectedID as "asc" | "desc",
+            );
             setShow(false);
           }}
           onCancel={() => setShow(false)}

@@ -1,5 +1,5 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import type { Configuration } from "./getConfigurations";
+import type { Configuration } from "./config.types";
 
 const scsUrl = getAppConfig().scs.baseUrl;
 

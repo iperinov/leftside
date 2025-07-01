@@ -1,7 +1,7 @@
-import { findItem } from "../../tree/common/findItem";
+import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { TemplateType } from "~/components/categories/TemplateType";
-import type CategoryTreeItem from "../CategoryTreeItem";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import type CategoryTreeItem from "../CategoryTreeItem";
 import AddNewCategoryDialog from "./AddNewCategoryDialog";
 
 interface AddNewCategoryProps {
@@ -11,20 +11,37 @@ interface AddNewCategoryProps {
   onCompleted?: () => void;
 }
 
-export default function AddNewCategory({ parentID, level, onCompleted, onCanceled }: AddNewCategoryProps) {
-  const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
+export default function AddNewCategory({
+  parentID,
+  level,
+  onCompleted,
+  onCanceled,
+}: AddNewCategoryProps) {
+  const findCategory = useCategoryTreeStore((state) => state.findCategory);
   const addCategory = useCategoryTreeStore((state) => state.addCategory);
-  const parent = findItem(parentID, rootCategory);
-  if (!parent || parent.type !== "nested") throw new Error(`Parent with ID ${parentID} not found or not nested type`);
+  const parent = findCategory(parentID);
+  if (!parent || parent.type !== "nested")
+    throw new Error(`Parent with ID ${parentID} not found or not nested type`);
   const siblings = parent.children || [];
 
-  const onAddConfirmed = (name: string, type: TemplateType, sports: string[], leagues: string[]) => {
-    console.log("AddNewCategory: ", parentID, level, name, type, sports, leagues);
-
-    const baseCategory = { id: crypto.randomUUID(), name, type: "flat"} as CategoryTreeItem;
+  const onAddConfirmed = (
+    name: string,
+    type: TemplateType,
+    sports: string[],
+    leagues: string[],
+  ) => {
+    const baseCategory = {
+      id: crypto.randomUUID(),
+      name,
+      type: "flat",
+    } as CategoryTreeItem;
     switch (type) {
       case TemplateType.Parent:
-        addCategory(parentID, { ...baseCategory, type: "nested", children: [] });
+        addCategory(parentID, {
+          ...baseCategory,
+          type: "nested",
+          children: [],
+        });
         break;
       case TemplateType.Child:
         addCategory(parentID, { ...baseCategory, filterGroups: [] });
@@ -39,7 +56,7 @@ export default function AddNewCategory({ parentID, level, onCompleted, onCancele
                 { type: "sport", values: sports },
                 { type: "league", values: leagues },
               ],
-            },
+            } as FilterGroup,
           ],
         });
         break;
@@ -51,9 +68,9 @@ export default function AddNewCategory({ parentID, level, onCompleted, onCancele
               uuid: crypto.randomUUID(),
               filters: [
                 { type: "sport", values: sports },
-                { type: "league", values: ["All"] },
+                { type: "league", values: ["all"] },
               ],
-            },
+            } as FilterGroup,
           ],
         });
         break;
@@ -70,7 +87,7 @@ export default function AddNewCategory({ parentID, level, onCompleted, onCancele
       open={true}
       onConfirm={onAddConfirmed}
       onCancel={onCanceled}
-      validName={(name) => siblings.find((item) => item.name === name) === undefined}
+      validName={(name) => !siblings.find((item) => item.name === name.trim())}
     />
   );
 }

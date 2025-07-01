@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function useControlledComponentClickOutside(
+export default function useControlledComponentClickOutside(
   outsideOfElelementRef: React.RefObject<HTMLDivElement | null>,
   open: boolean,
   onOpenChanged: (o: boolean) => void,

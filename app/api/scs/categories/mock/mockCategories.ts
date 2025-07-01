@@ -21,7 +21,7 @@ export const mockConfigurationCategories: Category[] = [
                 filters: [
                   { type: "sport", values: ["1"] },
                   { type: "league", values: ["10003"] },
-                //  { type: "region", values: ["3A38E6F6-BDAC-43A6-B334-F9A9461FFAF4"] },
+                  //  { type: "region", values: ["3A38E6F6-BDAC-43A6-B334-F9A9461FFAF4"] },
                 ],
                 groupBy: "league.day",
                 order: "asc",
@@ -39,7 +39,7 @@ export const mockConfigurationCategories: Category[] = [
                 filters: [
                   { type: "sport", values: ["1"] },
                   { type: "league", values: ["10002"] },
-                //  { type: "region", values: ["3A38E6F6-BDAC-43A6-B334-F9A9461FFAF4"] },
+                  //  { type: "region", values: ["3A38E6F6-BDAC-43A6-B334-F9A9461FFAF4"] },
                 ],
                 groupBy: "day.league",
                 order: "asc",
