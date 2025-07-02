@@ -1,22 +1,21 @@
 import { reactRouter } from "@react-router/dev/vite";
-import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "vitest/config";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  server: {
-    port: 8080,
-  },
-  plugins: [!process.env.VITEST && reactRouter(), tailwindcss(), tsconfigPaths()],
+  plugins: [
+    !process.env.VITEST && reactRouter(),
+    tsconfigPaths(),
+  ],
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./app/test/setup.ts'],
+    environment: "jsdom",
+    setupFiles: ["./app/test/setup.ts"],
     coverage: {
       reporter: ["text", "json", "html"],
-      reportsDirectory: "coverage"
+      reportsDirectory: "coverage",
     },
     reporters: ["default", "junit"],
-    outputFile: "junit.xml"
-  }
+    outputFile: "junit.xml",
+  },
 });

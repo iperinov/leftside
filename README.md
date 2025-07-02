@@ -3,7 +3,7 @@
 
 # 📘 Project Overview
 
-A modern web application built with React, using Vite, Tailwind, React Router v7, and Vitest. The project follows a modular and type-safe structure suitable for scalable frontend development.
+A modern web application built with React, using Vite, React Router v7, and Vitest. The project follows a modular and type-safe structure suitable for scalable frontend development.
 
 ---
 
@@ -13,7 +13,7 @@ A modern web application built with React, using Vite, Tailwind, React Router v7
 | ---------- | --------------------------------------------- |
 | UI         | React 19, TypeScript (strict mode)            |
 | Routing    | React Router v7 (data APIs)                   |
-| Styling    | Tailwind CSS, Radix UI, Radix Icons           |
+| Styling    | Radix UI, Radix Icons           |
 | State Mgmt | Zustand (`useAuthStore`)                      |
 | Tooling    | Vite + `vite-tsconfig-paths`                  |
 | Testing    | Vitest, Testing Library, jest-dom, user-event |
@@ -118,7 +118,6 @@ unit_tests:
 ## 📌 Notes
 
 * Prefer `createRoutesStub()` in unit tests
-* Tailwind is configured via `tailwind.config.js`
 * Global test setup is in `src/test/setup.ts`
 * Coverage is collected via V8 engine (`c8` under the hood)
 
