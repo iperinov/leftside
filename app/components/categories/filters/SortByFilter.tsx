@@ -8,8 +8,8 @@ import styles from "./Filters.module.css";
 
 function toItemData(): ItemData<string>[] {
   return [
-    { id: "asc", name: "asc" },
-    { id: "desc", name: "desc" },
+    { id: "time", name: "Start Time" },
+    { id: "alpha", name: "Alphabetical" },
   ];
 }
 
