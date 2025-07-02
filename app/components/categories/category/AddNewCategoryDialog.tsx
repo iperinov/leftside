@@ -154,6 +154,7 @@ export default function AddNewCategoryDialog({
 
   const getLeagueItems = (sportIDs: string[]): ItemData<string>[] => {
     const filteredLeagues = leaguesForSports(sportIDs);
+    console.log("getLeagueItems", filteredLeagues);
     return (
       filteredLeagues.map((league) => ({
         id: league.uuid,
@@ -194,7 +195,7 @@ export default function AddNewCategoryDialog({
               <FormRow label="Select sport">
                 <MultiSelectDropdown
                   items={getSportItems()}
-                  selectedIDs={selectedSportIDs}
+                  defaultSelectedIDs={selectedSportIDs}
                   onSelectionChange={handleSportsSelectionChange}
                 />
               </FormRow>
@@ -203,7 +204,7 @@ export default function AddNewCategoryDialog({
               <FormRow label="Select league">
                 <MultiSelectDropdown
                   items={getLeagueItems(selectedSportIDs)}
-                  selectedIDs={selectedLeagueIDs}
+                  defaultSelectedIDs={selectedLeagueIDs}
                   onSelectionChange={handleLeaguesSelectionChange}
                 />
               </FormRow>
