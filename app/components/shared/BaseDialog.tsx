@@ -17,6 +17,8 @@ export interface BaseDialogProps {
   renderActionsStart?: React.ReactNode;
   onBack?: () => void;
   showCancel?: boolean;
+
+  width?: string | number;
 }
 
 export const BaseDialog: React.FC<BaseDialogProps> = ({
@@ -33,6 +35,7 @@ export const BaseDialog: React.FC<BaseDialogProps> = ({
   renderActionsStart,
   onBack,
   showCancel = true,
+  width, // 👈 destructure the new prop
 }) => {
   return (
     <Dialog.Root open={open} onOpenChange={(open) => !open && onClose()}>
@@ -44,6 +47,9 @@ export const BaseDialog: React.FC<BaseDialogProps> = ({
           <Dialog.Content
             className="dialogContent"
             aria-describedby={undefined}
+            style={{
+              ...(width ? { width } : {}),
+            }}
           >
             <Dialog.Title className="dialogTitle">{title}</Dialog.Title>
 

@@ -1,13 +1,12 @@
+import { useLocation, useParams } from "react-router-dom";
 import ModifyConfigurationPage from "~/pages/ModifyConfigurationPage";
-import type { Route } from "./+types/configuration";
 
-export function meta() {
-  return [{ title: `${name} configuration` }];
-}
-
-export default function Configuration({ params }: Route.ComponentProps) {
-  const { id } = params;
-  const name = "TVG 2";
-  const edit = !!id;
+export default function Configuration() {
+  const { id } = useParams();
+  if (!id) {
+    throw new Error("Missing configuration ID in route params");
+  }
+  const location = useLocation();
+  const { name, edit } = location.state || {};
   return <ModifyConfigurationPage id={id} name={name} edit={edit} />;
 }

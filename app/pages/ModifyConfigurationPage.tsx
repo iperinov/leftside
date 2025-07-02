@@ -1,5 +1,7 @@
 import { Flex } from "@radix-ui/themes";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import ConfigurationContent from "~/components/categories/ConfigurationContent";
 import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
@@ -8,18 +10,31 @@ import { useCategories } from "~/hooks/configurationCategories/useCategories";
 import styles from "./ModifyConfigurationPage.module.css";
 
 interface ModifyConfigurationPageProps {
-  id: string;
-  name: string;
-  edit: boolean;
+  id?: string;
+  name?: string;
+  edit?: boolean;
 }
 
 export default function ModifyConfigurationPage({
-  id,
-  name,
-  edit,
+  id = "",
+  name = "",
+  edit = false,
 }: ModifyConfigurationPageProps) {
   const { error, isLoading } = useCategories(id);
   const [selectedID, setSelectedID] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
+
+  const onCanceled = () => {
+    if (!isProcessing) navigate("/configurations/");
+  };
+
+  const onCompleted = async () => {
+    setIsProcessing(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    toast.success(`Configuration "${name}" saved successfully.`);
+    navigate("/configurations/");
+  };
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading}>
@@ -35,13 +50,10 @@ export default function ModifyConfigurationPage({
           className={styles.content}
         />
         <ConfigurationFooter
-          onCanceled={() =>
-            console.log("Modigy configuration ", name, " canceled")
-          } // TODO
-          onCompleted={() =>
-            console.log("Modigy configuration ", name, " completed")
-          } //TODO
+          onCanceled={onCanceled}
+          onCompleted={onCompleted}
           className={styles.footer}
+          isProcessing={isProcessing}
         />
       </Flex>
     </LoadDataDecorator>

@@ -7,7 +7,7 @@ export interface RealSport {
 
   // TODO: Missing in ocs/realsports/
   shortDesc?: string; // maps from `rssd`
-  enabled: boolean; // maps from `enabled`
+  enabled?: boolean; // maps from `enabled`
 }
 
 export interface RenameRealSportApiIn {
@@ -80,4 +80,11 @@ export interface TakeBackProfile {
 
   // TODO: Missing in ocs/realsports/
   description: string; // maps from `tbpd`
+}
+
+export interface Book {
+  id: number; // maps from 'bid'
+  name: string; // maps from 'name'
+  webColumnId: number; // maps from 'wcid'
+  enabled: boolean; // maps from 'enabled'
 }

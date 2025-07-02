@@ -1,5 +1,5 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import { mockContentFiltered } from "./mock/mockContentFiltered";
+import { mockContentFiltered } from "./mock/mockContentFilteredFull";
 import type { FilterGroup, FilteredGamesResponse } from "./ssm.types";
 
 const ssmUrl = getAppConfig().ssm.baseUrl;

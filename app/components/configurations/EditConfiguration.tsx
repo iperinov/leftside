@@ -2,6 +2,7 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import type { FilterGroup } from "~/api/ssm/ssm.types";
+import { GroupBy, Order } from "~/api/ssm/ssm.types";
 import AssignedBooks from "./AssignedBooks";
 import ContentPreview from "./ContentPreview";
 
@@ -13,10 +14,28 @@ interface EditConfigurationProps {
 
 const mockFilterGroups: FilterGroup[] = [
   {
-    filters: [{ type: "league", value: "ARGENTINA - COPA ARGENTINA" }],
-    groupBy: ["league"],
-    order: "asc",
-    limit: 5,
+    filters: [
+      {
+        // USA - MLS
+        type: "league",
+        value: ["8ADE19BD-BC0C-489C-9568-87913DE486C7"],
+      },
+    ],
+    groupBy: GroupBy.SportDate,
+    order: Order.Asc,
+    //limit: 1,
+  },
+  {
+    filters: [
+      {
+        //NFL
+        type: "league",
+        value: ["F47370AC-44C3-4CC6-8358-8798C1E0DA9A"],
+      },
+    ],
+    groupBy: GroupBy.Date,
+    order: Order.Desc,
+    //limit: 1,
   },
 ];
 
@@ -25,10 +44,11 @@ export function EditConfiguration({
   name,
   onClose,
 }: EditConfigurationProps) {
+  const books = [1, 16, 26, 27, 28];
   const [configName, setValue] = useState(name);
-  const [assignedBooks, setAssignedBooks] = useState<number[]>([
-    1, 7, 11, 13, 20,
-  ]);
+  const [assignedBooks, setAssignedBooks] = useState<number[]>(books);
+  const [originalAssignedBooks, setoriginalAssignedBooks] =
+    useState<number[]>(books);
 
   return (
     <Box
@@ -92,6 +112,7 @@ export function EditConfiguration({
         >
           <AssignedBooks
             assignedBooks={assignedBooks}
+            originalAssignedBooks={originalAssignedBooks}
             onUpdate={setAssignedBooks}
           />
           <ContentPreview filterGroups={mockFilterGroups} />

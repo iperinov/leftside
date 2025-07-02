@@ -65,6 +65,11 @@ body {
   display: none; /* Chrome, Safari, Opera */
 }
 
+.no-horizontal-scroll {
+  overflow-x: hidden; /* Disables horizontal scrolling */
+  overflow-y: auto; /* Enables vertical scrolling if needed */
+}
+
 .customDialogContent {
   width: 400px;
 }

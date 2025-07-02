@@ -16,6 +16,7 @@
   position: fixed;
   height: 400px;
   z-index: 1000;
+  overflow: hidden;
   background-color: var(--color-background);
   color: var(--accent-12);
   box-shadow: 0 2px 8px var(--gray-8);
@@ -24,14 +25,13 @@
 }
 
 .multiSelectDropdownItem {
-  align-items: center;
   align-content: center;
   min-height: 35px;
 }
 
 .multiSelectDropdownItem,
 .multiSelectDropdownItem:hover {
-  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  padding: 0.0rem 0.5rem 0.0rem 0.5rem;
 }
 .multiSelectDropdownItem:hover {
   background-color: var(--accent-4);

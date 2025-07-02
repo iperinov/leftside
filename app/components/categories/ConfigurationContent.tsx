@@ -30,7 +30,10 @@ export default function ConfigurationContent({
         className={styles.main}
       />
 
-      <ConfigurationContentContext className={styles.context} />
+      <ConfigurationContentContext
+        categoryID={selectedID}
+        // className={styles.context}
+      />
     </Flex>
   );
 }

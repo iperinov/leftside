@@ -8,12 +8,19 @@ export interface Filter {
     | "market"
     | "time"
     | "status";
-  value: string;
+  value: string[];
 }
 
 export interface FilterGroup {
   filters: Filter[];
-  groupBy?: ("league" | "date")[];
+  groupBy?:
+    | "league"
+    | "date"
+    | "league.date"
+    | "date.league"
+    | "sport.league"
+    | "sport.date"
+    | "date.game";
   order?: "asc" | "desc";
   limit?: number;
 }
@@ -50,4 +57,19 @@ export interface FilteredGamesResponse {
   status: number;
   description: string;
   games: Game[];
+}
+
+export enum GroupBy {
+  League = "league",
+  Date = "date",
+  LeagueDate = "league.date",
+  DateLeague = "date.league",
+  SportLeague = "sport.league",
+  SportDate = "sport.date",
+  DateGame = "date.game",
+}
+
+export enum Order {
+  Asc = "asc",
+  Desc = "desc",
 }
