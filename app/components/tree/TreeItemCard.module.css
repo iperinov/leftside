@@ -21,10 +21,6 @@
   visibility: hidden;
 }
 
-.noselect {
-  user-select: none;
-}
-
 @keyframes blink {
   0%,
   100% {

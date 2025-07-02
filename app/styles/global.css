@@ -76,3 +76,7 @@ body {
 .nohover {
   background-color: transparent;
 }
+
+.noselect {
+  user-select: none;
+}

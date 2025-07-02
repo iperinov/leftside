@@ -45,7 +45,7 @@ export default function SportsFilter({
           key={"sport"}
           label={"Sports"}
           values={selections.map((id) => {
-            if (id === allItemData.id) return "All";
+            if (id === allItemData.id) return allItemData.name;
             const realSport = data?.find((item) => String(item.id) === id);
             return realSport ? realSport.name : "";
           })}

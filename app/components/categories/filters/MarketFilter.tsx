@@ -51,7 +51,7 @@ export default function MarketFilter({
           key={"market"}
           label={"Markets"}
           values={selections.map((id) => {
-            if (id === allItemData.id) return "All";
+            if (id === allItemData.id) return allItemData.name;
             const event = data?.find((event) => String(event.id) === id);
             return event ? event.description : "";
           })}
