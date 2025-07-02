@@ -8,7 +8,11 @@ import Filter from "./Filter";
 import styles from "./Filters.module.css";
 
 function toItemData(): ItemData<string>[] {
-  return [allItemData(), { id: "0", name: "Pregame" }, { id: "1", name: "Live" }];
+  return [
+    allItemData(),
+    { id: "0", name: "Pregame" },
+    { id: "1", name: "Live" },
+  ];
 }
 
 export default function StatusFilter({

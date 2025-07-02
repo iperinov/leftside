@@ -2,10 +2,10 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, TextField } from "@radix-ui/themes";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type ItemData from "~/types/ItemData";
+import { allItemData } from "../categories/AllItemData";
 import styles from "./MultiSelectDropdown.module.css";
 import MultiSelectDropdownItemList from "./MultiSelectDropdownItemList";
 import PillsSelections from "./PillsSelections";
-import { allItemData } from "../categories/AllItemData";
 
 export interface ResultsSelectionProps<T extends string | number> {
   selectedIDs: T[];
@@ -55,14 +55,19 @@ export default function MultiSelectDropdown<T extends string | number>({
 
   const onSelect = useCallback(
     (selected: boolean, id: T) => {
-      const newSelection = 
-        (includeAllItem && selected && (id === allItem.id || (selectedIDs.includes(allItem.id) && id !== allItem.id))) 
-        ? [id] 
-        : selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id);
+      const newSelection =
+        includeAllItem &&
+        selected &&
+        (id === allItem.id ||
+          (selectedIDs.includes(allItem.id) && id !== allItem.id))
+          ? [id]
+          : selected
+            ? [...selectedIDs, id]
+            : selectedIDs.filter((s) => s !== id);
       setSelectedIDs(newSelection);
       onSelectionChange?.(newSelection);
     },
-    [includeAllItem, selectedIDs, onSelectionChange],
+    [includeAllItem, selectedIDs, onSelectionChange, allItem.id],
   );
 
   useEffect(() => {

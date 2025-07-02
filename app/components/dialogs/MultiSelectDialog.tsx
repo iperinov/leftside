@@ -30,7 +30,7 @@ export default function MultiSelectDialog<T extends string | number>({
   valid = () => true,
 }: MultiSelectDialogProps<T>) {
   const [isOpen, setIsOpen] = useState(open);
-  const [selection, setSelection] = useState<T[]>(defaultSelectedIDs); 
+  const [selection, setSelection] = useState<T[]>(defaultSelectedIDs);
 
   const handleConfirm = () => {
     onConfirm(selection);

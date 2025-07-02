@@ -23,19 +23,30 @@ function toItemData(): ItemData<string>[] {
   ];
 }
 
-export default function TimeFilter({ categoryID, filterGroupID }: FilterGroupProps) {
+export default function TimeFilter({
+  categoryID,
+  filterGroupID,
+}: FilterGroupProps) {
   const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
-  const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
+  const updateTimeFilters = useCategoryTreeStore(
+    (state) => state.updateTimeFilter,
+  );
   const [show, setShow] = useState(false);
   const items = toItemData();
   const selection = timeFilter(categoryID, filterGroupID);
   const selectionName = items.find((item) => item.id === selection)?.name;
 
-console.log("TimeFilter", {selection, selectionName });
+  console.log("TimeFilter", { selection, selectionName });
 
   return (
     <>
-      <Filter key={"time"} label={"Time"} values={selectionName ? [selectionName] : []} onClick={() => setShow(true)} className={`${styles.filter}`} />
+      <Filter
+        key={"time"}
+        label={"Time"}
+        values={selectionName ? [selectionName] : []}
+        onClick={() => setShow(true)}
+        className={`${styles.filter}`}
+      />
 
       {show && (
         <SelectDialog

@@ -25,7 +25,9 @@ export default function SportsFilter({
 }: SportFilterProps & FilterGroupProps) {
   const { data, isLoading, error } = useRealSports();
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
-  const updateSportsFilters = useCategoryTreeStore((state) => state.updateSportsFilter,);
+  const updateSportsFilters = useCategoryTreeStore(
+    (state) => state.updateSportsFilter,
+  );
   const [show, setShow] = useState(false);
   const allItem = useMemo(() => allItemData(), []);
   const selections = sportFilters(categoryID, filterGroupID);

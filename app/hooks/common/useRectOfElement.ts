@@ -12,11 +12,13 @@ import { useEffect, useLayoutEffect, useState } from "react";
   return rect;
 }*/
 
-export default function useRectOfElement(ref: React.RefObject<HTMLElement | null>) {
+export default function useRectOfElement(
+  ref: React.RefObject<HTMLElement | null>,
+) {
   const [rect, setRect] = useState<DOMRect>();
 
   useLayoutEffect(() => {
-    let frame = requestAnimationFrame(() => {
+    const frame = requestAnimationFrame(() => {
       if (ref.current) {
         setRect(ref.current.getBoundingClientRect());
       }

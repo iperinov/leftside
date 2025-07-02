@@ -154,7 +154,6 @@ export default function AddNewCategoryDialog({
 
   const getLeagueItems = (sportIDs: string[]): ItemData<string>[] => {
     const filteredLeagues = leaguesForSports(sportIDs);
-    console.log("getLeagueItems", filteredLeagues);
     return (
       filteredLeagues.map((league) => ({
         id: league.uuid,

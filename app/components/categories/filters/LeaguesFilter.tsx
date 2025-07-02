@@ -15,7 +15,10 @@ interface LeagueFilterProps {
 }
 
 function toItemData(leagues: League[]): ItemData<string>[] {
-  return leagues.map((league) => ({ id: String(league.id), name: league.name }));
+  return leagues.map((league) => ({
+    id: String(league.id),
+    name: league.name,
+  }));
 }
 
 export default function LeaguesFilter({
