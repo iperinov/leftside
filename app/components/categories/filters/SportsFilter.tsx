@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { RealSport } from "~/api/ocs/ocs.types";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
@@ -15,10 +15,7 @@ interface SportFilterProps {
 }
 
 function toItemData(sports: RealSport[]): ItemData<string>[] {
-  return [
-    allItemData,
-    ...sports.map((sport) => ({ id: String(sport.id), name: sport.name })),
-  ];
+  return sports.map((sport) => ({ id: String(sport.id), name: sport.name }));
 }
 
 export default function SportsFilter({
@@ -28,10 +25,9 @@ export default function SportsFilter({
 }: SportFilterProps & FilterGroupProps) {
   const { data, isLoading, error } = useRealSports();
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
-  const updateSportsFilters = useCategoryTreeStore(
-    (state) => state.updateSportsFilter,
-  );
+  const updateSportsFilters = useCategoryTreeStore((state) => state.updateSportsFilter,);
   const [show, setShow] = useState(false);
+  const allItem = useMemo(() => allItemData(), []);
   const selections = sportFilters(categoryID, filterGroupID);
 
   return (
@@ -45,7 +41,7 @@ export default function SportsFilter({
           key={"sport"}
           label={"Sports"}
           values={selections.map((id) => {
-            if (id === allItemData.id) return allItemData.name;
+            if (id === allItem.id) return allItem.name;
             const realSport = data?.find((item) => String(item.id) === id);
             return realSport ? realSport.name : "";
           })}
@@ -57,6 +53,7 @@ export default function SportsFilter({
       {show && data && (
         <MultiSelectDialog<string>
           items={toItemData(data)}
+          includeAllItem={true}
           onConfirm={(selectedIDs) => {
             updateSportsFilters(categoryID, filterGroupID, selectedIDs);
             setShow(false);
@@ -68,11 +65,7 @@ export default function SportsFilter({
             values.some((v) => !selections.includes(v))
           }
           defaultSelectedIDs={selections}
-          onSelectionChange={(selectedIDs) =>
-            !selectedIDs.includes(allItemData.id)
-              ? selectedIDs
-              : [allItemData.id]
-          }
+          onSelectionChange={(selectedIDs) => onChange?.(selectedIDs)}
         />
       )}
     </>

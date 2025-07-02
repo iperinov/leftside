@@ -1,10 +1,11 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, TextField } from "@radix-ui/themes";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type ItemData from "~/types/ItemData";
 import styles from "./MultiSelectDropdown.module.css";
 import MultiSelectDropdownItemList from "./MultiSelectDropdownItemList";
 import PillsSelections from "./PillsSelections";
+import { allItemData } from "../categories/AllItemData";
 
 export interface ResultsSelectionProps<T extends string | number> {
   selectedIDs: T[];
@@ -13,7 +14,8 @@ export interface ResultsSelectionProps<T extends string | number> {
 }
 interface MultiSelectDropdownProps<T extends string | number> {
   items?: ItemData<T>[];
-  selectedIDs?: T[];
+  defaultSelectedIDs?: T[];
+  includeAllItem?: boolean;
   onSelectionChange?: (selectedIDs: T[]) => void;
   positionPreference?: "above" | "below";
   ResultsPanel?: (props: ResultsSelectionProps<T>) => React.ReactNode;
@@ -21,7 +23,8 @@ interface MultiSelectDropdownProps<T extends string | number> {
 
 export default function MultiSelectDropdown<T extends string | number>({
   items = [],
-  selectedIDs = [],
+  defaultSelectedIDs = [],
+  includeAllItem = false,
   onSelectionChange,
   positionPreference = "below",
   ResultsPanel = PillsSelections,
@@ -29,11 +32,15 @@ export default function MultiSelectDropdown<T extends string | number>({
   const triggerRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState("");
   const [open, setOpen] = useState(false);
+  const [selectedIDs, setSelectedIDs] = useState<T[]>(defaultSelectedIDs);
+  const allItem = useMemo(() => allItemData() as ItemData<T>, []);
+
+  const dropdownItems = includeAllItem ? [allItem, ...items] : items;
 
   const filteredItems =
     searchValue.length === 0
-      ? items
-      : items.filter((item) =>
+      ? dropdownItems
+      : dropdownItems.filter((item) =>
           item.name.toLowerCase().includes(searchValue.toLowerCase()),
         );
   const preventShowingDropdownList = filteredItems.length === 0;
@@ -48,11 +55,14 @@ export default function MultiSelectDropdown<T extends string | number>({
 
   const onSelect = useCallback(
     (selected: boolean, id: T) => {
-      onSelectionChange?.(
-        selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id),
-      );
+      const newSelection = 
+        (includeAllItem && selected && (id === allItem.id || (selectedIDs.includes(allItem.id) && id !== allItem.id))) 
+        ? [id] 
+        : selected ? [...selectedIDs, id] : selectedIDs.filter((s) => s !== id);
+      setSelectedIDs(newSelection);
+      onSelectionChange?.(newSelection);
     },
-    [selectedIDs, onSelectionChange],
+    [includeAllItem, selectedIDs, onSelectionChange],
   );
 
   useEffect(() => {
@@ -67,7 +77,7 @@ export default function MultiSelectDropdown<T extends string | number>({
         {/* Selected results */}
         <TextField.Root
           size="3"
-          disabled={items.length === 0}
+          disabled={dropdownItems.length === 0}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           className={`${styles.multiSelectDropdownTextField} hide-scrollbar`}
@@ -75,8 +85,11 @@ export default function MultiSelectDropdown<T extends string | number>({
           <TextField.Slot className={styles.multiSelectDropdownTextFieldSlot}>
             <ResultsPanel
               selectedIDs={selectedIDs}
-              items={items}
-              onSelectionChange={onSelectionChange}
+              items={dropdownItems}
+              onSelectionChange={(selectionIDs: T[]) => {
+                setSelectedIDs(selectionIDs);
+                onSelectionChange?.(selectionIDs);
+              }}
             />
           </TextField.Slot>
           <TextField.Slot>

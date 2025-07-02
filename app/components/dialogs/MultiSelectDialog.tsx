@@ -1,5 +1,5 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type ItemData from "~/types/ItemData";
 import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
 import type DialogBasicProps from "./DialogBasicProps";
@@ -7,8 +7,9 @@ import type DialogBasicProps from "./DialogBasicProps";
 interface MultiSelectDialogProps<T extends string | number>
   extends DialogBasicProps {
   items: ItemData<T>[];
+  includeAllItem?: boolean;
   defaultSelectedIDs?: T[];
-  onSelectionChange?: (selectedIDs: T[]) => T[];
+  onSelectionChange?: (selectedIDs: T[]) => void;
   onConfirm: (selectedIDs: T[]) => void;
   valid?: (values: T[]) => boolean;
 }
@@ -21,6 +22,7 @@ export default function MultiSelectDialog<T extends string | number>({
   cancelText = "Cancel",
   open = true,
   items,
+  includeAllItem = false,
   defaultSelectedIDs = [],
   onConfirm,
   onSelectionChange = () => [],
@@ -28,23 +30,23 @@ export default function MultiSelectDialog<T extends string | number>({
   valid = () => true,
 }: MultiSelectDialogProps<T>) {
   const [isOpen, setIsOpen] = useState(open);
-  const [selectedIDs, setSelectedIDs] = useState<T[]>(defaultSelectedIDs);
+  const [selection, setSelection] = useState<T[]>(defaultSelectedIDs); 
 
   const handleConfirm = () => {
-    onConfirm(selectedIDs);
+    onConfirm(selection);
     setIsOpen(false);
   };
 
   const handleSelectionChange = (selectedIDs: T[]) => {
-    const modifiedSelection = onSelectionChange?.(selectedIDs);
-    setSelectedIDs(modifiedSelection);
+    setSelection(selectedIDs);
+    onSelectionChange?.(selectedIDs);
   };
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (!open) {
       onCancel();
-      setSelectedIDs(defaultSelectedIDs);
+      setSelection(defaultSelectedIDs);
     }
   };
 
@@ -58,8 +60,9 @@ export default function MultiSelectDialog<T extends string | number>({
         {/* Input fields */}
         <MultiSelectDropdown
           items={items}
-          selectedIDs={selectedIDs}
+          defaultSelectedIDs={selection}
           onSelectionChange={handleSelectionChange}
+          includeAllItem={includeAllItem}
         />
 
         {/* Buttons */}
@@ -72,7 +75,7 @@ export default function MultiSelectDialog<T extends string | number>({
           <Button
             color={destructive ? "red" : undefined}
             onClick={handleConfirm}
-            disabled={!valid(selectedIDs)}
+            disabled={!valid(selection)}
           >
             {confirmText}
           </Button>

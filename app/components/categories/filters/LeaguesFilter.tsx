@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { League } from "~/api/ocs/ocs.types";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
@@ -10,17 +10,19 @@ import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
 import styles from "./Filters.module.css";
 
+interface LeagueFilterProps {
+  onChange?: (selectedIDs: string[]) => void;
+}
+
 function toItemData(leagues: League[]): ItemData<string>[] {
-  return [
-    allItemData,
-    ...leagues.map((league) => ({ id: String(league.id), name: league.name })),
-  ];
+  return leagues.map((league) => ({ id: String(league.id), name: league.name }));
 }
 
 export default function LeaguesFilter({
   categoryID,
   filterGroupID,
-}: FilterGroupProps) {
+  onChange,
+}: LeagueFilterProps & FilterGroupProps) {
   const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const sportsSelections = sportFilters(categoryID, filterGroupID);
@@ -29,6 +31,7 @@ export default function LeaguesFilter({
     (state) => state.updateLeaguesFilter,
   );
   const [show, setShow] = useState(false);
+  const allItem = useMemo(() => allItemData(), []);
   const selections = leagueFilters(categoryID, filterGroupID);
 
   return (
@@ -42,7 +45,7 @@ export default function LeaguesFilter({
           key={"league"}
           label={"Leagues"}
           values={selections.flatMap((id) => {
-            if (id === allItemData.id) return allItemData.name;
+            if (id === allItem.id) return allItem.name;
             const league = data?.find((item) => String(item.id) === id);
             return league ? [league.name] : [];
           })}
@@ -55,6 +58,7 @@ export default function LeaguesFilter({
       {show && data && (
         <MultiSelectDialog<string>
           items={toItemData(data)}
+          includeAllItem={true}
           onConfirm={(selectedIDs) => {
             updateLeaguesFilter(categoryID, filterGroupID, selectedIDs);
             setShow(false);
@@ -66,11 +70,7 @@ export default function LeaguesFilter({
             values.some((v) => !selections.includes(v))
           }
           defaultSelectedIDs={selections}
-          onSelectionChange={(selectedIDs) =>
-            !selectedIDs.includes(allItemData.id)
-              ? selectedIDs
-              : [allItemData.id]
-          }
+          onSelectionChange={(selectedIDs) => onChange?.(selectedIDs)}
         />
       )}
     </>

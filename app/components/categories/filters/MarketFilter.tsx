@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Event } from "~/api/ocs/ocs.types";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
@@ -15,43 +15,28 @@ interface MarketFilterProps {
 }
 
 function toItemData(events: Event[]): ItemData<string>[] {
-  return [
-    allItemData,
-    ...events.map((event) => ({
-      id: String(event.id),
-      name: event.description,
-    })),
-  ];
+  return events.map((event) => ({ id: String(event.id), name: event.description }));
 }
 
-export default function MarketFilter({
-  categoryID,
-  filterGroupID,
-  onChange,
-}: MarketFilterProps & FilterGroupProps) {
+export default function MarketFilter({ categoryID, filterGroupID, onChange }: MarketFilterProps & FilterGroupProps) {
   const marketFilters = useCategoryTreeStore((state) => state.marketFilters);
   const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
   const selectedLeagues = leagueFilters(categoryID, filterGroupID);
   const { data, isLoading, error } = useMarketsForLeagues(selectedLeagues);
-  const updateMarketsFilter = useCategoryTreeStore(
-    (state) => state.updateMarketsFilter,
-  );
+  const updateMarketsFilter = useCategoryTreeStore((state) => state.updateMarketsFilter);
   const [show, setShow] = useState(false);
+  const allItem = useMemo(() => allItemData(), []);
   const selections = marketFilters(categoryID, filterGroupID);
   const items = data ? toItemData(data) : [];
 
   return (
     <>
-      <LoadDataDecorator
-        error={error}
-        isLoading={isLoading}
-        className={`${styles.filter}`}
-      >
+      <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
         <Filter
           key={"market"}
           label={"Markets"}
           values={selections.map((id) => {
-            if (id === allItemData.id) return allItemData.name;
+            if (id === allItem.id) return allItem.name;
             const event = data?.find((event) => String(event.id) === id);
             return event ? event.description : "";
           })}
@@ -64,22 +49,16 @@ export default function MarketFilter({
       {show && data && (
         <MultiSelectDialog<string>
           items={items}
+          includeAllItem={true}
           onConfirm={(selectedIDs) => {
             updateMarketsFilter(categoryID, filterGroupID, selectedIDs);
             setShow(false);
           }}
           onCancel={() => setShow(false)}
           title="Select Markets"
-          valid={(values) =>
-            values.length !== selections.length ||
-            values.some((v) => !selections.includes(v))
-          }
+          valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
           defaultSelectedIDs={selections}
-          onSelectionChange={(selectedIDs) =>
-            !selectedIDs.includes(allItemData.id)
-              ? selectedIDs
-              : [allItemData.id]
-          }
+          onSelectionChange={(selectedIDs) => onChange?.(selectedIDs)}
         />
       )}
     </>

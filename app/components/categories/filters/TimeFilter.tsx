@@ -9,7 +9,7 @@ import styles from "./Filters.module.css";
 
 function toItemData(): ItemData<string>[] {
   return [
-    allItemData,
+    allItemData(),
     { id: "1", name: "1h" },
     { id: "3", name: "3h" },
     { id: "6", name: "6h" },

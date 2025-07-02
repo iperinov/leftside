@@ -1,3 +1,10 @@
 import type ItemData from "./ItemData";
 
-export const allItemData = { id: "all", name: "All" } as ItemData<string>;
+export function allItemData(): ItemData<string>;
+export function allItemData(): ItemData<number>;
+export function allItemData(): ItemData<any> {
+  return {
+    id: typeof arguments[0] === "number" ? -1 : "all",
+    name: "All"
+  };
+}
