@@ -36,8 +36,6 @@ export default function TimeFilter({
   const selection = timeFilter(categoryID, filterGroupID);
   const selectionName = items.find((item) => item.id === selection)?.name;
 
-  console.log("TimeFilter", { selection, selectionName });
-
   return (
     <>
       <Filter
@@ -52,8 +50,9 @@ export default function TimeFilter({
         <SelectDialog
           items={toItemData()}
           onConfirm={(selectedID) => {
-            updateTimeFilters(categoryID, filterGroupID, selectedID);
-            setShow(false);
+            console.log("TimeFilter 2: onConfirm", { selectedID });
+            selectedID && updateTimeFilters(categoryID, filterGroupID, selectedID);
+            //setShow(false);
           }}
           onCancel={() => setShow(false)}
           title="Select Time"

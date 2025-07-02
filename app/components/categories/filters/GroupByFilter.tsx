@@ -60,7 +60,7 @@ export default function GroupByFilter({
         <SelectDialog
           items={items}
           onConfirm={(selectedID) => {
-            updateGroupByFilters(categoryID, filterGroupID, selectedID);
+            selectedID && updateGroupByFilters(categoryID, filterGroupID, selectedID);
             setShow(false);
           }}
           onCancel={() => setShow(false)}

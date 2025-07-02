@@ -1,11 +1,14 @@
-import { useState } from "react";
-import SelectDialog from "~/components/dialogs/SelectDialog";
-import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import { allItemData } from "../AllItemData";
 import type ItemData from "../ItemData";
-import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
-import Filter from "./Filter";
 import styles from "./Filters.module.css";
+import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import SelectDialog from "~/components/dialogs/SelectDialog";
+import Filter from "./Filter";
+import { useMemo, useState } from "react";
+import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
+import { allItemData } from "../AllItemData";
+import React from "react";
+
+ const allItem = {id: "0", name: "All"} as ItemData<string>;
 
 function toItemData(): ItemData<string>[] {
   const items: ItemData<string>[] = [];
@@ -15,7 +18,7 @@ function toItemData(): ItemData<string>[] {
       name: `${i}`,
     });
   }
-  return [allItemData(), ...items];
+  return [allItem, ...items];
 }
 
 export default function LimitFilter({
@@ -27,6 +30,7 @@ export default function LimitFilter({
     (state) => state.updateLimitFilter,
   );
   const [show, setShow] = useState(false);
+ 
   const items = toItemData();
   const selection = limitFilter(categoryID, filterGroupID);
   const value = items.find((item) => item.id === String(selection))?.name;
@@ -45,7 +49,7 @@ export default function LimitFilter({
         <SelectDialog
           items={items}
           onConfirm={(selectedID) => {
-            updateLimitFilters(categoryID, filterGroupID, selectedID);
+            selectedID && updateLimitFilters(categoryID, filterGroupID, selectedID);
             setShow(false);
           }}
           onCancel={() => setShow(false)}

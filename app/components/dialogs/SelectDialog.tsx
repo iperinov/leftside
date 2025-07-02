@@ -7,7 +7,7 @@ import type DialogBasicProps from "./DialogBasicProps";
 interface SelectDialogProps extends DialogBasicProps {
   items: ItemData<string>[];
   defaultSelectedID?: string;
-  onConfirm: (selectedID: string) => void;
+  onConfirm: (selectedID?: string) => void;
   valid?: (value: string) => boolean;
 }
 
@@ -28,7 +28,9 @@ export default function SelectDialog({
   const [isOpen, setIsOpen] = useState(open);
 
   const handleConfirm = () => {
-    selectedID && onConfirm(selectedID);
+    console.log("TimeFilter: onConfirm", { selectedID });
+            
+    onConfirm(selectedID);
     setIsOpen(false);
   };
 
