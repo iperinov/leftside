@@ -1,3 +1,4 @@
+import React from "react";
 import type ItemData from "~/types/ItemData";
 
 export function allItemData<T extends string | number>(): ItemData<T> {
@@ -8,3 +9,5 @@ export function allItemData<T extends string | number>(): ItemData<T> {
     name: "All",
   };
 }
+
+export const allItem = allItemData<string>();

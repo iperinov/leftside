@@ -1,5 +1,5 @@
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import { allItemData } from "../AllItemData";
+import { allItem } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 import { useMemo } from "react";
@@ -8,7 +8,7 @@ export default function StatusFilter(props: FilterGroupProps) {
   const statusFilter = useCategoryTreeStore((state) => state.statusFilter);
   const updateStatusFilters = useCategoryTreeStore((state) => state.updateStatusFilter);
   const choices = useMemo(() => ([
-    allItemData(),
+    allItem,
     { id: "0", name: "Pregame" },
     { id: "1", name: "Live" }
   ]), []);

@@ -1,5 +1,5 @@
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import { allItemData } from "../AllItemData";
+import { allItem } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 import { useMemo } from "react";
@@ -8,7 +8,7 @@ export default function TimeFilter(props: FilterGroupProps) {
   const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
   const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
   const choices = useMemo(() => ([
-    allItemData(),
+    allItem,
     { id: "1", name: "1h" },
     { id: "3", name: "3h" },
     { id: "6", name: "6h" },

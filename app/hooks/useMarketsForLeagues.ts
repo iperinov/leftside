@@ -1,4 +1,4 @@
-import { allItemData } from "~/components/categories/AllItemData";
+import { allItem } from "~/components/categories/AllItemData";
 import { useEvents } from "./useEvents";
 import { useLeagueByEvent } from "./useLeagueByEvent";
 
@@ -13,7 +13,7 @@ export default function useMarketsForLeagues(leagues: string[]) {
     isLoading: isLoadingLeagueByEvent,
     error: errorLeagueByEvent,
   } = useLeagueByEvent();
-  if (leagues?.length === 1 && leagues[0] === allItemData().id) {
+  if (leagues?.length === 1 && leagues[0] === allItem.id) {
     return { data: events, isLoading: isLoadingEvents, error: errorEvents };
   }
 

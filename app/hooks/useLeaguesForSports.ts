@@ -1,4 +1,4 @@
-import { allItemData } from "~/components/categories/AllItemData";
+import { allItem } from "~/components/categories/AllItemData";
 import { useLeagues } from "./useLeagues";
 import { useRealSports } from "./useRealSport";
 
@@ -13,7 +13,7 @@ export default function useLeaguesForSports(sportIDs: string[]) {
     isLoading: isLoadingLeagues,
     error: errorLeagues,
   } = useLeagues();
-  if (sportIDs?.length === 1 && sportIDs[0] === allItemData().id) {
+  if (sportIDs?.length === 1 && sportIDs[0] === allItem.id) {
     return { data: leagues, isLoading: isLoadingLeagues, error: errorLeagues };
   }
 

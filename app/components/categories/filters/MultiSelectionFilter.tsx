@@ -1,0 +1,69 @@
+import { useState } from "react";
+import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
+import { allItem } from "../AllItemData";
+import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
+import Filter from "./Filter";
+import styles from "./Filters.module.css";
+import type ItemData from "~/types/ItemData";
+
+interface MultiSelectionFilterProps {
+  keyStr: string;
+  label: string;
+  title: string;
+  items: ItemData<string>[];
+  disabled?: boolean;
+
+  filterSelections(categoryID: string, filterID: string): string[];
+  updateFilterSelection(categoryID: string, filterID: string, selected: String[]): void;
+  onChange?: (selectedIDs: string[]) => void;
+}
+
+export default function MultiSelectionFilter({
+  categoryID,
+  filterGroupID,
+  keyStr,
+  label,
+  title,
+  items,
+  disabled = false,
+
+  filterSelections,
+  updateFilterSelection,
+  onChange,
+}: MultiSelectionFilterProps & FilterGroupProps) {
+  const selections = filterSelections(categoryID, filterGroupID);
+  const [show, setShow] = useState(false);
+
+  return (
+    <>
+      <Filter
+        key={keyStr}
+        label={label}
+        values={selections.flatMap((id) => {
+          if (id === allItem.id) return [allItem.name];
+          const item = items?.find((item) => String(item.id) === id);
+          return item ? [item.name] : [];
+        })}
+        onClick={() => setShow(true)}
+        className={`${styles.filter}`}
+        disabled={disabled}
+      />
+
+      {show && items && (
+        <MultiSelectDialog<string>
+          items={items}
+          includeAllItem={true}
+          onConfirm={(selectedIDs) => {
+            updateFilterSelection(categoryID, filterGroupID, selectedIDs);
+            setShow(false);
+          }}
+          onCancel={() => setShow(false)}
+          title={title}
+          valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
+          defaultSelectedIDs={selections}
+          onSelectionChange={(selectedIDs) => onChange?.(selectedIDs)}
+        />
+      )}
+    </>
+  );
+}
