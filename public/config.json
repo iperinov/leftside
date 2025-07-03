@@ -1,0 +1,8 @@
+{
+  "scs": {
+    "baseUrl": "https://localhost:7001"
+  },
+  "ocs": {
+    "baseUrl": "https://localhost:8001"
+  }
+}

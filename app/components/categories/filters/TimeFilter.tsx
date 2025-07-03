@@ -51,7 +51,8 @@ export default function TimeFilter({
           items={toItemData()}
           onConfirm={(selectedID) => {
             console.log("TimeFilter 2: onConfirm", { selectedID });
-            selectedID && updateTimeFilters(categoryID, filterGroupID, selectedID);
+            selectedID &&
+              updateTimeFilters(categoryID, filterGroupID, selectedID);
             //setShow(false);
           }}
           onCancel={() => setShow(false)}

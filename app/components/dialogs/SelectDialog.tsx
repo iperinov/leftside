@@ -29,7 +29,7 @@ export default function SelectDialog({
 
   const handleConfirm = () => {
     console.log("TimeFilter: onConfirm", { selectedID });
-            
+
     onConfirm(selectedID);
     setIsOpen(false);
   };

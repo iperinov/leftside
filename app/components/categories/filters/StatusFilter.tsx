@@ -42,7 +42,8 @@ export default function StatusFilter({
         <SelectDialog
           items={items}
           onConfirm={(selectedID) => {
-            selectedID && updateStatusFilters(categoryID, filterGroupID, selectedID);
+            selectedID &&
+              updateStatusFilters(categoryID, filterGroupID, selectedID);
             setShow(false);
           }}
           onCancel={() => setShow(false)}
