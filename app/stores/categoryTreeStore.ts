@@ -81,7 +81,7 @@ interface CategoryTreeMutations {
   updateLimitFilter: (
     categoryID: string,
     filterID: string,
-    selected: string,
+    selected: number | undefined,
   ) => void;
   updateGroupByFilter: (
     categoryID: string,
@@ -345,7 +345,7 @@ export const useCategoryTreeStore = create<
   updateLimitFilter: (
     categoryID: string,
     filterID: string,
-    selected: string,
+    selected: number | undefined,
   ) => {
     const rootCategory = structuredClone(get().rootCategory);
     const category = findItem(categoryID, rootCategory);

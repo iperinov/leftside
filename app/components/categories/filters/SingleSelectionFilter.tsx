@@ -15,7 +15,7 @@ interface SingleSelectionFilterProps<T> {
   updateFilterSelection(
     categoryID: string,
     filterID: string,
-    selected: T,
+    selected: T | undefined,
   ): void;
   disabled?: boolean;
 }

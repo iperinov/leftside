@@ -13,21 +13,10 @@ export default function SelectComponent<T>({
   items,
   onChange,
 }: ItemTypeSelectProps<T>) {
-  const stringToValueMap = useMemo(() => {
-    const map = new Map<string, T>();
-    for (const item of items) {
-      map.set(String(item.id), item.id);
-    }
-    return map;
-  }, [items]);
-
   return (
     <Select.Root
       value={value !== undefined ? String(value) : ""}
-      onValueChange={(value: string) => {
-        const real = stringToValueMap.get(value);
-        if (real !== undefined) onChange?.(real);
-      }}
+      onValueChange={(value: string) => onChange?.(value as T) }
     >
       <Select.Trigger />
       <Select.Content>
