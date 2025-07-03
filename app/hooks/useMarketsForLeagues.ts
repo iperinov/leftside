@@ -13,7 +13,7 @@ export default function useMarketsForLeagues(leagues: string[]) {
     isLoading: isLoadingLeagueByEvent,
     error: errorLeagueByEvent,
   } = useLeagueByEvent();
-  if (leagues?.length === 1 && leagues[0] === allItemData.id) {
+  if (leagues?.length === 1 && leagues[0] === allItemData().id) {
     return { data: events, isLoading: isLoadingEvents, error: errorEvents };
   }
 
