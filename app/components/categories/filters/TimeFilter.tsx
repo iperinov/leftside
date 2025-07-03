@@ -1,14 +1,13 @@
-import { useState } from "react";
-import SelectDialog from "~/components/dialogs/SelectDialog";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { allItemData } from "../AllItemData";
-import type ItemData from "../ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
-import Filter from "./Filter";
-import styles from "./Filters.module.css";
+import SingleSelectionFilter from "./SingleSelectionFilter";
+import { useMemo } from "react";
 
-function toItemData(): ItemData<string>[] {
-  return [
+export default function TimeFilter(props: FilterGroupProps) {
+  const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
+  const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
+  const choices = useMemo(() => ([
     allItemData(),
     { id: "1", name: "1h" },
     { id: "3", name: "3h" },
@@ -20,47 +19,17 @@ function toItemData(): ItemData<string>[] {
     { id: "168", name: "1 week" },
     { id: "336", name: "2 weeks" },
     { id: "720", name: "1 month" },
-  ];
-}
-
-export default function TimeFilter({
-  categoryID,
-  filterGroupID,
-}: FilterGroupProps) {
-  const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
-  const updateTimeFilters = useCategoryTreeStore(
-    (state) => state.updateTimeFilter,
-  );
-  const [show, setShow] = useState(false);
-  const items = toItemData();
-  const selection = timeFilter(categoryID, filterGroupID);
-  const selectionName = items.find((item) => item.id === selection)?.name;
+  ]), []);
 
   return (
-    <>
-      <Filter
-        key={"time"}
-        label={"Time"}
-        values={selectionName ? [selectionName] : []}
-        onClick={() => setShow(true)}
-        className={`${styles.filter}`}
-      />
-
-      {show && (
-        <SelectDialog
-          items={toItemData()}
-          onConfirm={(selectedID) => {
-            console.log("TimeFilter 2: onConfirm", { selectedID });
-            selectedID &&
-              updateTimeFilters(categoryID, filterGroupID, selectedID);
-            //setShow(false);
-          }}
-          onCancel={() => setShow(false)}
-          title="Select Time"
-          valid={(value) => value !== selection}
-          defaultSelectedID={selection}
-        />
-      )}
-    </>
+    <SingleSelectionFilter
+      keyStr={"time"}
+      label={"Time"}
+      title={"Select Time"}
+      items={choices}
+      filterSelection={timeFilter}
+      updateFilterSelection={updateTimeFilters}
+      {...props}
+    />
   );
 }

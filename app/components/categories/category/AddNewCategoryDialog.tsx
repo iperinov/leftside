@@ -13,9 +13,9 @@ import { useRealSports } from "~/hooks/useRealSport";
 import formatOrdinal from "~/utils/formatOrdinal";
 import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
-import type ItemData from "../ItemData";
 import { TemplateType } from "../TemplateType";
 import styles from "./AddNewCategoryDialog.module.css";
+import type ItemData from "~/types/ItemData";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;

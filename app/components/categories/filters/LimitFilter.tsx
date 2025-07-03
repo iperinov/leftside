@@ -1,64 +1,33 @@
-import { useMemo, useState } from "react";
-import React from "react";
-import SelectDialog from "~/components/dialogs/SelectDialog";
+
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import { allItemData } from "../AllItemData";
-import type ItemData from "../ItemData";
+import { useMemo } from "react";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
-import Filter from "./Filter";
-import styles from "./Filters.module.css";
+import SingleSelectionFilter from "./SingleSelectionFilter";
+import type ItemData from "~/types/ItemData";
 
-const allItem = { id: "0", name: "All" } as ItemData<string>;
-
-function toItemData(): ItemData<string>[] {
-  const items: ItemData<string>[] = [];
-  for (let i = 1; i <= 20; i++) {
-    items.push({
-      id: String(i),
-      name: `${i}`,
-    });
-  }
-  return [allItem, ...items];
-}
-
-export default function LimitFilter({
-  categoryID,
-  filterGroupID,
-}: FilterGroupProps) {
+export default function LimitFilter(props: FilterGroupProps) {
   const limitFilter = useCategoryTreeStore((state) => state.limitFilter);
-  const updateLimitFilters = useCategoryTreeStore(
-    (state) => state.updateLimitFilter,
-  );
-  const [show, setShow] = useState(false);
-
-  const items = toItemData();
-  const selection = limitFilter(categoryID, filterGroupID);
-  const value = items.find((item) => item.id === String(selection))?.name;
+  const updateLimitFilters = useCategoryTreeStore((state) => state.updateLimitFilter);
+  const choices = useMemo(() => {
+    const items: ItemData<number>[] = [{ id: 0, name: "All" }];
+    for (let i = 1; i <= 20; i++) {
+      items.push({
+        id: i,
+        name: `${i}`,
+      });
+    }
+    return items;
+  }, []);
 
   return (
-    <>
-      <Filter
-        key={"limit"}
-        label={"Limit"}
-        values={value ? [value] : []}
-        onClick={() => setShow(true)}
-        className={`${styles.filter}`}
-      />
-
-      {show && (
-        <SelectDialog
-          items={items}
-          onConfirm={(selectedID) => {
-            selectedID &&
-              updateLimitFilters(categoryID, filterGroupID, selectedID);
-            setShow(false);
-          }}
-          onCancel={() => setShow(false)}
-          title="Select Time"
-          valid={(value) => value !== String(selection)}
-          defaultSelectedID={String(selection) || ""}
-        />
-      )}
-    </>
+    <SingleSelectionFilter<number | undefined>
+      keyStr={"limit"}
+      label={"Limit"}
+      title={"Select Limit"}
+      items={choices}
+      filterSelection={limitFilter}
+      updateFilterSelection={updateLimitFilters}
+      {...props}
+    />
   );
 }

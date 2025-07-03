@@ -1,4 +1,4 @@
-import type ItemData from "./ItemData";
+import type ItemData from "~/types/ItemData";
 
 export function allItemData<T extends string | number>(): ItemData<T> {
   const value = undefined as unknown as T;

@@ -5,10 +5,10 @@ import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import useMarketsForLeagues from "~/hooks/useMarketsForLeagues";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { allItemData } from "../AllItemData";
-import type ItemData from "../ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
 import styles from "./Filters.module.css";
+import type ItemData from "~/types/ItemData";
 
 interface MarketFilterProps {
   onChange?: (selectedIDs: string[]) => void;

@@ -4,14 +4,14 @@ import type ItemData from "~/types/ItemData";
 import SelectComponent from "../shared/SelectComponent";
 import type DialogBasicProps from "./DialogBasicProps";
 
-interface SelectDialogProps extends DialogBasicProps {
-  items: ItemData<string>[];
-  defaultSelectedID?: string;
-  onConfirm: (selectedID?: string) => void;
-  valid?: (value: string) => boolean;
+interface SelectDialogProps<T> extends DialogBasicProps {
+  items: ItemData<T>[];
+  defaultSelectedID?: T;
+  onConfirm: (selectedID?: T) => void;
+  valid?: (value: T) => boolean;
 }
 
-export default function SelectDialog({
+export default function SelectDialog<T>({
   title,
   description,
   confirmText = "Confirm",
@@ -23,18 +23,16 @@ export default function SelectDialog({
   onConfirm,
   onCancel = () => {},
   valid = () => true,
-}: SelectDialogProps) {
+}: SelectDialogProps<T>) {
   const [selectedID, setSelectedID] = useState(defaultSelectedID);
   const [isOpen, setIsOpen] = useState(open);
 
   const handleConfirm = () => {
-    console.log("TimeFilter: onConfirm", { selectedID });
-
     onConfirm(selectedID);
     setIsOpen(false);
   };
 
-  const handleSelectionChange = (selectedID: string) => {
+  const handleSelectionChange = (selectedID?: T) => {
     setSelectedID(selectedID);
   };
 
@@ -55,7 +53,7 @@ export default function SelectDialog({
 
           {/* Input fields */}
           <SelectComponent
-            value={selectedID || ""}
+            value={selectedID}
             items={items}
             onChange={handleSelectionChange}
           />
@@ -70,7 +68,7 @@ export default function SelectDialog({
             <Button
               color={destructive ? "red" : undefined}
               onClick={handleConfirm}
-              disabled={selectedID ? !valid(selectedID) : true}
+              disabled={selectedID !== undefined ? !valid(selectedID) : true}
             >
               {confirmText}
             </Button>
