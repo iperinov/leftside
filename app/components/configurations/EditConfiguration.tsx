@@ -58,7 +58,7 @@ export function EditConfiguration({
         left: 0,
         right: 0,
         bottom: 0,
-        background: "var(--gray-3)",
+        background: "var(--accent-3)",
         zIndex: 999,
         display: "flex",
         flexDirection: "column",
@@ -68,7 +68,7 @@ export function EditConfiguration({
       <Flex
         justify="between"
         align="center"
-        style={{ backgroundColor: "var(--gray-9)", padding: "1rem 1.5rem" }}
+        style={{ backgroundColor: "var(--accent-9)", padding: "1rem 1.5rem" }}
       >
         <Text size="3" weight="bold" style={{ color: "white" }}>
           Edit:{" "}
@@ -86,7 +86,7 @@ export function EditConfiguration({
         <Box
           style={{
             flex: 1,
-            border: "1px solid var(--gray-6)",
+            border: "1px solid var(--accent-6)",
             marginRight: "0.5rem",
           }}
         >
@@ -95,7 +95,7 @@ export function EditConfiguration({
         <Box
           style={{
             flex: 2,
-            border: "1px solid var(--gray-6)",
+            border: "1px solid var(--accent-6)",
             marginRight: "0.5rem",
           }}
         >
@@ -104,7 +104,7 @@ export function EditConfiguration({
         <Box
           style={{
             flex: 1,
-            border: "1px solid var(--gray-6)",
+            border: "1px solid var(--accent-6)",
             display: "flex",
             flexDirection: "column",
             overflow: "hidden", // TODO scrolling
@@ -124,9 +124,9 @@ export function EditConfiguration({
         justify="end"
         gap="4"
         style={{
-          backgroundColor: "var(--gray-9)",
+          backgroundColor: "var(--accent-9)",
           padding: "1rem",
-          borderTop: "1px solid var(--gray-5)",
+          borderTop: "1px solid var(--accent-5)",
         }}
       >
         <Button

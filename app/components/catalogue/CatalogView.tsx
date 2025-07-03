@@ -136,7 +136,7 @@ export default function CatalogView() {
       flexGrow="1"
       style={{
         maxWidth: "350px",
-        backgroundColor: "var(--gray-3)",
+        backgroundColor: "var(--accent-3)",
         borderTopLeftRadius: "var(--radius-3)",
         borderBottomLeftRadius: "var(--radius-3)",
         overflowY: "auto",

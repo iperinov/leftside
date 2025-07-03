@@ -1,9 +1,9 @@
 import { useState } from "react";
 import SelectDialog from "~/components/dialogs/SelectDialog";
+import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
 import styles from "./Filters.module.css";
-import type ItemData from "~/types/ItemData";
 
 interface SingleSelectionFilterProps<T> {
   keyStr: string;
@@ -12,7 +12,11 @@ interface SingleSelectionFilterProps<T> {
   items: ItemData<T>[];
 
   filterSelection(categoryID: string, filterID: string): T;
-  updateFilterSelection(categoryID: string, filterID: string, selected: T): void;
+  updateFilterSelection(
+    categoryID: string,
+    filterID: string,
+    selected: T,
+  ): void;
   disabled?: boolean;
 }
 
@@ -50,7 +54,8 @@ export default function SingleSelectionFilter<T>({
         <SelectDialog
           items={items}
           onConfirm={(selectedID) => {
-            selectedID !== undefined && updateFilterSelection(categoryID, filterGroupID, selectedID);
+            selectedID !== undefined &&
+              updateFilterSelection(categoryID, filterGroupID, selectedID);
             setShow(false);
           }}
           onCancel={() => setShow(false)}

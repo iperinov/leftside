@@ -5,12 +5,12 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--color-panel);
-  color: var(--gray-12);
+  color: var(--accent-12);
   height: 100%;
 }
 
 .dialogOverlay {
-  background-color: var(--gray-a9);
+  background-color: var(--accent-a9);
   position: fixed;
   inset: 0;
 }
@@ -20,24 +20,24 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--gray-4);
+  background-color: var(--accent-4);
   border-radius: 6px;
   padding: 1rem 1.5rem 1.25rem;
   width: 24rem;
   box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px
     rgba(22, 23, 24, 0.2);
-  border: 1px solid var(--gray-6);
+  border: 1px solid var(--accent-6);
 }
 
 .dialogTitle {
   text-align: center;
   font-size: 18px;
   font-weight: 600;
-  color: var(--gray-12);
+  color: var(--accent-12);
 }
 
 .inputField {
-  border: 1px solid var(--gray-9);
+  border: 1px solid var(--accent-9);
   border-radius: 4px;
   padding: 0.5rem;
 }
@@ -45,6 +45,7 @@ body {
 .buttonGhost {
   text-decoration: underline;
   cursor: pointer;
+  color: var(--accent-11);
 }
 
 .iconCircle {
@@ -52,9 +53,38 @@ body {
   font-size: 1.25rem;
   padding: 1rem 1.5rem;
   border-radius: 999px;
-  border: 2px solid var(--gray-9);
-  background-color: var(--gray-4);
-  color: var(--gray-9);
+  border: 2px solid var(--accent-9);
+  background-color: var(--accent-4);
+  color: var(--accent-9);
+}
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.no-horizontal-scroll {
+  overflow-x: hidden; /* Disables horizontal scrolling */
+  overflow-y: auto; /* Enables vertical scrolling if needed */
+}
+
+.customDialogContent {
+  width: 400px;
+}
+
+.customDialogTitle {
+  text-align: center;
+}
+
+.nohover {
+  background-color: transparent;
+}
+
+.noselect {
+  user-select: none;
 }
 
 .hide-scrollbar {

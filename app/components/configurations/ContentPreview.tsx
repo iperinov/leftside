@@ -97,17 +97,17 @@ const renderGameCard = (game: Game, showBanner: boolean) => (
   <Box key={game.idGame} mb="4">
     {showBanner && (
       <Box>
-        <Text size="1" color="gray">
+        <Text size="1" style={{ color: "var(--accent-11)" }}>
           {game.banners?.[0]?.description}
         </Text>
       </Box>
     )}
     <Box>
-      <Text size="1" color="gray">
+      <Text size="1" style={{ color: "var(--accent-11)" }}>
         {game.description}
       </Text>
     </Box>
-    <Text size="1" color="gray">
+    <Text size="1" style={{ color: "var(--accent-11)" }}>
       {new Date(game.startTime).toLocaleString("en-US", {
         dateStyle: "short",
         timeStyle: "short",
@@ -116,7 +116,7 @@ const renderGameCard = (game: Game, showBanner: boolean) => (
     <Box
       mt="2"
       style={{
-        background: "var(--gray-4)",
+        background: "var(--accent-4)",
         borderRadius: "var(--radius-2)",
         padding: "0.5rem",
       }}

@@ -36,7 +36,7 @@ export default function ConfigurationsPage() {
       <Box
         flexGrow="1"
         style={{
-          backgroundColor: "var(--gray-3)",
+          backgroundColor: "var(--accent-3)",
           borderTopLeftRadius: "var(--radius-3)",
           borderTopRightRadius: "var(--radius-3)",
           borderBottomRightRadius: "var(--radius-3)",
@@ -49,17 +49,17 @@ export default function ConfigurationsPage() {
           }}
         >
           <Flex justify="between" align="center" mb="4">
-            <Heading as="h1" size="4" color="gray">
+            <Heading as="h1" size="4" style={{ color: "var(--accent-11)" }}>
               Configurations
             </Heading>
             <Button
               variant="surface"
               onClick={() => setCreateAction(true)}
               style={{
-                border: "1px solid var(--gray-7)",
+                border: "1px solid var(--accent-7)",
                 borderRadius: "6px",
                 padding: "0.5rem 1rem",
-                backgroundColor: "var(--gray-1)",
+                backgroundColor: "var(--accent-1)",
                 cursor: "pointer",
               }}
             >

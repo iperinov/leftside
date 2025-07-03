@@ -47,7 +47,7 @@ export const CreateRegion = ({
     >
       <Flex direction="column" gap="4" mb="4">
         <Flex direction="column" gap="2">
-          <Text size="1" color="gray" style={{ fontWeight: 500 }}>
+          <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
             Title (max 50 chars)
           </Text>
           <TextField.Root
@@ -61,7 +61,7 @@ export const CreateRegion = ({
         </Flex>
 
         <Flex direction="column" gap="2">
-          <Text size="1" color="gray" style={{ fontWeight: 500 }}>
+          <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
             Order (0 – 999)
           </Text>
           <TextField.Root
@@ -81,7 +81,12 @@ export const CreateRegion = ({
             checked={enabled}
             onCheckedChange={(val) => setEnabled(!!val)}
           />
-          <Text as="label" htmlFor="enabled" size="1" color="gray">
+          <Text
+            as="label"
+            htmlFor="enabled"
+            size="1"
+            style={{ color: "var(--accent-11)" }}
+          >
             Enabled
           </Text>
         </Flex>

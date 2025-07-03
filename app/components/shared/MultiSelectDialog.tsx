@@ -1,5 +1,5 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import type ItemData from "~/types/ItemData";
 import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
 import type DialogBasicProps from "./DialogBasicProps";

@@ -1,15 +1,20 @@
+import { useMemo } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
-import { useMemo } from "react";
 
 export default function SortByFilter(props: FilterGroupProps) {
   const sortByFilter = useCategoryTreeStore((state) => state.sortByFilter);
-  const updateSortByFilters = useCategoryTreeStore((state) => state.updateSortByFilter);
-  const choices = useMemo(() => ([
-    { id: "time", name: "Start Time" },
-    { id: "alpha", name: "Alphabetical" },
-  ]), []);
+  const updateSortByFilters = useCategoryTreeStore(
+    (state) => state.updateSortByFilter,
+  );
+  const choices = useMemo(
+    () => [
+      { id: "time", name: "Start Time" },
+      { id: "alpha", name: "Alphabetical" },
+    ],
+    [],
+  );
 
   return (
     <SingleSelectionFilter

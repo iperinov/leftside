@@ -50,16 +50,15 @@ export function SelectRegion({
       renderActionsStart={
         <Button
           variant="outline"
-          color="gray"
           style={{
             padding: "0.5rem 1rem",
             borderRadius: "var(--radius-3)", // TODO: Radius not working. make it working
-            backgroundColor: "transparent",
+            backgroundColor: "var(--accent-4)",
             transition: "background-color 0.2s ease",
             cursor: "pointer",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "var(--gray-6)";
+            e.currentTarget.style.backgroundColor = "var(--accent-6)";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = "transparent";

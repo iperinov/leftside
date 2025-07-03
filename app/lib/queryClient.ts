@@ -10,13 +10,11 @@ export const queryClient = new QueryClient({
       //refetchOnMount: false,
       //refetchOnReconnect: false,
 
-      // Never expire 
-      staleTime: Infinity,
+      // Never expire
+      staleTime: Number.POSITIVE_INFINITY,
 
       // Cache forever
-      gcTime: Infinity,
+      gcTime: Number.POSITIVE_INFINITY,
     },
   },
 });
-
-

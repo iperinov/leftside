@@ -57,7 +57,13 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
     >
       <Flex direction="column" gap="4" mb="4">
         <Box>
-          <Text as="label" size="1" weight="medium" color="gray" mb="1">
+          <Text
+            as="label"
+            size="1"
+            weight="medium"
+            mb="1"
+            style={{ color: "var(--accent-11)" }}
+          >
             Title (max 50 chars)
           </Text>
           <TextField.Root
@@ -69,7 +75,13 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
         </Box>
 
         <Box>
-          <Text as="label" size="1" weight="medium" color="gray" mb="1">
+          <Text
+            as="label"
+            size="1"
+            weight="medium"
+            mb="1"
+            style={{ color: "var(--accent-11)" }}
+          >
             Short Description
           </Text>
           <TextField.Root
@@ -82,7 +94,13 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
         </Box>
 
         <Box>
-          <Text as="label" size="1" weight="medium" color="gray" mb="1">
+          <Text
+            as="label"
+            size="1"
+            weight="medium"
+            mb="1"
+            style={{ color: "var(--accent-11)" }}
+          >
             Order (0 – 1000)
           </Text>
           <TextField.Root
@@ -97,7 +115,13 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
         </Box>
 
         <Box>
-          <Text as="label" size="1" weight="medium" color="gray" mb="1">
+          <Text
+            as="label"
+            size="1"
+            weight="medium"
+            mb="1"
+            style={{ color: "var(--accent-11)" }}
+          >
             Take Back Profile
           </Text>
           <Box mt="1">

@@ -8,7 +8,7 @@ export default function SportsCatalogPage() {
       <Box
         flexGrow="1"
         style={{
-          backgroundColor: "var(--gray-6)",
+          backgroundColor: "var(--accent-6)",
           borderTopRightRadius: "var(--radius-3)",
           borderBottomRightRadius: "var(--radius-3)",
         }}

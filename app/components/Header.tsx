@@ -11,7 +11,7 @@ function NavItem({ to, children, ...props }: NavLinkProps) {
         {...props}
         style={({ isActive }: { isActive: boolean }) => ({
           textDecoration: "none",
-          color: isActive ? "var(--accent-a11)" : "var(--gray-a11)",
+          color: isActive ? "var(--accent-a11)" : "var(--accent-a9)",
           fontWeight: isActive ? 500 : 400,
           borderBottom: isActive
             ? "2px solid var(--accent-a11)"
@@ -42,8 +42,8 @@ export default function Header() {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        backgroundColor: "var(--gray-3)",
-        borderBottom: "1px solid var(--gray-6)",
+        backgroundColor: "var(--accent-3)",
+        borderBottom: "1px solid var(--accent-6)",
         padding: "0.25rem 2rem",
       }}
     >
@@ -64,14 +64,14 @@ export default function Header() {
         </NavigationMenu.Root>
 
         <Flex align="center" gap="3">
-          <Text size="2" weight="medium" color="gray">
+          <Text size="2" weight="medium" style={{ color: "var(--accent-11)" }}>
             {email}
           </Text>
           <Separator
             orientation="vertical"
             style={{
               height: "1rem",
-              backgroundColor: "var(--gray-10)",
+              backgroundColor: "var(--accent-10)",
               width: 1,
             }}
           />
@@ -81,7 +81,7 @@ export default function Header() {
             onClick={handleLogout}
             style={{
               textDecoration: "underline",
-              color: "var(--gray-11)",
+              color: "var(--accent-11)",
               padding: 0,
             }}
           >

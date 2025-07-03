@@ -40,12 +40,14 @@ const mockFilterGroups: FilterGroup[] = [
 export default function ConfigurationContentContext({
   categoryID,
 }: ConfigurationContentContextProps) {
+  console.log("ConfigurationContentContext", categoryID);
   const category = useCategoryTreeStore((state) =>
     state.findCategory(categoryID),
   );
 
+  const categorySelected = categoryID !== "";
+
   const books = [1, 16, 26, 27, 28];
-  const [configName, setValue] = useState(name);
   const [assignedBooks, setAssignedBooks] = useState<number[]>(books);
   const [originalAssignedBooks, setoriginalAssignedBooks] =
     useState<number[]>(books);
@@ -56,13 +58,13 @@ export default function ConfigurationContentContext({
       direction="column"
       flexGrow="1"
       style={{
-        border: "1px solid var(--gray-9)",
+        border: "1px solid var(--accent-9)",
         borderRadius: "0.5rem",
         marginTop: "0.5rem",
         overflow: "hidden",
       }}
     >
-      <Box style={{ backgroundColor: "var(--gray-4)" }}>
+      <Box style={{ backgroundColor: "var(--accent-4)" }}>
         <AssignedBooks
           assignedBooks={assignedBooks}
           originalAssignedBooks={originalAssignedBooks}
@@ -70,12 +72,18 @@ export default function ConfigurationContentContext({
         />
       </Box>
 
-      <Box style={{ height: "1px", backgroundColor: "var(--gray-9)" }} />
+      <Box style={{ height: "1px", backgroundColor: "var(--accent-11)" }} />
 
       <Box
-        style={{ backgroundColor: "var(--gray-1)", flex: 1, overflow: "auto" }}
+        style={{
+          backgroundColor: "var(--accent-3)",
+          flex: 1,
+          overflow: "auto",
+        }}
       >
-        <ContentPreview filterGroups={mockFilterGroups} />
+        <ContentPreview
+          filterGroups={categorySelected ? mockFilterGroups : []}
+        />
       </Box>
     </Flex>
   );

@@ -37,14 +37,18 @@ export const DuplicateConfiguration = ({
       onConfirm={handleProceed}
     >
       <Flex direction="column" align="center" mb="4">
-        <Text size="1" color="gray" mb="3" className="iconCircle">
+        <Text
+          size="1"
+          mb="3"
+          className="iconCircle"
+          style={{ color: "var(--accent-11)" }}
+        >
           !
         </Text>
         <Text
           size="2"
           align="center"
-          color="gray"
-          style={{ paddingTop: "1rem" }}
+          style={{ color: "var(--accent-11)", paddingTop: "1rem" }}
         >
           Are you sure you want to duplicate configuration{" "}
           <strong>'{name}'</strong>?

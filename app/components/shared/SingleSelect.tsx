@@ -25,7 +25,7 @@ export function SingleSelect<T>({
         height: "450px",
         overflowY: "auto",
         borderRadius: "var(--radius-2)",
-        border: "1px solid var(--gray-4)",
+        border: "1px solid var(--accent-4)",
         padding: "0",
       }}
     >
@@ -35,9 +35,9 @@ export function SingleSelect<T>({
         const isHovered = id === hoveredId;
 
         const backgroundColor = isSelected
-          ? "var(--gray-6)"
+          ? "var(--accent-6)"
           : isHovered
-            ? "var(--gray-6)"
+            ? "var(--accent-6)"
             : "transparent";
 
         return (
@@ -60,7 +60,7 @@ export function SingleSelect<T>({
             >
               <Box
                 style={{
-                  borderTop: "1px solid var(--gray-9)",
+                  borderTop: "1px solid var(--accent-9)",
                   // marginInline: "0.5rem",
                 }}
               />
@@ -74,7 +74,7 @@ export function SingleSelect<T>({
             {index < items.length - 1 && (
               <Box
                 style={{
-                  borderTop: "1px solid var(--gray-9)",
+                  borderTop: "1px solid var(--accent-9)",
                 }}
               />
             )}

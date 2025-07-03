@@ -64,7 +64,7 @@ export default function AssignedBooks({
             maxWidth: "300px",
           }}
         >
-          <Text size="2" color="gray">
+          <Text size="2" style={{ color: "var(--accent-11)" }}>
             {selectionLabel}
           </Text>
           <CaretDownIcon />

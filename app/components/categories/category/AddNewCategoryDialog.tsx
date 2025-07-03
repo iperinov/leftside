@@ -10,12 +10,12 @@ import { useCallback, useState } from "react";
 import type { League } from "~/api/ocs/ocs.types";
 import { useLeagues } from "~/hooks/useLeagues";
 import { useRealSports } from "~/hooks/useRealSport";
+import type ItemData from "~/types/ItemData";
 import formatOrdinal from "~/utils/formatOrdinal";
 import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
 import { TemplateType } from "../TemplateType";
 import styles from "./AddNewCategoryDialog.module.css";
-import type ItemData from "~/types/ItemData";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;

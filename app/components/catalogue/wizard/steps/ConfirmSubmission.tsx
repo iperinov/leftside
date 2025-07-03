@@ -33,7 +33,7 @@ export function ConfirmSubmission({
       showCancel={false}
     >
       <Box style={{ marginTop: "1rem", marginBottom: "1.25rem" }}>
-        <Text size="1" color="gray">
+        <Text size="1" style={{ color: "var(--accent-11)" }}>
           Add Sport
         </Text>
         <Text
@@ -47,7 +47,7 @@ export function ConfirmSubmission({
       </Box>
 
       <Box style={{ marginBottom: "1.25rem" }}>
-        <Text size="1" color="gray">
+        <Text size="1" style={{ color: "var(--accent-11)" }}>
           Add Region
         </Text>
         <Text
@@ -61,7 +61,7 @@ export function ConfirmSubmission({
       </Box>
 
       <Box>
-        <Text size="1" color="gray">
+        <Text size="1" style={{ color: "var(--accent-11)" }}>
           Add League
         </Text>
         <Text

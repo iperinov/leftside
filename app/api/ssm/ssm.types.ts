@@ -35,6 +35,8 @@ export interface Game {
   idSport: string;
   eventId?: number;
   description?: string;
+  periodId?: number;
+  //regionId?: number;
   banners?: {
     description: string;
     top: string;
@@ -42,6 +44,7 @@ export interface Game {
   }[];
   realSportName: string;
   leagueName: string;
+  //regionName: string;
   contenders: {
     id: number;
     name: string;

@@ -22,7 +22,7 @@ export default function SelectComponent<T>({
   }, [items]);
 
   return (
-    <Select.Root 
+    <Select.Root
       value={value !== undefined ? String(value) : ""}
       onValueChange={(value: string) => {
         const real = stringToValueMap.get(value);

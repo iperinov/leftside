@@ -38,7 +38,7 @@ export const RenameConfiguration = ({
       onConfirm={handleRename}
     >
       <Flex direction="column" gap="3" mb="4">
-        <Text size="1" color="gray" style={{ fontWeight: 500 }}>
+        <Text size="1" style={{ color: "var(--accent-7)", fontWeight: 500 }}>
           Title
         </Text>
         <TextField.Root

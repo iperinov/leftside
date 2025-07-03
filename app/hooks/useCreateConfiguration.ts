@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  type UseMutationOptions,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ExitCodes } from "../api/scs/configurations/config.exitCodes";
 import type {
@@ -12,7 +16,13 @@ export interface CreateConfigInput {
   name: string;
 }
 
-export const useCreateConfiguration = () => {
+export const useCreateConfiguration = (
+  options?: UseMutationOptions<
+    CreateConfigApiSuccess,
+    Error,
+    CreateConfigApiIn
+  >,
+) => {
   const queryClient = useQueryClient();
   return useMutation<CreateConfigApiSuccess, Error, CreateConfigApiIn>({
     mutationFn: async ({ name }) => {
@@ -40,13 +50,6 @@ export const useCreateConfiguration = () => {
 
       return success;
     },
-    onSuccess: (created) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.configurations() });
-      toast.success("Configuration created successfully");
-    },
-    onError: (error, _variables, context) => {
-      toast.error("Failed to create configuration");
-      console.error(error);
-    },
+    ...options,
   });
 };

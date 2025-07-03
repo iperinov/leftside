@@ -18,7 +18,7 @@ export default function LoginForm() {
       p="4"
       width="400px"
       style={{
-        backgroundColor: "var(--gray-1)",
+        backgroundColor: "var(--accent-1)",
         borderRadius: "var(--radius-3)",
         boxShadow: "var(--shadow-4)",
       }}

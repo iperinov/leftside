@@ -26,7 +26,7 @@ export function RenameLeagueDialog({
       onConfirm={() => onRename(name)}
     >
       <Flex direction="column" gap="3" mb="4">
-        <Text size="1" color="gray" style={{ fontWeight: 500 }}>
+        <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
           League Name
         </Text>
         <TextField.Root

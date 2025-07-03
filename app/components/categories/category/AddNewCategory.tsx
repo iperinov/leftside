@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { TemplateType } from "~/components/categories/TemplateType";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
@@ -31,7 +32,7 @@ export default function AddNewCategory({
     leagues: string[],
   ) => {
     const baseCategory = {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       name,
       type: "flat",
     } as CategoryTreeItem;
@@ -51,7 +52,7 @@ export default function AddNewCategory({
           ...baseCategory,
           filterGroups: [
             {
-              uuid: crypto.randomUUID(),
+              uuid: uuidv4(),
               filters: [
                 { type: "sport", values: sports },
                 { type: "league", values: leagues },
@@ -65,7 +66,7 @@ export default function AddNewCategory({
           ...baseCategory,
           filterGroups: [
             {
-              uuid: crypto.randomUUID(),
+              uuid: uuidv4(),
               filters: [
                 { type: "sport", values: sports },
                 { type: "league", values: ["all"] },

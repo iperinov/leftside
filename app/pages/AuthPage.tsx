@@ -9,7 +9,7 @@ export default function AuthPage() {
       align="center"
       justify="center"
       style={{
-        backgroundColor: "var(--gray-2)",
+        backgroundColor: "var(--accent-2)",
       }}
     >
       <LoginForm />

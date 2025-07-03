@@ -8,7 +8,7 @@ interface SearchBarProps {
 
 export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <Flex px="0" py="0" style={{ backgroundColor: "var(--gray-3)" }}>
+    <Flex px="0" py="0" style={{ backgroundColor: "var(--accent-3)" }}>
       <TextField.Root
         placeholder="ctrl+k"
         size="2"
@@ -18,7 +18,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
           onChange(e.target.value);
         }}
         style={{
-          backgroundColor: "var(--gray-3)",
+          backgroundColor: "var(--accent-3)",
           width: "100%",
           boxShadow: "none",
         }}

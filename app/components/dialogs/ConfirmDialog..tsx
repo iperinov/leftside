@@ -35,7 +35,11 @@ export default function ConfirmDialog({
 
         <Flex gap="3" mt="4" justify="end">
           <AlertDialog.Cancel>
-            <Button variant="soft" color="gray" onClick={onCancel}>
+            <Button
+              variant="soft"
+              onClick={onCancel}
+              style={{ color: "var(--accent-11)" }}
+            >
               {cancelText}
             </Button>
           </AlertDialog.Cancel>

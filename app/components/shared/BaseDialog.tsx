@@ -68,7 +68,6 @@ export const BaseDialog: React.FC<BaseDialogProps> = ({
                 {showCancel && (
                   <Button
                     variant="ghost"
-                    color="gray"
                     onClick={onClose}
                     disabled={isProcessing}
                     className="buttonGhost"
@@ -80,7 +79,6 @@ export const BaseDialog: React.FC<BaseDialogProps> = ({
                 {onBack && (
                   <Button
                     variant="ghost"
-                    color="gray"
                     onClick={onBack}
                     disabled={isProcessing}
                     className="buttonGhost"
@@ -91,7 +89,6 @@ export const BaseDialog: React.FC<BaseDialogProps> = ({
 
                 <Button
                   variant="ghost"
-                  color="gray"
                   onClick={onConfirm}
                   disabled={isProcessing || disableConfirm}
                   className="buttonGhost"

@@ -1,13 +1,14 @@
-
-import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { useMemo } from "react";
+import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
-import type ItemData from "~/types/ItemData";
 
 export default function LimitFilter(props: FilterGroupProps) {
   const limitFilter = useCategoryTreeStore((state) => state.limitFilter);
-  const updateLimitFilters = useCategoryTreeStore((state) => state.updateLimitFilter);
+  const updateLimitFilters = useCategoryTreeStore(
+    (state) => state.updateLimitFilter,
+  );
   const choices = useMemo(() => {
     const items: ItemData<number>[] = [{ id: 0, name: "All" }];
     for (let i = 1; i <= 20; i++) {
