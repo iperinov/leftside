@@ -15,23 +15,13 @@ function choices(sports: RealSport[]): ItemData<string>[] {
   return sports.map((sport) => ({ id: String(sport.id), name: sport.name }));
 }
 
-export default function SportsFilter({
-  categoryID,
-  filterGroupID,
-  onChange,
-}: SportFilterProps & FilterGroupProps) {
+export default function SportsFilter({ categoryID, filterGroupID, onChange }: SportFilterProps & FilterGroupProps) {
   const { data: sports, isLoading, error } = useRealSports();
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
-  const updateSportsFilters = useCategoryTreeStore(
-    (state) => state.updateSportsFilter,
-  );
+  const updateSportsFilters = useCategoryTreeStore((state) => state.updateSportsFilter);
 
   return (
-    <LoadDataDecorator
-      error={error}
-      isLoading={isLoading}
-      className={`${styles.filter}`}
-    >
+    <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
       <MultiSelectionFilter
         categoryID={categoryID}
         filterGroupID={filterGroupID}
