@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Separator,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Box, Button, Flex, Separator, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import type { LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
 import SearchBar from "~/components/SearchBar";
@@ -21,19 +14,12 @@ interface SelectRegionProps {
   onNew: (step: number) => void;
 }
 
-export function SelectRegion({
-  onClose,
-  onBack,
-  onConfirm,
-  onNew,
-}: SelectRegionProps) {
+export function SelectRegion({ onClose, onBack, onConfirm, onNew }: SelectRegionProps) {
   const { data: regions = [] } = useRegions();
   const [selected, setSelected] = useState<LeagueRegion | null>(null);
   const [search, setSearch] = useState("");
 
-  const filtered = regions.filter((r) =>
-    r.name.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filtered = regions.filter((r) => r.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <BaseDialog
@@ -75,13 +61,7 @@ export function SelectRegion({
         <Separator size="4" />
         <SearchBar value={search} onChange={setSearch} />
         <Separator size="4" />
-        <SingleSelect
-          items={filtered}
-          selectedId={selected?.uuid ?? null}
-          onSelect={setSelected}
-          renderLabel={(r) => r.name}
-          getId={(r) => r.uuid}
-        />
+        <SingleSelect items={filtered} selectedId={selected?.uuid ?? null} onSelect={setSelected} renderLabel={(r) => r.name} getId={(r) => r.uuid} />
       </Flex>
     </BaseDialog>
   );

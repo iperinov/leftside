@@ -1,26 +1,11 @@
 export interface Filter {
-  type:
-    | "sport"
-    | "region"
-    | "league"
-    | "game"
-    | "period"
-    | "market"
-    | "time"
-    | "status";
+  type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status";
   value: string[];
 }
 
 export interface FilterGroup {
   filters: Filter[];
-  groupBy?:
-    | "league"
-    | "date"
-    | "league.date"
-    | "date.league"
-    | "sport.league"
-    | "sport.date"
-    | "date.game";
+  groupBy?: "league" | "date" | "league.date" | "date.league" | "sport.league" | "sport.date" | "date.game";
   order?: "asc" | "desc";
   limit?: number;
 }

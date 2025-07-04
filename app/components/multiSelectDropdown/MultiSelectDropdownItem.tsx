@@ -8,20 +8,12 @@ interface MultiSelectDropdownItemProps<T extends string | number> {
   onSelect: (selected: boolean, id: T) => void;
 }
 
-export default function MultiSelectDropdownItem<T extends string | number>({
-  ...props
-}) {
+export default function MultiSelectDropdownItem<T extends string | number>({ ...props }) {
   const { data, index, style } = props;
-  const { items, selectedIDs, onSelect } =
-    data as MultiSelectDropdownItemProps<T>;
+  const { items, selectedIDs, onSelect } = data as MultiSelectDropdownItemProps<T>;
 
   return (
-    <Text
-      as="label"
-      size="2"
-      style={style}
-      className={`${styles.multiSelectDropdownItem} noselect`}
-    >
+    <Text as="label" size="2" style={style} className={`${styles.multiSelectDropdownItem} noselect`}>
       <Flex gap="2">
         <Checkbox
           checked={selectedIDs.includes(items[index].id)}

@@ -18,17 +18,10 @@ export const CreateSport = ({ handler, onClose }: CreateSportProps) => {
   const parsedPregame = Number.parseInt(gameDelayPregame, 10);
   const parsedLive = Number.parseInt(gameDelayLive, 10);
 
-  const isPregameValid =
-    !Number.isNaN(parsedPregame) && parsedPregame >= 0 && parsedPregame <= 255;
-  const isLiveValid =
-    !Number.isNaN(parsedLive) && parsedLive >= 0 && parsedLive <= 255;
+  const isPregameValid = !Number.isNaN(parsedPregame) && parsedPregame >= 0 && parsedPregame <= 255;
+  const isLiveValid = !Number.isNaN(parsedLive) && parsedLive >= 0 && parsedLive <= 255;
 
-  const isFormValid =
-    name.trim() !== "" &&
-    shortDesc.trim() !== "" &&
-    shortDesc.length <= 10 &&
-    isPregameValid &&
-    isLiveValid;
+  const isFormValid = name.trim() !== "" && shortDesc.trim() !== "" && shortDesc.length <= 10 && isPregameValid && isLiveValid;
 
   return (
     <BaseDialog
@@ -54,26 +47,14 @@ export const CreateSport = ({ handler, onClose }: CreateSportProps) => {
           <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
             Title (max 50 chars)
           </Text>
-          <TextField.Root
-            value={name}
-            maxLength={50}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter sport name"
-            variant="soft"
-          />
+          <TextField.Root value={name} maxLength={50} onChange={(e) => setName(e.target.value)} placeholder="Enter sport name" variant="soft" />
         </Flex>
 
         <Flex direction="column" gap="2">
           <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
             Short Description (max 10 chars)
           </Text>
-          <TextField.Root
-            value={shortDesc}
-            maxLength={10}
-            onChange={(e) => setShortDesc(e.target.value)}
-            placeholder="Enter short desc"
-            variant="soft"
-          />
+          <TextField.Root value={shortDesc} maxLength={10} onChange={(e) => setShortDesc(e.target.value)} placeholder="Enter short desc" variant="soft" />
         </Flex>
 
         <Flex direction="column" gap="2">
@@ -107,17 +88,8 @@ export const CreateSport = ({ handler, onClose }: CreateSportProps) => {
         </Flex>
 
         <Flex align="center" gap="2" mt="1">
-          <Checkbox
-            id="enabled"
-            checked={enabled}
-            onCheckedChange={(val) => setEnabled(!!val)}
-          />
-          <Text
-            as="label"
-            htmlFor="enabled"
-            size="1"
-            style={{ color: "var(--accent-11)" }}
-          >
+          <Checkbox id="enabled" checked={enabled} onCheckedChange={(val) => setEnabled(!!val)} />
+          <Text as="label" htmlFor="enabled" size="1" style={{ color: "var(--accent-11)" }}>
             Enabled
           </Text>
         </Flex>

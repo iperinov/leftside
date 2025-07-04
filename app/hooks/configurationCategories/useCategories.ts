@@ -13,10 +13,7 @@ function toCategoryTree(categories: Category[]): CategoryTreeItem[] {
         name: category.name,
         type: category.type,
         filterGroups: category.filterGroups,
-        children:
-          category.type === "flat"
-            ? undefined
-            : toCategoryTree(category.children || []),
+        children: category.type === "flat" ? undefined : toCategoryTree(category.children || []),
       }) as CategoryTreeItem,
   );
 }

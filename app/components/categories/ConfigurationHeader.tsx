@@ -6,11 +6,7 @@ interface ConfigurationHeaderProps {
   name: string;
 }
 
-export default function ConfigurationHeader({
-  edit,
-  name,
-  className,
-}: ConfigurationHeaderProps & ClassNameProps) {
+export default function ConfigurationHeader({ edit, name, className }: ConfigurationHeaderProps & ClassNameProps) {
   return (
     <Flex align={"center"} className={className}>
       <Text>{edit ? `Edit: ${name}` : `Create: ${name}`}</Text>

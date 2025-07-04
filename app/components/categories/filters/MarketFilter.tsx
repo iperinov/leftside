@@ -1,13 +1,13 @@
 import type { Event } from "~/api/ocs/ocs.types";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
+import useFilteredLeaguesBy from "~/hooks/useFilteredLeaguesBy";
 import useMarketsForSports from "~/hooks/useFilteredMarketsBy";
+import useFilteredMarketsBy from "~/hooks/useFilteredMarketsBy";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import styles from "./Filters.module.css";
 import MultiSelectionFilter from "./MultiSelectionFilter";
-import useFilteredLeaguesBy from "~/hooks/useFilteredLeaguesBy";
-import useFilteredMarketsBy from "~/hooks/useFilteredMarketsBy";
 
 interface MarketFilterProps {
   onChange?: (selectedIDs: string[]) => void;
@@ -28,8 +28,6 @@ export default function MarketFilter({ categoryID, filterGroupID, onChange }: Ma
   const sportsSelection = sportFilters(categoryID, filterGroupID);
   const leaguesSelection = leagueFilters(categoryID, filterGroupID);
   const { data: markets, isLoading, error } = useFilteredMarketsBy(sportsSelection, leaguesSelection);
-  
-  console.log("MarketFilter", markets?.length);
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>

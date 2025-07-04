@@ -14,11 +14,7 @@ interface MultiSelectionFilterProps {
   disabled?: boolean;
 
   filterSelections(categoryID: string, filterID: string): string[];
-  updateFilterSelection(
-    categoryID: string,
-    filterID: string,
-    selected: string[],
-  ): void;
+  updateFilterSelection(categoryID: string, filterID: string, selected: string[]): void;
   onChange?: (selectedIDs: string[]) => void;
 }
 
@@ -63,10 +59,7 @@ export default function MultiSelectionFilter({
           }}
           onCancel={() => setShow(false)}
           title={title}
-          valid={(values) =>
-            values.length !== selections.length ||
-            values.some((v) => !selections.includes(v))
-          }
+          valid={(values) => values.length !== selections.length || values.some((v) => !selections.includes(v))}
           defaultSelectedIDs={selections}
           onSelectionChange={(selectedIDs) => onChange?.(selectedIDs)}
         />

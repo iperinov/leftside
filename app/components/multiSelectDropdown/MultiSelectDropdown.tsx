@@ -37,29 +37,18 @@ export default function MultiSelectDropdown<T extends string | number>({
 
   const dropdownItems = includeAllItem ? [allItem, ...items] : items;
 
-  const filteredItems =
-    searchValue.length === 0
-      ? dropdownItems
-      : dropdownItems.filter((item) =>
-          item.name.toLowerCase().includes(searchValue.toLowerCase()),
-        );
+  const filteredItems = searchValue.length === 0 ? dropdownItems : dropdownItems.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
   const preventShowingDropdownList = filteredItems.length === 0;
 
-  const onAddItemClicked = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-      setOpen((prev) => !prev);
-    },
-    [],
-  );
+  const onAddItemClicked = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setOpen((prev) => !prev);
+  }, []);
 
   const onSelect = useCallback(
     (selected: boolean, id: T) => {
       const newSelection =
-        includeAllItem &&
-        selected &&
-        (id === allItem.id ||
-          (selectedIDs.includes(allItem.id) && id !== allItem.id))
+        includeAllItem && selected && (id === allItem.id || (selectedIDs.includes(allItem.id) && id !== allItem.id))
           ? [id]
           : selected
             ? [...selectedIDs, id]
@@ -98,12 +87,7 @@ export default function MultiSelectDropdown<T extends string | number>({
             />
           </TextField.Slot>
           <TextField.Slot>
-            <Button
-              disabled={preventShowingDropdownList}
-              variant="ghost"
-              onClick={onAddItemClicked}
-              className="nohover"
-            >
+            <Button disabled={preventShowingDropdownList} variant="ghost" onClick={onAddItemClicked} className="nohover">
               <PlusIcon />
             </Button>
           </TextField.Slot>

@@ -80,34 +80,16 @@ export default function ConfigurationsPage() {
               });
             }}
             onRename={(id, rev, name) => setRenameAction({ id, rev, name })}
-            onDuplicate={(id, rev, name) =>
-              setDuplicateAction({ id, rev, name })
-            }
+            onDuplicate={(id, rev, name) => setDuplicateAction({ id, rev, name })}
             onDelete={(id, rev, name) => setDeleteAction({ id, rev, name })}
           />
         </Box>
 
-        <CreateConfiguration
-          open={createAction}
-          onClose={() => setCreateAction(false)}
-        />
+        <CreateConfiguration open={createAction} onClose={() => setCreateAction(false)} />
 
-        {editAction && (
-          <EditConfiguration
-            uuid={editAction.id}
-            name={editAction.name}
-            onClose={() => setEditAction(null)}
-          />
-        )}
+        {editAction && <EditConfiguration uuid={editAction.id} name={editAction.name} onClose={() => setEditAction(null)} />}
 
-        {renameAction && (
-          <RenameConfiguration
-            open={!!renameAction}
-            onClose={() => setRenameAction(null)}
-            uuid={renameAction.id}
-            rev={renameAction.rev}
-          />
-        )}
+        {renameAction && <RenameConfiguration open={!!renameAction} onClose={() => setRenameAction(null)} uuid={renameAction.id} rev={renameAction.rev} />}
 
         {duplicateAction && (
           <DuplicateConfiguration

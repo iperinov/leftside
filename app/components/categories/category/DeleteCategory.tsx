@@ -7,11 +7,7 @@ interface DeleteCategoryProps {
   onCanceled?: () => void;
 }
 
-export default function DeleteCategory({
-  id,
-  onCompleted,
-  onCanceled,
-}: DeleteCategoryProps) {
+export default function DeleteCategory({ id, onCompleted, onCanceled }: DeleteCategoryProps) {
   const deleteCategory = useCategoryTreeStore((state) => state.deleteCategory);
 
   return (

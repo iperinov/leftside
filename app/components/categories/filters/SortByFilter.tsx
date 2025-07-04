@@ -5,9 +5,7 @@ import SingleSelectionFilter from "./SingleSelectionFilter";
 
 export default function SortByFilter(props: FilterGroupProps) {
   const sortByFilter = useCategoryTreeStore((state) => state.sortByFilter);
-  const updateSortByFilters = useCategoryTreeStore(
-    (state) => state.updateSortByFilter,
-  );
+  const updateSortByFilters = useCategoryTreeStore((state) => state.updateSortByFilter);
   const choices = useMemo(
     () => [
       { id: "time", name: "Start Time" },

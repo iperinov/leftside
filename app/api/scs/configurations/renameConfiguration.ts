@@ -1,14 +1,9 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import type {
-  RenameConfigApiIn,
-  RenameConfigApiResponse,
-} from "./config.types";
+import type { RenameConfigApiIn, RenameConfigApiResponse } from "./config.types";
 
 const scsUrl = getAppConfig().scs.baseUrl;
 
-export const renameConfiguration = async (
-  input: RenameConfigApiIn,
-): Promise<RenameConfigApiResponse> => {
+export const renameConfiguration = async (input: RenameConfigApiIn): Promise<RenameConfigApiResponse> => {
   const url = `${scsUrl}/scs/config/${input.uuid}/rename`;
   console.log("rename config: ", url, input);
 

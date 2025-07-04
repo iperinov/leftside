@@ -1,4 +1,3 @@
-
 import { allItem } from "~/components/categories/AllItemData";
 import { useLeagues } from "./useLeagues";
 import { useRealSports } from "./useRealSport";
@@ -9,7 +8,11 @@ export default function useFilteredSportsBy(leagues: string[]) {
 
   if (leagues?.length === 1 && leagues[0] === allItem.id) {
     // all leagues case
-    return { data: allLeagues, isLoading: isLoadingLeagues, error: errorLeagues };
+    return {
+      data: allLeagues,
+      isLoading: isLoadingLeagues,
+      error: errorLeagues,
+    };
   }
 
   const isLoading = isLoadingSports || isLoadingLeagues;

@@ -11,16 +11,9 @@ interface ConfigurationContentMainProps {
   categoryID: string;
 }
 
-export default function ConfigurationContentMain({
-  categoryID,
-  className,
-}: ConfigurationContentMainProps & ClassNameProps) {
-  const category = useCategoryTreeStore((state) =>
-    state.findCategory(categoryID),
-  );
-  const addEmptyFilterGroup = useCategoryTreeStore(
-    (state) => state.addEmptyFilterGroup,
-  );
+export default function ConfigurationContentMain({ categoryID, className }: ConfigurationContentMainProps & ClassNameProps) {
+  const category = useCategoryTreeStore((state) => state.findCategory(categoryID));
+  const addEmptyFilterGroup = useCategoryTreeStore((state) => state.addEmptyFilterGroup);
   const [duplicateItemData, setDuplicateItemData] = useState<{
     categoryID: string;
     filterGroupID: string;
@@ -29,9 +22,7 @@ export default function ConfigurationContentMain({
     categoryID: string;
     filterGroupID: string;
   }>();
-  const hasFilters = category?.filterGroups
-    ? category.filterGroups.length > 0
-    : false;
+  const hasFilters = category?.filterGroups ? category.filterGroups.length > 0 : false;
   const showAddNewFilterGroup = category?.type === "flat";
 
   return (
@@ -43,12 +34,8 @@ export default function ConfigurationContentMain({
               key={filterGroup.uuid}
               categoryID={category.id}
               filterGroupID={filterGroup.uuid}
-              onDuplicate={(categoryID, filterGroupID) =>
-                setDuplicateItemData({ categoryID, filterGroupID })
-              }
-              onDelete={(categoryID, filterGroupID) =>
-                setDeleteItemData({ categoryID, filterGroupID })
-              }
+              onDuplicate={(categoryID, filterGroupID) => setDuplicateItemData({ categoryID, filterGroupID })}
+              onDelete={(categoryID, filterGroupID) => setDeleteItemData({ categoryID, filterGroupID })}
               onReorder={() => console.log("Reorder filter group", filterGroup)} // TODO
             />
           ))
@@ -63,26 +50,16 @@ export default function ConfigurationContentMain({
         )}
         {showAddNewFilterGroup && (
           <Flex align="center" justify="center">
-            <Button onClick={() => addEmptyFilterGroup(categoryID)}>
-              Add New Group
-            </Button>
+            <Button onClick={() => addEmptyFilterGroup(categoryID)}>Add New Group</Button>
           </Flex>
         )}
       </Flex>
 
       {duplicateItemData && (
-        <DuplicateFilterGroup
-          {...duplicateItemData}
-          onCompleted={() => setDuplicateItemData(undefined)}
-          onCanceled={() => setDuplicateItemData(undefined)}
-        />
+        <DuplicateFilterGroup {...duplicateItemData} onCompleted={() => setDuplicateItemData(undefined)} onCanceled={() => setDuplicateItemData(undefined)} />
       )}
       {deleteItemData && (
-        <DeleteFilterGroup
-          {...deleteItemData}
-          onCompleted={() => setDeleteItemData(undefined)}
-          onCanceled={() => setDeleteItemData(undefined)}
-        />
+        <DeleteFilterGroup {...deleteItemData} onCompleted={() => setDeleteItemData(undefined)} onCanceled={() => setDeleteItemData(undefined)} />
       )}
     </>
   );

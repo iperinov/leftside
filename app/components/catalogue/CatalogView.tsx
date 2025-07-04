@@ -1,11 +1,7 @@
 import { Box, Flex, ScrollArea, Separator } from "@radix-ui/themes";
 import { useState } from "react";
 import { toast } from "sonner";
-import type {
-  RenameLeagueApiIn,
-  RenameLeagueRegionApiIn,
-  RenameRealSportApiIn,
-} from "~/api/ocs/ocs.types";
+import type { RenameLeagueApiIn, RenameLeagueRegionApiIn, RenameRealSportApiIn } from "~/api/ocs/ocs.types";
 import { useLeagues } from "~/hooks/useLeagues";
 import { useRealSports } from "~/hooks/useRealSport";
 import { useRegions } from "~/hooks/useRegions";
@@ -26,14 +22,9 @@ export default function CatalogView() {
   const [creating, setCreating] = useState<boolean>(false);
   const [realSport, setRealSport] = useState<string>("");
   const [region, setRegion] = useState<string>("");
-  const [renameSport, setRenameSport] = useState<RenameRealSportApiIn | null>(
-    null,
-  );
-  const [renameRegion, setRenameRegion] =
-    useState<RenameLeagueRegionApiIn | null>(null);
-  const [renameLeague, setRenameLeague] = useState<RenameLeagueApiIn | null>(
-    null,
-  );
+  const [renameSport, setRenameSport] = useState<RenameRealSportApiIn | null>(null);
+  const [renameRegion, setRenameRegion] = useState<RenameLeagueRegionApiIn | null>(null);
+  const [renameLeague, setRenameLeague] = useState<RenameLeagueApiIn | null>(null);
 
   const { isLoading: realSportsLoading, data: realSports } = useRealSports();
   const { isLoading: regionsLoading, data: regions } = useRegions();
@@ -77,9 +68,7 @@ export default function CatalogView() {
     expand: {
       itemIDs: expandedIds,
       handler: (item: CatalogueNode, expand: boolean) => {
-        setExpandedIds((prev) =>
-          expand ? [...prev, item.id] : prev.filter((id) => id !== item.id),
-        );
+        setExpandedIds((prev) => (expand ? [...prev, item.id] : prev.filter((id) => id !== item.id)));
       },
       allowed: () => true,
     },
@@ -156,13 +145,7 @@ export default function CatalogView() {
         >
           <Tree root={nodes} level={0} {...treeConfig} />
         </ScrollArea>
-        <WizzardRoot
-          open={creating}
-          create={createLeague}
-          sportId={realSport}
-          regionId={region}
-          onClose={() => setCreating(false)}
-        />
+        <WizzardRoot open={creating} create={createLeague} sportId={realSport} regionId={region} onClose={() => setCreating(false)} />
       </Box>
 
       {renameSport && (

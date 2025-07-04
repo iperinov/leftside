@@ -12,11 +12,7 @@ interface SingleSelectionFilterProps<T> {
   items: ItemData<T>[];
 
   filterSelection(categoryID: string, filterID: string): T;
-  updateFilterSelection(
-    categoryID: string,
-    filterID: string,
-    selected: T | undefined,
-  ): void;
+  updateFilterSelection(categoryID: string, filterID: string, selected: T | undefined): void;
   disabled?: boolean;
 }
 
@@ -50,8 +46,7 @@ export default function SingleSelectionFilter<T>({
         <SelectDialog
           items={items}
           onConfirm={(selectedID) => {
-            selectedID !== undefined &&
-              updateFilterSelection(categoryID, filterGroupID, selectedID);
+            selectedID !== undefined && updateFilterSelection(categoryID, filterGroupID, selectedID);
             setShow(false);
           }}
           onCancel={() => setShow(false)}

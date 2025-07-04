@@ -10,11 +10,7 @@ interface AssignedBooksProps {
   onUpdate: (selected: number[]) => void;
 }
 
-export default function AssignedBooks({
-  assignedBooks,
-  originalAssignedBooks,
-  onUpdate,
-}: AssignedBooksProps) {
+export default function AssignedBooks({ assignedBooks, originalAssignedBooks, onUpdate }: AssignedBooksProps) {
   const { data: books = [] } = useBooks();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [tempSelected, setTempSelected] = useState<number[]>(assignedBooks);
@@ -22,9 +18,7 @@ export default function AssignedBooks({
   // Prevent unchecking originally assigned books.
   const toggleSelection = (id: number) => {
     if (originalAssignedBooks.includes(id)) return;
-    setTempSelected((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
-    );
+    setTempSelected((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]));
   };
 
   // Handle confirm operation.
@@ -33,19 +27,13 @@ export default function AssignedBooks({
     setDialogOpen(false);
   };
 
-  const selectionLabel =
-    assignedBooks.length === 0
-      ? "Assign to books"
-      : `${assignedBooks.length} selection${assignedBooks.length > 1 ? "s" : ""}`;
+  const selectionLabel = assignedBooks.length === 0 ? "Assign to books" : `${assignedBooks.length} selection${assignedBooks.length > 1 ? "s" : ""}`;
 
   // Detect on changed.
   const hasChanges = useMemo(() => {
     const sortedA = [...tempSelected].sort();
     const sortedB = [...assignedBooks].sort();
-    return (
-      sortedA.length !== sortedB.length ||
-      sortedA.some((val, i) => val !== sortedB[i])
-    );
+    return sortedA.length !== sortedB.length || sortedA.some((val, i) => val !== sortedB[i]);
   }, [tempSelected, assignedBooks]);
 
   return (
@@ -101,16 +89,8 @@ export default function AssignedBooks({
                   gap="2"
                   style={{ width: "30%" }} // 3 columns per row
                 >
-                  <Checkbox
-                    id={checkboxId}
-                    checked={checked}
-                    onCheckedChange={() => toggleSelection(book.id)}
-                    disabled={locked}
-                  />
-                  <label
-                    htmlFor={checkboxId}
-                    style={{ cursor: locked ? "default" : "pointer" }}
-                  >
+                  <Checkbox id={checkboxId} checked={checked} onCheckedChange={() => toggleSelection(book.id)} disabled={locked} />
+                  <label htmlFor={checkboxId} style={{ cursor: locked ? "default" : "pointer" }}>
                     <Text size="2">{book.name}</Text>
                   </label>
                 </Flex>

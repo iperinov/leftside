@@ -10,13 +10,7 @@ export interface DuplicateConfigurationProps {
   name: string;
 }
 
-export const DuplicateConfiguration = ({
-  open,
-  onClose,
-  id,
-  rev,
-  name,
-}: DuplicateConfigurationProps) => {
+export const DuplicateConfiguration = ({ open, onClose, id, rev, name }: DuplicateConfigurationProps) => {
   const mutation = useDuplicateConfiguration();
 
   const handleProceed = async () => {
@@ -29,29 +23,13 @@ export const DuplicateConfiguration = ({
   };
 
   return (
-    <BaseDialog
-      open={open}
-      onClose={onClose}
-      title="Duplicate configuration"
-      isProcessing={mutation.isPending}
-      onConfirm={handleProceed}
-    >
+    <BaseDialog open={open} onClose={onClose} title="Duplicate configuration" isProcessing={mutation.isPending} onConfirm={handleProceed}>
       <Flex direction="column" align="center" mb="4">
-        <Text
-          size="1"
-          mb="3"
-          className="iconCircle"
-          style={{ color: "var(--accent-11)" }}
-        >
+        <Text size="1" mb="3" className="iconCircle" style={{ color: "var(--accent-11)" }}>
           !
         </Text>
-        <Text
-          size="2"
-          align="center"
-          style={{ color: "var(--accent-11)", paddingTop: "1rem" }}
-        >
-          Are you sure you want to duplicate configuration{" "}
-          <strong>'{name}'</strong>?
+        <Text size="2" align="center" style={{ color: "var(--accent-11)", paddingTop: "1rem" }}>
+          Are you sure you want to duplicate configuration <strong>'{name}'</strong>?
         </Text>
       </Flex>
     </BaseDialog>

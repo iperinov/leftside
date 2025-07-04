@@ -11,10 +11,7 @@ export interface CreateConfigurationProps {
   onClose: () => void;
 }
 
-export const CreateConfiguration = ({
-  open,
-  onClose,
-}: CreateConfigurationProps) => {
+export const CreateConfiguration = ({ open, onClose }: CreateConfigurationProps) => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
@@ -56,13 +53,7 @@ export const CreateConfiguration = ({
         <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
           Title
         </Text>
-        <TextField.Root
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter configuration name"
-          variant="soft"
-          className="inputField"
-        />
+        <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter configuration name" variant="soft" className="inputField" />
       </Flex>
     </BaseDialog>
   );

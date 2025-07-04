@@ -13,9 +13,7 @@ function NavItem({ to, children, ...props }: NavLinkProps) {
           textDecoration: "none",
           color: isActive ? "var(--accent-a11)" : "var(--accent-a9)",
           fontWeight: isActive ? 500 : 400,
-          borderBottom: isActive
-            ? "2px solid var(--accent-a11)"
-            : "2px solid transparent",
+          borderBottom: isActive ? "2px solid var(--accent-a11)" : "2px solid transparent",
           paddingBottom: "10px",
           fontSize: "14px",
           cursor: "pointer",

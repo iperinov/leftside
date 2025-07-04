@@ -39,16 +39,11 @@ const mockFilterGroups: FilterGroup[] = [
   },
 ];
 
-export function EditConfiguration({
-  uuid,
-  name,
-  onClose,
-}: EditConfigurationProps) {
+export function EditConfiguration({ uuid, name, onClose }: EditConfigurationProps) {
   const books = [1, 16, 26, 27, 28];
   const [configName, setValue] = useState(name);
   const [assignedBooks, setAssignedBooks] = useState<number[]>(books);
-  const [originalAssignedBooks, setoriginalAssignedBooks] =
-    useState<number[]>(books);
+  const [originalAssignedBooks, setoriginalAssignedBooks] = useState<number[]>(books);
 
   return (
     <Box
@@ -65,11 +60,7 @@ export function EditConfiguration({
       }}
     >
       {/* Header */}
-      <Flex
-        justify="between"
-        align="center"
-        style={{ backgroundColor: "var(--accent-9)", padding: "1rem 1.5rem" }}
-      >
+      <Flex justify="between" align="center" style={{ backgroundColor: "var(--accent-9)", padding: "1rem 1.5rem" }}>
         <Text size="3" weight="bold" style={{ color: "white" }}>
           Edit:{" "}
           <Text as="span" weight="medium">
@@ -110,11 +101,7 @@ export function EditConfiguration({
             overflow: "hidden", // TODO scrolling
           }}
         >
-          <AssignedBooks
-            assignedBooks={assignedBooks}
-            originalAssignedBooks={originalAssignedBooks}
-            onUpdate={setAssignedBooks}
-          />
+          <AssignedBooks assignedBooks={assignedBooks} originalAssignedBooks={originalAssignedBooks} onUpdate={setAssignedBooks} />
           <ContentPreview filterGroups={mockFilterGroups} />
         </Box>
       </Flex>

@@ -4,8 +4,7 @@ import type ItemData from "~/types/ItemData";
 import MultiSelectDropdown from "../multiSelectDropdown/MultiSelectDropdown";
 import type DialogBasicProps from "./DialogBasicProps";
 
-interface MultiSelectDialogProps<T extends string | number>
-  extends DialogBasicProps {
+interface MultiSelectDialogProps<T extends string | number> extends DialogBasicProps {
   items: ItemData<T>[];
   includeAllItem?: boolean;
   defaultSelectedIDs?: T[];
@@ -58,12 +57,7 @@ export default function MultiSelectDialog<T extends string | number>({
         <Dialog.Description>{description}</Dialog.Description>
 
         {/* Input fields */}
-        <MultiSelectDropdown
-          items={items}
-          defaultSelectedIDs={selection}
-          onSelectionChange={handleSelectionChange}
-          includeAllItem={includeAllItem}
-        />
+        <MultiSelectDropdown items={items} defaultSelectedIDs={selection} onSelectionChange={handleSelectionChange} includeAllItem={includeAllItem} />
 
         {/* Buttons */}
         <Flex justify="end" gap="3" mt="4">
@@ -72,11 +66,7 @@ export default function MultiSelectDialog<T extends string | number>({
               {cancelText}
             </Button>
           </Dialog.Close>
-          <Button
-            color={destructive ? "red" : undefined}
-            onClick={handleConfirm}
-            disabled={!valid(selection)}
-          >
+          <Button color={destructive ? "red" : undefined} onClick={handleConfirm} disabled={!valid(selection)}>
             {confirmText}
           </Button>
         </Flex>

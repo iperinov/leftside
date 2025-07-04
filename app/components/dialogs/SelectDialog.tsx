@@ -52,11 +52,7 @@ export default function SelectDialog<T>({
           <Dialog.Description>{description}</Dialog.Description>
 
           {/* Input fields */}
-          <SelectComponent
-            value={selectedID}
-            items={items}
-            onChange={handleSelectionChange}
-          />
+          <SelectComponent value={selectedID} items={items} onChange={handleSelectionChange} />
 
           {/* Buttons */}
           <Flex justify="end" gap="3" mt="4">
@@ -65,11 +61,7 @@ export default function SelectDialog<T>({
                 {cancelText}
               </Button>
             </Dialog.Close>
-            <Button
-              color={destructive ? "red" : undefined}
-              onClick={handleConfirm}
-              disabled={selectedID !== undefined ? !valid(selectedID) : true}
-            >
+            <Button color={destructive ? "red" : undefined} onClick={handleConfirm} disabled={selectedID !== undefined ? !valid(selectedID) : true}>
               {confirmText}
             </Button>
           </Flex>

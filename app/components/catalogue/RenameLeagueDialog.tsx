@@ -9,11 +9,7 @@ interface RenameLeagueProps {
   onRename: (newName: string) => void;
 }
 
-export function RenameLeagueDialog({
-  league,
-  onClose,
-  onRename,
-}: RenameLeagueProps) {
+export function RenameLeagueDialog({ league, onClose, onRename }: RenameLeagueProps) {
   const [name, setName] = useState(league.name);
 
   return (
@@ -29,12 +25,7 @@ export function RenameLeagueDialog({
         <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
           League Name
         </Text>
-        <TextField.Root
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter new name"
-          variant="soft"
-        />
+        <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter new name" variant="soft" />
       </Flex>
     </BaseDialog>
   );

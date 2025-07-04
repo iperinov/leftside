@@ -1,16 +1,10 @@
 import type TreeItemData from "../TreeItemData";
 
-export function findItem<T extends TreeItemData<T>>(
-  id: string,
-  root: T,
-): T | undefined {
+export function findItem<T extends TreeItemData<T>>(id: string, root: T): T | undefined {
   return findItemBy((item) => item.id === id, root);
 }
 
-function findItemBy<T extends TreeItemData<T>>(
-  compare: (item: T) => boolean,
-  root: T,
-): T | undefined {
+function findItemBy<T extends TreeItemData<T>>(compare: (item: T) => boolean, root: T): T | undefined {
   if (compare(root)) return root;
   if (!root.children) return undefined;
 
@@ -39,17 +33,11 @@ function findItemBy<T extends TreeItemData<T>>(
 //   return undefined;
 // }
 
-export function findItemSiblings<T extends TreeItemData<T>>(
-  id: string,
-  root: T,
-): T[] | undefined {
+export function findItemSiblings<T extends TreeItemData<T>>(id: string, root: T): T[] | undefined {
   return findItemParent(id, root)?.children;
 }
 
-export function findItemParent<T extends TreeItemData<T>>(
-  id: string,
-  root: T,
-): T | undefined {
+export function findItemParent<T extends TreeItemData<T>>(id: string, root: T): T | undefined {
   for (const item of root.children || []) {
     if (item.id === id) {
       return root;

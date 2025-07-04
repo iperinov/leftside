@@ -55,44 +55,25 @@ export const BaseDialog: React.FC<BaseDialogProps> = ({
 
             {children}
 
-            <Flex
-              justify="between"
-              align="center"
-              style={{ paddingTop: "1rem" }}
-            >
+            <Flex justify="between" align="center" style={{ paddingTop: "1rem" }}>
               {/* Left side */}
               {renderActionsStart ?? <span />}
 
               {/* Right side buttons */}
               <Flex gap="4">
                 {showCancel && (
-                  <Button
-                    variant="ghost"
-                    onClick={onClose}
-                    disabled={isProcessing}
-                    className="buttonGhost"
-                  >
+                  <Button variant="ghost" onClick={onClose} disabled={isProcessing} className="buttonGhost">
                     {cancelLabel}
                   </Button>
                 )}
 
                 {onBack && (
-                  <Button
-                    variant="ghost"
-                    onClick={onBack}
-                    disabled={isProcessing}
-                    className="buttonGhost"
-                  >
+                  <Button variant="ghost" onClick={onBack} disabled={isProcessing} className="buttonGhost">
                     {backLabel}
                   </Button>
                 )}
 
-                <Button
-                  variant="ghost"
-                  onClick={onConfirm}
-                  disabled={isProcessing || disableConfirm}
-                  className="buttonGhost"
-                >
+                <Button variant="ghost" onClick={onConfirm} disabled={isProcessing || disableConfirm} className="buttonGhost">
                   {isProcessing ? "Processing…" : confirmLabel}
                 </Button>
               </Flex>

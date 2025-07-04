@@ -15,33 +15,20 @@ interface FilterGroupRowProps {
   onReorder?: () => void;
 }
 
-export default function FiltersGroupRow({
-  categoryID,
-  filterGroupID,
-  onDuplicate,
-  onDelete,
-  onReorder,
-}: FilterGroupRowProps & ClassNameProps) {
+export default function FiltersGroupRow({ categoryID, filterGroupID, onDuplicate, onDelete, onReorder }: FilterGroupRowProps & ClassNameProps) {
   const menuItems: MenuItem<{ categoryID: string; filterGroupID: string }>[] = [
     {
       name: "Duplicate",
-      action: (context) =>
-        context && onDuplicate?.(context.categoryID, context.filterGroupID),
+      action: (context) => context && onDuplicate?.(context.categoryID, context.filterGroupID),
     },
     {
       name: "Delete",
-      action: (context) =>
-        context && onDelete?.(context.categoryID, context.filterGroupID),
+      action: (context) => context && onDelete?.(context.categoryID, context.filterGroupID),
     },
   ];
 
   return (
-    <Flex
-      gap="2"
-      align="center"
-      justify="between"
-      className={styles.filterGroupRow}
-    >
+    <Flex gap="2" align="center" justify="between" className={styles.filterGroupRow}>
       <Button variant="ghost" className="nohover" onClick={onReorder}>
         <CaretSortIcon />
       </Button>
@@ -49,10 +36,7 @@ export default function FiltersGroupRow({
       <FiltersGroup categoryID={categoryID} filterGroupID={filterGroupID} />
 
       <Box pr="3" pl="2">
-        <DropdownContextMenu
-          items={menuItems}
-          context={{ categoryID, filterGroupID }}
-        />
+        <DropdownContextMenu items={menuItems} context={{ categoryID, filterGroupID }} />
       </Box>
     </Flex>
   );

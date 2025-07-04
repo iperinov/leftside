@@ -151,9 +151,7 @@ export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
         const order = (filterGroup.order ?? Order.Asc) as Order;
         const groupLimit = filterGroup.limit;
 
-        const filteredGames = games.filter((game) =>
-          matchesFilterGroup(game, filterGroup),
-        );
+        const filteredGames = games.filter((game) => matchesFilterGroup(game, filterGroup));
         const grouped = new Map<string, Game[]>();
 
         for (const game of filteredGames) {
@@ -170,18 +168,13 @@ export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
                 const bTime = new Date(b.startTime).getTime();
                 return order === Order.Desc ? bTime - aTime : aTime - bTime;
               });
-              const displayGames =
-                groupLimit != null
-                  ? sortedGames.slice(0, groupLimit)
-                  : sortedGames;
+              const displayGames = groupLimit != null ? sortedGames.slice(0, groupLimit) : sortedGames;
               const labelParts = groupLabel.split(" > ");
 
               return (
                 <Box key={groupLabel} mb="5">
                   <Box mb="2">{renderGroupLabel(groupBy, labelParts)}</Box>
-                  {displayGames.map((game) =>
-                    renderGameCard(game, groupBy !== GroupBy.Date),
-                  )}
+                  {displayGames.map((game) => renderGameCard(game, groupBy !== GroupBy.Date))}
                 </Box>
               );
             })}

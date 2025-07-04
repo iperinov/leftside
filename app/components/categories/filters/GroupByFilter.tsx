@@ -4,10 +4,7 @@ import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 
-function generateChoices(
-  sportsSelected: number,
-  marketsSelected: number,
-): ItemData<string>[] {
+function generateChoices(sportsSelected: number, marketsSelected: number): ItemData<string>[] {
   switch (true) {
     case sportsSelected === 1 && marketsSelected === 0:
       return [
@@ -29,16 +26,11 @@ export default function GroupByFilter(props: FilterGroupProps) {
   const groupByFilter = useCategoryTreeStore((state) => state.groupByFilter);
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const marketFilters = useCategoryTreeStore((state) => state.marketFilters);
-  const updateGroupByFilters = useCategoryTreeStore(
-    (state) => state.updateGroupByFilter,
-  );
+  const updateGroupByFilters = useCategoryTreeStore((state) => state.updateGroupByFilter);
 
   const sportsSelection = sportFilters(categoryID, filterGroupID);
   const marketsSelection = marketFilters(categoryID, filterGroupID);
-  const choices = useMemo(
-    () => generateChoices(sportsSelection.length, marketsSelection.length),
-    [sportsSelection.length, marketsSelection.length],
-  );
+  const choices = useMemo(() => generateChoices(sportsSelection.length, marketsSelection.length), [sportsSelection.length, marketsSelection.length]);
 
   return (
     <SingleSelectionFilter

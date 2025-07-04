@@ -8,15 +8,8 @@ interface DeleteFilterGroupProps {
   onCanceled?: () => void;
 }
 
-export default function DeleteFilterGroup({
-  categoryID,
-  filterGroupID,
-  onCompleted,
-  onCanceled,
-}: DeleteFilterGroupProps) {
-  const deleteFilterGroup = useCategoryTreeStore(
-    (state) => state.deleteFilterGroup,
-  );
+export default function DeleteFilterGroup({ categoryID, filterGroupID, onCompleted, onCanceled }: DeleteFilterGroupProps) {
+  const deleteFilterGroup = useCategoryTreeStore((state) => state.deleteFilterGroup);
 
   return (
     <EditNameDialog

@@ -11,10 +11,7 @@ interface UseContentFilteredOptions {
 /**
  * Fetch filtered games content using a list of filter groups.
  */
-export const useContentFiltered = ({
-  filterGroups,
-  enabled = true,
-}: UseContentFilteredOptions) => {
+export const useContentFiltered = ({ filterGroups, enabled = true }: UseContentFilteredOptions) => {
   return useQuery<FilteredGamesResponse>({
     queryKey: queryKeys.contentFiltered(filterGroups),
     queryFn: () => getContentFiltered({ filterGroups }),

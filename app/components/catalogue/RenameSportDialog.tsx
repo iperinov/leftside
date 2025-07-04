@@ -9,11 +9,7 @@ interface RenameRealSportProps {
   onRename: (newName: string) => void;
 }
 
-export function RenameSportDialog({
-  sport,
-  onClose,
-  onRename,
-}: RenameRealSportProps) {
+export function RenameSportDialog({ sport, onClose, onRename }: RenameRealSportProps) {
   const [name, setName] = useState(sport.name);
 
   return (
@@ -29,12 +25,7 @@ export function RenameSportDialog({
         <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
           Region Name
         </Text>
-        <TextField.Root
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter new name"
-          variant="soft"
-        />
+        <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter new name" variant="soft" />
       </Flex>
     </BaseDialog>
   );

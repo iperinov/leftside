@@ -4,9 +4,7 @@ import type { LeagueByEvent } from "./ocs.types";
 
 const ocsUrl = getAppConfig().ocs.baseUrl;
 
-export const getLeagueByEvent = async (
-  rsids: number[] = [],
-): Promise<LeagueByEvent[]> => {
+export const getLeagueByEvent = async (rsids: number[] = []): Promise<LeagueByEvent[]> => {
   const url = new URL(`${ocsUrl}/config/leagues-by-events`);
   console.log("getLeagueByEvent: ", url);
   await new Promise((res) => setTimeout(res, 2000)); // Simulate delay

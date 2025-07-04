@@ -6,11 +6,7 @@ export interface CatalogueNode extends TreeItemData<CatalogueNode> {
   regionUUID?: string;
 }
 
-export function buildCatalogueTree(
-  realSports?: RealSport[],
-  regions?: LeagueRegion[],
-  leagues?: League[],
-): CatalogueNode {
+export function buildCatalogueTree(realSports?: RealSport[], regions?: LeagueRegion[], leagues?: League[]): CatalogueNode {
   const regionMap = new Map<number, LeagueRegion>();
   if (regions) {
     for (const region of regions) {

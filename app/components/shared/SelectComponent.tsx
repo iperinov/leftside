@@ -8,16 +8,9 @@ interface ItemTypeSelectProps<T> {
   onChange?: (value: T) => void;
 }
 
-export default function SelectComponent<T>({
-  value,
-  items,
-  onChange,
-}: ItemTypeSelectProps<T>) {
+export default function SelectComponent<T>({ value, items, onChange }: ItemTypeSelectProps<T>) {
   return (
-    <Select.Root
-      value={value !== undefined ? String(value) : ""}
-      onValueChange={(value: string) => onChange?.(value as T) }
-    >
+    <Select.Root value={value !== undefined ? String(value) : ""} onValueChange={(value: string) => onChange?.(value as T)}>
       <Select.Trigger />
       <Select.Content>
         <Select.Group>

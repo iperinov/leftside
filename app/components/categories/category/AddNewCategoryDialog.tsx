@@ -1,11 +1,4 @@
-import {
-  Button,
-  Dialog,
-  Flex,
-  Select,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Button, Dialog, Flex, Select, Text, TextField } from "@radix-ui/themes";
 import { useCallback, useState } from "react";
 import type { League } from "~/api/ocs/ocs.types";
 import { useLeagues } from "~/hooks/useLeagues";
@@ -30,25 +23,16 @@ function ItemTypeSelect({ value, level, onChange }: ItemTypeSelectProps) {
       <Select.Content>
         <Select.Group>
           <Select.Label>Items</Select.Label>
-          <Select.Item
-            value={TemplateType.Parent}
-            disabled={level >= 3 ? true : undefined}
-          >
+          <Select.Item value={TemplateType.Parent} disabled={level >= 3 ? true : undefined}>
             {TemplateType.Parent}
           </Select.Item>
-          <Select.Item value={TemplateType.Child}>
-            {TemplateType.Child}
-          </Select.Item>
+          <Select.Item value={TemplateType.Child}>{TemplateType.Child}</Select.Item>
         </Select.Group>
         <Select.Separator />
         <Select.Group>
           <Select.Label>Predefined templates</Select.Label>
-          <Select.Item value={TemplateType.AllLeagues}>
-            {TemplateType.AllLeagues}
-          </Select.Item>
-          <Select.Item value={TemplateType.LiveAndUpcoming}>
-            {TemplateType.LiveAndUpcoming}
-          </Select.Item>
+          <Select.Item value={TemplateType.AllLeagues}>{TemplateType.AllLeagues}</Select.Item>
+          <Select.Item value={TemplateType.LiveAndUpcoming}>{TemplateType.LiveAndUpcoming}</Select.Item>
         </Select.Group>
       </Select.Content>
     </Select.Root>
@@ -73,33 +57,14 @@ function FormRow({ label, children }: React.PropsWithChildren<FormRowProps>) {
 interface AddNewCategoryDialogProps {
   open?: boolean;
   level: number;
-  onConfirm: (
-    name: string,
-    type: TemplateType,
-    sports: string[],
-    leagues: string[],
-  ) => void;
+  onConfirm: (name: string, type: TemplateType, sports: string[], leagues: string[]) => void;
   onCancel?: () => void;
   validName?: (name: string) => boolean;
 }
 
-export default function AddNewCategoryDialog({
-  open = true,
-  level,
-  onConfirm,
-  onCancel = () => {},
-  validName = () => true,
-}: AddNewCategoryDialogProps) {
-  const {
-    error: sportsError,
-    data: sports,
-    isLoading: isSportsLoading,
-  } = useRealSports();
-  const {
-    error: leaguesError,
-    data: leagues,
-    isLoading: isLeaguesLoading,
-  } = useLeagues();
+export default function AddNewCategoryDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewCategoryDialogProps) {
+  const { error: sportsError, data: sports, isLoading: isSportsLoading } = useRealSports();
+  const { error: leaguesError, data: leagues, isLoading: isLeaguesLoading } = useLeagues();
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState("");
   const [type, setType] = useState<TemplateType>(TemplateType.Child);
@@ -124,9 +89,7 @@ export default function AddNewCategoryDialog({
     (selectedIDs: string[]) => {
       const leaguesIDs = leaguesForSports(selectedIDs).map((l) => l.uuid);
       setSelectedSportsIDs(selectedIDs);
-      setSelectedLeaguesIDs(
-        selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)),
-      );
+      setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
     },
     [selectedLeagueIDs],
   );
@@ -145,11 +108,7 @@ export default function AddNewCategoryDialog({
   };
 
   const leaguesForSports = (sportIDs: string[]): League[] => {
-    return sportIDs.flatMap(
-      (sportID) =>
-        leagues?.filter((league) => String(league.realSportId) === sportID) ||
-        [],
-    );
+    return sportIDs.flatMap((sportID) => leagues?.filter((league) => String(league.realSportId) === sportID) || []);
   };
 
   const getLeagueItems = (sportIDs: string[]): ItemData<string>[] => {
@@ -166,37 +125,19 @@ export default function AddNewCategoryDialog({
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>
       <Dialog.Content className={styles.content} size="3">
         {/* Title and description */}
-        <Dialog.Title
-          className={styles.title}
-        >{`Add ${formatOrdinal(level + 1)} level`}</Dialog.Title>
+        <Dialog.Title className={styles.title}>{`Add ${formatOrdinal(level + 1)} level`}</Dialog.Title>
 
-        <LoadDataDecorator
-          isLoading={isSportsLoading || isLeaguesLoading}
-          error={sportsError && leaguesError}
-        >
+        <LoadDataDecorator isLoading={isSportsLoading || isLeaguesLoading} error={sportsError && leaguesError}>
           <Flex direction="column" gap="3" mt="4">
             <FormRow label="Title">
-              <TextField.Root
-                value={name}
-                placeholder="Enter name"
-                onChange={(e) => setName(e.target.value)}
-              />
+              <TextField.Root value={name} placeholder="Enter name" onChange={(e) => setName(e.target.value)} />
             </FormRow>
             <FormRow label="Type">
-              <ItemTypeSelect
-                value={type}
-                level={level + 1}
-                onChange={(type) => setType(type)}
-              />
+              <ItemTypeSelect value={type} level={level + 1} onChange={(type) => setType(type)} />
             </FormRow>
-            {(type === TemplateType.AllLeagues ||
-              type === TemplateType.LiveAndUpcoming) && (
+            {(type === TemplateType.AllLeagues || type === TemplateType.LiveAndUpcoming) && (
               <FormRow label="Select sport">
-                <MultiSelectDropdown
-                  items={getSportItems()}
-                  defaultSelectedIDs={selectedSportIDs}
-                  onSelectionChange={handleSportsSelectionChange}
-                />
+                <MultiSelectDropdown items={getSportItems()} defaultSelectedIDs={selectedSportIDs} onSelectionChange={handleSportsSelectionChange} />
               </FormRow>
             )}
             {type === TemplateType.LiveAndUpcoming && (
@@ -217,10 +158,7 @@ export default function AddNewCategoryDialog({
               Cancel
             </Button>
           </Dialog.Close>
-          <Button
-            onClick={handleSave}
-            disabled={name === "" || !validName(name)}
-          >
+          <Button onClick={handleSave} disabled={name === "" || !validName(name)}>
             Save
           </Button>
         </Flex>

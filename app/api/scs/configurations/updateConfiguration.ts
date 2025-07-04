@@ -3,9 +3,7 @@ import type { Configuration } from "./config.types";
 
 const scsUrl = getAppConfig().scs.baseUrl;
 
-export const updateConfiguration = async (
-  input: Configuration,
-): Promise<Configuration> => {
+export const updateConfiguration = async (input: Configuration): Promise<Configuration> => {
   const url = new URL(`${scsUrl}/configurations/${input.uuid}`);
   console.log("rename config: ", url, input);
   // TODO:

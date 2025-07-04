@@ -8,16 +8,9 @@ interface RenameCategoryProps {
   onCanceled?: () => void;
 }
 
-export default function RenameCategory({
-  id,
-  name,
-  onCompleted,
-  onCanceled,
-}: RenameCategoryProps) {
+export default function RenameCategory({ id, name, onCompleted, onCanceled }: RenameCategoryProps) {
   const renameCategory = useCategoryTreeStore((state) => state.renameCategory);
-  const findCategorySiblings = useCategoryTreeStore(
-    (state) => state.findCategorySiblings,
-  );
+  const findCategorySiblings = useCategoryTreeStore((state) => state.findCategorySiblings);
 
   return (
     <EditNameDialog
@@ -33,9 +26,7 @@ export default function RenameCategory({
         onCompleted?.();
       }}
       onCancel={onCanceled}
-      validName={(name) =>
-        !findCategorySiblings(id)?.find((item) => item.name === name.trim())
-      }
+      validName={(name) => !findCategorySiblings(id)?.find((item) => item.name === name.trim())}
     />
   );
 }

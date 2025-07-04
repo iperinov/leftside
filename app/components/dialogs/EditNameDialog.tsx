@@ -44,12 +44,7 @@ export default function EditNameDialog({
         <Dialog.Description>{description}</Dialog.Description>
 
         {/* Input fields */}
-        <TextField.Root
-          value={name}
-          placeholder="New name"
-          mt="3"
-          onChange={(e) => setName(e.target.value)}
-        />
+        <TextField.Root value={name} placeholder="New name" mt="3" onChange={(e) => setName(e.target.value)} />
 
         {/* Buttons */}
         <Flex justify="end" gap="3" mt="4">
@@ -58,11 +53,7 @@ export default function EditNameDialog({
               {cancelText}
             </Button>
           </Dialog.Close>
-          <Button
-            color={destructive ? "red" : undefined}
-            onClick={handleRename}
-            disabled={name === "" || name === currentName || !validName(name)}
-          >
+          <Button color={destructive ? "red" : undefined} onClick={handleRename} disabled={name === "" || name === currentName || !validName(name)}>
             {confirmText}
           </Button>
         </Flex>

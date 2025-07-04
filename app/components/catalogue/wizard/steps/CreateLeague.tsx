@@ -57,78 +57,32 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
     >
       <Flex direction="column" gap="4" mb="4">
         <Box>
-          <Text
-            as="label"
-            size="1"
-            weight="medium"
-            mb="1"
-            style={{ color: "var(--accent-11)" }}
-          >
+          <Text as="label" size="1" weight="medium" mb="1" style={{ color: "var(--accent-11)" }}>
             Title (max 50 chars)
           </Text>
-          <TextField.Root
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter league name"
-            variant="soft"
-          />
+          <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter league name" variant="soft" />
         </Box>
 
         <Box>
-          <Text
-            as="label"
-            size="1"
-            weight="medium"
-            mb="1"
-            style={{ color: "var(--accent-11)" }}
-          >
+          <Text as="label" size="1" weight="medium" mb="1" style={{ color: "var(--accent-11)" }}>
             Short Description
           </Text>
-          <TextField.Root
-            value={shortDesc}
-            onChange={(e) => setShortDesc(e.target.value)}
-            placeholder="Short description"
-            maxLength={20}
-            variant="soft"
-          />
+          <TextField.Root value={shortDesc} onChange={(e) => setShortDesc(e.target.value)} placeholder="Short description" maxLength={20} variant="soft" />
         </Box>
 
         <Box>
-          <Text
-            as="label"
-            size="1"
-            weight="medium"
-            mb="1"
-            style={{ color: "var(--accent-11)" }}
-          >
+          <Text as="label" size="1" weight="medium" mb="1" style={{ color: "var(--accent-11)" }}>
             Order (0 – 1000)
           </Text>
-          <TextField.Root
-            type="number"
-            value={order}
-            onChange={(e) => setOrder(e.target.value)}
-            min={0}
-            max={1000}
-            placeholder="Enter order"
-            variant="soft"
-          />
+          <TextField.Root type="number" value={order} onChange={(e) => setOrder(e.target.value)} min={0} max={1000} placeholder="Enter order" variant="soft" />
         </Box>
 
         <Box>
-          <Text
-            as="label"
-            size="1"
-            weight="medium"
-            mb="1"
-            style={{ color: "var(--accent-11)" }}
-          >
+          <Text as="label" size="1" weight="medium" mb="1" style={{ color: "var(--accent-11)" }}>
             Take Back Profile
           </Text>
           <Box mt="1">
-            <Select.Root
-              value={takeBackProfile}
-              onValueChange={(val) => setTakeBackProfile(val)}
-            >
+            <Select.Root value={takeBackProfile} onValueChange={(val) => setTakeBackProfile(val)}>
               <Select.Trigger placeholder="Select take-back profile" />
               <Select.Content>
                 {tbProfiles.map((tbp) => (
@@ -142,30 +96,21 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
         </Box>
 
         <Flex align="center" gap="2">
-          <Checkbox
-            checked={teamFKRequired}
-            onCheckedChange={(val) => setTeamFKRequired(Boolean(val))}
-          />
+          <Checkbox checked={teamFKRequired} onCheckedChange={(val) => setTeamFKRequired(Boolean(val))} />
           <Text size="1" as="label">
             Team FK Required
           </Text>
         </Flex>
 
         <Flex align="center" gap="2">
-          <Checkbox
-            checked={hideForMaster}
-            onCheckedChange={(val) => setHideForMaster(Boolean(val))}
-          />
+          <Checkbox checked={hideForMaster} onCheckedChange={(val) => setHideForMaster(Boolean(val))} />
           <Text size="1" as="label">
             Hide For Master
           </Text>
         </Flex>
 
         <Flex align="center" gap="2">
-          <Checkbox
-            checked={enabled}
-            onCheckedChange={(val) => setEnabled(Boolean(val))}
-          />
+          <Checkbox checked={enabled} onCheckedChange={(val) => setEnabled(Boolean(val))} />
           <Text size="1" as="label">
             Enabled
           </Text>

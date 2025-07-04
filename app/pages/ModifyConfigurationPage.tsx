@@ -15,11 +15,7 @@ interface ModifyConfigurationPageProps {
   edit?: boolean;
 }
 
-export default function ModifyConfigurationPage({
-  id = "",
-  name = "",
-  edit = false,
-}: ModifyConfigurationPageProps) {
+export default function ModifyConfigurationPage({ id = "", name = "", edit = false }: ModifyConfigurationPageProps) {
   const { error, isLoading } = useCategories(id);
   const [selectedID, setSelectedID] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -39,22 +35,9 @@ export default function ModifyConfigurationPage({
   return (
     <LoadDataDecorator error={error} isLoading={isLoading}>
       <Flex direction="column" className={styles.page}>
-        <ConfigurationHeader
-          name={name}
-          edit={edit}
-          className={styles.header}
-        />
-        <ConfigurationContent
-          selectedID={selectedID}
-          setSelectedID={setSelectedID}
-          className={styles.content}
-        />
-        <ConfigurationFooter
-          onCanceled={onCanceled}
-          onCompleted={onCompleted}
-          className={styles.footer}
-          isProcessing={isProcessing}
-        />
+        <ConfigurationHeader name={name} edit={edit} className={styles.header} />
+        <ConfigurationContent selectedID={selectedID} setSelectedID={setSelectedID} className={styles.content} />
+        <ConfigurationFooter onCanceled={onCanceled} onCompleted={onCompleted} className={styles.footer} isProcessing={isProcessing} />
       </Flex>
     </LoadDataDecorator>
   );

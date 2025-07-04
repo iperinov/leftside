@@ -7,12 +7,7 @@ interface ConfigurationHeaderProps {
   isProcessing?: boolean;
 }
 
-export default function ConfigurationHeader({
-  onCanceled,
-  onCompleted,
-  isProcessing,
-  className,
-}: ConfigurationHeaderProps & ClassNameProps) {
+export default function ConfigurationHeader({ onCanceled, onCompleted, isProcessing, className }: ConfigurationHeaderProps & ClassNameProps) {
   return (
     <Flex justify="end" gap="3" className={className}>
       <Button

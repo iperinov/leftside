@@ -11,19 +11,13 @@ export interface CreateRegionProps {
   showCancel?: boolean;
 }
 
-export const CreateRegion = ({
-  handler,
-  onBack,
-  onClose,
-  showCancel = false,
-}: CreateRegionProps) => {
+export const CreateRegion = ({ handler, onBack, onClose, showCancel = false }: CreateRegionProps) => {
   const [name, setName] = useState("");
   const [order, setOrder] = useState("");
   const [enabled, setEnabled] = useState(false);
 
   const parsedOrder = Number.parseInt(order, 10);
-  const isValidOrder =
-    !Number.isNaN(parsedOrder) && parsedOrder >= 0 && parsedOrder <= 1000;
+  const isValidOrder = !Number.isNaN(parsedOrder) && parsedOrder >= 0 && parsedOrder <= 1000;
   const isFormValid = name.trim() !== "" && isValidOrder;
 
   return (
@@ -64,29 +58,12 @@ export const CreateRegion = ({
           <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
             Order (0 – 999)
           </Text>
-          <TextField.Root
-            type="number"
-            value={order}
-            onChange={(e) => setOrder(e.target.value)}
-            placeholder="Enter order"
-            variant="soft"
-            min={0}
-            max={999}
-          />
+          <TextField.Root type="number" value={order} onChange={(e) => setOrder(e.target.value)} placeholder="Enter order" variant="soft" min={0} max={999} />
         </Flex>
 
         <Flex align="center" gap="2" mt="2">
-          <Checkbox
-            id="enabled"
-            checked={enabled}
-            onCheckedChange={(val) => setEnabled(!!val)}
-          />
-          <Text
-            as="label"
-            htmlFor="enabled"
-            size="1"
-            style={{ color: "var(--accent-11)" }}
-          >
+          <Checkbox id="enabled" checked={enabled} onCheckedChange={(val) => setEnabled(!!val)} />
+          <Text as="label" htmlFor="enabled" size="1" style={{ color: "var(--accent-11)" }}>
             Enabled
           </Text>
         </Flex>

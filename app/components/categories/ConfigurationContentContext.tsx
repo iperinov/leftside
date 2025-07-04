@@ -37,20 +37,15 @@ const mockFilterGroups: FilterGroup[] = [
   },
 ];
 
-export default function ConfigurationContentContext({
-  categoryID,
-}: ConfigurationContentContextProps) {
+export default function ConfigurationContentContext({ categoryID }: ConfigurationContentContextProps) {
   console.log("ConfigurationContentContext", categoryID);
-  const category = useCategoryTreeStore((state) =>
-    state.findCategory(categoryID),
-  );
+  const category = useCategoryTreeStore((state) => state.findCategory(categoryID));
 
   const categorySelected = categoryID !== "";
 
   const books = [1, 16, 26, 27, 28];
   const [assignedBooks, setAssignedBooks] = useState<number[]>(books);
-  const [originalAssignedBooks, setoriginalAssignedBooks] =
-    useState<number[]>(books);
+  const [originalAssignedBooks, setoriginalAssignedBooks] = useState<number[]>(books);
 
   return (
     <Flex
@@ -65,11 +60,7 @@ export default function ConfigurationContentContext({
       }}
     >
       <Box style={{ backgroundColor: "var(--accent-4)" }}>
-        <AssignedBooks
-          assignedBooks={assignedBooks}
-          originalAssignedBooks={originalAssignedBooks}
-          onUpdate={setAssignedBooks}
-        />
+        <AssignedBooks assignedBooks={assignedBooks} originalAssignedBooks={originalAssignedBooks} onUpdate={setAssignedBooks} />
       </Box>
 
       <Box style={{ height: "1px", backgroundColor: "var(--accent-11)" }} />
@@ -81,9 +72,7 @@ export default function ConfigurationContentContext({
           overflow: "auto",
         }}
       >
-        <ContentPreview
-          filterGroups={categorySelected ? mockFilterGroups : []}
-        />
+        <ContentPreview filterGroups={categorySelected ? mockFilterGroups : []} />
       </Box>
     </Flex>
   );

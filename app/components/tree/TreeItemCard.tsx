@@ -10,11 +10,7 @@ interface TreeItemCardProps<T extends TreeItemData<T>> {
   parent: T;
 }
 
-export default function TreeItemCard<T extends TreeItemData<T>>({
-  item,
-  parent,
-  ...config
-}: TreeItemCardProps<T> & TreeConfig<T>) {
+export default function TreeItemCard<T extends TreeItemData<T>>({ item, parent, ...config }: TreeItemCardProps<T> & TreeConfig<T>) {
   const isSelectable = config.selection?.allowed(item);
   const enableReorder = config.reorder?.allowed(item, parent) && !item.pending;
 
@@ -29,9 +25,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       onClick={isSelectable ? () => config.selection?.handler(item) : undefined}
       draggable={enableReorder ? "true" : undefined}
       data-selectable={isSelectable ? "true" : undefined}
-      data-selected={
-        config.selection?.selectedID === item.id ? "true" : undefined
-      }
+      data-selected={config.selection?.selectedID === item.id ? "true" : undefined}
       data-pending={item.pending ? "true" : undefined}
     >
       <Flex align="center" gap="1">
@@ -56,10 +50,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       {/* Context menu */}
       {config.contextMenu && config.contextMenu.menuItems.length > 0 && (
         <Box pr="3" pl="2">
-          <DropdownContextMenu
-            items={config.contextMenu.menuItems}
-            context={item}
-          />
+          <DropdownContextMenu items={config.contextMenu.menuItems} context={item} />
         </Box>
       )}
     </Flex>

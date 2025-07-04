@@ -7,16 +7,11 @@ export default function useControlledComponentClickOutside(
 ) {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        outsideOfElelementRef.current &&
-        !outsideOfElelementRef.current.contains(event.target as Node)
-      ) {
+      if (outsideOfElelementRef.current && !outsideOfElelementRef.current.contains(event.target as Node)) {
         onOpenChanged(false);
       }
     }
-    open
-      ? document.addEventListener("click", handleClickOutside)
-      : document.removeEventListener("click", handleClickOutside);
+    open ? document.addEventListener("click", handleClickOutside) : document.removeEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [open, onOpenChanged, outsideOfElelementRef]);
 }

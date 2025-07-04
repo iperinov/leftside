@@ -6,9 +6,7 @@ import SingleSelectionFilter from "./SingleSelectionFilter";
 
 export default function TimeFilter(props: FilterGroupProps) {
   const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
-  const updateTimeFilters = useCategoryTreeStore(
-    (state) => state.updateTimeFilter,
-  );
+  const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
   const choices = useMemo(
     () => [
       allItem,

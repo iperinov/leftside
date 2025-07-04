@@ -29,26 +29,16 @@ export default function ConfirmDialog({
     <AlertDialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialog.Content maxWidth="450px">
         <AlertDialog.Title>{title}</AlertDialog.Title>
-        <AlertDialog.Description size="2">
-          {description}
-        </AlertDialog.Description>
+        <AlertDialog.Description size="2">{description}</AlertDialog.Description>
 
         <Flex gap="3" mt="4" justify="end">
           <AlertDialog.Cancel>
-            <Button
-              variant="soft"
-              onClick={onCancel}
-              style={{ color: "var(--accent-11)" }}
-            >
+            <Button variant="soft" onClick={onCancel} style={{ color: "var(--accent-11)" }}>
               {cancelText}
             </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
-            <Button
-              variant="solid"
-              color={destructive ? "red" : undefined}
-              onClick={onConfirm}
-            >
+            <Button variant="solid" color={destructive ? "red" : undefined} onClick={onConfirm}>
               {confirmText}
             </Button>
           </AlertDialog.Action>

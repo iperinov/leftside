@@ -15,11 +15,7 @@ interface ConfigurationContentSidebarProps {
   onSelected: (item: CategoryTreeItem) => void;
 }
 
-export default function ConfigurationContentSidebar({
-  selectedID,
-  onSelected,
-  className,
-}: ConfigurationContentSidebarProps & ClassNameProps) {
+export default function ConfigurationContentSidebar({ selectedID, onSelected, className }: ConfigurationContentSidebarProps & ClassNameProps) {
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [addItemData, setAddItemData] = useState<{
@@ -36,15 +32,12 @@ export default function ConfigurationContentSidebar({
     parentID: string;
   }>();
   const [deleteItemData, setDeleteItemData] = useState<{ id: string }>();
-  const findParentCategory = useCategoryTreeStore(
-    (state) => state.findParentCategory,
-  );
+  const findParentCategory = useCategoryTreeStore((state) => state.findParentCategory);
 
   const menuItems: MenuItem<CategoryTreeItem>[] = [
     {
       name: "Rename",
-      action: (context) =>
-        context && setRenameItemData({ id: context.id, name: context.name }),
+      action: (context) => context && setRenameItemData({ id: context.id, name: context.name }),
     },
     {
       name: "Delete",
@@ -77,19 +70,12 @@ export default function ConfigurationContentSidebar({
           expand={{
             allowed: (item, level) => !!item.children,
             itemIDs: expandedItems,
-            handler: (item, expand) =>
-              setExpandedItems((prev) =>
-                expand
-                  ? [...prev, item.id]
-                  : prev.filter((id) => id !== item.id),
-              ),
+            handler: (item, expand) => setExpandedItems((prev) => (expand ? [...prev, item.id] : prev.filter((id) => id !== item.id))),
           }}
           addToParent={{
             allowed: (level, parentID) => true,
-            handler: (level, parent) =>
-              setAddItemData({ level, parentID: parent.id }),
-            toString: (level, parentID) =>
-              `Add ${formatOrdinal(level + 1)} level`,
+            handler: (level, parent) => setAddItemData({ level, parentID: parent.id }),
+            toString: (level, parentID) => `Add ${formatOrdinal(level + 1)} level`,
           }}
           selection={{
             allowed: (item) => !item.pending && !item.children,
@@ -104,33 +90,15 @@ export default function ConfigurationContentSidebar({
       </aside>
 
       {/* Actions */}
-      {addItemData && (
-        <AddNewCategory
-          {...addItemData}
-          onCompleted={() => setAddItemData(undefined)}
-          onCanceled={() => setAddItemData(undefined)}
-        />
-      )}
+      {addItemData && <AddNewCategory {...addItemData} onCompleted={() => setAddItemData(undefined)} onCanceled={() => setAddItemData(undefined)} />}
       {renameItemData && (
-        <RenameCategory
-          {...renameItemData}
-          onCompleted={() => setRenameItemData(undefined)}
-          onCanceled={() => setRenameItemData(undefined)}
-        />
+        <RenameCategory {...renameItemData} onCompleted={() => setRenameItemData(undefined)} onCanceled={() => setRenameItemData(undefined)} />
       )}
       {duplicateItemData && (
-        <DuplicateCategory
-          {...duplicateItemData}
-          onCompleted={() => setDuplicateItemData(undefined)}
-          onCanceled={() => setDuplicateItemData(undefined)}
-        />
+        <DuplicateCategory {...duplicateItemData} onCompleted={() => setDuplicateItemData(undefined)} onCanceled={() => setDuplicateItemData(undefined)} />
       )}
       {deleteItemData && (
-        <DeleteCategory
-          {...deleteItemData}
-          onCompleted={() => setDeleteItemData(undefined)}
-          onCanceled={() => setDeleteItemData(undefined)}
-        />
+        <DeleteCategory {...deleteItemData} onCompleted={() => setDeleteItemData(undefined)} onCanceled={() => setDeleteItemData(undefined)} />
       )}
     </>
   );

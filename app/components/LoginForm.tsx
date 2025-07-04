@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Separator,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Box, Button, Flex, Heading, Separator, Text, TextField } from "@radix-ui/themes";
 import { Form, useNavigation } from "react-router";
 
 export default function LoginForm() {
@@ -28,28 +20,11 @@ export default function LoginForm() {
       <Form method="post">
         <Flex direction="column" gap="1" py="2">
           <Text size="2">Email address</Text>
-          <TextField.Root
-            name="email"
-            type="email"
-            required
-            placeholder="Email"
-            autoComplete="email"
-          />
+          <TextField.Root name="email" type="email" required placeholder="Email" autoComplete="email" />
           <Text size="2">Password</Text>
-          <TextField.Root
-            name="password"
-            type="password"
-            required
-            placeholder="Password"
-            autoComplete="current-password"
-          />
+          <TextField.Root name="password" type="password" required placeholder="Password" autoComplete="current-password" />
           <Flex justify="end" align="center" pt="1">
-            <Button
-              id="login"
-              type="submit"
-              disabled={isLogging}
-              variant="outline"
-            >
+            <Button id="login" type="submit" disabled={isLogging} variant="outline">
               {isLogging ? "Loggin in..." : "Log In"}
             </Button>
           </Flex>

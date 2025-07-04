@@ -16,20 +16,13 @@ export interface ConfigurationListProps {
   onDelete: (id: string, rev: string, name: string) => void;
 }
 
-export const ConfigurationList = ({
-  onEdit,
-  onRename,
-  onDuplicate,
-  onDelete,
-}: ConfigurationListProps) => {
+export const ConfigurationList = ({ onEdit, onRename, onDuplicate, onDelete }: ConfigurationListProps) => {
   const { data: booksData = [] } = useBooks();
   const { data = [], isLoading, error } = useConfigurations();
 
   const resolveBookNames = React.useMemo(() => {
     return (ids: number[]): string[] => {
-      return ids
-        .map((bid) => booksData.find((b) => b.id === bid)?.name)
-        .filter(Boolean) as string[];
+      return ids.map((bid) => booksData.find((b) => b.id === bid)?.name).filter(Boolean) as string[];
     };
   }, [booksData]);
 
@@ -63,24 +56,11 @@ export const ConfigurationList = ({
           }
 
           return (
-            <Card
-              key={config.uuid}
-              variant="classic"
-              style={{ borderRadius: 6 }}
-            >
+            <Card key={config.uuid} variant="classic" style={{ borderRadius: 6 }}>
               <Flex direction="row" justify="between" align="center" p="2">
-                <Flex
-                  direction="row"
-                  justify="between"
-                  style={{ width: "100%" }}
-                >
+                <Flex direction="row" justify="between" style={{ width: "100%" }}>
                   <Box style={{ flexBasis: "33%", paddingRight: "1rem" }}>
-                    <Text
-                      weight="bold"
-                      size="2"
-                      mb="1"
-                      style={{ color: "var(--accent-11)" }}
-                    >
+                    <Text weight="bold" size="2" mb="1" style={{ color: "var(--accent-11)" }}>
                       {config.name}
                     </Text>
                   </Box>
@@ -89,13 +69,8 @@ export const ConfigurationList = ({
                       Last updated
                     </Text>
                     <br />
-                    <Text
-                      size="1"
-                      weight="bold"
-                      style={{ color: "var(--accent-11)" }}
-                    >
-                      {formatDateTime(config.lmt, undefined, undefined)} by{" "}
-                      {config.lmu}
+                    <Text size="1" weight="bold" style={{ color: "var(--accent-11)" }}>
+                      {formatDateTime(config.lmt, undefined, undefined)} by {config.lmu}
                     </Text>
                   </Box>
                   <Box style={{ flexBasis: "33%", paddingRight: "1rem" }}>
@@ -103,11 +78,7 @@ export const ConfigurationList = ({
                       Assigned to
                     </Text>
                     <br />
-                    <Text
-                      size="1"
-                      weight="bold"
-                      style={{ color: "var(--accent-11)" }}
-                    >
+                    <Text size="1" weight="bold" style={{ color: "var(--accent-11)" }}>
                       {resolveBookNames(config.books).join(", ")}
                     </Text>
                   </Box>

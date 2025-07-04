@@ -2309,8 +2309,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "7C4B6D99-185D-4B25-8F7C-48B5BAC9466A",
     leagueUUID: "6B15444A-AD18-4259-8443-AA56E4D92D28",
     idSport: "MU   ",
-    description:
-      "Super Featherweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
+    description: "Super Featherweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
     banners: [],
     realSportName: "BOXING",
     leagueName: "BOXING",
@@ -2338,8 +2337,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "7C4B6D99-185D-4B25-8F7C-48B5BAC9466A",
     leagueUUID: "6B15444A-AD18-4259-8443-AA56E4D92D28",
     idSport: "MU   ",
-    description:
-      "Bantamweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
+    description: "Bantamweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
     banners: [],
     realSportName: "BOXING",
     leagueName: "BOXING",
@@ -2367,8 +2365,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "7C4B6D99-185D-4B25-8F7C-48B5BAC9466A",
     leagueUUID: "6B15444A-AD18-4259-8443-AA56E4D92D28",
     idSport: "MU   ",
-    description:
-      "Super Middleweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
+    description: "Super Middleweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
     banners: [],
     realSportName: "BOXING",
     leagueName: "BOXING",
@@ -2396,8 +2393,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "7C4B6D99-185D-4B25-8F7C-48B5BAC9466A",
     leagueUUID: "6B15444A-AD18-4259-8443-AA56E4D92D28",
     idSport: "MU   ",
-    description:
-      "Welterweight, 12 Rounds - Manchester Arena, Manchester, Lancashire, United Kingdom",
+    description: "Welterweight, 12 Rounds - Manchester Arena, Manchester, Lancashire, United Kingdom",
     banners: [],
     realSportName: "BOXING",
     leagueName: "BOXING",
@@ -2425,8 +2421,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "7C4B6D99-185D-4B25-8F7C-48B5BAC9466A",
     leagueUUID: "6B15444A-AD18-4259-8443-AA56E4D92D28",
     idSport: "MU   ",
-    description:
-      "Super Lightweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
+    description: "Super Lightweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
     banners: [],
     realSportName: "BOXING",
     leagueName: "BOXING",
@@ -2510,8 +2505,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "7C4B6D99-185D-4B25-8F7C-48B5BAC9466A",
     leagueUUID: "6B15444A-AD18-4259-8443-AA56E4D92D28",
     idSport: "MU   ",
-    description:
-      "Super Bantamweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
+    description: "Super Bantamweight, 10 Rounds - Madison Square Garden, New York, New York, USA",
     banners: [],
     realSportName: "BOXING",
     leagueName: "BOXING",
@@ -2539,8 +2533,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "7C4B6D99-185D-4B25-8F7C-48B5BAC9466A",
     leagueUUID: "6B15444A-AD18-4259-8443-AA56E4D92D28",
     idSport: "MU   ",
-    description:
-      "Super Lightweight 10 Rounds - Madison Square Garden, New York",
+    description: "Super Lightweight 10 Rounds - Madison Square Garden, New York",
     banners: [],
     realSportName: "BOXING",
     leagueName: "BOXING",
@@ -11236,8 +11229,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Lorenzo Musetti To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Lorenzo Musetti To Win Wimbledon 2025 (Must Start for Action)",
     banners: [],
     realSportName: "TENNIS",
     leagueName: "TENNIS - PICK WINNER YES/NO",
@@ -11265,8 +11257,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Jelena Ostapenko To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Jelena Ostapenko To Win Wimbledon 2025 (Must Start for Action)",
     banners: [],
     realSportName: "TENNIS",
     leagueName: "TENNIS - PICK WINNER YES/NO",
@@ -11322,8 +11313,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Matteo Berrettini To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Matteo Berrettini To Win Wimbledon 2025 (Must Start for Action)",
     banners: [],
     realSportName: "TENNIS",
     leagueName: "TENNIS - PICK WINNER YES/NO",
@@ -11469,8 +11459,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Elina Svitolina  To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Elina Svitolina  To Win Wimbledon 2025 (Must Start for Action)",
     banners: [],
     realSportName: "TENNIS",
     leagueName: "TENNIS - PICK WINNER YES/NO",
@@ -14060,8 +14049,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Karolina Muchova  To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Karolina Muchova  To Win Wimbledon 2025 (Must Start for Action)",
     banners: [],
     realSportName: "TENNIS",
     leagueName: "TENNIS - PICK WINNER YES/NO",
@@ -14173,8 +14161,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Barbora Krejcikova  To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Barbora Krejcikova  To Win Wimbledon 2025 (Must Start for Action)",
     banners: [],
     realSportName: "TENNIS",
     leagueName: "TENNIS - PICK WINNER YES/NO",
@@ -14292,8 +14279,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Alexander Bublik To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Alexander Bublik To Win Wimbledon 2025 (Must Start for Action)",
     banners: [],
     realSportName: "TENNIS",
     leagueName: "TENNIS - PICK WINNER YES/NO",
@@ -14349,8 +14335,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Jasmine Paolini  To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Jasmine Paolini  To Win Wimbledon 2025 (Must Start for Action)",
     banners: [],
     realSportName: "TENNIS",
     leagueName: "TENNIS - PICK WINNER YES/NO",
@@ -14462,8 +14447,7 @@ export const mockContentFiltered: Game[] = [
     realSportUUID: "2DB86274-D492-475F-8C1F-709A8CD95A8B",
     leagueUUID: "D04EE1C4-0D38-4B12-8FFB-76BEF91E3462",
     idSport: "MU   ",
-    description:
-      "Aryna Sabalenka To Win Wimbledon 2025 (Must Start for Action)",
+    description: "Aryna Sabalenka To Win Wimbledon 2025 (Must Start for Action)",
     banners: [
       {
         description: "Special Promo Banner",

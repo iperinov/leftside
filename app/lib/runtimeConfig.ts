@@ -8,11 +8,7 @@ export async function loadRuntimeConfig(): Promise<void> {
     if (!res.ok) throw new Error("Failed to fetch config.json");
     const data = await res.json();
     runtimeOverrides = data;
-    console.log(
-      "loadRuntimeConfig runtimeOverrides: ",
-      runtimeOverrides,
-      defaultAppConfig,
-    );
+    console.log("loadRuntimeConfig runtimeOverrides: ", runtimeOverrides, defaultAppConfig);
   } catch (err) {
     console.warn("[config] Falling back to default config:", err);
   }

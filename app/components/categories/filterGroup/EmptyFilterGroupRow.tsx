@@ -6,9 +6,7 @@ interface EmptyFilterGroupRowProps {
   text: string;
 }
 
-export default function EmptyFilterGroupRow({
-  text,
-}: EmptyFilterGroupRowProps) {
+export default function EmptyFilterGroupRow({ text }: EmptyFilterGroupRowProps) {
   return (
     <Flex direction="column" px="2">
       <Flex
@@ -20,11 +18,7 @@ export default function EmptyFilterGroupRow({
         minHeight={"100px"}
         className={`${styles.filterGroupRow} ${styles.filtersGroup} ${styles.emptyFiltersGroupRow}`}
       >
-        <InfoCircledIcon
-          width="1.2rem"
-          height="1.2rem"
-          style={{ marginLeft: "1rem", flex: "1" }}
-        />
+        <InfoCircledIcon width="1.2rem" height="1.2rem" style={{ marginLeft: "1rem", flex: "1" }} />
         <Text style={{ flex: "9" }}>{text}</Text>
       </Flex>
     </Flex>

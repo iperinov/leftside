@@ -1,14 +1,9 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import type {
-  DeleteConfigApiIn,
-  DeleteConfigApiResponse,
-} from "./config.types";
+import type { DeleteConfigApiIn, DeleteConfigApiResponse } from "./config.types";
 
 const scsUrl = getAppConfig().scs.baseUrl;
 
-export const deleteConfiguration = async (
-  input: DeleteConfigApiIn,
-): Promise<DeleteConfigApiResponse> => {
+export const deleteConfiguration = async (input: DeleteConfigApiIn): Promise<DeleteConfigApiResponse> => {
   const url = `${scsUrl}/scs/config/${input.uuid}/delete`;
   console.log("delete config:", url, input);
 

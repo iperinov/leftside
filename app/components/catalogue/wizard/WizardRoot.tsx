@@ -5,11 +5,7 @@ import { toast } from "sonner";
 import type { League, LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
 import { useRealSports } from "~/hooks/useRealSport";
 import { useRegions } from "~/hooks/useRegions";
-import {
-  type CreateLeagueRequest,
-  CreationStep,
-  useCreateLeagueStore,
-} from "~/stores/createLeagueStore";
+import { type CreateLeagueRequest, CreationStep, useCreateLeagueStore } from "~/stores/createLeagueStore";
 import { ConfirmSubmission } from "./steps/ConfirmSubmission";
 import { CreateLeague } from "./steps/CreateLeague";
 import { CreateRegion } from "./steps/CreateRegion";
@@ -17,9 +13,7 @@ import { CreateSport } from "./steps/CreateSport";
 import { SelectRegion } from "./steps/SelectRegion";
 
 // Safely extract `.name` from union types
-function getEntityName(
-  entity: RealSport | LeagueRegion | League | { uuid: string } | undefined,
-): string {
+function getEntityName(entity: RealSport | LeagueRegion | League | { uuid: string } | undefined): string {
   return entity && "name" in entity ? entity.name : "—";
 }
 
@@ -31,13 +25,7 @@ export interface WizzardProps {
   regionId?: string;
 }
 
-export const WizzardRoot = ({
-  open,
-  onClose,
-  create,
-  sportId,
-  regionId,
-}: WizzardProps) => {
+export const WizzardRoot = ({ open, onClose, create, sportId, regionId }: WizzardProps) => {
   const step = useCreateLeagueStore((s) => s.step);
   const setSport = useCreateLeagueStore((s) => s.setSport);
   const setSportRegion = useCreateLeagueStore((s) => s.setSportRegion);
@@ -70,16 +58,7 @@ export const WizzardRoot = ({
         else setRegion({ uuid: regionId, name: regionId });
       }
     }
-  }, [
-    open,
-    clearState,
-    setSportRegion,
-    setRegion,
-    sportId,
-    regionId,
-    realSports,
-    regions,
-  ]);
+  }, [open, clearState, setSportRegion, setRegion, sportId, regionId, realSports, regions]);
 
   const handleSport = (sport: RealSport) => {
     console.log("handleSport", sport);
@@ -129,31 +108,15 @@ export const WizzardRoot = ({
 
           {step === CreationStep.Invalid && <p>ERROR!</p>}
 
-          {step === CreationStep.CreateSport && (
-            <CreateSport handler={handleSport} onClose={onClose} />
-          )}
+          {step === CreationStep.CreateSport && <CreateSport handler={handleSport} onClose={onClose} />}
 
-          {step === CreationStep.SelectRegion && (
-            <SelectRegion
-              onConfirm={handleSelectRegion}
-              onClose={onClose}
-              onBack={setGoToStep}
-              onNew={setGoToStep}
-            />
-          )}
+          {step === CreationStep.SelectRegion && <SelectRegion onConfirm={handleSelectRegion} onClose={onClose} onBack={setGoToStep} onNew={setGoToStep} />}
 
           {step === CreationStep.CreateRegion && (
-            <CreateRegion
-              handler={handleRegion}
-              onClose={onClose}
-              onBack={!showCancel ? setGoToStep : undefined}
-              showCancel={showCancel}
-            />
+            <CreateRegion handler={handleRegion} onClose={onClose} onBack={!showCancel ? setGoToStep : undefined} showCancel={showCancel} />
           )}
 
-          {step === CreationStep.CreateLeague && (
-            <CreateLeague handler={handleLeague} onClose={onClose} />
-          )}
+          {step === CreationStep.CreateLeague && <CreateLeague handler={handleLeague} onClose={onClose} />}
 
           {step === CreationStep.Confirm && (
             <ConfirmSubmission

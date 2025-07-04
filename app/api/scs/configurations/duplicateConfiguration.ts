@@ -1,14 +1,9 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import type {
-  DuplicateConfigApiIn,
-  DuplicateConfigApiResponse,
-} from "./config.types";
+import type { DuplicateConfigApiIn, DuplicateConfigApiResponse } from "./config.types";
 
 const scsUrl = getAppConfig().scs.baseUrl;
 
-export const duplicateConfiguration = async (
-  input: DuplicateConfigApiIn,
-): Promise<DuplicateConfigApiResponse> => {
+export const duplicateConfiguration = async (input: DuplicateConfigApiIn): Promise<DuplicateConfigApiResponse> => {
   const url = `${scsUrl}/scs/config/${input.uuid}/duplicate`;
   console.log("duplicate config:", url, input);
 

@@ -10,25 +10,16 @@ interface ConfigurationContentProps {
   setSelectedID: (id: string) => void;
 }
 
-export default function ConfigurationContent({
-  className,
-  selectedID,
-  setSelectedID,
-}: ConfigurationContentProps & ClassNameProps) {
+export default function ConfigurationContent({ className, selectedID, setSelectedID }: ConfigurationContentProps & ClassNameProps) {
   return (
     <Flex direction="row" className={className}>
       <ConfigurationContentSidebar
         className={styles.sideBar}
         selectedID={selectedID}
-        onSelected={(item) =>
-          setSelectedID(selectedID === item.id ? "" : item.id)
-        }
+        onSelected={(item) => setSelectedID(selectedID === item.id ? "" : item.id)}
       />
 
-      <ConfigurationContentMain
-        categoryID={selectedID}
-        className={styles.main}
-      />
+      <ConfigurationContentMain categoryID={selectedID} className={styles.main} />
 
       <ConfigurationContentContext
         categoryID={selectedID}

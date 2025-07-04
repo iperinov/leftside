@@ -12,14 +12,7 @@ interface ConfirmSubmissionProps {
   leagueTitle: string;
 }
 
-export function ConfirmSubmission({
-  handler,
-  onClose,
-  onBack,
-  sportTitle,
-  regionTitle,
-  leagueTitle,
-}: ConfirmSubmissionProps) {
+export function ConfirmSubmission({ handler, onClose, onBack, sportTitle, regionTitle, leagueTitle }: ConfirmSubmissionProps) {
   return (
     <BaseDialog
       open={true}
@@ -36,12 +29,7 @@ export function ConfirmSubmission({
         <Text size="1" style={{ color: "var(--accent-11)" }}>
           Add Sport
         </Text>
-        <Text
-          size="3"
-          weight="medium"
-          as="div"
-          style={{ marginTop: "0.25rem" }}
-        >
+        <Text size="3" weight="medium" as="div" style={{ marginTop: "0.25rem" }}>
           {sportTitle}
         </Text>
       </Box>
@@ -50,12 +38,7 @@ export function ConfirmSubmission({
         <Text size="1" style={{ color: "var(--accent-11)" }}>
           Add Region
         </Text>
-        <Text
-          size="3"
-          weight="medium"
-          as="div"
-          style={{ marginTop: "0.25rem" }}
-        >
+        <Text size="3" weight="medium" as="div" style={{ marginTop: "0.25rem" }}>
           {regionTitle}
         </Text>
       </Box>
@@ -64,12 +47,7 @@ export function ConfirmSubmission({
         <Text size="1" style={{ color: "var(--accent-11)" }}>
           Add League
         </Text>
-        <Text
-          size="3"
-          weight="medium"
-          as="div"
-          style={{ marginTop: "0.25rem" }}
-        >
+        <Text size="3" weight="medium" as="div" style={{ marginTop: "0.25rem" }}>
           {leagueTitle}
         </Text>
       </Box>

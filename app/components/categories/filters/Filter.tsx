@@ -9,25 +9,13 @@ interface FilterProps {
   onClick?: () => void;
 }
 
-export default function Filter({
-  label,
-  values,
-  disabled = false,
-  onClick,
-  className,
-}: FilterProps & ClassNameProps) {
+export default function Filter({ label, values, disabled = false, onClick, className }: FilterProps & ClassNameProps) {
   const hasValues = values && values.length > 0;
   const valuesText = values?.join(", ") || "";
   const text = hasValues ? `${label}: ${valuesText}` : label;
 
   return (
-    <Flex
-      gap="1"
-      align="center"
-      data-no-values={hasValues ? undefined : "true"}
-      data-disabled={disabled ? "true" : undefined}
-      className={className}
-    >
+    <Flex gap="1" align="center" data-no-values={hasValues ? undefined : "true"} data-disabled={disabled ? "true" : undefined} className={className}>
       <Text>{text}</Text>
       <Button variant="ghost" className="nohover" onClick={onClick}>
         {hasValues ? <Pencil1Icon /> : <PlusIcon />}

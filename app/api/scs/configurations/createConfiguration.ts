@@ -1,14 +1,9 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import type {
-  CreateConfigApiIn,
-  CreateConfigApiResponse,
-} from "./config.types";
+import type { CreateConfigApiIn, CreateConfigApiResponse } from "./config.types";
 
 const scsUrl = getAppConfig().scs.baseUrl;
 
-export const createConfiguration = async (
-  input: CreateConfigApiIn,
-): Promise<CreateConfigApiResponse> => {
+export const createConfiguration = async (input: CreateConfigApiIn): Promise<CreateConfigApiResponse> => {
   const url = `${scsUrl}/scs/config/`;
   console.log("create config: ", url, input);
 

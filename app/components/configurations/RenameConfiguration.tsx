@@ -10,12 +10,7 @@ interface RenameConfigurationProps {
   rev: string;
 }
 
-export const RenameConfiguration = ({
-  open,
-  onClose,
-  uuid,
-  rev,
-}: RenameConfigurationProps) => {
+export const RenameConfiguration = ({ open, onClose, uuid, rev }: RenameConfigurationProps) => {
   const [name, setName] = useState("");
   const mutation = useRenameConfiguration();
 
@@ -41,13 +36,7 @@ export const RenameConfiguration = ({
         <Text size="1" style={{ color: "var(--accent-7)", fontWeight: 500 }}>
           Title
         </Text>
-        <TextField.Root
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter new name"
-          variant="soft"
-          className="inputField"
-        />
+        <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter new name" variant="soft" className="inputField" />
       </Flex>
     </BaseDialog>
   );

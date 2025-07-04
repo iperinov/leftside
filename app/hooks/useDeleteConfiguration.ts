@@ -1,10 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ExitCodes } from "../api/scs/configurations/config.exitCodes";
-import type {
-  DeleteConfigApiIn,
-  DeleteConfigApiSuccess,
-} from "../api/scs/configurations/config.types";
+import type { DeleteConfigApiIn, DeleteConfigApiSuccess } from "../api/scs/configurations/config.types";
 import { deleteConfiguration } from "../api/scs/configurations/deleteConfiguration";
 import { queryKeys } from "../lib/queryKeys";
 
@@ -22,19 +19,11 @@ export const useDeleteConfiguration = () => {
 
       if (result.ExitCode === ExitCodes.NotFound) {
         queryClient.invalidateQueries({ queryKey: queryKeys.configurations() });
-        throw new Error(
-          "Description" in result
-            ? result.Description
-            : "Delete failed with unknown error",
-        );
+        throw new Error("Description" in result ? result.Description : "Delete failed with unknown error");
       }
 
       if (result.ExitCode !== ExitCodes.Success) {
-        throw new Error(
-          "Description" in result
-            ? result.Description
-            : "Delete failed with unknown error",
-        );
+        throw new Error("Description" in result ? result.Description : "Delete failed with unknown error");
       }
 
       // Assign the successful result to a new variable with type assertion

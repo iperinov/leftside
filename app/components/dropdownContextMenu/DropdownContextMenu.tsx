@@ -13,10 +13,7 @@ export interface DropdownContextMenuProps<T> {
   context?: T;
 }
 
-export default function DropdownContextMenu<T>({
-  items,
-  context,
-}: DropdownContextMenuProps<T>) {
+export default function DropdownContextMenu<T>({ items, context }: DropdownContextMenuProps<T>) {
   if (items.length === 0) {
     return null; // No items to display
   }

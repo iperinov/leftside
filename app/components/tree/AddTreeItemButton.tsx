@@ -9,19 +9,9 @@ interface AddTreeItemButtonProps<T extends TreeItemData<T>> {
   parent: T;
 }
 
-export default function AddTreeItemButton<T extends TreeItemData<T>>({
-  onAddLevel,
-  addLevelText,
-  level,
-  parent,
-  isInProgress,
-}: AddTreeItemButtonProps<T>) {
+export default function AddTreeItemButton<T extends TreeItemData<T>>({ onAddLevel, addLevelText, level, parent, isInProgress }: AddTreeItemButtonProps<T>) {
   return (
-    <Button
-      onClick={() => onAddLevel(level, parent)}
-      ml="5"
-      loading={isInProgress}
-    >
+    <Button onClick={() => onAddLevel(level, parent)} ml="5" loading={isInProgress}>
       {addLevelText(level, parent)}
     </Button>
   );

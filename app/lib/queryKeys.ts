@@ -8,6 +8,5 @@ export const queryKeys = {
   leagueByEvent: () => ["league-by-event"] as const,
   takeBackProfiles: () => ["take-back-profiles"] as const,
   contentFiltered: (filters: unknown) => ["content-filtered", filters] as const,
-  configurationCategories: (configID: string) =>
-    ["configuration-categories", configID] as const,
+  configurationCategories: (configID: string) => ["configuration-categories", configID] as const,
 };

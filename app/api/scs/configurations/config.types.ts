@@ -39,15 +39,7 @@ export type DuplicateConfigApiResponse = DuplicateConfigApiSuccess | ApiError;
 
 /* Create */
 export interface Filter {
-  type:
-    | "sport"
-    | "region"
-    | "league"
-    | "game"
-    | "period"
-    | "market"
-    | "time"
-    | "status";
+  type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status";
   values: string[];
 }
 

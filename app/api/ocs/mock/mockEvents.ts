@@ -2804,8 +2804,7 @@ export const mockEvents: Event[] = [
   {
     id: 2118,
     description: "Player Called for 1st Def.Pass Interference (TNT)",
-    gameDescription:
-      "<VTL> vs <HTL>: Called for 1st Defensive Pass Interference",
+    gameDescription: "<VTL> vs <HTL>: Called for 1st Defensive Pass Interference",
   },
   {
     id: 2120,
@@ -4393,8 +4392,7 @@ export const mockEvents: Event[] = [
   {
     id: 7343,
     description: "Will the Call on the Field Be Overturned?",
-    gameDescription:
-      "Will the Call on the Field Be Overturned? <playnr> <VT> vs <HT>",
+    gameDescription: "Will the Call on the Field Be Overturned? <playnr> <VT> vs <HT>",
   },
   {
     id: 7360,
@@ -4424,8 +4422,7 @@ export const mockEvents: Event[] = [
   {
     id: 7368,
     description: "2H Total Runs <total> <VT> vs <HT>",
-    gameDescription:
-      "2H Total Runs <total>(from top of the 6th inning till final) <VT> vs <HT>",
+    gameDescription: "2H Total Runs <total>(from top of the 6th inning till final) <VT> vs <HT>",
   },
   {
     id: 7369,
@@ -5485,14 +5482,12 @@ export const mockEvents: Event[] = [
   {
     id: 7591,
     description: "(Map <Period>)(<Side>) To Win <Line> Rounds",
-    gameDescription:
-      "<VT> vs <HT>: <Participant> To Win <Line> Rds (Map <Period>)",
+    gameDescription: "<VT> vs <HT>: <Participant> To Win <Line> Rds (Map <Period>)",
   },
   {
     id: 7592,
     description: "(Map <Period>)(<Side>) Total Barracks",
-    gameDescription:
-      "<VT> vs <HT>: <Participant> Total Barracks (Map <Period>)",
+    gameDescription: "<VT> vs <HT>: <Participant> Total Barracks (Map <Period>)",
   },
   {
     id: 7593,
@@ -5502,8 +5497,7 @@ export const mockEvents: Event[] = [
   {
     id: 7594,
     description: "(Map <Period>)(<Side>) Total Inhibitors",
-    gameDescription:
-      "<VT> vs <HT>: <Participant> Total Inhibitors (Map <Period>)",
+    gameDescription: "<VT> vs <HT>: <Participant> Total Inhibitors (Map <Period>)",
   },
   {
     id: 7595,
@@ -6979,8 +6973,7 @@ export const mockEvents: Event[] = [
   {
     id: 7895,
     description: "Broadcast Props.7",
-    gameDescription:
-      "Will any Eagles player mention T.Swift in Post-Game Interview",
+    gameDescription: "Will any Eagles player mention T.Swift in Post-Game Interview",
   },
   {
     id: 7896,
@@ -7000,8 +6993,7 @@ export const mockEvents: Event[] = [
   {
     id: 7899,
     description: "Broadcast Props.13",
-    gameDescription:
-      "Will a Player reference Taylor Swift in their Postgame speech",
+    gameDescription: "Will a Player reference Taylor Swift in their Postgame speech",
   },
   {
     id: 7900,
@@ -7021,8 +7013,7 @@ export const mockEvents: Event[] = [
   {
     id: 7903,
     description: "Broadcast Props.14",
-    gameDescription:
-      "Will Taylor Swift put on Championship Hat/Shirt After Game",
+    gameDescription: "Will Taylor Swift put on Championship Hat/Shirt After Game",
   },
   {
     id: 7904,
@@ -7883,14 +7874,12 @@ export const mockEvents: Event[] = [
   {
     id: 8076,
     description: "Both Teams to Score Remaining Time? <asco>:<hsco>",
-    gameDescription:
-      "Both Teams to Score Remaining Time? <asco>:<hsco> <VT> vs <HT>",
+    gameDescription: "Both Teams to Score Remaining Time? <asco>:<hsco> <VT> vs <HT>",
   },
   {
     id: 8077,
     description: "Next Goal No Draw (<asco>:<vsco>) - 1st Half",
-    gameDescription:
-      "Next Goal No Draw (<asco>:<hsco>) - 1st Half <VT> vs <HT>",
+    gameDescription: "Next Goal No Draw (<asco>:<hsco>) - 1st Half <VT> vs <HT>",
   },
   {
     id: 8078,
@@ -7910,14 +7899,12 @@ export const mockEvents: Event[] = [
   {
     id: 8081,
     description: "Num of Goals in Int: <timea>-<timeb> <VT> vs <HT>",
-    gameDescription:
-      "Number of Goals in Interval: <timea>-<timeb> <VT> vs <HT>",
+    gameDescription: "Number of Goals in Interval: <timea>-<timeb> <VT> vs <HT>",
   },
   {
     id: 8082,
     description: "3-way Reg Rem Time (<hsco>:<asco>) <VT> vs <HT>",
-    gameDescription:
-      "3-way Regulation Remaining Time (<hsco>:<asco>) <VT> vs <HT>",
+    gameDescription: "3-way Regulation Remaining Time (<hsco>:<asco>) <VT> vs <HT>",
   },
   {
     id: 8083,
@@ -8062,14 +8049,12 @@ export const mockEvents: Event[] = [
   {
     id: 8112,
     description: "Will <HT> Score Their <penaltynr> Penalty Attempt?",
-    gameDescription:
-      "Will <HT> Score Their <penaltynr><ordinalnr> Penalty Attempt?",
+    gameDescription: "Will <HT> Score Their <penaltynr><ordinalnr> Penalty Attempt?",
   },
   {
     id: 8113,
     description: "Will <VT> Score Their <penaltynr> Penalty Attempt?",
-    gameDescription:
-      "Will <VT> Score Their <penaltynr><ordinalnr> Penalty Attempt?",
+    gameDescription: "Will <VT> Score Their <penaltynr><ordinalnr> Penalty Attempt?",
   },
   {
     id: 8114,

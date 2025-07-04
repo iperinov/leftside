@@ -9,11 +9,7 @@ interface RenameRegionProps {
   onRename: (newName: string) => void;
 }
 
-export function RenameRegionDialog({
-  region,
-  onClose,
-  onRename,
-}: RenameRegionProps) {
+export function RenameRegionDialog({ region, onClose, onRename }: RenameRegionProps) {
   const [name, setName] = useState(region.name);
 
   return (
@@ -29,12 +25,7 @@ export function RenameRegionDialog({
         <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
           Region Name
         </Text>
-        <TextField.Root
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter new name"
-          variant="soft"
-        />
+        <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter new name" variant="soft" />
       </Flex>
     </BaseDialog>
   );

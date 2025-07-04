@@ -10,13 +10,7 @@ interface SingleSelectProps<T> {
   getId: (item: T) => string;
 }
 
-export function SingleSelect<T>({
-  items,
-  selectedId,
-  onSelect,
-  renderLabel,
-  getId,
-}: SingleSelectProps<T>) {
+export function SingleSelect<T>({ items, selectedId, onSelect, renderLabel, getId }: SingleSelectProps<T>) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
@@ -34,11 +28,7 @@ export function SingleSelect<T>({
         const isSelected = id === selectedId;
         const isHovered = id === hoveredId;
 
-        const backgroundColor = isSelected
-          ? "var(--accent-6)"
-          : isHovered
-            ? "var(--accent-6)"
-            : "transparent";
+        const backgroundColor = isSelected ? "var(--accent-6)" : isHovered ? "var(--accent-6)" : "transparent";
 
         return (
           <Fragment key={id}>
@@ -64,9 +54,7 @@ export function SingleSelect<T>({
                   // marginInline: "0.5rem",
                 }}
               />
-              <Box style={{ width: "30px" }}>
-                {isSelected && <CheckIcon width={16} height={16} />}
-              </Box>
+              <Box style={{ width: "30px" }}>{isSelected && <CheckIcon width={16} height={16} />}</Box>
 
               <Text>{renderLabel(item)}</Text>
             </Flex>

@@ -12,12 +12,7 @@ export function Pill({ text, onClose }: PillProps) {
     <Flex align="center" gap="1" px="2" my="1" className={styles.pill}>
       <Text>{text}</Text>
       {onClose && (
-        <Button
-          onClick={onClose}
-          variant="ghost"
-          radius="full"
-          className={`${styles.closeButton} nohover`}
-        >
+        <Button onClick={onClose} variant="ghost" radius="full" className={`${styles.closeButton} nohover`}>
           <Cross2Icon />
         </Button>
       )}

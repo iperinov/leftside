@@ -9,19 +9,9 @@ interface DuplicateCategoryProps {
   onCanceled?: () => void;
 }
 
-export default function DuplicateCategory({
-  id,
-  name,
-  parentID,
-  onCompleted,
-  onCanceled,
-}: DuplicateCategoryProps) {
-  const duplicateCategory = useCategoryTreeStore(
-    (state) => state.duplicateCategory,
-  );
-  const findCategorySiblings = useCategoryTreeStore(
-    (state) => state.findCategorySiblings,
-  );
+export default function DuplicateCategory({ id, name, parentID, onCompleted, onCanceled }: DuplicateCategoryProps) {
+  const duplicateCategory = useCategoryTreeStore((state) => state.duplicateCategory);
+  const findCategorySiblings = useCategoryTreeStore((state) => state.findCategorySiblings);
 
   return (
     <EditNameDialog
@@ -35,9 +25,7 @@ export default function DuplicateCategory({
         onCompleted?.();
       }}
       onCancel={onCanceled}
-      validName={(name) =>
-        !findCategorySiblings(id)?.find((item) => item.name === name.trim())
-      }
+      validName={(name) => !findCategorySiblings(id)?.find((item) => item.name === name.trim())}
     />
   );
 }
