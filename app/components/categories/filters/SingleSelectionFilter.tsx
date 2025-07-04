@@ -35,10 +35,6 @@ export default function SingleSelectionFilter<T>({
   const selection = filterSelection(categoryID, filterGroupID);
   const selectionName = items.find((item) => item.id === selection)?.name;
 
-  if (keyStr === "limit") {
-    console.log({ selection, items });
-  }
-
   return (
     <>
       <Filter

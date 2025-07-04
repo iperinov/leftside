@@ -1,6 +1,6 @@
 import type { Event } from "~/api/ocs/ocs.types";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import useMarketsForLeagues from "~/hooks/useMarketsForLeagues";
+import useMarketsForSports from "~/hooks/useMarketsForSports";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
@@ -24,13 +24,13 @@ export default function MarketFilter({
   onChange,
 }: MarketFilterProps & FilterGroupProps) {
   const marketFilters = useCategoryTreeStore((state) => state.marketFilters);
-  const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
-  const leaguesSelection = leagueFilters(categoryID, filterGroupID);
+  const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
+  const sportsSelection = sportFilters(categoryID, filterGroupID);
   const {
     data: markets,
     isLoading,
     error,
-  } = useMarketsForLeagues(leaguesSelection);
+  } = useMarketsForSports(sportsSelection);
   const updateMarketsFilter = useCategoryTreeStore(
     (state) => state.updateMarketsFilter,
   );
@@ -51,7 +51,7 @@ export default function MarketFilter({
         filterSelections={marketFilters}
         updateFilterSelection={updateMarketsFilter}
         onChange={onChange}
-        disabled={leaguesSelection.length === 0}
+        disabled={sportsSelection.length === 0}
       />
     </LoadDataDecorator>
   );
