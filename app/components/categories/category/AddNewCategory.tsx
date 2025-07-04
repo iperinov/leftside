@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { TemplateType } from "~/components/categories/TemplateType";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import type CategoryTreeItem from "../CategoryTreeItem";
+import type CategoryTreeItem from "../tree/CategoryTreeItem";
 import AddNewCategoryDialog from "./AddNewCategoryDialog";
 
 interface AddNewCategoryProps {

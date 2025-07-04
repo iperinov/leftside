@@ -15,23 +15,25 @@ function findItemBy<T extends TreeItemData<T>>(compare: (item: T) => boolean, ro
   return undefined;
 }
 
-// export function findItemTrail<T extends TreeItemData<T>>(id: string, subtree: T[]): T[] | undefined {
-//   for (const item of subtree) {
-//     if (item.id === id) {
-//       return [item];
-//     }
-//     if (!item.children || item.children.length === 0) {
-//       continue;
-//     }
+export function findItemTrail<T extends TreeItemData<T>>(id: string, tree: T): T[] | undefined {
+  if (id === tree.id) { return [tree] }
+  
+  for (const item of tree.children || []) {
+    if (item.id === id) {
+      return [item];
+    }
+    if (!item.children || item.children.length === 0) {
+      continue;
+    }
 
-//     const found = findItemTrail(id, item.children);
-//     if (found) {
-//       return [item, ...found];
-//     }
-//   }
+    const found = findItemTrail(id, item);
+    if (found) {
+      return [item, ...found];
+    }
+  }
 
-//   return undefined;
-// }
+  return undefined;
+}
 
 export function findItemSiblings<T extends TreeItemData<T>>(id: string, root: T): T[] | undefined {
   return findItemParent(id, root)?.children;

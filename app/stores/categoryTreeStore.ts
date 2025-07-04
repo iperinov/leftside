@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { create, createStore, useStore } from "zustand";
 import type { FilterGroup } from "~/api/scs/configurations/config.types";
-import type CategoryTreeItem from "~/components/categories/CategoryTreeItem";
-import { findItem, findItemParent, findItemSiblings } from "~/components/tree/common/findItem";
+import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
+import { findItem, findItemParent, findItemSiblings, findItemTrail } from "~/components/tree/common/findItem";
 import iterateItem from "~/components/tree/common/iterateItem";
 
 interface CategoryTreeState {
@@ -15,6 +15,7 @@ interface CategoryTreeGetters {
   findCategory: (id: string) => CategoryTreeItem | undefined;
   findParentCategory: (id: string) => CategoryTreeItem | undefined;
   findCategorySiblings: (id: string) => CategoryTreeItem[] | undefined;
+  findCategotyTrail: (id: string) => CategoryTreeItem[] | undefined;
 
   filters: (categoryID: string, filterID: string, type: string) => string[];
   sportFilters: (categoryID: string, filterID: string) => string[];
@@ -69,6 +70,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
   findCategory: (id: string) => findItem(id, get().rootCategory),
   findParentCategory: (id: string) => findItemParent(id, get().rootCategory),
   findCategorySiblings: (id: string) => get().findParentCategory(id)?.children,
+  findCategotyTrail: (id: string) => findItemTrail(id, get().rootCategory),
   getFilterGroup: (categoryID: string, filterID: string) =>
     get()
       .findCategory(categoryID)
