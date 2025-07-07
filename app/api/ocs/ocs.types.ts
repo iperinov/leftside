@@ -35,6 +35,7 @@ export interface League {
   shortDesc: string; // maps from `lsd`
   takeBackProfile: number; // maps from `tbp`
   realSportId: number; // maps from `rsid`
+  realSportUUID: string; // maps from `rsuuid`
   sportId: string; // maps from `sid`
   hideForMaster: boolean; // maps from `hfm`
   regionId: number; // maps from `rid`
