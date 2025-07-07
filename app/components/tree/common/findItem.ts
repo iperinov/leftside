@@ -15,6 +15,11 @@ function findItemBy<T extends TreeItemData<T>>(compare: (item: T) => boolean, ro
   return undefined;
 }
 
+export function findItemDepth<T extends TreeItemData<T>>(id: string, root: T): number | undefined {
+  const trail = findItemTrail(id, root)?.length;
+  return trail ? trail - 1 : undefined;
+}
+
 export function findItemTrail<T extends TreeItemData<T>>(id: string, tree: T): T[] | undefined {
   if (id === tree.id) { return [tree] }
   

@@ -6,7 +6,7 @@ import ConfigurationContent from "~/components/categories/ConfigurationContent";
 import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import { useCategories } from "~/hooks/configurationCategories/useCategories";
+import { useCategories } from "~/hooks/categories/useCategories";
 import styles from "./ModifyConfigurationPage.module.css";
 
 interface ModifyConfigurationPageProps {

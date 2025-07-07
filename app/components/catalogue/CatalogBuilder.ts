@@ -1,75 +1,38 @@
-import type { League, LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
 import type TreeItemData from "../tree/TreeItemData";
+import type { Catalog, CatalogItemBase, LeagueCatalogItem, RegionCatalogItem, SportCatalogItem } from "~/hooks/catalog/useCatalog";
 
 export interface CatalogueNode extends TreeItemData<CatalogueNode> {
-  realSportUUID?: string;
-  regionUUID?: string;
 }
 
-export function buildCatalogueTree(realSports?: RealSport[], regions?: LeagueRegion[], leagues?: League[]): CatalogueNode {
-  const regionMap = new Map<number, LeagueRegion>();
-  if (regions) {
-    for (const region of regions) {
-      regionMap.set(region.id, region);
-    }
-  }
+function baseToCalalogueNode(item: CatalogItemBase): CatalogueNode {
+  return {
+    id: item.uuid,
+    name: item.name,
+  };
+}
 
-  const grouped: Map<number, Map<number, League[]>> = new Map();
+function leagueToCatalogueNode(item: LeagueCatalogItem): CatalogueNode {
+  return baseToCalalogueNode(item);
+}
 
-  if (leagues) {
-    for (const league of leagues) {
-      if (!grouped.has(league.realSportId)) {
-        grouped.set(league.realSportId, new Map());
-      }
-      const regionGroup = grouped.get(league.realSportId);
-      if (!regionGroup) continue;
+function regionToCatalogueNode(item: RegionCatalogItem): CatalogueNode {
+  return {
+    ...baseToCalalogueNode(item),
+    children: item.leagues.map((league) => leagueToCatalogueNode(league))
+  };
+} 
 
-      if (!regionGroup.has(league.regionId)) {
-        regionGroup.set(league.regionId, []);
-      }
-      regionGroup.get(league.regionId)?.push(league);
-    }
-  }
+function sportToCatalogueNode(item: SportCatalogItem): CatalogueNode {
+  return {
+    ...baseToCalalogueNode(item),
+    children: item.regions.map((region) => regionToCatalogueNode(region)),
+  };
+}
 
-  const children: CatalogueNode[] = [];
-
-  if (realSports) {
-    for (const sport of realSports) {
-      const sportGroup = grouped.get(sport.id);
-      if (!sportGroup) continue;
-
-      const regionNodes: CatalogueNode[] = [];
-
-      for (const [regionId, leagueList] of sportGroup.entries()) {
-        const region = regionMap.get(regionId);
-        if (!region) continue;
-
-        const leagueNodes: CatalogueNode[] = leagueList.map((league) => ({
-          id: league.uuid,
-          name: league.name,
-          regionUUID: region.uuid,
-          realSportUUID: sport.uuid,
-        }));
-
-        regionNodes.push({
-          id: region.uuid,
-          name: region.name,
-          realSportUUID: sport.uuid,
-          children: leagueNodes,
-        });
-      }
-
-      children.push({
-        id: sport.uuid,
-        name: sport.name,
-        children: regionNodes,
-      });
-    }
-  }
-
+export function buildCatalogueTree(catalog: Catalog): CatalogueNode {
   return {
     id: "root",
     name: "Catalog",
-    children,
+    children: catalog.sports.map((sport) => sportToCatalogueNode(sport)),
   };
 }

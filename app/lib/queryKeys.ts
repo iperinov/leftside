@@ -9,4 +9,5 @@ export const queryKeys = {
   takeBackProfiles: () => ["take-back-profiles"] as const,
   contentFiltered: (filters: unknown) => ["content-filtered", filters] as const,
   configurationCategories: (configID: string) => ["configuration-categories", configID] as const,
+  catalogItems: () => ["catalog-items"] as const,
 };

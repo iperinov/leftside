@@ -2,9 +2,6 @@ import { Box, Flex, ScrollArea, Separator } from "@radix-ui/themes";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { RenameLeagueApiIn, RenameLeagueRegionApiIn, RenameRealSportApiIn } from "~/api/ocs/ocs.types";
-import { useLeagues } from "~/hooks/useLeagues";
-import { useRealSports } from "~/hooks/useRealSport";
-import { useRegions } from "~/hooks/useRegions";
 import type { CreateLeagueRequest } from "~/stores/createLeagueStore";
 import SearchBar from "../SearchBar";
 import Tree from "../tree/Tree";
@@ -14,6 +11,15 @@ import { RenameLeagueDialog } from "./RenameLeagueDialog";
 import { RenameRegionDialog } from "./RenameRegionDialog";
 import { RenameSportDialog } from "./RenameSportDialog";
 import { WizzardRoot } from "./wizard/WizardRoot";
+import { findItemDepth, findItemParent } from "../tree/common/findItem";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
+import LoadDataDecorator from "../loading/LoadDataDecorator";
+
+const enum CatalogueNodeTypeByLevel {
+  RealSport = 0,
+  Region = 1,
+  League = 2,
+}
 
 export default function CatalogView() {
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
@@ -25,10 +31,9 @@ export default function CatalogView() {
   const [renameSport, setRenameSport] = useState<RenameRealSportApiIn | null>(null);
   const [renameRegion, setRenameRegion] = useState<RenameLeagueRegionApiIn | null>(null);
   const [renameLeague, setRenameLeague] = useState<RenameLeagueApiIn | null>(null);
+  const { data: catalog, isLoading, error } = useCatalog();
 
-  const { isLoading: realSportsLoading, data: realSports } = useRealSports();
-  const { isLoading: regionsLoading, data: regions } = useRegions();
-  const { isLoading: leaguesLoading, data: leagues } = useLeagues();
+  const catalogRoot = catalog ? buildCatalogueTree(catalog) : undefined;
 
   const treeConfig: TreeConfig<CatalogueNode> = {
     addToParent: {
@@ -37,28 +42,30 @@ export default function CatalogView() {
       },
       toString: (level: number, _parent: CatalogueNode) => {
         switch (level) {
-          case 0:
+          case CatalogueNodeTypeByLevel.RealSport:
             return "Create Real Sport";
-          case 1:
+          case CatalogueNodeTypeByLevel.Region:
             return "Create Region";
-          case 2:
+          case CatalogueNodeTypeByLevel.League:
             return "Create League";
           default:
             return "";
         }
       },
       handler: (level: number, parent: CatalogueNode) => {
+        if (!catalogRoot) return;
+
         switch (level) {
-          case 0:
+          case CatalogueNodeTypeByLevel.RealSport:
             setRealSport("");
             setRegion("");
             break;
-          case 1:
+          case CatalogueNodeTypeByLevel.Region:
             setRealSport(parent.id ?? "");
             setRegion("");
             break;
-          case 2:
-            setRealSport(parent.realSportUUID ?? "");
+          case CatalogueNodeTypeByLevel.League:
+            setRealSport(findItemParent(parent.id, catalogRoot)?.id || "");
             setRegion(parent.id);
             break;
         }
@@ -90,21 +97,22 @@ export default function CatalogView() {
         {
           name: "Rename",
           action: (item?: CatalogueNode) => {
-            if (!item) return;
+            if (!item || !catalogRoot) return;
 
-            const isSport = !item.realSportUUID && !item.regionUUID;
-            const isRegion = item.realSportUUID && !item.regionUUID;
-            const isLeague = item.realSportUUID && item.regionUUID;
+            const level = findItemDepth(item.id, catalogRoot);
+            switch(level) {
 
-            if (isSport) {
-              console.log("Rename Sport");
+            case CatalogueNodeTypeByLevel.RealSport:
               setRenameSport({ uuid: item.id, name: item.name });
-            } else if (isRegion) {
-              console.log("Rename Region");
+              break;
+            case CatalogueNodeTypeByLevel.Region:
               setRenameRegion({ uuid: item.id, name: item.name });
-            } else if (isLeague) {
-              console.log("Rename League");
+              break;
+            case CatalogueNodeTypeByLevel.League:
               setRenameLeague({ uuid: item.id, name: item.name });
+              break;
+            default:
+              throw new Error(`Unexpected level: ${level}`);
             }
           },
         },
@@ -112,41 +120,43 @@ export default function CatalogView() {
     },
   };
 
-  const nodes = buildCatalogueTree(realSports, regions, leagues);
-
   const createLeague = (req: CreateLeagueRequest) => {
     setCreating(false);
   };
 
   return (
-    <Flex
-      direction="column"
-      p="3"
-      flexGrow="1"
-      style={{
-        maxWidth: "350px",
-        backgroundColor: "var(--accent-3)",
-        borderTopLeftRadius: "var(--radius-3)",
-        borderBottomLeftRadius: "var(--radius-3)",
-        overflowY: "auto",
-      }}
-    >
-      <SearchBar value={filter} onChange={setFilter} />
-      <Separator orientation="horizontal" size="4" mb="2" />
-      <Box flexGrow="1" minHeight="0">
-        <ScrollArea
-          size="1"
-          type="auto"
-          scrollbars="vertical"
-          style={{
-            height: "100%",
-            paddingRight: "var(--space-2)",
-          }}
-        >
-          <Tree root={nodes} level={0} {...treeConfig} />
-        </ScrollArea>
-        <WizzardRoot open={creating} create={createLeague} sportId={realSport} regionId={region} onClose={() => setCreating(false)} />
-      </Box>
+    <>
+      <Flex
+        direction="column"
+        p="3"
+        flexGrow="1"
+        style={{
+          maxWidth: "350px",
+          backgroundColor: "var(--accent-3)",
+          borderTopLeftRadius: "var(--radius-3)",
+          borderBottomLeftRadius: "var(--radius-3)",
+          overflowY: "auto",
+        }}
+      >
+        <LoadDataDecorator error={error} isLoading={isLoading}>
+          <SearchBar value={filter} onChange={setFilter} />
+          <Separator orientation="horizontal" size="4" mb="2" />
+          <Box flexGrow="1" minHeight="0">
+            <ScrollArea
+              size="1"
+              type="auto"
+              scrollbars="vertical"
+              style={{
+                height: "100%",
+                paddingRight: "var(--space-2)",
+              }}
+            >
+              {catalogRoot && <Tree root={catalogRoot} level={0} {...treeConfig} />}
+            </ScrollArea>
+            <WizzardRoot open={creating} create={createLeague} sportId={realSport} regionId={region} onClose={() => setCreating(false)} />
+          </Box>
+        </LoadDataDecorator>
+      </Flex>
 
       {renameSport && (
         <RenameSportDialog
@@ -183,6 +193,6 @@ export default function CatalogView() {
           }}
         />
       )}
-    </Flex>
+    </>
   );
 }
