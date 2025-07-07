@@ -21,7 +21,7 @@ interface ExpandConfig<T extends TreeItemData<T>> {
 
 interface SelectionConfig<T extends TreeItemData<T>> {
   allowed: (item: T) => boolean;
-  selectedID: string;
+  selectedID?: string;
   handler: (item: T) => void;
 }
 
@@ -35,6 +35,10 @@ interface FilterConfig<T extends TreeItemData<T>> {
   filter: string;
 }
 
+interface OptionalsConfig<T extends TreeItemData<T>> {
+  optionalsFor: (item: T) => {key?: string, node: React.ReactNode}[];
+}
+
 export default interface TreeConfig<T extends TreeItemData<T>> {
   addToParent?: AddToParentConfig<T>;
   expand?: ExpandConfig<T>;
@@ -42,4 +46,5 @@ export default interface TreeConfig<T extends TreeItemData<T>> {
   selection?: SelectionConfig<T>;
   contextMenu?: ContextMenuConfig<T>;
   filter?: FilterConfig<T>;
+  additionalElements?: OptionalsConfig<T>;
 }

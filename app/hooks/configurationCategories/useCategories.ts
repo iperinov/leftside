@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getConfigurationCategories } from "~/api/scs/categories/getConfigurationCategories";
 import type { Category } from "~/api/scs/configurations/config.types";
-import type CategoryTreeItem from "~/components/categories/CategoryTreeItem";
+import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
 import { queryKeys } from "~/lib/queryKeys";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 

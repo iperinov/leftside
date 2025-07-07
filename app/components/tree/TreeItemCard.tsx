@@ -4,6 +4,7 @@ import DropdownContextMenu from "../dropdownContextMenu/DropdownContextMenu";
 import type TreeConfig from "./TreeConfig";
 import styles from "./TreeItemCard.module.css";
 import type TreeItemData from "./TreeItemData";
+import React from "react";
 
 interface TreeItemCardProps<T extends TreeItemData<T>> {
   item: T;
@@ -13,6 +14,7 @@ interface TreeItemCardProps<T extends TreeItemData<T>> {
 export default function TreeItemCard<T extends TreeItemData<T>>({ item, parent, ...config }: TreeItemCardProps<T> & TreeConfig<T>) {
   const isSelectable = config.selection?.allowed(item);
   const enableReorder = config.reorder?.allowed(item, parent) && !item.pending;
+  const optionals = config.additionalElements?.optionalsFor(item) || [];
 
   return (
     <Flex
@@ -44,7 +46,10 @@ export default function TreeItemCard<T extends TreeItemData<T>>({ item, parent, 
         {/* Name */}
         <Text wrap="pretty">{item.name}</Text>
 
-        {/* TODO: Flags */}
+        {/* Optionals */}
+        {optionals.map((optional) => (
+          <React.Fragment key={optional.key ? optional.key : undefined}>{optional.node}</React.Fragment>
+        ))}
       </Flex>
 
       {/* Context menu */}
