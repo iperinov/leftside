@@ -1,22 +1,22 @@
-import type { RealSport } from "~/api/ocs/ocs.types";
+import type { BasicEntity, RealSport } from "~/api/ocs/ocs.types";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import { useRealSports } from "~/hooks/useRealSport";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import styles from "./Filters.module.css";
 import MultiSelectionFilter from "./MultiSelectionFilter";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
 
 interface SportFilterProps {
   onChange?: (selectedUUIDs: string[]) => void;
 }
 
-function choices(sports: RealSport[]): ItemData<string>[] {
+function choices(sports: BasicEntity[]): ItemData<string>[] {
   return sports.map((sport) => ({ id: String(sport.uuid), name: sport.name }));
 }
 
 export default function SportsFilter({ categoryUUID, filterGroupUUID, onChange }: SportFilterProps & FilterGroupProps) {
-  const { data: sports, isLoading, error } = useRealSports();
+  const { data: catalog, isLoading, error } = useCatalog();
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const updateSportsFilters = useCategoryTreeStore((state) => state.updateSportsFilter);
 
@@ -28,7 +28,7 @@ export default function SportsFilter({ categoryUUID, filterGroupUUID, onChange }
         keyStr="sport"
         label="Sports"
         title="Select Sports"
-        items={choices(sports || [])}
+        items={choices(catalog?.sports || [])}
         filterSelections={sportFilters}
         updateFilterSelection={updateSportsFilters}
         onChange={onChange}

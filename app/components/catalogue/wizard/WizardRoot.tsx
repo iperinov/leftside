@@ -2,15 +2,14 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Dialog } from "radix-ui";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import type { League, LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
-import { useRealSports } from "~/hooks/useRealSport";
-import { useRegions } from "~/hooks/useRegions";
+import type { BasicEntity, League, LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
 import { type CreateLeagueRequest, CreationStep, useCreateLeagueStore } from "~/stores/createLeagueStore";
 import { ConfirmSubmission } from "./steps/ConfirmSubmission";
 import { CreateLeague } from "./steps/CreateLeague";
 import { CreateRegion } from "./steps/CreateRegion";
 import { CreateSport } from "./steps/CreateSport";
 import { SelectRegion } from "./steps/SelectRegion";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
 
 // Safely extract `.name` from union types
 function getEntityName(entity: RealSport | LeagueRegion | League | { uuid: string } | undefined): string {
@@ -37,8 +36,7 @@ export const WizzardRoot = ({ open, onClose, create, sportId, regionId }: Wizzar
   const clearState = useCreateLeagueStore((s) => s.clearState);
   const dataState = useCreateLeagueStore((s) => s.data);
 
-  const { data: realSports = [] } = useRealSports();
-  const { data: regions = [] } = useRegions();
+  const { data: catalog, isLoading, error } = useCatalog()
 
   const showCancel = Boolean(sportId);
 
@@ -47,27 +45,22 @@ export const WizzardRoot = ({ open, onClose, create, sportId, regionId }: Wizzar
       clearState();
 
       if (sportId) {
-        const foundSport = realSports.find((s) => s.uuid === sportId);
+        const foundSport = catalog?.findSport(sportId);
         if (foundSport) setSportRegion(foundSport);
         else setSportRegion({ uuid: sportId, name: sportId });
       }
 
       if (regionId) {
-        const foundRegion = regions.find((r) => r.uuid === regionId);
+        const foundRegion = catalog?.findRegion(regionId);
         if (foundRegion) setRegion(foundRegion);
         else setRegion({ uuid: regionId, name: regionId });
       }
     }
-  }, [open, clearState, setSportRegion, setRegion, sportId, regionId, realSports, regions]);
+  }, [open, clearState, setSportRegion, setRegion, sportId, regionId, catalog]);
 
   const handleSport = (sport: RealSport) => {
     console.log("handleSport", sport);
     setSport(sport);
-  };
-
-  const handleSportRegion = (sport: RealSport) => {
-    console.log("handleSportRegion", sport);
-    setSportRegion(sport);
   };
 
   const handleRegion = (region: LeagueRegion) => {
@@ -75,7 +68,7 @@ export const WizzardRoot = ({ open, onClose, create, sportId, regionId }: Wizzar
     setRegion(region);
   };
 
-  const handleSelectRegion = (region: LeagueRegion) => {
+  const handleSelectRegion = (region: BasicEntity) => {
     console.log("handleSelectRegion", region);
     setSelectRegion(region);
   };

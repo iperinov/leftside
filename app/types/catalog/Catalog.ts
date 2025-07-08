@@ -13,6 +13,10 @@ export interface SportCatalogItem extends BasicEntity {
 }
 
 export interface CatalogActions {
+  allSports(): SportCatalogItem[];
+  allRegions(): RegionCatalogItem[];
+  allLeagues(): LeagueCatalogItem[];
+
   findSport(uuid: string): SportCatalogItem | undefined;
   findRegion(uuid: string): RegionCatalogItem | undefined;
   findLeague(uuid: string): LeagueCatalogItem | undefined;
@@ -65,6 +69,10 @@ export class Catalog implements CatalogActions {
       throw new Error(`Duplicate catalog item found: ${league.name} in region ${region.name} for sport ${sport.name}`);
     });
   }
+
+  allSports(): SportCatalogItem[] { return this.sports; }
+  allRegions(): RegionCatalogItem[] { return this.sports.flatMap((sport) => sport.regions); }
+  allLeagues(): LeagueCatalogItem[] { return this.sports.flatMap((sport) => sport.regions.flatMap((region) => region.leagues)); } 
 
   findSport(uuid: string): SportCatalogItem | undefined {
     return this.sports.find((sport) => sport.uuid === uuid);

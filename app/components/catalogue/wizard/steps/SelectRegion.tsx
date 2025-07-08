@@ -1,25 +1,25 @@
 import { Box, Button, Flex, Separator, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import type { LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
+import type { BasicEntity, LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
 import SearchBar from "~/components/SearchBar";
 import { BaseDialog } from "~/components/shared/BaseDialog";
-import { useRegions } from "~/hooks/useRegions";
 import { CreationStep } from "~/stores/createLeagueStore";
 import { SingleSelect } from "../../../shared/SingleSelect";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
 
 interface SelectRegionProps {
   onClose: () => void;
   onBack: (step: number) => void;
-  onConfirm: (region: LeagueRegion) => void;
+  onConfirm: (region: BasicEntity) => void;
   onNew: (step: number) => void;
 }
 
 export function SelectRegion({ onClose, onBack, onConfirm, onNew }: SelectRegionProps) {
-  const { data: regions = [] } = useRegions();
-  const [selected, setSelected] = useState<LeagueRegion | null>(null);
+  const { data: catalog, isLoading, error } = useCatalog();
+  const [selected, setSelected] = useState<BasicEntity | null>(null);
   const [search, setSearch] = useState("");
 
-  const filtered = regions.filter((r) => r.name.toLowerCase().includes(search.toLowerCase()));
+  const filtered = catalog?.allRegions().filter((r) => r.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <BaseDialog
@@ -61,7 +61,7 @@ export function SelectRegion({ onClose, onBack, onConfirm, onNew }: SelectRegion
         <Separator size="4" />
         <SearchBar value={search} onChange={setSearch} />
         <Separator size="4" />
-        <SingleSelect items={filtered} selectedId={selected?.uuid ?? null} onSelect={setSelected} renderLabel={(r) => r.name} getId={(r) => r.uuid} />
+        <SingleSelect items={filtered || []} selectedId={selected?.uuid ?? null} onSelect={setSelected} renderLabel={(r) => r.name} getId={(r) => r.uuid} />
       </Flex>
     </BaseDialog>
   );
