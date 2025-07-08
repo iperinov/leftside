@@ -22,14 +22,14 @@ function generateChoices(sportsSelected: number, marketsSelected: number): ItemD
 }
 
 export default function GroupByFilter(props: FilterGroupProps) {
-  const { categoryID, filterGroupID } = props;
+  const { categoryUUID, filterGroupUUID } = props;
   const groupByFilter = useCategoryTreeStore((state) => state.groupByFilter);
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const marketFilters = useCategoryTreeStore((state) => state.marketFilters);
   const updateGroupByFilters = useCategoryTreeStore((state) => state.updateGroupByFilter);
 
-  const sportsSelection = sportFilters(categoryID, filterGroupID);
-  const marketsSelection = marketFilters(categoryID, filterGroupID);
+  const sportsSelection = sportFilters(categoryUUID, filterGroupUUID);
+  const marketsSelection = marketFilters(categoryUUID, filterGroupUUID);
   const choices = useMemo(() => generateChoices(sportsSelection.length, marketsSelection.length), [sportsSelection.length, marketsSelection.length]);
 
   return (

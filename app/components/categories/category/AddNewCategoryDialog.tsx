@@ -1,14 +1,12 @@
 import { Button, Dialog, Flex, Select, Text, TextField } from "@radix-ui/themes";
 import { useCallback, useState } from "react";
-import type { League } from "~/api/ocs/ocs.types";
-import { useLeagues } from "~/hooks/useLeagues";
-import { useRealSports } from "~/hooks/useRealSport";
 import type ItemData from "~/types/ItemData";
 import formatOrdinal from "~/utils/formatOrdinal";
 import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
 import { TemplateType } from "../TemplateType";
 import styles from "./AddNewCategoryDialog.module.css";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;
@@ -62,9 +60,14 @@ interface AddNewCategoryDialogProps {
   validName?: (name: string) => boolean;
 }
 
-export default function AddNewCategoryDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewCategoryDialogProps) {
-  const { error: sportsError, data: sports, isLoading: isSportsLoading } = useRealSports();
-  const { error: leaguesError, data: leagues, isLoading: isLeaguesLoading } = useLeagues();
+export default function AddNewCategoryDialog({
+  open = true,
+  level,
+  onConfirm,
+  onCancel = () => {},
+  validName = () => true,
+}: AddNewCategoryDialogProps) {
+  const { data: catalog, isLoading, error } = useCatalog();
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState("");
   const [type, setType] = useState<TemplateType>(TemplateType.Child);
@@ -77,7 +80,7 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
       //setName("");
       onCancel();
     },
-    [onCancel],
+    [onCancel]
   );
 
   const handleSave = useCallback(() => {
@@ -87,11 +90,11 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
 
   const handleSportsSelectionChange = useCallback(
     (selectedIDs: string[]) => {
-      const leaguesIDs = leaguesForSports(selectedIDs).map((l) => l.uuid);
+      const leaguesIDs = catalog?.filteredLeaguesBy(selectedIDs).map((l) => l.uuid) || [];
       setSelectedSportsIDs(selectedIDs);
       setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
     },
-    [selectedLeagueIDs],
+    [selectedLeagueIDs]
   );
 
   const handleLeaguesSelectionChange = useCallback((selectedIDs: string[]) => {
@@ -99,26 +102,11 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
   }, []);
 
   const getSportItems = (): ItemData<string>[] => {
-    return (
-      sports?.map((sport) => ({
-        id: String(sport.id),
-        name: sport.name,
-      })) || []
-    );
-  };
-
-  const leaguesForSports = (sportIDs: string[]): League[] => {
-    return sportIDs.flatMap((sportID) => leagues?.filter((league) => String(league.realSportId) === sportID) || []);
+    return catalog?.sports?.map((sport) => ({ id: String(sport.id), name: sport.name })) || [];
   };
 
   const getLeagueItems = (sportIDs: string[]): ItemData<string>[] => {
-    const filteredLeagues = leaguesForSports(sportIDs);
-    return (
-      filteredLeagues.map((league) => ({
-        id: league.uuid,
-        name: league.name,
-      })) || []
-    );
+    return catalog?.filteredLeaguesBy(sportIDs).map((league) => ({ id: league.uuid, name: league.name })) || [];
   };
 
   return (
@@ -127,7 +115,7 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
         {/* Title and description */}
         <Dialog.Title className={styles.title}>{`Add ${formatOrdinal(level + 1)} level`}</Dialog.Title>
 
-        <LoadDataDecorator isLoading={isSportsLoading || isLeaguesLoading} error={sportsError && leaguesError}>
+        <LoadDataDecorator isLoading={isLoading} error={error}>
           <Flex direction="column" gap="3" mt="4">
             <FormRow label="Title">
               <TextField.Root value={name} placeholder="Enter name" onChange={(e) => setName(e.target.value)} />

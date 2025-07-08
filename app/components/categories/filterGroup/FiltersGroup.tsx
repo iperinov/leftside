@@ -10,8 +10,8 @@ import StatusFilter from "../filters/StatusFilter";
 import TimeFilter from "../filters/TimeFilter";
 
 export interface FilterGroupProps {
-  categoryID: string;
-  filterGroupID: string;
+  categoryUUID: string;
+  filterGroupUUID: string;
 }
 
 export default function FiltersGroup(props: FilterGroupProps) {

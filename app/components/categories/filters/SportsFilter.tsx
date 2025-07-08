@@ -8,14 +8,14 @@ import styles from "./Filters.module.css";
 import MultiSelectionFilter from "./MultiSelectionFilter";
 
 interface SportFilterProps {
-  onChange?: (selectedIDs: string[]) => void;
+  onChange?: (selectedUUIDs: string[]) => void;
 }
 
 function choices(sports: RealSport[]): ItemData<string>[] {
-  return sports.map((sport) => ({ id: String(sport.id), name: sport.name }));
+  return sports.map((sport) => ({ id: String(sport.uuid), name: sport.name }));
 }
 
-export default function SportsFilter({ categoryID, filterGroupID, onChange }: SportFilterProps & FilterGroupProps) {
+export default function SportsFilter({ categoryUUID, filterGroupUUID, onChange }: SportFilterProps & FilterGroupProps) {
   const { data: sports, isLoading, error } = useRealSports();
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const updateSportsFilters = useCategoryTreeStore((state) => state.updateSportsFilter);
@@ -23,8 +23,8 @@ export default function SportsFilter({ categoryID, filterGroupID, onChange }: Sp
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
       <MultiSelectionFilter
-        categoryID={categoryID}
-        filterGroupID={filterGroupID}
+        categoryUUID={categoryUUID}
+        filterGroupUUID={filterGroupUUID}
         keyStr="sport"
         label="Sports"
         title="Select Sports"

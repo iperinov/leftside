@@ -45,6 +45,7 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
           shortDesc,
           takeBackProfile: Number.parseInt(takeBackProfile),
           realSportId: 0,
+          realSportUUID: "",
           sportId: "",
           hideForMaster,
           regionId: 0,

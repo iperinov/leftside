@@ -4,26 +4,23 @@ import type ClassNameProps from "~/components/shared/ClassNameProps";
 import type { MenuItem } from "../../dropdownContextMenu/DropdownContextMenu";
 import DropdownContextMenu from "../../dropdownContextMenu/DropdownContextMenu";
 import styles from "../filters/Filters.module.css";
-import FiltersGroup from "./FiltersGroup";
+import FiltersGroup, { type FilterGroupProps } from "./FiltersGroup";
 
-interface FilterGroupRowProps {
-  categoryID: string;
-  filterGroupID: string;
-
+interface FilterGroupRowProps extends FilterGroupProps {
   onDuplicate?: (categoryID: string, filterGroupID: string) => void;
   onDelete?: (categoryID: string, filterGroupID: string) => void;
   onReorder?: () => void;
 }
 
-export default function FiltersGroupRow({ categoryID, filterGroupID, onDuplicate, onDelete, onReorder }: FilterGroupRowProps & ClassNameProps) {
-  const menuItems: MenuItem<{ categoryID: string; filterGroupID: string }>[] = [
+export default function FiltersGroupRow({ categoryUUID, filterGroupUUID, onDuplicate, onDelete, onReorder }: FilterGroupRowProps & ClassNameProps) {
+  const menuItems: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[] = [
     {
       name: "Duplicate",
-      action: (context) => context && onDuplicate?.(context.categoryID, context.filterGroupID),
+      action: (context) => context && onDuplicate?.(context.categoryUUID, context.filterGroupUUID),
     },
     {
       name: "Delete",
-      action: (context) => context && onDelete?.(context.categoryID, context.filterGroupID),
+      action: (context) => context && onDelete?.(context.categoryUUID, context.filterGroupUUID),
     },
   ];
 
@@ -33,10 +30,10 @@ export default function FiltersGroupRow({ categoryID, filterGroupID, onDuplicate
         <CaretSortIcon />
       </Button>
 
-      <FiltersGroup categoryID={categoryID} filterGroupID={filterGroupID} />
+      <FiltersGroup categoryUUID={categoryUUID} filterGroupUUID={filterGroupUUID} />
 
       <Box pr="3" pl="2">
-        <DropdownContextMenu items={menuItems} context={{ categoryID, filterGroupID }} />
+        <DropdownContextMenu items={menuItems} context={{ categoryUUID, filterGroupUUID }} />
       </Box>
     </Flex>
   );

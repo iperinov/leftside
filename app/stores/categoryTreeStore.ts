@@ -10,83 +10,83 @@ interface CategoryTreeState {
 }
 
 interface CategoryTreeGetters {
-  getFilterGroup: (categoryID: string, filterID: string) => FilterGroup | undefined;
+  getFilterGroup: (categoryUUID: string, filterGroupUUID: string) => FilterGroup | undefined;
 
-  findCategory: (id: string) => CategoryTreeItem | undefined;
-  findParentCategory: (id: string) => CategoryTreeItem | undefined;
-  findCategorySiblings: (id: string) => CategoryTreeItem[] | undefined;
-  findCategotyTrail: (id: string) => CategoryTreeItem[] | undefined;
+  findCategory: (uuid: string) => CategoryTreeItem | undefined;
+  findParentCategory: (uuid: string) => CategoryTreeItem | undefined;
+  findCategorySiblings: (uuid: string) => CategoryTreeItem[] | undefined;
+  findCategotyTrail: (uuid: string) => CategoryTreeItem[] | undefined;
 
-  filters: (categoryID: string, filterID: string, type: string) => string[];
-  sportFilters: (categoryID: string, filterID: string) => string[];
-  leagueFilters: (categoryID: string, filterID: string) => string[];
-  marketFilters: (categoryID: string, filterID: string) => string[];
-  statusFilter: (categoryID: string, filterID: string) => string;
-  timeFilter: (categoryID: string, filterID: string) => string;
-  sortByFilter: (categoryID: string, filterID: string) => "asc" | "desc" | undefined;
-  limitFilter: (categoryID: string, filterID: string) => number | undefined;
-  groupByFilter: (categoryID: string, filterID: string) => string | undefined;
+  filters: (categoryUUID: string, filterGroupUUID: string, type: string) => string[];
+  sportFilters: (categoryUUID: string, filterGroupUUID: string) => string[];
+  leagueFilters: (categoryUUID: string, filterGroupUUID: string) => string[];
+  marketFilters: (categoryUUID: string, filterGroupUUID: string) => string[];
+  statusFilter: (categoryUUID: string, filterGroupUUID: string) => string;
+  timeFilter: (categoryUUID: string, filterGroupUUID: string) => string;
+  sortByFilter: (categoryUUID: string, filterGroupUUID: string) => "asc" | "desc" | undefined;
+  limitFilter: (categoryUUID: string, filterGroupUUID: string) => number | undefined;
+  groupByFilter: (categoryUUID: string, filterGroupUUID: string) => string | undefined;
 }
 
 interface CategoryTreeMutations {
   reset: (categories: CategoryTreeItem[]) => void;
   addCategory: (parentID: string, newItem: CategoryTreeItem) => boolean;
-  renameCategory: (id: string, newName: string) => boolean;
-  deleteCategory: (id: string) => boolean;
-  duplicateCategory: (id: string, name: string, parentID: string) => boolean;
+  renameCategory: (uuid: string, newName: string) => boolean;
+  deleteCategory: (uuid: string) => boolean;
+  duplicateCategory: (uuid: string, name: string, parentUUID: string) => boolean;
 
-  addEmptyFilterGroup: (categoryID: string) => boolean;
-  deleteFilterGroup: (categoryID: string, groupID: string) => boolean;
-  duplicateFilterGroup: (categoryID: string, groupID: string) => boolean;
+  addEmptyFilterGroup: (categoryUUID: string) => boolean;
+  deleteFilterGroup: (categoryUUID: string, groupUUID: string) => boolean;
+  duplicateFilterGroup: (categoryUUID: string, groupUUID: string) => boolean;
 
-  updateSportsFilter: (categoryID: string, filterID: string, selected: string[]) => void;
-  updateLeaguesFilter: (categoryID: string, filterID: string, selected: string[]) => void;
-  updateMarketsFilter: (categoryID: string, filterID: string, selected: string[]) => void;
-  updateStatusFilter: (categoryID: string, filterID: string, selected: string) => void;
-  updateTimeFilter: (categoryID: string, filterID: string, selected: string) => void;
-  updateSortByFilter: (categoryID: string, filterID: string, selected: "asc" | "desc") => void;
-  updateLimitFilter: (categoryID: string, filterID: string, selected: number | undefined) => void;
-  updateGroupByFilter: (categoryID: string, filterID: string, selected: string) => void;
+  updateSportsFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[]) => void;
+  updateLeaguesFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[]) => void;
+  updateMarketsFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[]) => void;
+  updateStatusFilter: (categoryUUID: string, filterGroupUUID: string, selected: string) => void;
+  updateTimeFilter: (categoryUUID: string, filterGroupUUID: string, selected: string) => void;
+  updateSortByFilter: (categoryUUID: string, filterGroupUUID: string, selected: "asc" | "desc") => void;
+  updateLimitFilter: (categoryUUID: string, filterGroupUUID: string, selected: number | undefined) => void;
+  updateGroupByFilter: (categoryUUID: string, filterGroupUUID: string, selected: string) => void;
 
   updateFilters: (
-    categoryID: string,
-    filterID: string,
+    categoryUUID: string,
+    filterGroupUUID: string,
     type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status",
     selected: string[],
   ) => void;
 }
 
-const rootCategoryID = "root-categories-id";
+const rootCategoryUUID = "root-categories-id";
 
-function newItemID(): string {
+function newItemUUID(): string {
   return uuidv4();
 }
 
 export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGetters & CategoryTreeMutations>((set, get) => ({
   // State
-  rootCategory: { id: rootCategoryID, name: "", type: "nested", children: [] },
+  rootCategory: { id: rootCategoryUUID, name: "", type: "nested", children: [] },
 
   // Getters
-  findCategory: (id: string) => findItem(id, get().rootCategory),
-  findParentCategory: (id: string) => findItemParent(id, get().rootCategory),
-  findCategorySiblings: (id: string) => get().findParentCategory(id)?.children,
-  findCategotyTrail: (id: string) => findItemTrail(id, get().rootCategory),
-  getFilterGroup: (categoryID: string, filterID: string) =>
+  findCategory: (uuid: string) => findItem(uuid, get().rootCategory),
+  findParentCategory: (uuid: string) => findItemParent(uuid, get().rootCategory),
+  findCategorySiblings: (uuid: string) => get().findParentCategory(uuid)?.children,
+  findCategotyTrail: (uuid: string) => findItemTrail(uuid, get().rootCategory),
+  getFilterGroup: (categoryUUID: string, filterGroupUUID: string) =>
     get()
-      .findCategory(categoryID)
-      ?.filterGroups?.find((group) => group.uuid === filterID),
-  filters: (categoryID: string, filterID: string, type: string) =>
+      .findCategory(categoryUUID)
+      ?.filterGroups?.find((group) => group.uuid === filterGroupUUID),
+  filters: (categoryUUID: string, filterGroupUUID: string, type: string) =>
     get()
-      .getFilterGroup(categoryID, filterID)
+      .getFilterGroup(categoryUUID, filterGroupUUID)
       ?.filters.find((filter) => filter.type === type)?.values || [],
-  sportFilters: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "sport"),
-  leagueFilters: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "league"),
-  marketFilters: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "market"),
-  statusFilter: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "status")[0],
-  timeFilter: (categoryID: string, filterID: string) => get().filters(categoryID, filterID, "time")[0],
-  sortByFilter: (categoryID: string, filterID: string) => get().getFilterGroup(categoryID, filterID)?.order,
-  limitFilter: (categoryID: string, filterID: string) => get().getFilterGroup(categoryID, filterID)?.limit,
-  groupByFilter: (categoryID: string, filterID: string) => get().getFilterGroup(categoryID, filterID)?.groupBy,
+  sportFilters: (categoryUUID: string, filterGroupUUID: string) => get().filters(categoryUUID, filterGroupUUID, "sport"),
+  leagueFilters: (categoryUUID: string, filterGroupUUID: string) => get().filters(categoryUUID, filterGroupUUID, "league"),
+  marketFilters: (categoryUUID: string, filterGroupUUID: string) => get().filters(categoryUUID, filterGroupUUID, "market"),
+  statusFilter: (categoryUUID: string, filterGroupUUID: string) => get().filters(categoryUUID, filterGroupUUID, "status")[0],
+  timeFilter: (categoryUUID: string, filterGroupUUID: string) => get().filters(categoryUUID, filterGroupUUID, "time")[0],
+  sortByFilter: (categoryUUID: string, filterGroupUUID: string) => get().getFilterGroup(categoryUUID, filterGroupUUID)?.order,
+  limitFilter: (categoryUUID: string, filterGroupUUID: string) => get().getFilterGroup(categoryUUID, filterGroupUUID)?.limit,
+  groupByFilter: (categoryUUID: string, filterGroupUUID: string) => get().getFilterGroup(categoryUUID, filterGroupUUID)?.groupBy,
 
   // Mutations
   reset: (categories) => {
@@ -95,12 +95,12 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     }));
   },
 
-  addCategory: (parentID, newItem) => {
+  addCategory: (parentUUID, newItem) => {
     const rootCategory = structuredClone(get().rootCategory);
-    if (parentID === rootCategoryID) {
+    if (parentUUID === rootCategoryUUID) {
       rootCategory.children = [...(rootCategory.children || []), newItem];
     } else if (rootCategory.children) {
-      const parent = findItem(parentID, rootCategory);
+      const parent = findItem(parentUUID, rootCategory);
       if (!parent) return false;
       parent.children = [...(parent.children || []), newItem];
     }
@@ -108,37 +108,37 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     return true;
   },
 
-  renameCategory: (id, newName) => {
+  renameCategory: (uuid, newName) => {
     const rootCategory = structuredClone(get().rootCategory);
     if (!rootCategory.children) return false;
-    const item = findItem(id, rootCategory);
+    const item = findItem(uuid, rootCategory);
     if (!item) return false;
     item.name = newName;
     set({ rootCategory: rootCategory });
     return true;
   },
 
-  deleteCategory: (id) => {
+  deleteCategory: (uuid) => {
     const rootCategory = structuredClone(get().rootCategory);
     if (!rootCategory.children) return false;
-    const siblings = findItemSiblings(id, rootCategory);
+    const siblings = findItemSiblings(uuid, rootCategory);
     if (!siblings) return false;
-    const itemIndex = siblings.findIndex((item) => item.id === id);
+    const itemIndex = siblings.findIndex((item) => item.id === uuid);
     if (itemIndex === -1) return false;
     siblings.splice(itemIndex, 1);
     set({ rootCategory: rootCategory });
     return true;
   },
 
-  duplicateCategory: (id, name, parentID) => {
+  duplicateCategory: (uuid, name, parentUUID) => {
     const rootCategory = structuredClone(get().rootCategory);
-    const parent = findItem(parentID, rootCategory);
+    const parent = findItem(parentUUID, rootCategory);
     if (!parent) return false;
-    const item = findItem(id, parent);
+    const item = findItem(uuid, parent);
     if (!item) return false;
     const newItem = { ...structuredClone(item), name };
     iterateItem(newItem, (item) => {
-      item.id = newItemID();
+      item.id = newItemUUID();
     });
     if (parent.children) {
       parent.children.push(newItem);
@@ -149,12 +149,12 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     return true;
   },
 
-  addEmptyFilterGroup: (categoryID: string) => {
+  addEmptyFilterGroup: (categoryUUID: string) => {
     const rootCategory = structuredClone(get().rootCategory);
-    const category = findItem(categoryID, rootCategory);
+    const category = findItem(categoryUUID, rootCategory);
     if (!category) return false;
     const emptyFilterGroup = {
-      uuid: uuidv4(),
+      uuid: newItemUUID(),
       filters: [],
     } as FilterGroup;
     if (category.filterGroups) {
@@ -166,24 +166,24 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     return true;
   },
 
-  deleteFilterGroup: (categoryID: string, groupID: string) => {
+  deleteFilterGroup: (categoryUUID: string, groupUUID: string) => {
     const rootCategory = structuredClone(get().rootCategory);
-    const category = findItem(categoryID, rootCategory);
+    const category = findItem(categoryUUID, rootCategory);
     if (!category) return false;
-    category.filterGroups = category.filterGroups?.filter((item) => item.uuid !== groupID);
+    category.filterGroups = category.filterGroups?.filter((item) => item.uuid !== groupUUID);
     set({ rootCategory: rootCategory });
     return true;
   },
 
-  duplicateFilterGroup: (categoryID: string, groupID: string) => {
+  duplicateFilterGroup: (categoryUUID: string, groupUUID: string) => {
     const rootCategory = structuredClone(get().rootCategory);
-    const category = findItem(categoryID, rootCategory);
+    const category = findItem(categoryUUID, rootCategory);
     if (!category) return false;
-    const filterGroup = category.filterGroups?.find((item) => item.uuid === groupID);
+    const filterGroup = category.filterGroups?.find((item) => item.uuid === groupUUID);
     if (!filterGroup) return false;
     const newFilterGroup = {
       ...structuredClone(filterGroup),
-      uuid: uuidv4(),
+      uuid: newItemUUID(),
     };
     category.filterGroups?.push(newFilterGroup);
     set({ rootCategory: rootCategory });
@@ -191,15 +191,15 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
   },
 
   updateFilters: (
-    categoryID: string,
-    filterID: string,
+    categoryUUID: string,
+    filterGroupUUID: string,
     type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status",
     selected: string[],
   ) => {
     const rootCategory = structuredClone(get().rootCategory);
-    const category = findItem(categoryID, rootCategory);
+    const category = findItem(categoryUUID, rootCategory);
     if (!category) return;
-    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterID);
+    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterGroupUUID);
     if (!filterGroup) return;
 
     const existingFilter = filterGroup.filters.find((filter) => filter.type === type);
@@ -211,53 +211,53 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     set({ rootCategory: rootCategory });
   },
 
-  updateSportsFilter: (categoryID: string, filterID: string, selected: string[]) => {
-    get().updateFilters(categoryID, filterID, "sport", selected);
+  updateSportsFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[]) => {
+    get().updateFilters(categoryUUID, filterGroupUUID, "sport", selected);
   },
 
-  updateLeaguesFilter: (categoryID: string, filterID: string, selected: string[]) => {
-    get().updateFilters(categoryID, filterID, "league", selected);
+  updateLeaguesFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[]) => {
+    get().updateFilters(categoryUUID, filterGroupUUID, "league", selected);
   },
 
-  updateMarketsFilter: (categoryID: string, filterID: string, selected: string[]) => {
-    get().updateFilters(categoryID, filterID, "market", selected);
+  updateMarketsFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[]) => {
+    get().updateFilters(categoryUUID, filterGroupUUID, "market", selected);
   },
 
-  updateStatusFilter: (categoryID: string, filterID: string, selected: string) => {
-    get().updateFilters(categoryID, filterID, "status", [selected]);
+  updateStatusFilter: (categoryUUID: string, filterGroupUUID: string, selected: string) => {
+    get().updateFilters(categoryUUID, filterGroupUUID, "status", [selected]);
   },
 
-  updateTimeFilter: (categoryID: string, filterID: string, selected: string) => {
-    get().updateFilters(categoryID, filterID, "time", [selected]);
+  updateTimeFilter: (categoryUUID: string, filterGroupUUID: string, selected: string) => {
+    get().updateFilters(categoryUUID, filterGroupUUID, "time", [selected]);
   },
 
-  updateSortByFilter: (categoryID: string, filterID: string, selected: "asc" | "desc") => {
+  updateSortByFilter: (categoryUUID: string, filterGroupUUID: string, selected: "asc" | "desc") => {
     const rootCategory = structuredClone(get().rootCategory);
-    const category = findItem(categoryID, rootCategory);
+    const category = findItem(categoryUUID, rootCategory);
     if (!category) return;
-    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterID);
+    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterGroupUUID);
     if (!filterGroup) return;
 
     filterGroup.order = selected;
     set({ rootCategory: rootCategory });
   },
 
-  updateLimitFilter: (categoryID: string, filterID: string, selected: number | undefined) => {
+  updateLimitFilter: (categoryUUID: string, filterGroupUUID: string, selected: number | undefined) => {
     const rootCategory = structuredClone(get().rootCategory);
-    const category = findItem(categoryID, rootCategory);
+    const category = findItem(categoryUUID, rootCategory);
     if (!category) return;
-    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterID);
+    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterGroupUUID);
     if (!filterGroup) return;
 
     filterGroup.limit = Number(selected);
     set({ rootCategory: rootCategory });
   },
 
-  updateGroupByFilter: (categoryID: string, filterID: string, selected: string) => {
+  updateGroupByFilter: (categoryUUID: string, filterGroupUUID: string, selected: string) => {
     const rootCategory = structuredClone(get().rootCategory);
-    const category = findItem(categoryID, rootCategory);
+    const category = findItem(categoryUUID, rootCategory);
     if (!category) return;
-    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterID);
+    const filterGroup = category.filterGroups?.find((group) => group.uuid === filterGroupUUID);
     if (!filterGroup) return;
 
     filterGroup.groupBy = selected;

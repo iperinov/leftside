@@ -1,7 +1,10 @@
-export interface RealSport {
-  id: number; // maps from `rsid`
-  uuid: string; // maps from `lruuid`
-  name: string; // maps from `rsd`
+export interface BasicEntity {
+  id: number;  // ORO id
+  uuid: string; // UUID
+  name: string; 
+}
+
+export interface RealSport extends BasicEntity {
   gameDelayPregame: number; // maps from `gd`
   gameDelayLive: number; // maps from `gdl`
 
@@ -15,10 +18,7 @@ export interface RenameRealSportApiIn {
   name: string; // maps from `rsd`
 }
 
-export interface LeagueRegion {
-  id: number; // maps from `rsid`
-  uuid: string; // maps from `lruuid`
-  name: string; // maps from `lrd`
+export interface LeagueRegion extends BasicEntity {
   order: number; // maps from `lrro`
   enabled: boolean; // maps from `enabled`
 }
@@ -28,10 +28,7 @@ export interface RenameLeagueRegionApiIn {
   name: string; // maps from `lrd`
 }
 
-export interface League {
-  id: number; // maps from `lid`
-  uuid: string; // maps from `uuid`
-  name: string; // maps from `ln`
+export interface League extends BasicEntity {
   shortDesc: string; // maps from `lsd`
   takeBackProfile: number; // maps from `tbp`
   realSportId: number; // maps from `rsid`

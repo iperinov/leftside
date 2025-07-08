@@ -1,10 +1,11 @@
+import type { BasicEntity } from "~/api/ocs/ocs.types";
 import type TreeItemData from "../tree/TreeItemData";
-import type { Catalog, CatalogItemBase, LeagueCatalogItem, RegionCatalogItem, SportCatalogItem } from "~/hooks/catalog/useCatalog";
+import type { Catalog, LeagueCatalogItem, RegionCatalogItem, SportCatalogItem } from "~/types/catalog/Catalog";
 
 export interface CatalogueNode extends TreeItemData<CatalogueNode> {
 }
 
-function baseToCalalogueNode(item: CatalogItemBase): CatalogueNode {
+function baseToCalalogueNode(item: BasicEntity): CatalogueNode {
   return {
     id: item.uuid,
     name: item.name,

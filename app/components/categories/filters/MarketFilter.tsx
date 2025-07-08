@@ -1,7 +1,5 @@
 import type { Event } from "~/api/ocs/ocs.types";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import useFilteredLeaguesBy from "~/hooks/useFilteredLeaguesBy";
-import useMarketsForSports from "~/hooks/useFilteredMarketsBy";
 import useFilteredMarketsBy from "~/hooks/useFilteredMarketsBy";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
@@ -20,20 +18,20 @@ function choices(markets: Event[]): ItemData<string>[] {
   }));
 }
 
-export default function MarketFilter({ categoryID, filterGroupID, onChange }: MarketFilterProps & FilterGroupProps) {
+export default function MarketFilter({ categoryUUID, filterGroupUUID, onChange }: MarketFilterProps & FilterGroupProps) {
   const marketFilters = useCategoryTreeStore((state) => state.marketFilters);
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
   const updateMarketsFilter = useCategoryTreeStore((state) => state.updateMarketsFilter);
-  const sportsSelection = sportFilters(categoryID, filterGroupID);
-  const leaguesSelection = leagueFilters(categoryID, filterGroupID);
+  const sportsSelection = sportFilters(categoryUUID, filterGroupUUID);
+  const leaguesSelection = leagueFilters(categoryUUID, filterGroupUUID);
   const { data: markets, isLoading, error } = useFilteredMarketsBy(sportsSelection, leaguesSelection);
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
       <MultiSelectionFilter
-        categoryID={categoryID}
-        filterGroupID={filterGroupID}
+        categoryUUID={categoryUUID}
+        filterGroupUUID={filterGroupUUID}
         keyStr="market"
         label="Markets"
         title="Select Markets"

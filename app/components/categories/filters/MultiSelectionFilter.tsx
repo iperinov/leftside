@@ -19,8 +19,8 @@ interface MultiSelectionFilterProps {
 }
 
 export default function MultiSelectionFilter({
-  categoryID,
-  filterGroupID,
+  categoryUUID,
+  filterGroupUUID,
   keyStr,
   label,
   title,
@@ -31,7 +31,7 @@ export default function MultiSelectionFilter({
   updateFilterSelection,
   onChange,
 }: MultiSelectionFilterProps & FilterGroupProps) {
-  const selections = filterSelections(categoryID, filterGroupID);
+  const selections = filterSelections(categoryUUID, filterGroupUUID);
   const [show, setShow] = useState(false);
 
   return (
@@ -54,7 +54,7 @@ export default function MultiSelectionFilter({
           items={items}
           includeAllItem={true}
           onConfirm={(selectedIDs) => {
-            updateFilterSelection(categoryID, filterGroupID, selectedIDs);
+            updateFilterSelection(categoryUUID, filterGroupUUID, selectedIDs);
             setShow(false);
           }}
           onCancel={() => setShow(false)}

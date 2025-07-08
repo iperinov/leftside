@@ -10,6 +10,7 @@ interface ConfigurationContentContextProps {
   categoryID: string;
 }
 
+// TODO replace with API call
 const mockFilterGroups: FilterGroup[] = [
   {
     filters: [
@@ -38,7 +39,6 @@ const mockFilterGroups: FilterGroup[] = [
 ];
 
 export default function ConfigurationContentContext({ categoryID }: ConfigurationContentContextProps) {
-  console.log("ConfigurationContentContext", categoryID);
   const category = useCategoryTreeStore((state) => state.findCategory(categoryID));
 
   const categorySelected = categoryID !== "";

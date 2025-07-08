@@ -32,8 +32,8 @@ export default function ConfigurationContentMain({ categoryID, className }: Conf
           category?.filterGroups?.map((filterGroup) => (
             <FiltersGroupRow
               key={filterGroup.uuid}
-              categoryID={category.id}
-              filterGroupID={filterGroup.uuid}
+              categoryUUID={category.id}
+              filterGroupUUID={filterGroup.uuid}
               onDuplicate={(categoryID, filterGroupID) => setDuplicateItemData({ categoryID, filterGroupID })}
               onDelete={(categoryID, filterGroupID) => setDeleteItemData({ categoryID, filterGroupID })}
               onReorder={() => console.log("Reorder filter group", filterGroup)} // TODO

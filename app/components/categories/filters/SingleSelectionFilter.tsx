@@ -11,14 +11,14 @@ interface SingleSelectionFilterProps<T> {
   title: string;
   items: ItemData<T>[];
 
-  filterSelection(categoryID: string, filterID: string): T;
-  updateFilterSelection(categoryID: string, filterID: string, selected: T | undefined): void;
+  filterSelection(categoryUUID: string, filterGroupUUID: string): T;
+  updateFilterSelection(categoryUUID: string, filterGroupUUID: string, selected: T | undefined): void;
   disabled?: boolean;
 }
 
 export default function SingleSelectionFilter<T>({
-  categoryID,
-  filterGroupID,
+  categoryUUID,
+  filterGroupUUID,
   keyStr,
   label,
   title,
@@ -28,7 +28,7 @@ export default function SingleSelectionFilter<T>({
   disabled = false,
 }: SingleSelectionFilterProps<T> & FilterGroupProps) {
   const [show, setShow] = useState(false);
-  const selection = filterSelection(categoryID, filterGroupID);
+  const selection = filterSelection(categoryUUID, filterGroupUUID);
   const selectionName = items.find((item) => item.id === selection)?.name;
 
   return (
@@ -46,7 +46,7 @@ export default function SingleSelectionFilter<T>({
         <SelectDialog
           items={items}
           onConfirm={(selectedID) => {
-            selectedID !== undefined && updateFilterSelection(categoryID, filterGroupID, selectedID);
+            selectedID !== undefined && updateFilterSelection(categoryUUID, filterGroupUUID, selectedID);
             setShow(false);
           }}
           onCancel={() => setShow(false)}
