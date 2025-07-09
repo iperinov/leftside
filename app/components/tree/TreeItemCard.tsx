@@ -5,13 +5,23 @@ import type TreeConfig from "./TreeConfig";
 import styles from "./TreeItemCard.module.css";
 import type TreeItemData from "./TreeItemData";
 import React from "react";
+import type SortableTriggerProps from "../shared/SortableTriggerProps";
+import type ClassNameProps from "../shared/ClassNameProps";
 
 interface TreeItemCardProps<T extends TreeItemData<T>> {
   item: T;
   parent: T;
+  dragging?: boolean;
 }
 
-export default function TreeItemCard<T extends TreeItemData<T>>({ item, parent, ...config }: TreeItemCardProps<T> & TreeConfig<T>) {
+export default function TreeItemCard<T extends TreeItemData<T>>({
+  item,
+  parent,
+  attributes,
+  listeners,
+  dragging,
+  ...config
+}: TreeItemCardProps<T> & TreeConfig<T> & SortableTriggerProps) {
   const isSelectable = config.selection?.allowed(item);
   const enableReorder = config.reorder?.allowed(item, parent) && !item.pending;
   const optionals = config.additionalElements?.optionalsFor(item) || [];
@@ -23,26 +33,17 @@ export default function TreeItemCard<T extends TreeItemData<T>>({ item, parent, 
       px="1"
       justify="between"
       width="100%"
-      className={`${styles.treeItemCard}  ${styles.noselect}`}
+      className={`${styles.treeItemCard}  noselect`}
       onClick={isSelectable ? () => config.selection?.handler(item) : undefined}
-      draggable={enableReorder ? "true" : undefined}
       data-selectable={isSelectable ? "true" : undefined}
       data-selected={config.selection?.selectedID === item.id ? "true" : undefined}
       data-pending={item.pending ? "true" : undefined}
       data-changed={item.changed ? "true" : undefined}
+      data-dragging={dragging ? "true" : undefined}
     >
       <Flex align="center" gap="1">
-        {/* Reorder Button */}
-        <Button
-          className={`${styles.reorderButton} nohover`}
-          variant="ghost"
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-          data-hidden={enableReorder ? undefined : "true"}
-        >
-          <CaretSortIcon />
-        </Button>
+        {/* Reorder */}
+        <CaretSortIcon data-hidden={enableReorder ? undefined : "true"} {...attributes} {...listeners}/>
 
         {/* Name */}
         <Text wrap="pretty">{item.name}</Text>

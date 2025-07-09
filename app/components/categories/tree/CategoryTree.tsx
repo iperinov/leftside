@@ -1,10 +1,10 @@
-import Tree from "~/components/tree/Tree";
 import type CategoryTreeItem from "./CategoryTreeItem";
 import { useEffect, useState } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type TreeConfig from "~/components/tree/TreeConfig";
 import formatOrdinal from "~/common/formatOrdinal";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
+import Tree from "~/components/tree/Tree";
 
 interface CategoryTreeProps {
   selectedUUID?: string;
@@ -16,6 +16,7 @@ interface CategoryTreeProps {
 export default function CategoryTree({ selectedUUID, menuItems, onSelected, onAdd }: CategoryTreeProps) {
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   const findCategoryTrail = useCategoryTreeStore((state) => state.findCategotyTrail);
+  const moveCategoryTo = useCategoryTreeStore((state) => state.moveCategoryTo);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   useEffect(() => {
@@ -55,16 +56,13 @@ export default function CategoryTree({ selectedUUID, menuItems, onSelected, onAd
       menuItems: menuItems,
     },
     additionalElements: {
-      optionalsFor: (item) => {},
+      optionalsFor: (item) => [],
     },
     reorder: {
       allowed: (item, parent) => true,
-      handler: (item, oldParent, newParent) => console.log("Reorder not implemented yet", item, oldParent, newParent),
+      handler: (parent, childID, movedOnPlaceOfChildID) => moveCategoryTo(parent.id, childID, movedOnPlaceOfChildID),
     },
   } as TreeConfig<CategoryTreeItem>;
 
-  return (
-    
-      <Tree<CategoryTreeItem> root={rootCategory} level={0} {...config} />
-  );
+  return <Tree<CategoryTreeItem> root={rootCategory} level={0} {...config} />
 }

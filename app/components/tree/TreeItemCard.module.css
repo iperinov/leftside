@@ -21,8 +21,12 @@
   animation: pulse 1s ease-in-out;
 } 
 
-.reorderButton[data-hidden] {
+[data-hidden] {
   visibility: hidden;
+}
+
+[data-dragging] {
+  background-color: var(--accent-a4);
 }
 
 @keyframes blink {

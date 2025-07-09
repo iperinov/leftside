@@ -10,7 +10,7 @@ interface AddToParentConfig<T extends TreeItemData<T>> {
 
 interface ReorderConfig<T extends TreeItemData<T>> {
   allowed: (item: T, parent: T) => boolean;
-  handler: (item: T, oldParent: T, newParent: T) => void;
+  handler: (parent: T, childID: string, movedOnPlaceOfChildID: string) => void;
 }
 
 interface ExpandConfig<T extends TreeItemData<T>> {

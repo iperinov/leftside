@@ -35,6 +35,7 @@ interface CategoryTreeMutations {
   renameCategory: (uuid: string, newName: string) => boolean;
   deleteCategory: (uuid: string) => boolean;
   duplicateCategory: (uuid: string, name: string, parentUUID: string) => boolean;
+  moveCategoryTo: (parentUUID: string, categoryUUID: string, moveOnPlaceOfCategoryUUID: string) => boolean;
 
   addEmptyFilterGroup: (categoryUUID: string) => boolean;
   deleteFilterGroup: (categoryUUID: string, groupUUID: string) => boolean;
@@ -54,7 +55,7 @@ interface CategoryTreeMutations {
     categoryUUID: string,
     filterGroupUUID: string,
     type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status",
-    selected: string[],
+    selected: string[]
   ) => void;
 }
 
@@ -98,7 +99,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
   },
 
   addCategory: (parentUUID, newItem) => {
-    newItem.changed = true; 
+    newItem.changed = true;
     const rootCategory = structuredClone(get().rootCategory);
     if (parentUUID === rootCategoryUUID) {
       rootCategory.children = [...(rootCategory.children || []), newItem];
@@ -117,7 +118,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     const item = findItem(uuid, rootCategory);
     if (!item) return false;
     item.name = newName;
-    item.changed = true; 
+    item.changed = true;
     set({ rootCategory: rootCategory });
     return true;
   },
@@ -143,13 +144,26 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     const newItem = { ...structuredClone(item), name };
     iterateItem(newItem, (item) => {
       item.id = newItemUUID();
-      item.changed = true; 
+      item.changed = true;
     });
     if (parent.children) {
       parent.children.push(newItem);
     } else {
       parent.children = [newItem];
     }
+    set({ rootCategory: rootCategory });
+    return true;
+  },
+
+  moveCategoryTo: (parentUUID: string, categoryUUID: string, moveOnPlaceOfCategoryUUID: string) => {
+    const rootCategory = structuredClone(get().rootCategory);
+    const parent = findItem(parentUUID, rootCategory);
+    if (!parent || !parent.children) return false;
+    const index = parent.children.findIndex((item) => item.id === categoryUUID);
+    if (index === -1) return false;
+    const moveOnPlaceIndex = parent.children.findIndex((item) => item.id === moveOnPlaceOfCategoryUUID);
+    if (moveOnPlaceIndex === -1) return false;
+    parent.children = arrayMove(parent.children, index, moveOnPlaceIndex);
     set({ rootCategory: rootCategory });
     return true;
   },
@@ -201,7 +215,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     if (!category || !category.filterGroups) return false;
     const index = category.filterGroups.findIndex((item) => item.uuid === groupUUID);
     if (index === -1) return false;
-    const moveOnPlaceIndex= category.filterGroups.findIndex((item) => item.uuid === moveOnPlaceOfGroupUUID);
+    const moveOnPlaceIndex = category.filterGroups.findIndex((item) => item.uuid === moveOnPlaceOfGroupUUID);
     if (moveOnPlaceIndex === -1) return false;
     category.filterGroups = arrayMove(category.filterGroups, index, moveOnPlaceIndex);
     set({ rootCategory: rootCategory });
@@ -212,7 +226,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     categoryUUID: string,
     filterGroupUUID: string,
     type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status",
-    selected: string[],
+    selected: string[]
   ) => {
     const rootCategory = structuredClone(get().rootCategory);
     const category = findItem(categoryUUID, rootCategory);

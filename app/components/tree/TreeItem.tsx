@@ -4,14 +4,25 @@ import Tree from "./Tree";
 import type TreeConfig from "./TreeConfig";
 import TreeItemCard from "./TreeItemCard";
 import type TreeItemData from "./TreeItemData";
+import type SortableTriggerProps from "../shared/SortableTriggerProps";
+import type ClassNameProps from "../shared/ClassNameProps";
 
-interface TreeItemProps<T extends TreeItemData<T>> {
+export interface TreeItemProps<T extends TreeItemData<T>> {
   item: T;
   level: number;
   parent: T;
+  dragging?: boolean;
 }
 
-export default function TreeItem<T extends TreeItemData<T>>({ item, level, parent, ...config }: TreeItemProps<T> & TreeConfig<T>) {
+export default function TreeItem<T extends TreeItemData<T>>({
+  item,
+  level,
+  parent,
+  dragging,
+  attributes,
+  listeners,
+  ...config
+}: TreeItemProps<T> & TreeConfig<T> & SortableTriggerProps & ClassNameProps) {
   const hasChildren = item.children && item.children.length > 0;
   const canExpandItem = (config.expand?.allowed(item, level) || false) && (hasChildren || config.addToParent?.allowed(level + 1, item) || false);
   const itemExpanded = config.expand?.itemIDs.includes(item.id);
@@ -21,15 +32,19 @@ export default function TreeItem<T extends TreeItemData<T>>({ item, level, paren
     <>
       {!itemFiltered && (
         <Flex gap="2" align="center">
-          <IconButton style={{ visibility: canExpandItem ? undefined : "hidden" }} onClick={() => config.expand?.handler(item, !itemExpanded)} variant="ghost">
+          <IconButton
+            style={{ visibility: !dragging && canExpandItem ? undefined : "hidden" }}
+            onClick={() => config.expand?.handler(item, !itemExpanded)}
+            variant="ghost"
+          >
             {itemExpanded ? <MinusIcon /> : <PlusIcon />}
           </IconButton>
 
-          <TreeItemCard item={item} parent={parent} {...config} />
+          <TreeItemCard item={item} parent={parent} attributes={attributes} listeners={listeners} dragging {...config} />
         </Flex>
       )}
 
-      {canExpandItem && itemExpanded && <Tree root={item} level={level + 1} {...config} />}
+      {!dragging && canExpandItem && itemExpanded && <Tree root={item} level={level + 1} {...config} />}
     </>
   );
 }
