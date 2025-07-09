@@ -29,6 +29,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({ item, parent, 
       data-selectable={isSelectable ? "true" : undefined}
       data-selected={config.selection?.selectedID === item.id ? "true" : undefined}
       data-pending={item.pending ? "true" : undefined}
+      data-changed={item.changed ? "true" : undefined}
     >
       <Flex align="center" gap="1">
         {/* Reorder Button */}

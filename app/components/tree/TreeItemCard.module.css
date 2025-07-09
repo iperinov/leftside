@@ -17,6 +17,10 @@
   animation: blink 1s ease-in-out infinite;
 }
 
+.treeItemCard[data-changed] {
+  animation: pulse 1s ease-in-out;
+} 
+
 .reorderButton[data-hidden] {
   visibility: hidden;
 }
@@ -32,13 +36,19 @@
 }
 
 @keyframes pulse {
-  0%,
-  100% {
-    transform: scale(0.99);
-    opacity: 0.2;
+  0%{
+    
+    transform: scale(0.97);
+    opacity: 0.3;
   }
   50% {
-    transform: scale(1.01);
+    transform: scale(1.03);
+    background-color: var(--accent-6);
+    opacity: 1;
+  }
+  100% {
+    background-color: var(--accent-3);
+    transform: scale(1);
     opacity: 1;
   }
 }
