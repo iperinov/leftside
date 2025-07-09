@@ -1,8 +1,7 @@
 import FiltersGroupRow from "./FilterGroupRow";
 import { useSortable } from "@dnd-kit/sortable";
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { CSS } from "@dnd-kit/utilities";
-import { Fragment } from "react/jsx-runtime";
+import { Box } from "@radix-ui/themes";
 
 interface SortableFilterGroupRowProps {
   categoryUUID: string;
@@ -20,12 +19,12 @@ export default function SortableFilterGroupRow(props: SortableFilterGroupRowProp
   };
 
   return (
-    <div ref={setNodeRef} style={style}>
+    <Box ref={setNodeRef} style={style}>
       <FiltersGroupRow
         attributes={attributes}
         listeners={listeners}
         {...props}
       />
-    </div>
+    </Box>
   );
 }
