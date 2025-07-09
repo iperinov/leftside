@@ -18,7 +18,7 @@ export default function TreeItem<T extends TreeItemData<T>>({
   item,
   level,
   parent,
-  dragging,
+  dragging = false,
   attributes,
   listeners,
   ...config
@@ -40,7 +40,7 @@ export default function TreeItem<T extends TreeItemData<T>>({
             {itemExpanded ? <MinusIcon /> : <PlusIcon />}
           </IconButton>
 
-          <TreeItemCard item={item} parent={parent} attributes={attributes} listeners={listeners} dragging {...config} />
+          <TreeItemCard item={item} parent={parent} attributes={attributes} listeners={listeners} dragging={dragging} {...config} />
         </Flex>
       )}
 

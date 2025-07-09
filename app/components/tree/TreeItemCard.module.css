@@ -4,11 +4,11 @@
   border-radius: 0.375rem;
 }
 
-.treeItemCard:not([data-selected]):not([data-pending]):hover[data-selectable] {
+.treeItemCard:not([data-selected]):not([data-pending]):not([data-dragging]):hover[data-selectable] {
   background-color: var(--accent-4);
 }
 
-.treeItemCard[data-selected] {
+.treeItemCard:not([data-dragging])[data-selected] {
   background-color: var(--accent-5);
 }
 

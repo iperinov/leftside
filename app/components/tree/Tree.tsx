@@ -55,7 +55,7 @@ export default function Tree<T extends TreeItemData<T>>({ root, level, ...config
           >
             {activeItem && (
               <Flex direction="column" gap="2">
-                <TreeItem item={activeItem} level={level} parent={root} dragging {...config}/>
+                <TreeItem item={activeItem} level={level} parent={root} dragging={true} {...config}/>
               </Flex>
             )}
           </DragOverlay>

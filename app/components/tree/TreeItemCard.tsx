@@ -19,7 +19,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
   parent,
   attributes,
   listeners,
-  dragging,
+  dragging = false,
   ...config
 }: TreeItemCardProps<T> & TreeConfig<T> & SortableTriggerProps) {
   const isSelectable = config.selection?.allowed(item);
