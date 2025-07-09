@@ -2,7 +2,7 @@ import { Flex } from "@radix-ui/themes";
 import AddTreeItemButton from "./AddTreeItemButton";
 import type TreeConfig from "./TreeConfig";
 import type TreeItemData from "./TreeItemData";
-import { closestCenter, DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
+import { closestCenter, DndContext, DragOverlay, type DragEndEvent, type DragStartEvent, type UniqueIdentifier } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { SortableTreeItem } from "./SortableTreeItem";
 import { useState } from "react";
@@ -15,7 +15,7 @@ interface TreeProps<T extends TreeItemData<T>> {
 }
 
 export default function Tree<T extends TreeItemData<T>>({ root, level, ...config }: TreeProps<T> & TreeConfig<T>) {
-  const [activeID, setActiveID] = useState<string>();
+  const [activeID, setActiveID] = useState<UniqueIdentifier>();
   const activeItem = root.children?.find((child) => child.id === activeID);
 
   const handleDragEnd = ({ over, active }: DragEndEvent) => {

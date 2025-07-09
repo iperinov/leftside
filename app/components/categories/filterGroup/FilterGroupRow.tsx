@@ -8,39 +8,26 @@ import FiltersGroup, { type FilterGroupProps } from "./FiltersGroup";
 import type SortableTriggerProps from "~/components/shared/SortableTriggerProps";
 
 interface FilterGroupRowProps extends FilterGroupProps {
-  onDuplicate?: (categoryUUID: string, filterGroupUUID: string) => void;
-  onDelete?: (categoryUUID: string, filterGroupUUID: string) => void;
-  onReorder?: (categoryUUID: string, filterGroupUUID: string) => void;
+  menuItems?: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[];
+  dragging?: boolean;
 }
 
 export default function FiltersGroupRow({
   categoryUUID,
   filterGroupUUID,
-  onDuplicate,
-  onDelete,
+  menuItems,
+  dragging,
   attributes,
   listeners,
 }: FilterGroupRowProps & ClassNameProps & SortableTriggerProps) {
-  const menuItems: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[] = [
-    {
-      name: "Duplicate",
-      action: (context) => context && onDuplicate?.(context.categoryUUID, context.filterGroupUUID),
-    },
-    {
-      name: "Delete",
-      action: (context) => context && onDelete?.(context.categoryUUID, context.filterGroupUUID),
-    },
-  ];
-
   return (
     <Flex gap="2" align="center" justify="between" className={styles.filterGroupRow}>
       <CaretSortIcon {...attributes} {...listeners} className="nohover" />
 
-
       <FiltersGroup categoryUUID={categoryUUID} filterGroupUUID={filterGroupUUID} />
 
       <Box pr="3" pl="2">
-        <DropdownContextMenu items={menuItems} context={{ categoryUUID, filterGroupUUID }} />
+        <DropdownContextMenu items={menuItems || []} context={{ categoryUUID, filterGroupUUID }} />
       </Box>
     </Flex>
   );

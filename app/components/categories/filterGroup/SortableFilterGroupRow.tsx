@@ -2,12 +2,12 @@ import FiltersGroupRow from "./FilterGroupRow";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Box } from "@radix-ui/themes";
+import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
 
 interface SortableFilterGroupRowProps {
   categoryUUID: string;
   filterGroupUUID: string;
-  onDuplicate?: (categoryUUID: string, filterGroupUUID: string) => void;
-  onDelete?: (categoryUUID: string, filterGroupUUID: string) => void;
+  menuItems?: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[]
 }
 
 export default function SortableFilterGroupRow(props: SortableFilterGroupRowProps) {
