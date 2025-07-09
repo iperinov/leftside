@@ -6,23 +6,23 @@ import ConfigurationContentMain from "./ConfigurationContentMain";
 import ConfigurationContentSidebar from "./ConfigurationContentSidebar";
 
 interface ConfigurationContentProps {
-  selectedID: string;
+  selectedUUID: string;
   setSelectedID: (id: string) => void;
 }
 
-export default function ConfigurationContent({ className, selectedID, setSelectedID }: ConfigurationContentProps & ClassNameProps) {
+export default function ConfigurationContent({ className, selectedUUID, setSelectedID }: ConfigurationContentProps & ClassNameProps) {
   return (
     <Flex direction="row" className={className}>
       <ConfigurationContentSidebar
         className={styles.sideBar}
-        selectedID={selectedID}
-        onSelected={(item) => setSelectedID(selectedID === item.id ? "" : item.id)}
+        selectedUUID={selectedUUID}
+        onSelected={(item) => setSelectedID(selectedUUID === item.id ? "" : item.id)}
       />
 
-      <ConfigurationContentMain categoryID={selectedID} className={styles.main} />
+      <ConfigurationContentMain categoryUUID={selectedUUID} className={styles.main} />
 
       <ConfigurationContentContext
-        categoryID={selectedID}
+        categoryID={selectedUUID}
         // className={styles.context}
       />
     </Flex>

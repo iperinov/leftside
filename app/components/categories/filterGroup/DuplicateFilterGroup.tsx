@@ -2,13 +2,13 @@ import ConfirmDialog from "~/components/dialogs/ConfirmDialog.";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 
 interface DuplicateFilterGroupProps {
-  categoryID: string;
-  filterGroupID: string;
+  categoryUUID: string;
+  filterGroupUUID: string;
   onCompleted?: () => void;
   onCanceled?: () => void;
 }
 
-export default function DuplicateFilterGroup({ categoryID, filterGroupID, onCompleted, onCanceled }: DuplicateFilterGroupProps) {
+export default function DuplicateFilterGroup({ categoryUUID, filterGroupUUID, onCompleted, onCanceled }: DuplicateFilterGroupProps) {
   const duplicateFilterGroup = useCategoryTreeStore((state) => state.duplicateFilterGroup);
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
 
@@ -19,7 +19,7 @@ export default function DuplicateFilterGroup({ categoryID, filterGroupID, onComp
       confirmText="Duplicate"
       open={true}
       onConfirm={() => {
-        duplicateFilterGroup(categoryID, filterGroupID);
+        duplicateFilterGroup(categoryUUID, filterGroupUUID);
         onCompleted?.();
       }}
       onCancel={onCanceled}

@@ -22,9 +22,9 @@ type Pages = {
   "/configurations": {
     params: {};
   };
-  "/configuration/:id": {
+  "/configuration/:uuid": {
     params: {
-      "id": string;
+      "uuid": string;
     };
   };
 };
@@ -32,7 +32,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/auth" | "/catalog" | "/configurations" | "/configuration/:id";
+    page: "/" | "/auth" | "/catalog" | "/configurations" | "/configuration/:uuid";
   };
   "./routes/home.tsx": {
     id: "routes/home";
@@ -48,7 +48,7 @@ type RouteFiles = {
   };
   "./layouts/main.tsx": {
     id: "layouts/main";
-    page: "/catalog" | "/configurations" | "/configuration/:id";
+    page: "/catalog" | "/configurations" | "/configuration/:uuid";
   };
   "./routes/catalog.tsx": {
     id: "routes/catalog";
@@ -60,6 +60,6 @@ type RouteFiles = {
   };
   "./routes/configuration.tsx": {
     id: "routes/configuration";
-    page: "/configuration/:id";
+    page: "/configuration/:uuid";
   };
 };

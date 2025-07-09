@@ -10,14 +10,14 @@ import { useCategories } from "~/hooks/categories/useCategories";
 import styles from "./ModifyConfigurationPage.module.css";
 
 interface ModifyConfigurationPageProps {
-  id?: string;
+  uuid?: string;
   name?: string;
   edit?: boolean;
 }
 
-export default function ModifyConfigurationPage({ id = "", name = "", edit = false }: ModifyConfigurationPageProps) {
-  const { error, isLoading } = useCategories(id);
-  const [selectedID, setSelectedID] = useState<string>("");
+export default function ModifyConfigurationPage({ uuid = "", name = "", edit = false }: ModifyConfigurationPageProps) {
+  const { error, isLoading } = useCategories(uuid);
+  const [selectedUUID, setSelectedUUID] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ export default function ModifyConfigurationPage({ id = "", name = "", edit = fal
     <LoadDataDecorator error={error} isLoading={isLoading}>
       <Flex direction="column" className={styles.page}>
         <ConfigurationHeader name={name} edit={edit} className={styles.header} />
-        <ConfigurationContent selectedID={selectedID} setSelectedID={setSelectedID} className={styles.content} />
+        <ConfigurationContent selectedUUID={selectedUUID} setSelectedID={setSelectedUUID} className={styles.content} />
         <ConfigurationFooter onCanceled={onCanceled} onCompleted={onCompleted} className={styles.footer} isProcessing={isProcessing} />
       </Flex>
     </LoadDataDecorator>

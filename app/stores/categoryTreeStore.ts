@@ -1,3 +1,4 @@
+import { arrayMove } from "@dnd-kit/sortable";
 import { v4 as uuidv4 } from "uuid";
 import { create, createStore, useStore } from "zustand";
 import type { FilterGroup } from "~/api/scs/configurations/config.types";
@@ -38,6 +39,7 @@ interface CategoryTreeMutations {
   addEmptyFilterGroup: (categoryUUID: string) => boolean;
   deleteFilterGroup: (categoryUUID: string, groupUUID: string) => boolean;
   duplicateFilterGroup: (categoryUUID: string, groupUUID: string) => boolean;
+  moveFilterGroupTo: (categoryUUID: string, groupUUID: string, moveOnPlaceOfGroupUUID: string) => boolean;
 
   updateSportsFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[]) => void;
   updateLeaguesFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[]) => void;
@@ -189,6 +191,19 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
       uuid: newItemUUID(),
     };
     category.filterGroups?.push(newFilterGroup);
+    set({ rootCategory: rootCategory });
+    return true;
+  },
+
+  moveFilterGroupTo: (categoryUUID: string, groupUUID: string, moveOnPlaceOfGroupUUID: string) => {
+    const rootCategory = structuredClone(get().rootCategory);
+    const category = findItem(categoryUUID, rootCategory);
+    if (!category || !category.filterGroups) return false;
+    const index = category.filterGroups.findIndex((item) => item.uuid === groupUUID);
+    if (index === -1) return false;
+    const moveOnPlaceIndex= category.filterGroups.findIndex((item) => item.uuid === moveOnPlaceOfGroupUUID);
+    if (moveOnPlaceIndex === -1) return false;
+    category.filterGroups = arrayMove(category.filterGroups, index, moveOnPlaceIndex);
     set({ rootCategory: rootCategory });
     return true;
   },

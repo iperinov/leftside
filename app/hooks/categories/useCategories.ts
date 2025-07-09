@@ -18,14 +18,14 @@ function toCategoryTree(categories: Category[]): CategoryTreeItem[] {
   );
 }
 
-export const useCategories = (configID: string) => {
+export const useCategories = (uuid: string) => {
   const resetTreeStore = useCategoryTreeStore((state) => state.reset);
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
 
   return useQuery({
-    queryKey: queryKeys.configurationCategories(configID),
+    queryKey: queryKeys.configurationCategories(uuid),
     queryFn: async () => {
-      const categories = await getConfigurationCategories(configID);
+      const categories = await getConfigurationCategories(uuid);
       const tree = toCategoryTree(categories);
       resetTreeStore(tree);
       return { root: rootCategory };

@@ -12,12 +12,12 @@ import RenameCategory from "./category/RenameCategory";
 import CategoryTree from "./tree/CategoryTree";
 
 interface ConfigurationContentSidebarProps {
-  selectedID: string;
+  selectedUUID: string;
   onSelected: (item: CategoryTreeItem) => void;
 }
 
-export default function ConfigurationContentSidebar({ selectedID, onSelected, className }: ConfigurationContentSidebarProps & ClassNameProps) {
-  const [addItemData, setAddItemData] = useState<{ level: number; parentID: string }>();
+export default function ConfigurationContentSidebar({ selectedUUID, onSelected, className }: ConfigurationContentSidebarProps & ClassNameProps) {
+  const [addItemData, setAddItemData] = useState<{ level: number; parentUUID: string }>();
   const [renameItemData, setRenameItemData] = useState<{ id: string; name: string }>();
   const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parentID: string }>();
   const [deleteItemData, setDeleteItemData] = useState<{ id: string }>();
@@ -39,9 +39,9 @@ export default function ConfigurationContentSidebar({ selectedID, onSelected, cl
     <>
       <aside className={className}>
         <CategoryTree
-          selectedID={selectedID}
+          selectedUUID={selectedUUID}
           onSelected={onSelected}
-          onAdd={(level, parentID) => setAddItemData({ level, parentID })}
+          onAdd={(level, parentUUID) => setAddItemData({ level, parentUUID })}
           menuItems={menuItems}
         />
       </aside>

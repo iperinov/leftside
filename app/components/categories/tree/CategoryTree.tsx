@@ -7,20 +7,20 @@ import formatOrdinal from "~/common/formatOrdinal";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
 
 interface CategoryTreeProps {
-  selectedID?: string;
+  selectedUUID?: string;
   menuItems: MenuItem<CategoryTreeItem>[];
   onSelected?: (item: CategoryTreeItem) => void;
   onAdd?: (level: number, parentID: string) => void;
 }
 
-export default function CategoryTree({ selectedID, menuItems, onSelected, onAdd }: CategoryTreeProps) {
+export default function CategoryTree({ selectedUUID, menuItems, onSelected, onAdd }: CategoryTreeProps) {
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   const findCategoryTrail = useCategoryTreeStore((state) => state.findCategotyTrail);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!selectedID) return;
-    const trail = findCategoryTrail(selectedID);
+    if (!selectedUUID) return;
+    const trail = findCategoryTrail(selectedUUID);
     if (!trail) return;
 
     setExpandedItems((prev) => {
@@ -32,7 +32,7 @@ export default function CategoryTree({ selectedID, menuItems, onSelected, onAdd 
       }
       return newExpanded;
     });
-  }, [selectedID]);
+  }, [selectedUUID]);
 
   const config = {
     addToParent: {
@@ -47,7 +47,7 @@ export default function CategoryTree({ selectedID, menuItems, onSelected, onAdd 
     },
     selection: {
       allowed: (item) => !item.pending && !item.children,
-      selectedID: selectedID,
+      selectedID: selectedUUID,
       handler: onSelected,
     },
     contextMenu: {
@@ -57,8 +57,14 @@ export default function CategoryTree({ selectedID, menuItems, onSelected, onAdd 
     additionalElements: {
       optionalsFor: (item) => {},
     },
-    //reorder: {},
+    reorder: {
+      allowed: (item, parent) => true,
+      handler: (item, oldParent, newParent) => console.log("Reorder not implemented yet", item, oldParent, newParent),
+    },
   } as TreeConfig<CategoryTreeItem>;
 
-  return <Tree<CategoryTreeItem> root={rootCategory} level={0} {...config} />;
+  return (
+    
+      <Tree<CategoryTreeItem> root={rootCategory} level={0} {...config} />
+  );
 }

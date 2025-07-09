@@ -6,17 +6,17 @@ import type CategoryTreeItem from "../tree/CategoryTreeItem";
 import AddNewCategoryDialog from "./AddNewCategoryDialog";
 
 interface AddNewCategoryProps {
-  parentID: string;
+  parentUUID: string;
   level: number;
   onCanceled?: () => void;
   onCompleted?: () => void;
 }
 
-export default function AddNewCategory({ parentID, level, onCompleted, onCanceled }: AddNewCategoryProps) {
+export default function AddNewCategory({ parentUUID, level, onCompleted, onCanceled }: AddNewCategoryProps) {
   const findCategory = useCategoryTreeStore((state) => state.findCategory);
   const addCategory = useCategoryTreeStore((state) => state.addCategory);
-  const parent = findCategory(parentID);
-  if (!parent || parent.type !== "nested") throw new Error(`Parent with ID ${parentID} not found or not nested type`);
+  const parent = findCategory(parentUUID);
+  if (!parent || parent.type !== "nested") throw new Error(`Parent with ID ${parentUUID} not found or not nested type`);
   const siblings = parent.children || [];
 
   const onAddConfirmed = (name: string, type: TemplateType, sports: string[], leagues: string[]) => {
@@ -27,17 +27,17 @@ export default function AddNewCategory({ parentID, level, onCompleted, onCancele
     } as CategoryTreeItem;
     switch (type) {
       case TemplateType.Parent:
-        addCategory(parentID, {
+        addCategory(parentUUID, {
           ...baseCategory,
           type: "nested",
           children: [],
         });
         break;
       case TemplateType.Child:
-        addCategory(parentID, { ...baseCategory, filterGroups: [] });
+        addCategory(parentUUID, { ...baseCategory, filterGroups: [] });
         break;
       case TemplateType.LiveAndUpcoming:
-        addCategory(parentID, {
+        addCategory(parentUUID, {
           ...baseCategory,
           filterGroups: [
             {
@@ -51,7 +51,7 @@ export default function AddNewCategory({ parentID, level, onCompleted, onCancele
         });
         break;
       case TemplateType.AllLeagues:
-        addCategory(parentID, {
+        addCategory(parentUUID, {
           ...baseCategory,
           filterGroups: [
             {
