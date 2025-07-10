@@ -17,7 +17,7 @@ interface TreeProps<T extends TreeItemData<T>> {
 export default function Tree<T extends TreeItemData<T>>({ root, level, ...config }: TreeProps<T> & TreeConfig<T>) {
   const [activeID, setActiveID] = useState<UniqueIdentifier>();
   const activeItem = root.children?.find((child) => child.id === activeID);
-
+  
   const handleDragEnd = ({ over, active }: DragEndEvent) => {
     setActiveID(undefined);
     if (!over || active.id === over.id) return;

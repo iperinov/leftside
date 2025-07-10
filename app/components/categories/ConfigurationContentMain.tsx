@@ -1,21 +1,17 @@
-import { DndContext, type DragEndEvent, KeyboardSensor, PointerSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
-import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { Button, Flex } from "@radix-ui/themes";
 import { useState } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type { MenuItem } from "../dropdownContextMenu/DropdownContextMenu";
-import type ClassNameProps from "../shared/ClassNameProps";
 import DeleteFilterGroup from "./filterGroup/DeleteFilterGroup";
 import DuplicateFilterGroup from "./filterGroup/DuplicateFilterGroup";
 import EmptyFilterGroupRow from "./filterGroup/EmptyFilterGroupRow";
 import FilterGroupList from "./filterGroup/FilterGroupList";
-import SortableFilterGroupRow from "./filterGroup/SortableFilterGroupRow";
 
 interface ConfigurationContentMainProps {
   categoryUUID: string;
 }
 
-export default function ConfigurationContentMain({ categoryUUID, className }: ConfigurationContentMainProps & ClassNameProps) {
+export default function ConfigurationContentMain({ categoryUUID }: ConfigurationContentMainProps) {
   const category = useCategoryTreeStore((state) => state.findCategory(categoryUUID));
   const addEmptyFilterGroup = useCategoryTreeStore((state) => state.addEmptyFilterGroup);
   const [duplicateItemData, setDuplicateItemData] = useState<{ categoryUUID: string; filterGroupUUID: string }>();
