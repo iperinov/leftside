@@ -61,7 +61,7 @@ export default function CategoryTree({
 
   const contextMenuItemsFor = (item: CategoryTreeItem): MenuItem<CategoryTreeItem>[] => {
     if (item.pending) return []; 
-    const isParentCategory = item.children;
+    const isParentCategory = item.type === "nested";
     if (isParentCategory) return menuItems.slice(0, -1);
     return preselected.find(({firstLevelParent, uuid}) => uuid === item.id) ? menuItems.slice(0, -1) : menuItems;  
   }

@@ -8,6 +8,7 @@ import RenameCategory from "./category/RenameCategory";
 import CategoryTree from "./tree/CategoryTree";
 import type CategoryTreeItem from "./tree/CategoryTreeItem";
 import ConfirmDialog from "../dialogs/ConfirmDialog.";
+import { BookmarkFilledIcon, BookmarkIcon } from "@radix-ui/react-icons";
 
 interface ConfigurationContentSidebarProps {
   selectedUUID: string;
@@ -50,8 +51,16 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     if (!changePreselectionData) throw new Error("Change preselection data is not set.");
     const { currentItem, newItem, firstParent } = changePreselectionData;
 
-    setPreselected((prev) => prev.map((item) => (item.firstLevelParent === firstParent.id ? { firstLevelParent: item.firstLevelParent, uuid: newItem.id } : item)));
+    setPreselected((prev) =>
+      prev.map((item) => (item.firstLevelParent === firstParent.id ? { firstLevelParent: item.firstLevelParent, uuid: newItem.id } : item))
+    );
     setChangePreselectionData(undefined);
+  };
+
+  const getOptionalNodesFor = (item: CategoryTreeItem) => {
+    return preselected.find((preselectedItem) => preselectedItem.uuid === item.id)
+      ? [{ key: "pre", node: <BookmarkFilledIcon color="var(--accent-9)" /> }]
+      : [];
   };
 
   return (
@@ -67,7 +76,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
           onDuplicate={(item) => setDuplicateItemData({ ...item, parentID: findParentCategory(item.id)?.id || "" })}
           onPreselected={onPreselected}
           onReorder={(parent, childID, movedOnPlaceOfChildID) => moveCategoryTo(parent.id, childID, movedOnPlaceOfChildID)}
-          getOptionalNodesForCategory={(item) => []}
+          getOptionalNodesForCategory={getOptionalNodesFor}
         />
       </aside>
 
@@ -77,11 +86,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
         <RenameCategory {...renameItemData} onCompleted={() => setRenameItemData(undefined)} onCanceled={() => setRenameItemData(undefined)} />
       )}
       {duplicateItemData && (
-        <DuplicateCategory
-          {...duplicateItemData}
-          onCompleted={() => setDuplicateItemData(undefined)}
-          onCanceled={() => setDuplicateItemData(undefined)}
-        />
+        <DuplicateCategory {...duplicateItemData} onCompleted={() => setDuplicateItemData(undefined)} onCanceled={() => setDuplicateItemData(undefined)} />
       )}
       {deleteItemData && (
         <DeleteCategory {...deleteItemData} onCompleted={() => setDeleteItemData(undefined)} onCanceled={() => setDeleteItemData(undefined)} />
