@@ -15,6 +15,7 @@ interface CategoryTreeGetters {
 
   findCategory: (uuid: string) => CategoryTreeItem | undefined;
   findParentCategory: (uuid: string) => CategoryTreeItem | undefined;
+  findFirstLevelParent: (uuid: string) => CategoryTreeItem | undefined;
   findCategorySiblings: (uuid: string) => CategoryTreeItem[] | undefined;
   findCategotyTrail: (uuid: string) => CategoryTreeItem[] | undefined;
 
@@ -72,6 +73,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
   // Getters
   findCategory: (uuid: string) => findItem(uuid, get().rootCategory),
   findParentCategory: (uuid: string) => findItemParent(uuid, get().rootCategory),
+  findFirstLevelParent: (uuid: string) => findItemTrail(uuid, get().rootCategory)?.[0],
   findCategorySiblings: (uuid: string) => get().findParentCategory(uuid)?.children,
   findCategotyTrail: (uuid: string) => findItemTrail(uuid, get().rootCategory),
   getFilterGroup: (categoryUUID: string, filterGroupUUID: string) =>

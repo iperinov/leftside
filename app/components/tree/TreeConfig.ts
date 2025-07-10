@@ -26,8 +26,7 @@ interface SelectionConfig<T extends TreeItemData<T>> {
 }
 
 interface ContextMenuConfig<T extends TreeItemData<T>> {
-  canItemHaveContextMenu?: (item: T) => boolean;
-  menuItems: MenuItem<T>[];
+  itemsFor?: (item: T) => MenuItem<T>[];
 }
 
 interface FilterConfig<T extends TreeItemData<T>> {
