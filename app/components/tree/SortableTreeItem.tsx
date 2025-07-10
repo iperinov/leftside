@@ -1,10 +1,10 @@
 import { useSortable } from "@dnd-kit/sortable";
-import type TreeConfig from "./TreeConfig";
-import type { TreeItemProps } from "./TreeItem";
-import type TreeItemData from "./TreeItemData";
 import { CSS } from "@dnd-kit/utilities";
 import { Flex } from "@radix-ui/themes";
+import type TreeConfig from "./TreeConfig";
+import type { TreeItemProps } from "./TreeItem";
 import TreeItem from "./TreeItem";
+import type TreeItemData from "./TreeItemData";
 
 export function SortableTreeItem<T extends TreeItemData<T>>({ item, level, parent, ...config }: TreeItemProps<T> & TreeConfig<T>) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });

@@ -2,20 +2,20 @@ import { Box, Flex, ScrollArea, Separator } from "@radix-ui/themes";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { RenameLeagueApiIn, RenameLeagueRegionApiIn, RenameRealSportApiIn } from "~/api/ocs/ocs.types";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
 import type { CreateLeagueRequest } from "~/stores/createLeagueStore";
 import SearchBar from "../SearchBar";
+import LoadDataDecorator from "../loading/LoadDataDecorator";
 import Tree from "../tree/Tree";
 import type TreeConfig from "../tree/TreeConfig";
+import { findItemDepth, findItemParent } from "../tree/common/findItem";
 import { type CatalogueNode, buildCatalogueTree } from "./CatalogBuilder";
 import { RenameLeagueDialog } from "./RenameLeagueDialog";
 import { RenameRegionDialog } from "./RenameRegionDialog";
 import { RenameSportDialog } from "./RenameSportDialog";
 import { WizzardRoot } from "./wizard/WizardRoot";
-import { findItemDepth, findItemParent } from "../tree/common/findItem";
-import { useCatalog } from "~/hooks/catalog/useCatalog";
-import LoadDataDecorator from "../loading/LoadDataDecorator";
 
-const enum CatalogueNodeTypeByLevel {
+enum CatalogueNodeTypeByLevel {
   RealSport = 0,
   Region = 1,
   League = 2,
@@ -100,19 +100,18 @@ export default function CatalogView() {
             if (!item || !catalogRoot) return;
 
             const level = findItemDepth(item.id, catalogRoot);
-            switch(level) {
-
-            case CatalogueNodeTypeByLevel.RealSport:
-              setRenameSport({ uuid: item.id, name: item.name });
-              break;
-            case CatalogueNodeTypeByLevel.Region:
-              setRenameRegion({ uuid: item.id, name: item.name });
-              break;
-            case CatalogueNodeTypeByLevel.League:
-              setRenameLeague({ uuid: item.id, name: item.name });
-              break;
-            default:
-              throw new Error(`Unexpected level: ${level}`);
+            switch (level) {
+              case CatalogueNodeTypeByLevel.RealSport:
+                setRenameSport({ uuid: item.id, name: item.name });
+                break;
+              case CatalogueNodeTypeByLevel.Region:
+                setRenameRegion({ uuid: item.id, name: item.name });
+                break;
+              case CatalogueNodeTypeByLevel.League:
+                setRenameLeague({ uuid: item.id, name: item.name });
+                break;
+              default:
+                throw new Error(`Unexpected level: ${level}`);
             }
           },
         },

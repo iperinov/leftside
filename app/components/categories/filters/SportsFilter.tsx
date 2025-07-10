@@ -1,11 +1,11 @@
 import type { BasicEntity, RealSport } from "~/api/ocs/ocs.types";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import styles from "./Filters.module.css";
 import MultiSelectionFilter from "./MultiSelectionFilter";
-import { useCatalog } from "~/hooks/catalog/useCatalog";
 
 interface SportFilterProps {
   onChange?: (selectedUUIDs: string[]) => void;

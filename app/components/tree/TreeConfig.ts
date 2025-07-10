@@ -36,7 +36,7 @@ interface FilterConfig<T extends TreeItemData<T>> {
 }
 
 interface OptionalsConfig<T extends TreeItemData<T>> {
-  optionalsFor: (item: T) => {key?: string, node: React.ReactNode}[];
+  optionalsFor: (item: T) => { key?: string; node: React.ReactNode }[];
 }
 
 export default interface TreeConfig<T extends TreeItemData<T>> {

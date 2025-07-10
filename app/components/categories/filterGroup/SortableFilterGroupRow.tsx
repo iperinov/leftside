@@ -1,13 +1,13 @@
-import FiltersGroupRow from "./FilterGroupRow";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Box } from "@radix-ui/themes";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
+import FiltersGroupRow from "./FilterGroupRow";
 
 interface SortableFilterGroupRowProps {
   categoryUUID: string;
   filterGroupUUID: string;
-  menuItems?: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[]
+  menuItems?: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[];
 }
 
 export default function SortableFilterGroupRow(props: SortableFilterGroupRowProps) {
@@ -20,11 +20,7 @@ export default function SortableFilterGroupRow(props: SortableFilterGroupRowProp
 
   return (
     <Box ref={setNodeRef} style={style}>
-      <FiltersGroupRow
-        attributes={attributes}
-        listeners={listeners}
-        {...props}
-      />
+      <FiltersGroupRow attributes={attributes} listeners={listeners} {...props} />
     </Box>
   );
 }

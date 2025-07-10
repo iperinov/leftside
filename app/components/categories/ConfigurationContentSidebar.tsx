@@ -4,12 +4,12 @@ import formatOrdinal from "~/utils/formatOrdinal";
 import type { MenuItem } from "../dropdownContextMenu/DropdownContextMenu";
 import type ClassNameProps from "../shared/ClassNameProps";
 import Tree from "../tree/Tree";
-import type CategoryTreeItem from "./tree/CategoryTreeItem";
 import AddNewCategory from "./category/AddNewCategory";
 import DeleteCategory from "./category/DeleteCategory";
 import DuplicateCategory from "./category/DuplicateCategory";
 import RenameCategory from "./category/RenameCategory";
 import CategoryTree from "./tree/CategoryTree";
+import type CategoryTreeItem from "./tree/CategoryTreeItem";
 
 interface ConfigurationContentSidebarProps {
   selectedUUID: string;
@@ -30,8 +30,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     { name: "Delete", action: (context) => context && setDeleteItemData({ id: context.id }) },
     {
       name: "Duplicate",
-      action: (context) =>
-        context && setDuplicateItemData({ id: context.id, name: context.name, parentID: findParentCategory(context.id)?.id || "" }),
+      action: (context) => context && setDuplicateItemData({ id: context.id, name: context.name, parentID: findParentCategory(context.id)?.id || "" }),
     },
   ];
 
@@ -52,11 +51,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
         <RenameCategory {...renameItemData} onCompleted={() => setRenameItemData(undefined)} onCanceled={() => setRenameItemData(undefined)} />
       )}
       {duplicateItemData && (
-        <DuplicateCategory
-          {...duplicateItemData}
-          onCompleted={() => setDuplicateItemData(undefined)}
-          onCanceled={() => setDuplicateItemData(undefined)}
-        />
+        <DuplicateCategory {...duplicateItemData} onCompleted={() => setDuplicateItemData(undefined)} onCanceled={() => setDuplicateItemData(undefined)} />
       )}
       {deleteItemData && (
         <DeleteCategory {...deleteItemData} onCompleted={() => setDeleteItemData(undefined)} onCanceled={() => setDeleteItemData(undefined)} />

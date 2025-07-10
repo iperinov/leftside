@@ -1,5 +1,5 @@
 interface TreeItemInternalStateFlags {
-  changed?: boolean; 
+  changed?: boolean;
   pending?: boolean; // optimistic update
 }
 export default interface TreeItemData<T extends TreeItemData<T>> extends TreeItemInternalStateFlags {

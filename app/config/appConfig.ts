@@ -14,7 +14,7 @@ export interface AppConfig {
   cdb: {
     baseUrl: string;
     timeout: number;
-  }
+  };
   features: {
     enableRename: boolean;
     enableDuplicate: boolean;

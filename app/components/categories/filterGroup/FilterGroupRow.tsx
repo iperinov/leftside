@@ -1,11 +1,11 @@
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex } from "@radix-ui/themes";
 import type ClassNameProps from "~/components/shared/ClassNameProps";
+import type SortableTriggerProps from "~/components/shared/SortableTriggerProps";
 import type { MenuItem } from "../../dropdownContextMenu/DropdownContextMenu";
 import DropdownContextMenu from "../../dropdownContextMenu/DropdownContextMenu";
 import styles from "../filters/Filters.module.css";
 import FiltersGroup, { type FilterGroupProps } from "./FiltersGroup";
-import type SortableTriggerProps from "~/components/shared/SortableTriggerProps";
 
 interface FilterGroupRowProps extends FilterGroupProps {
   menuItems?: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[];

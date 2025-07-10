@@ -1,12 +1,12 @@
 import { allItem } from "~/components/categories/AllItemData";
+import { useCatalog } from "./catalog/useCatalog";
 import { useEvents } from "./useEvents";
 import { useLeagueByEvent } from "./useLeagueByEvent";
-import { useCatalog } from "./catalog/useCatalog";
 
 export default function useFilteredMarketsBy(sportUUIDs: string[], leagueUUIDs: string[]) {
   const { data: events, isLoading: isLoadingEvents, error: errorEvents } = useEvents();
   const { data: leagueByEvent, isLoading: isLoadingLeagueByEvent, error: errorLeagueByEvent } = useLeagueByEvent();
-  const { data: catalog, isLoading: isLoadingCatalog, error: errorCatalog } = useCatalog(); 
+  const { data: catalog, isLoading: isLoadingCatalog, error: errorCatalog } = useCatalog();
 
   const isAllSportsSelected = sportUUIDs.length === 1 && sportUUIDs[0] === allItem.id;
   const isAllLeaguesSelected = leagueUUIDs.length === 1 && leagueUUIDs[0] === allItem.id;

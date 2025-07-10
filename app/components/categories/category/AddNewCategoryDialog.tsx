@@ -1,12 +1,12 @@
 import { Button, Dialog, Flex, Select, Text, TextField } from "@radix-ui/themes";
 import { useCallback, useState } from "react";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
 import type ItemData from "~/types/ItemData";
 import formatOrdinal from "~/utils/formatOrdinal";
 import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
 import { TemplateType } from "../TemplateType";
 import styles from "./AddNewCategoryDialog.module.css";
-import { useCatalog } from "~/hooks/catalog/useCatalog";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;
@@ -60,13 +60,7 @@ interface AddNewCategoryDialogProps {
   validName?: (name: string) => boolean;
 }
 
-export default function AddNewCategoryDialog({
-  open = true,
-  level,
-  onConfirm,
-  onCancel = () => {},
-  validName = () => true,
-}: AddNewCategoryDialogProps) {
+export default function AddNewCategoryDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewCategoryDialogProps) {
   const { data: catalog, isLoading, error } = useCatalog();
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState("");
@@ -80,7 +74,7 @@ export default function AddNewCategoryDialog({
       //setName("");
       onCancel();
     },
-    [onCancel]
+    [onCancel],
   );
 
   const handleSave = useCallback(() => {
@@ -94,7 +88,7 @@ export default function AddNewCategoryDialog({
       setSelectedSportsIDs(selectedIDs);
       setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
     },
-    [selectedLeagueIDs]
+    [selectedLeagueIDs, catalog],
   );
 
   const handleLeaguesSelectionChange = useCallback((selectedIDs: string[]) => {

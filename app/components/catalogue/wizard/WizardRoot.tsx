@@ -3,13 +3,13 @@ import { Dialog } from "radix-ui";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import type { BasicEntity, League, LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
+import { useCatalog } from "~/hooks/catalog/useCatalog";
 import { type CreateLeagueRequest, CreationStep, useCreateLeagueStore } from "~/stores/createLeagueStore";
 import { ConfirmSubmission } from "./steps/ConfirmSubmission";
 import { CreateLeague } from "./steps/CreateLeague";
 import { CreateRegion } from "./steps/CreateRegion";
 import { CreateSport } from "./steps/CreateSport";
 import { SelectRegion } from "./steps/SelectRegion";
-import { useCatalog } from "~/hooks/catalog/useCatalog";
 
 // Safely extract `.name` from union types
 function getEntityName(entity: RealSport | LeagueRegion | League | { uuid: string } | undefined): string {
@@ -36,7 +36,7 @@ export const WizzardRoot = ({ open, onClose, create, sportId, regionId }: Wizzar
   const clearState = useCreateLeagueStore((s) => s.clearState);
   const dataState = useCreateLeagueStore((s) => s.data);
 
-  const { data: catalog, isLoading, error } = useCatalog()
+  const { data: catalog, isLoading, error } = useCatalog();
 
   const showCancel = Boolean(sportId);
 

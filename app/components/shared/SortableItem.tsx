@@ -1,8 +1,8 @@
+import type { UniqueIdentifier } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { UniqueIdentifier } from "@dnd-kit/core";
-import React from "react";
 import { Box } from "@radix-ui/themes";
+import type React from "react";
 
 interface SortableItemProps {
   id: UniqueIdentifier;
@@ -15,11 +15,11 @@ export default function SortableItem({ id, dragStyle, children }: SortableItemPr
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    ...(isDragging && dragStyle)
+    ...(isDragging && dragStyle),
   };
 
   return (
-    <Box ref={setNodeRef} style={style} {...attributes} {...listeners} >
+    <Box ref={setNodeRef} style={style} {...attributes} {...listeners}>
       {children}
     </Box>
   );

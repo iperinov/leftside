@@ -1,7 +1,7 @@
 export interface BasicEntity {
-  id: number;  // ORO id
+  id: number; // ORO id
   uuid: string; // UUID
-  name: string; 
+  name: string;
 }
 
 export interface RealSport extends BasicEntity {

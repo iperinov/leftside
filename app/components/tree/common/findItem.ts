@@ -21,8 +21,10 @@ export function findItemDepth<T extends TreeItemData<T>>(id: string, root: T): n
 }
 
 export function findItemTrail<T extends TreeItemData<T>>(id: string, tree: T): T[] | undefined {
-  if (id === tree.id) { return [tree] }
-  
+  if (id === tree.id) {
+    return [tree];
+  }
+
   for (const item of tree.children || []) {
     if (item.id === id) {
       return [item];

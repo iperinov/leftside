@@ -1,11 +1,11 @@
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Flex, IconButton } from "@radix-ui/themes";
+import type ClassNameProps from "../shared/ClassNameProps";
+import type SortableTriggerProps from "../shared/SortableTriggerProps";
 import Tree from "./Tree";
 import type TreeConfig from "./TreeConfig";
 import TreeItemCard from "./TreeItemCard";
 import type TreeItemData from "./TreeItemData";
-import type SortableTriggerProps from "../shared/SortableTriggerProps";
-import type ClassNameProps from "../shared/ClassNameProps";
 
 export interface TreeItemProps<T extends TreeItemData<T>> {
   item: T;

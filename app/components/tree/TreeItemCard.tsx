@@ -1,12 +1,12 @@
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, Text } from "@radix-ui/themes";
+import React from "react";
 import DropdownContextMenu from "../dropdownContextMenu/DropdownContextMenu";
+import type ClassNameProps from "../shared/ClassNameProps";
+import type SortableTriggerProps from "../shared/SortableTriggerProps";
 import type TreeConfig from "./TreeConfig";
 import styles from "./TreeItemCard.module.css";
 import type TreeItemData from "./TreeItemData";
-import React from "react";
-import type SortableTriggerProps from "../shared/SortableTriggerProps";
-import type ClassNameProps from "../shared/ClassNameProps";
 
 interface TreeItemCardProps<T extends TreeItemData<T>> {
   item: T;
@@ -43,7 +43,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
     >
       <Flex align="center" gap="1">
         {/* Reorder */}
-        <CaretSortIcon data-hidden={enableReorder ? undefined : "true"} {...attributes} {...listeners}/>
+        <CaretSortIcon data-hidden={enableReorder ? undefined : "true"} {...attributes} {...listeners} />
 
         {/* Name */}
         <Text wrap="pretty">{item.name}</Text>

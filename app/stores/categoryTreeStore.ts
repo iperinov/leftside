@@ -55,7 +55,7 @@ interface CategoryTreeMutations {
     categoryUUID: string,
     filterGroupUUID: string,
     type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status",
-    selected: string[]
+    selected: string[],
   ) => void;
 }
 
@@ -226,7 +226,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     categoryUUID: string,
     filterGroupUUID: string,
     type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status",
-    selected: string[]
+    selected: string[],
   ) => {
     const rootCategory = structuredClone(get().rootCategory);
     const category = findItem(categoryUUID, rootCategory);

@@ -1,5 +1,5 @@
 import type { CatalogItem } from "~/api/cdb/cdb.types";
-import type { BasicEntity, LeagueRegion as Region, League, RealSport } from "~/api/ocs/ocs.types";
+import type { BasicEntity, League, RealSport, LeagueRegion as Region } from "~/api/ocs/ocs.types";
 import { allItem } from "~/components/categories/AllItemData";
 
 export interface LeagueCatalogItem extends BasicEntity {}
@@ -31,13 +31,13 @@ export class Catalog implements CatalogActions {
 
   constructor(catalogItems: CatalogItem[], realSports: RealSport[], regions: Region[], leagues: League[]) {
     this.sports = [];
-    catalogItems.forEach((item) => {
+    for (const item of catalogItems) {
       const sport = realSports.find((s) => s.uuid === item.realSportUUID);
       const region = regions.find((r) => r.uuid === item.regionUUID);
       const league = leagues.find((l) => l.uuid === item.leagueUUID);
-      if (!sport || !region || !league) return;
+      if (!sport || !region || !league) continue;
 
-      let sportCatalogItem = this.sports.find((s) => s.uuid === sport.uuid);
+      const sportCatalogItem = this.sports.find((s) => s.uuid === sport.uuid);
       if (!sportCatalogItem) {
         this.sports.push({
           ...(buildCatalogItemBaseFrom(sport) as SportCatalogItem),
@@ -48,31 +48,37 @@ export class Catalog implements CatalogActions {
             },
           ],
         });
-        return;
+        continue;
       }
 
-      let regionCatalogItem = sportCatalogItem.regions.find((r) => r.uuid === region.uuid);
+      const regionCatalogItem = sportCatalogItem.regions.find((r) => r.uuid === region.uuid);
       if (!regionCatalogItem) {
         sportCatalogItem.regions.push({
           ...(buildCatalogItemBaseFrom(region) as RegionCatalogItem),
           leagues: [buildCatalogItemBaseFrom(league) as LeagueCatalogItem],
         });
-        return;
+        continue;
       }
 
-      let leagueCatalogItem = regionCatalogItem.leagues.find((l) => l.uuid === league.uuid);
+      const leagueCatalogItem = regionCatalogItem.leagues.find((l) => l.uuid === league.uuid);
       if (!leagueCatalogItem) {
         regionCatalogItem.leagues.push(buildCatalogItemBaseFrom(league) as LeagueCatalogItem);
-        return;
+        continue;
       }
 
       throw new Error(`Duplicate catalog item found: ${league.name} in region ${region.name} for sport ${sport.name}`);
-    });
+    }
   }
 
-  allSports(): SportCatalogItem[] { return this.sports; }
-  allRegions(): RegionCatalogItem[] { return this.sports.flatMap((sport) => sport.regions); }
-  allLeagues(): LeagueCatalogItem[] { return this.sports.flatMap((sport) => sport.regions.flatMap((region) => region.leagues)); } 
+  allSports(): SportCatalogItem[] {
+    return this.sports;
+  }
+  allRegions(): RegionCatalogItem[] {
+    return this.sports.flatMap((sport) => sport.regions);
+  }
+  allLeagues(): LeagueCatalogItem[] {
+    return this.sports.flatMap((sport) => sport.regions.flatMap((region) => region.leagues));
+  }
 
   findSport(uuid: string): SportCatalogItem | undefined {
     return this.sports.find((sport) => sport.uuid === uuid);

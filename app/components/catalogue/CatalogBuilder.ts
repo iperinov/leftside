@@ -1,9 +1,8 @@
 import type { BasicEntity } from "~/api/ocs/ocs.types";
-import type TreeItemData from "../tree/TreeItemData";
 import type { Catalog, LeagueCatalogItem, RegionCatalogItem, SportCatalogItem } from "~/types/catalog/Catalog";
+import type TreeItemData from "../tree/TreeItemData";
 
-export interface CatalogueNode extends TreeItemData<CatalogueNode> {
-}
+export interface CatalogueNode extends TreeItemData<CatalogueNode> {}
 
 function baseToCalalogueNode(item: BasicEntity): CatalogueNode {
   return {
@@ -19,9 +18,9 @@ function leagueToCatalogueNode(item: LeagueCatalogItem): CatalogueNode {
 function regionToCatalogueNode(item: RegionCatalogItem): CatalogueNode {
   return {
     ...baseToCalalogueNode(item),
-    children: item.leagues.map((league) => leagueToCatalogueNode(league))
+    children: item.leagues.map((league) => leagueToCatalogueNode(league)),
   };
-} 
+}
 
 function sportToCatalogueNode(item: SportCatalogItem): CatalogueNode {
   return {

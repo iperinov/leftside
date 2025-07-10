@@ -19,7 +19,7 @@
 
 .treeItemCard[data-changed] {
   animation: pulse 1s ease-in-out;
-} 
+}
 
 [data-hidden] {
   visibility: hidden;
@@ -40,8 +40,7 @@
 }
 
 @keyframes pulse {
-  0%{
-    
+  0% {
     transform: scale(0.97);
     opacity: 0.3;
   }
