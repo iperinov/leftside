@@ -8,7 +8,7 @@ import RenameCategory from "./category/RenameCategory";
 import CategoryTree from "./tree/CategoryTree";
 import type CategoryTreeItem from "./tree/CategoryTreeItem";
 import ConfirmDialog from "../dialogs/ConfirmDialog.";
-import { BookmarkFilledIcon, BookmarkIcon } from "@radix-ui/react-icons";
+import { BookmarkFilledIcon, BookmarkIcon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons";
 
 interface ConfigurationContentSidebarProps {
   selectedUUID: string;
@@ -26,11 +26,23 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     newItem: CategoryTreeItem;
     firstParent: CategoryTreeItem;
   }>();
-  const [mainPreselected, setMainPreselected] = useState<number>();
+  const [mainPreselected, setMainPreselected] = useState<string>();
+  const [mainPreselectedData, setMainPreselectedData] = useState<{ currentItem: CategoryTreeItem; newItem: CategoryTreeItem }>();
   const findItemCategory = useCategoryTreeStore((state) => state.findCategory);
   const findParentCategory = useCategoryTreeStore((state) => state.findParentCategory);
   const findFirstLevelParent = useCategoryTreeStore((state) => state.findFirstLevelParent);
   const moveCategoryTo = useCategoryTreeStore((state) => state.moveCategoryTo);
+
+  const onMainPreselected = (item: CategoryTreeItem) => {
+    if (mainPreselected) {
+      const currentMainPreselection = findItemCategory(mainPreselected);
+      if (!currentMainPreselection) throw new Error(`Preselected item with UUID ${mainPreselected} not found.`);
+      setMainPreselectedData({ currentItem: currentMainPreselection, newItem: item });
+      return;
+    }
+
+    setMainPreselected(item.id);
+  };
 
   const onPreselected = (item: CategoryTreeItem) => {
     const itemFirstParent = findFirstLevelParent(item.id);
@@ -51,21 +63,38 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     if (!changePreselectionData) throw new Error("Change preselection data is not set.");
     const { currentItem, newItem, firstParent } = changePreselectionData;
 
+    const isCurrentItemMainPreselected = mainPreselected === currentItem.id;
     setPreselected((prev) =>
       prev.map((item) => (item.firstLevelParent === firstParent.id ? { firstLevelParent: item.firstLevelParent, uuid: newItem.id } : item))
     );
+    if (isCurrentItemMainPreselected) {
+      setMainPreselected(newItem.id);
+    }
     setChangePreselectionData(undefined);
   };
 
-  const getOptionalNodesFor = (item: CategoryTreeItem) => {
+  const preselectionIconsFor = (item: CategoryTreeItem) => {
     const isItemFlat = item.type === "flat";
     if (!isItemFlat) return [];
     const isItemPreselected = preselected.some((preselectedItem) => preselectedItem.uuid === item.id);
+    const isItemMainPreselected = mainPreselected === item.id;
     const color = "var(--accent-9)";
-    return [{ key: "pre", node: isItemPreselected 
-      ? <BookmarkFilledIcon color={color}/> 
-      : <BookmarkIcon color={color} onClick={() => onPreselected(item)}/> 
-    }];
+    switch (true) {
+      case isItemMainPreselected:
+        return [
+          { key: "pre", node: <BookmarkFilledIcon color={color} /> }, 
+          { key: "main", node: <StarFilledIcon color={color} /> }
+        ];
+      case isItemPreselected:
+        return [
+          { key: "pre", node: <BookmarkFilledIcon color={color} /> }, 
+          { key: "main", node: <StarIcon color={color} onClick={() => onMainPreselected(item)} /> }
+        ];
+      default:
+        return [
+          { key: "pre", node: <BookmarkIcon color={color} onClick={() => onPreselected(item)} /> }
+        ];
+    }
   };
 
   return (
@@ -81,7 +110,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
           onDuplicate={(item) => setDuplicateItemData({ ...item, parentID: findParentCategory(item.id)?.id || "" })}
           onPreselected={onPreselected}
           onReorder={(parent, childID, movedOnPlaceOfChildID) => moveCategoryTo(parent.id, childID, movedOnPlaceOfChildID)}
-          getOptionalNodesForCategory={getOptionalNodesFor}
+          getOptionalNodesForCategory={preselectionIconsFor}
         />
       </aside>
 
@@ -100,11 +129,29 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
       {changePreselectionData && (
         <ConfirmDialog
           title="Change preselection"
-          description={`Change preselection for "${changePreselectionData.firstParent.name}" from "${changePreselectionData.currentItem.name}" to "${changePreselectionData.newItem.name}"?`}
+          description={
+            mainPreselected === changePreselectionData.currentItem.id 
+              ? `Change preselection for "${changePreselectionData.firstParent.name}" from "${changePreselectionData.currentItem.name}" to "${changePreselectionData.newItem.name}" and transfer main preselection?`
+              : `Change preselection for "${changePreselectionData.firstParent.name}" from "${changePreselectionData.currentItem.name}" to "${changePreselectionData.newItem.name}"?`
+          }
           confirmText="Change"
           destructive={true}
           onCancel={() => setChangePreselectionData(undefined)}
           onConfirm={changePreselection}
+        />
+      )}
+
+      {mainPreselectedData && (
+        <ConfirmDialog
+          title="Change main preselection"
+          description={`Change main preselection from "${mainPreselectedData.currentItem.name}" to "${mainPreselectedData.newItem.name}"?`}
+          confirmText="Change"
+          destructive={true}
+          onCancel={() => setMainPreselectedData(undefined)}
+          onConfirm={() => {
+            setMainPreselected(mainPreselectedData.newItem.id);
+            setMainPreselectedData(undefined);
+          }}
         />
       )}
     </>
