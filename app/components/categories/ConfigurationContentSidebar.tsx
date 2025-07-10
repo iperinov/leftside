@@ -58,9 +58,14 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
   };
 
   const getOptionalNodesFor = (item: CategoryTreeItem) => {
-    return preselected.find((preselectedItem) => preselectedItem.uuid === item.id)
-      ? [{ key: "pre", node: <BookmarkFilledIcon color="var(--accent-9)" /> }]
-      : [];
+    const isItemFlat = item.type === "flat";
+    if (!isItemFlat) return [];
+    const isItemPreselected = preselected.some((preselectedItem) => preselectedItem.uuid === item.id);
+    const color = "var(--accent-9)";
+    return [{ key: "pre", node: isItemPreselected 
+      ? <BookmarkFilledIcon color={color}/> 
+      : <BookmarkIcon color={color} onClick={() => onPreselected(item)}/> 
+    }];
   };
 
   return (
