@@ -9,26 +9,22 @@ import type { OptionalNode } from "~/components/tree/TreeConfig";
 
 interface CategoryTreeProps {
   selectedUUID?: string;
-  preselected: {firstLevelParent: string, uuid: string}[];
   onSelected?: (item: CategoryTreeItem) => void;
   onAdd?: (level: number, parentID: string) => void;
   onRename?: (item: { id: string; name: string }) => void;
   onDelete?: (item: { id: string }) => void;
   onDuplicate?: (item: { id: string; name: string }) => void;
-  onPreselected?: (item: CategoryTreeItem) => void;
   onReorder?: (parent: CategoryTreeItem, childID: string, movedOnPlaceOfChildID: string) => void;
   getOptionalNodesForCategory?: (item: CategoryTreeItem) => OptionalNode[];
 }
 
 export default function CategoryTree({
   selectedUUID,
-  preselected,
   onSelected,
   onAdd,
   onRename,
   onDelete,
   onDuplicate,
-  onPreselected,
   onReorder,
   getOptionalNodesForCategory,
 }: CategoryTreeProps) {
@@ -55,16 +51,8 @@ export default function CategoryTree({
   const menuItems: MenuItem<CategoryTreeItem>[] = [
     { name: "Rename", action: (context) => context && onRename?.({ id: context.id, name: context.name }) },
     { name: "Delete", action: (context) => context && onDelete?.({ id: context.id }) },
-    { name: "Duplicate", action: (context) => context && onDuplicate?.({ id: context.id, name: context.name }) },
-    { name: "Preselect", action: (context) => context && onPreselected?.(context) },
+    { name: "Duplicate", action: (context) => context && onDuplicate?.({ id: context.id, name: context.name }) }
   ];
-
-  const contextMenuItemsFor = (item: CategoryTreeItem): MenuItem<CategoryTreeItem>[] => {
-    if (item.pending) return []; 
-    const isParentCategory = item.type === "nested";
-    if (isParentCategory) return menuItems.slice(0, -1);
-    return preselected.find(({firstLevelParent, uuid}) => uuid === item.id) ? menuItems.slice(0, -1) : menuItems;  
-  }
 
   const config = {
     addToParent: {
@@ -83,7 +71,7 @@ export default function CategoryTree({
       handler: onSelected,
     },
     contextMenu: {
-      itemsFor: contextMenuItemsFor
+      itemsFor: () => menuItems,
     },
     additionalElements: {
       getFor: getOptionalNodesForCategory,

@@ -9,6 +9,7 @@ import CategoryTree from "./tree/CategoryTree";
 import type CategoryTreeItem from "./tree/CategoryTreeItem";
 import ConfirmDialog from "../dialogs/ConfirmDialog.";
 import { BookmarkFilledIcon, BookmarkIcon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons";
+import TwoStateIconWithHint from "../shared/TwoStateIconWithHintProps";
 
 interface ConfigurationContentSidebarProps {
   selectedUUID: string;
@@ -79,22 +80,40 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     const isItemPreselected = preselected.some((preselectedItem) => preselectedItem.uuid === item.id);
     const isItemMainPreselected = mainPreselected === item.id;
     const color = "var(--accent-9)";
-    switch (true) {
-      case isItemMainPreselected:
-        return [
-          { key: "pre", node: <BookmarkFilledIcon color={color} /> }, 
-          { key: "main", node: <StarFilledIcon color={color} /> }
-        ];
-      case isItemPreselected:
-        return [
-          { key: "pre", node: <BookmarkFilledIcon color={color} /> }, 
-          { key: "main", node: <StarIcon color={color} onClick={() => onMainPreselected(item)} /> }
-        ];
-      default:
-        return [
-          { key: "pre", node: <BookmarkIcon color={color} onClick={() => onPreselected(item)} /> }
-        ];
-    }
+
+    const icons = [
+      {
+        key: "pre",
+        node: (
+          <TwoStateIconWithHint
+            selected={isItemPreselected}
+            hint="Automatically open a category when its top-level parent is selected by the user."
+            SelectedIcon={BookmarkFilledIcon}
+            NotSelectedIcon={BookmarkIcon}
+            onSelected={() => onPreselected(item)}
+            color={color}
+          />
+        ),
+      },
+    ];
+
+    if (isItemPreselected) {
+      icons.push({
+        key: "main",
+        node: (
+          <TwoStateIconWithHint
+            selected={isItemMainPreselected}
+            hint="Mark this category as the default selection. It will automatically open when the user first visits the website."
+            SelectedIcon={StarFilledIcon}
+            NotSelectedIcon={StarIcon}
+            onSelected={() => onMainPreselected(item)}
+            color={color}
+          />
+        ),
+      });
+    } 
+
+    return icons;
   };
 
   return (
@@ -102,13 +121,11 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
       <aside className={className}>
         <CategoryTree
           selectedUUID={selectedUUID}
-          preselected={preselected}
           onSelected={onSelected}
           onAdd={(level, parentUUID) => setAddItemData({ level, parentUUID })}
           onRename={setRenameItemData}
           onDelete={setDeleteItemData}
           onDuplicate={(item) => setDuplicateItemData({ ...item, parentID: findParentCategory(item.id)?.id || "" })}
-          onPreselected={onPreselected}
           onReorder={(parent, childID, movedOnPlaceOfChildID) => moveCategoryTo(parent.id, childID, movedOnPlaceOfChildID)}
           getOptionalNodesForCategory={preselectionIconsFor}
         />
@@ -130,7 +147,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
         <ConfirmDialog
           title="Change preselection"
           description={
-            mainPreselected === changePreselectionData.currentItem.id 
+            mainPreselected === changePreselectionData.currentItem.id
               ? `Change preselection for "${changePreselectionData.firstParent.name}" from "${changePreselectionData.currentItem.name}" to "${changePreselectionData.newItem.name}" and transfer main preselection?`
               : `Change preselection for "${changePreselectionData.firstParent.name}" from "${changePreselectionData.currentItem.name}" to "${changePreselectionData.newItem.name}"?`
           }
