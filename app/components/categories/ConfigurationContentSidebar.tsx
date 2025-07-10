@@ -21,16 +21,18 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
   const [renameItemData, setRenameItemData] = useState<{ id: string; name: string }>();
   const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parentID: string }>();
   const [deleteItemData, setDeleteItemData] = useState<{ id: string }>();
-  //const [preselected, setPreselected] = useState<string[]>([]);
-  //const [masterPreselected, setMasterPreselected] = useState<string>();
+  const [preselected, setPreselected] = useState<string[]>([]);
+  const [masterPreselected, setMasterPreselected] = useState<string>();
   const findParentCategory = useCategoryTreeStore((state) => state.findParentCategory);
+  const moveCategoryTo = useCategoryTreeStore((state) => state.moveCategoryTo);
 
   const menuItems: MenuItem<CategoryTreeItem>[] = [
     { name: "Rename", action: (context) => context && setRenameItemData({ id: context.id, name: context.name }) },
     { name: "Delete", action: (context) => context && setDeleteItemData({ id: context.id }) },
     {
       name: "Duplicate",
-      action: (context) => context && setDuplicateItemData({ id: context.id, name: context.name, parentID: findParentCategory(context.id)?.id || "" }),
+      action: (context) =>
+        context && setDuplicateItemData({ id: context.id, name: context.name, parentID: findParentCategory(context.id)?.id || "" }),
     },
   ];
 
@@ -41,7 +43,11 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
           selectedUUID={selectedUUID}
           onSelected={onSelected}
           onAdd={(level, parentUUID) => setAddItemData({ level, parentUUID })}
-          menuItems={menuItems}
+          onRename={setRenameItemData}
+          onDelete={setDeleteItemData}
+          onDuplicate={(item) => setDuplicateItemData({...item, parentID: findParentCategory(item.id)?.id || ""}) }
+          onReorder={(parent, childID, movedOnPlaceOfChildID) => moveCategoryTo(parent.id, childID, movedOnPlaceOfChildID)}
+          getOptionalNodesForCategory={(item) => []}
         />
       </aside>
 
@@ -51,7 +57,11 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
         <RenameCategory {...renameItemData} onCompleted={() => setRenameItemData(undefined)} onCanceled={() => setRenameItemData(undefined)} />
       )}
       {duplicateItemData && (
-        <DuplicateCategory {...duplicateItemData} onCompleted={() => setDuplicateItemData(undefined)} onCanceled={() => setDuplicateItemData(undefined)} />
+        <DuplicateCategory
+          {...duplicateItemData}
+          onCompleted={() => setDuplicateItemData(undefined)}
+          onCanceled={() => setDuplicateItemData(undefined)}
+        />
       )}
       {deleteItemData && (
         <DeleteCategory {...deleteItemData} onCompleted={() => setDeleteItemData(undefined)} onCanceled={() => setDeleteItemData(undefined)} />

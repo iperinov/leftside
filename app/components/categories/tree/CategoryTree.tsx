@@ -5,18 +5,22 @@ import type TreeConfig from "~/components/tree/TreeConfig";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import formatOrdinal from "~/utils/formatOrdinal";
 import type CategoryTreeItem from "./CategoryTreeItem";
+import type { OptionalNode } from "~/components/tree/TreeConfig";
 
 interface CategoryTreeProps {
   selectedUUID?: string;
-  menuItems: MenuItem<CategoryTreeItem>[];
   onSelected?: (item: CategoryTreeItem) => void;
   onAdd?: (level: number, parentID: string) => void;
+  onRename?: (item: { id: string, name: string }) => void;
+  onDelete?: (item: { id: string }) => void;
+  onDuplicate?: (item: { id: string, name: string}) => void;
+  onReorder?: (parent: CategoryTreeItem, childID: string, movedOnPlaceOfChildID: string) => void;
+  getOptionalNodesForCategory?: (item: CategoryTreeItem) => OptionalNode[];
 }
 
-export default function CategoryTree({ selectedUUID, menuItems, onSelected, onAdd }: CategoryTreeProps) {
+export default function CategoryTree({ selectedUUID, onSelected, onAdd, onRename, onDelete, onDuplicate, onReorder, getOptionalNodesForCategory }: CategoryTreeProps) {
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   const findCategoryTrail = useCategoryTreeStore((state) => state.findCategotyTrail);
-  const moveCategoryTo = useCategoryTreeStore((state) => state.moveCategoryTo);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   useEffect(() => {
@@ -34,6 +38,12 @@ export default function CategoryTree({ selectedUUID, menuItems, onSelected, onAd
       return newExpanded;
     });
   }, [selectedUUID, findCategoryTrail]);
+
+  const menuItems: MenuItem<CategoryTreeItem>[] = [
+    { name: "Rename", action: (context) => context && onRename?.({ id: context.id, name: context.name }) },
+    { name: "Delete", action: (context) => context && onDelete?.({ id: context.id }) },
+    { name: "Duplicate", action: (context) => context && onDuplicate?.({ id: context.id, name: context.name }) },
+  ];
 
   const config = {
     addToParent: {
@@ -56,11 +66,11 @@ export default function CategoryTree({ selectedUUID, menuItems, onSelected, onAd
       menuItems: menuItems,
     },
     additionalElements: {
-      optionalsFor: () => [],
+      getFor: getOptionalNodesForCategory,
     },
     reorder: {
       allowed: (item, parent) => true,
-      handler: (parent, childID, movedOnPlaceOfChildID) => moveCategoryTo(parent.id, childID, movedOnPlaceOfChildID),
+      handler: onReorder,
     },
   } as TreeConfig<CategoryTreeItem>;
 

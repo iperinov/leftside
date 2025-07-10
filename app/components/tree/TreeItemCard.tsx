@@ -24,7 +24,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
 }: TreeItemCardProps<T> & TreeConfig<T> & SortableTriggerProps) {
   const isSelectable = config.selection?.allowed(item);
   const enableReorder = config.reorder?.allowed(item, parent) && !item.pending;
-  const optionals = config.additionalElements?.optionalsFor(item) || [];
+  const optionals = config.additionalElements?.getFor(item) || [];
 
   return (
     <Flex
@@ -42,19 +42,13 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       data-dragging={dragging ? "true" : undefined}
     >
       <Flex align="center" gap="1">
-        {/* Reorder */}
         <CaretSortIcon data-hidden={enableReorder ? undefined : "true"} {...attributes} {...listeners} />
-
-        {/* Name */}
-        <Text wrap="pretty">{item.name}</Text>
-
-        {/* Optionals */}
-        {optionals.map((optional) => (
+        <Text wrap="pretty">{item.name}</Text> 
+        {optionals.map((optional) => ( 
           <React.Fragment key={optional.key ? optional.key : undefined}>{optional.node}</React.Fragment>
         ))}
       </Flex>
 
-      {/* Context menu */}
       {config.contextMenu && config.contextMenu.menuItems.length > 0 && (
         <Box pr="3" pl="2">
           <DropdownContextMenu items={config.contextMenu.menuItems} context={item} />
