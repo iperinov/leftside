@@ -1,6 +1,6 @@
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Box, Flex, Text } from "@radix-ui/themes";
-import React from "react";
+import React, { useEffect } from "react";
 import DropdownContextMenu from "../dropdownContextMenu/DropdownContextMenu";
 import type SortableTriggerProps from "../shared/SortableTriggerProps";
 import type TreeConfig from "./TreeConfig";
@@ -21,10 +21,18 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
   dragging = false,
   ...config
 }: TreeItemCardProps<T> & TreeConfig<T> & SortableTriggerProps) {
+  const [focusAttention, setFocusAttention] = React.useState(false);
   const isSelectable = config.selection?.allowed(item);
   const enableReorder = config.reorder?.allowed(item, parent) && !item.pending;
   const optionals = config.additionalElements?.getFor(item) || [];
   const contextMenu = config.contextMenu?.itemsFor?.(item) || [];
+
+  useEffect(() => {
+    if (!config.focusAttention?.allow(item)) return; 
+    setFocusAttention(true);
+    const timeout = setTimeout(() => {setFocusAttention(false); config.focusAttention?.done(item)}, 1000); 
+    return () => clearTimeout(timeout);
+  });
 
   return (
     <Flex
@@ -38,13 +46,13 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       data-selectable={isSelectable ? "true" : undefined}
       data-selected={config.selection?.selectedID === item.id ? "true" : undefined}
       data-pending={item.pending ? "true" : undefined}
-      data-changed={item.changed ? "true" : undefined}
+      data-focus-attention={focusAttention ? "true" : undefined}
       data-dragging={dragging ? "true" : undefined}
     >
       <Flex align="center" gap="1">
         <CaretSortIcon data-hidden={enableReorder ? undefined : "true"} {...attributes} {...listeners} />
-        <Text wrap="pretty">{item.name}</Text> 
-        {optionals.map((optional) => ( 
+        <Text wrap="pretty">{item.name}</Text>
+        {optionals.map((optional) => (
           <React.Fragment key={optional.key ? optional.key : undefined}>{optional.node}</React.Fragment>
         ))}
       </Flex>

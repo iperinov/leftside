@@ -17,7 +17,7 @@
   animation: blink 1s ease-in-out infinite;
 }
 
-.treeItemCard[data-changed] {
+.treeItemCard[data-focus-attention] {
   animation: pulse 1s ease-in-out;
 }
 

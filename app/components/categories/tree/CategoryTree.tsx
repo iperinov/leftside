@@ -92,6 +92,10 @@ export default function CategoryTree({
       allowed: (item, parent) => true,
       handler: onReorder,
     },
+    focusAttention: {
+      allow: (item) => item.focusAttention || false,
+      done: (item) => item.focusAttention = false
+    },
   } as TreeConfig<CategoryTreeItem>;
 
   return <Tree<CategoryTreeItem> root={rootCategory} level={0} {...config} />;

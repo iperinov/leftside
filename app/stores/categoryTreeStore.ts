@@ -101,7 +101,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
   },
 
   addCategory: (parentUUID, newItem) => {
-    newItem.changed = true;
+    newItem.focusAttention = true;
     const rootCategory = structuredClone(get().rootCategory);
     if (parentUUID === rootCategoryUUID) {
       rootCategory.children = [...(rootCategory.children || []), newItem];
@@ -120,7 +120,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     const item = findItem(uuid, rootCategory);
     if (!item) return false;
     item.name = newName;
-    item.changed = true;
+    item.focusAttention = true;
     set({ rootCategory: rootCategory });
     return true;
   },

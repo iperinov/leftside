@@ -34,13 +34,17 @@ interface FilterConfig<T extends TreeItemData<T>> {
   filter: string;
 }
 
-
 export interface OptionalNode {
   key?: string;
   node: React.ReactNode;
 }
 interface OptionalsConfig<T extends TreeItemData<T>> {
   getFor: (item: T) => OptionalNode[];
+}
+
+interface FocusAttentionConfig<T extends TreeItemData<T>> {
+  allow: (item: T) => boolean;
+  done: (item: T) => void;
 }
 
 export default interface TreeConfig<T extends TreeItemData<T>> {
@@ -51,4 +55,5 @@ export default interface TreeConfig<T extends TreeItemData<T>> {
   contextMenu?: ContextMenuConfig<T>;
   filter?: FilterConfig<T>;
   additionalElements?: OptionalsConfig<T>;
+  focusAttention?: FocusAttentionConfig<T>;
 }
