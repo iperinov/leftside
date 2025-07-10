@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import formatOrdinal from "~/utils/formatOrdinal";
-import type { MenuItem } from "../dropdownContextMenu/DropdownContextMenu";
 import type ClassNameProps from "../shared/ClassNameProps";
-import Tree from "../tree/Tree";
 import AddNewCategory from "./category/AddNewCategory";
 import DeleteCategory from "./category/DeleteCategory";
 import DuplicateCategory from "./category/DuplicateCategory";
@@ -25,16 +22,6 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
   const [masterPreselected, setMasterPreselected] = useState<string>();
   const findParentCategory = useCategoryTreeStore((state) => state.findParentCategory);
   const moveCategoryTo = useCategoryTreeStore((state) => state.moveCategoryTo);
-
-  const menuItems: MenuItem<CategoryTreeItem>[] = [
-    { name: "Rename", action: (context) => context && setRenameItemData({ id: context.id, name: context.name }) },
-    { name: "Delete", action: (context) => context && setDeleteItemData({ id: context.id }) },
-    {
-      name: "Duplicate",
-      action: (context) =>
-        context && setDuplicateItemData({ id: context.id, name: context.name, parentID: findParentCategory(context.id)?.id || "" }),
-    },
-  ];
 
   return (
     <>
