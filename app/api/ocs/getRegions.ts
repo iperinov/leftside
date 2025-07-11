@@ -7,7 +7,7 @@ const ocsBaseUrl = getAppConfig().ocs.baseUrl;
 export const getRegions = async (): Promise<Region[]> => {
   const url = new URL(`${ocsBaseUrl}/config/regions/`);
   console.log("getLeagueRegions: ", url);
-  await new Promise((res) => setTimeout(res, 2000)); // Simulate delay
+  await new Promise((res) => setTimeout(res, 500)); // Simulate delay
 
   // TODO:
   //    * Replace with real API call

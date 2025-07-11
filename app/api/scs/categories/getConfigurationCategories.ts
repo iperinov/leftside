@@ -8,6 +8,6 @@ export const getConfigurationCategories = async (configID: string): Promise<Cate
   const url = new URL(`${scsUrl}/config/${configID}`);
   // TODO:
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return mockConfigurationCategories;
 };

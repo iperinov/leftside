@@ -1,6 +1,6 @@
 import type { Configuration } from "../config.types";
 
-export const mockLeagues: Configuration[] = [
+export const mockConfigurations: Configuration[] = [
   {
     uuid: "09bef6e0-351d-4065-922a-6ce6241a1d85",
     rev: "14-f04499aa1dc7258169beeb08b6ab78b6",

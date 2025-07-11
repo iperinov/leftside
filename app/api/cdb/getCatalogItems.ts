@@ -7,7 +7,7 @@ const cdbUrl = getAppConfig().cdb.baseUrl;
 export default async function getCatalogItems(): Promise<CatalogItem[]> {
   const url = new URL("/config/leagues/", cdbUrl);
   console.log("getLeagues: ", url);
-  await new Promise((res) => setTimeout(res, 2000)); // Simulate delay
+  await new Promise((res) => setTimeout(res, 500)); // Simulate delay
 
   // TODO:
 

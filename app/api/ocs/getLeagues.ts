@@ -7,7 +7,7 @@ const ocsUrl = getAppConfig().ocs.baseUrl;
 export async function getLeagues(rsids: number[] = []): Promise<League[]> {
   const url = new URL("/config/leagues/", ocsUrl);
   console.log("getLeagues: ", url);
-  await new Promise((res) => setTimeout(res, 2000)); // Simulate delay
+  await new Promise((res) => setTimeout(res, 500)); // Simulate delay
 
   // TODO:
   //    * Replace with real API call

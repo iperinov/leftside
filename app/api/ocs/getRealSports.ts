@@ -7,6 +7,7 @@ const ocsUrl = getAppConfig().ocs.baseUrl;
 export const getRealSports = async (): Promise<RealSport[]> => {
   const url = new URL(`${ocsUrl}/config/realsports/`);
   console.log("getRealSports: ", url);
+  await new Promise((res) => setTimeout(res, 500)); // Simulate delay
 
   // TODO:
   //    * Replace with real API call
@@ -20,6 +21,5 @@ export const getRealSports = async (): Promise<RealSport[]> => {
   //   const data: RealSport[] = await response.json();
   //   return data;
 
-  await new Promise((res) => setTimeout(res, 2000)); // Simulate delay
   return mockRealSports;
 };
