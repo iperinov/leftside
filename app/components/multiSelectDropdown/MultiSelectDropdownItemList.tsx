@@ -74,7 +74,7 @@ function positionItemsList(
   rectOfTrigger: DOMRect,
   rectOfItemsList: DOMRect,
   itemsListRef: React.RefObject<HTMLDivElement | null>,
-  positionPreference: "above" | "below",
+  positionPreference: "above" | "below"
 ) {
   if (!itemsListRef.current || rectOfItemsList.width === 0 || rectOfItemsList.height === 0) {
     return;
@@ -86,25 +86,34 @@ function positionItemsList(
   const canPositionBelowTrigger = availableHeightBelowTrigger + offset >= rectOfItemsList.height;
   const canPositionAboveTrigger = availableHeightAboveTrigger + offset >= rectOfItemsList.height;
 
+  // console.log("Positioning params: ", { rectOfTrigger, rectOfItemsList, positionPreference,
+  //   availableHeightBelowTrigger, availableHeightAboveTrigger, canPositionBelowTrigger, canPositionAboveTrigger});
+
   switch (true) {
     case positionPreference === "below" && canPositionBelowTrigger:
+      //console.log("Prefered positioning below trigger ", rectOfTrigger.bottom + window.scrollY + offset);
       itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
       break;
     case positionPreference === "above" && canPositionAboveTrigger:
+      //console.log("Prefered positioning above trigger ", rectOfTrigger.top - rectOfItemsList.height + window.scrollY - offset);
       itemsListRef.current.style.setProperty("top", `${rectOfTrigger.top - rectOfItemsList.height + window.scrollY - offset}px`);
       break;
     case canPositionBelowTrigger:
+      //console.log("Forced positioning below trigger ", rectOfTrigger.bottom + window.scrollY + offset);
       itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
       break;
     case canPositionAboveTrigger:
+      //console.log("Forced positioning above trigger ", rectOfTrigger.top - rectOfItemsList.height + window.scrollY - offset);
       itemsListRef.current.style.setProperty("top", `${rectOfTrigger.top - rectOfItemsList.height + window.scrollY - offset}px`);
       break;
     case availableHeightBelowTrigger >= availableHeightAboveTrigger:
+      //console.log("Force shorter length (",availableHeightBelowTrigger - offset, ") and position below trigger  ", rectOfTrigger.bottom + window.scrollY + offset);
       itemsListRef.current.style.setProperty("top", `${rectOfTrigger.bottom + window.scrollY + offset}px`);
       itemsListRef.current.style.setProperty("height", `${availableHeightBelowTrigger - offset}px`);
       break;
     default:
-      itemsListRef.current.style.setProperty("top", `${rectOfTrigger.top - rectOfItemsList.height + window.scrollY - offset}px`);
+      //console.log("Force shorter length (",availableHeightAboveTrigger - offset, ") and position above trigger ", 0);
+      itemsListRef.current.style.setProperty("top", "0px");
       itemsListRef.current.style.setProperty("height", `${availableHeightAboveTrigger - offset}px`);
   }
 
