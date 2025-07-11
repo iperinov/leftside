@@ -23,7 +23,7 @@ export default function ConfigurationContent({ className, selectedUUID, setSelec
 
       <ConfigurationContentContext
         categoryID={selectedUUID}
-        // className={styles.context}
+        className={styles.context}
       />
     </Flex>
   );

@@ -12,7 +12,8 @@
 }
 
 .context {
-  flex: 1.5;
+  flex: 1;
+  min-width: 300px;
   padding: 1rem;
   background-color: var(--accent-5);
 }

@@ -5,6 +5,7 @@ import { GroupBy, Order } from "~/api/ssm/ssm.types";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import AssignedBooks from "../configurations/AssignedBooks";
 import ContentPreview from "../configurations/ContentPreview";
+import type ClassNameProps from "../shared/ClassNameProps";
 
 interface ConfigurationContentContextProps {
   categoryID: string;
@@ -38,7 +39,7 @@ const mockFilterGroups: FilterGroup[] = [
   },
 ];
 
-export default function ConfigurationContentContext({ categoryID }: ConfigurationContentContextProps) {
+export default function ConfigurationContentContext({ categoryID, className }: ConfigurationContentContextProps & ClassNameProps) {
   const category = useCategoryTreeStore((state) => state.findCategory(categoryID));
 
   const categorySelected = categoryID !== "";
@@ -58,6 +59,7 @@ export default function ConfigurationContentContext({ categoryID }: Configuratio
         marginTop: "0.5rem",
         overflow: "hidden",
       }}
+      className={className}
     >
       <Box style={{ backgroundColor: "var(--accent-4)" }}>
         <AssignedBooks assignedBooks={assignedBooks} originalAssignedBooks={originalAssignedBooks} onUpdate={setAssignedBooks} />

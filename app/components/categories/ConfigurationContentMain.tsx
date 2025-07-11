@@ -6,12 +6,13 @@ import DeleteFilterGroup from "./filterGroup/DeleteFilterGroup";
 import DuplicateFilterGroup from "./filterGroup/DuplicateFilterGroup";
 import EmptyFilterGroupRow from "./filterGroup/EmptyFilterGroupRow";
 import FilterGroupList from "./filterGroup/FilterGroupList";
+import type ClassNameProps from "../shared/ClassNameProps";
 
 interface ConfigurationContentMainProps {
   categoryUUID: string;
 }
 
-export default function ConfigurationContentMain({ categoryUUID }: ConfigurationContentMainProps) {
+export default function ConfigurationContentMain({ categoryUUID, className }: ConfigurationContentMainProps & ClassNameProps) {
   const category = useCategoryTreeStore((state) => state.findCategory(categoryUUID));
   const addEmptyFilterGroup = useCategoryTreeStore((state) => state.addEmptyFilterGroup);
   const [duplicateItemData, setDuplicateItemData] = useState<{ categoryUUID: string; filterGroupUUID: string }>();
@@ -26,7 +27,7 @@ export default function ConfigurationContentMain({ categoryUUID }: Configuration
 
   return (
     <>
-      <Flex gap="2" direction="column" p="2" flexGrow="1">
+      <Flex gap="2" direction="column" p="2" flexGrow="1" className={className}>
         {hasFilters && category ? (
           <FilterGroupList category={category} menuItems={menuItems} />
         ) : (
