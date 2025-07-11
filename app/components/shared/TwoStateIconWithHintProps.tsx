@@ -1,11 +1,10 @@
-import { HoverCard, Text } from "@radix-ui/themes";
+import { HoverCard, IconButton, Text } from "@radix-ui/themes";
 
 interface TwoStateIconWithHintProps {
   selected: boolean;
   hint: string;
   onSelected?: () => void;
   onDeselected?: () => void;
-  color?: string;
   SelectedIcon: React.ComponentType<{ color?: string; onClick?: () => void }>;
   NotSelectedIcon: React.ComponentType<{ color?: string; onClick?: () => void }>;
 }
@@ -15,14 +14,21 @@ export default function TwoStateIconWithHint({
   hint,
   onSelected,
   onDeselected,
-  color,
   SelectedIcon,
   NotSelectedIcon,
 }: TwoStateIconWithHintProps) {
+
+  const onClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    selected ? onDeselected?.() : onSelected?.();
+  }
+
   return (
     <HoverCard.Root openDelay={700} closeDelay={100}>
       <HoverCard.Trigger>
-        {selected ? <SelectedIcon color={color} onClick={onDeselected} /> : <NotSelectedIcon color={color} onClick={onSelected} />}
+        <IconButton variant="ghost" onClick={onClick} className="nohover">
+          {selected ? <SelectedIcon  /> : <NotSelectedIcon />}
+        </IconButton>
       </HoverCard.Trigger>
       <HoverCard.Content maxWidth="300px" hideWhenDetached={true}>
         <Text wrap="pretty">{hint}</Text>

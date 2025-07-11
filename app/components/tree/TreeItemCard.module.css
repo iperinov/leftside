@@ -9,7 +9,9 @@
 }
 
 .treeItemCard:not([data-dragging])[data-selected] {
-  background-color: var(--accent-5);
+  background-color: var(--accent-8);
+  color: var(--accent-12);
+  border-color: var(--accent-12);
 }
 
 .treeItemCard[data-pending] {

@@ -15,7 +15,7 @@ interface CategoryTreeProps {
   onDelete?: (item: { id: string }) => void;
   onDuplicate?: (item: { id: string; name: string }) => void;
   onReorder?: (parent: CategoryTreeItem, childID: string, movedOnPlaceOfChildID: string) => void;
-  getOptionalNodesForCategory?: (item: CategoryTreeItem) => OptionalNode[];
+  getOptionalNodes?: (item: CategoryTreeItem) => OptionalNode[];
 }
 
 export default function CategoryTree({
@@ -26,7 +26,7 @@ export default function CategoryTree({
   onDelete,
   onDuplicate,
   onReorder,
-  getOptionalNodesForCategory,
+  getOptionalNodes,
 }: CategoryTreeProps) {
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   const findCategoryTrail = useCategoryTreeStore((state) => state.findCategotyTrail);
@@ -74,7 +74,7 @@ export default function CategoryTree({
       itemsFor: () => menuItems,
     },
     additionalElements: {
-      getFor: getOptionalNodesForCategory,
+      getFor: getOptionalNodes,
     },
     reorder: {
       allowed: (item, parent) => true,

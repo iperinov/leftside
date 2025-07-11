@@ -79,8 +79,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     if (!isItemFlat) return [];
     const isItemPreselected = preselected.some((preselectedItem) => preselectedItem.uuid === item.id);
     const isItemMainPreselected = mainPreselected === item.id;
-    const color = "var(--accent-9)";
-
+    
     const icons = [
       {
         key: "pre",
@@ -91,7 +90,6 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
             SelectedIcon={BookmarkFilledIcon}
             NotSelectedIcon={BookmarkIcon}
             onSelected={() => onPreselected(item)}
-            color={color}
           />
         ),
       },
@@ -107,7 +105,6 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
             SelectedIcon={StarFilledIcon}
             NotSelectedIcon={StarIcon}
             onSelected={() => onMainPreselected(item)}
-            color={color}
           />
         ),
       });
@@ -127,7 +124,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
           onDelete={setDeleteItemData}
           onDuplicate={(item) => setDuplicateItemData({ ...item, parentID: findParentCategory(item.id)?.id || "" })}
           onReorder={(parent, childID, movedOnPlaceOfChildID) => moveCategoryTo(parent.id, childID, movedOnPlaceOfChildID)}
-          getOptionalNodesForCategory={preselectionIconsFor}
+          getOptionalNodes={preselectionIconsFor}
         />
       </aside>
 

@@ -24,6 +24,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
   const [focusAttention, setFocusAttention] = React.useState(false);
   const isSelectable = config.selection?.allowed(item);
   const enableReorder = config.reorder?.allowed(item, parent) && !item.pending;
+  const isSelected = config.selection?.selectedID === item.id;
   const optionals = config.additionalElements?.getFor(item) || [];
   const contextMenu = config.contextMenu?.itemsFor?.(item) || [];
 
@@ -44,7 +45,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       className={`${styles.treeItemCard}  noselect`}
       onClick={isSelectable ? () => config.selection?.handler(item) : undefined}
       data-selectable={isSelectable ? "true" : undefined}
-      data-selected={config.selection?.selectedID === item.id ? "true" : undefined}
+      data-selected={isSelected ? "true" : undefined}
       data-pending={item.pending ? "true" : undefined}
       data-focus-attention={focusAttention ? "true" : undefined}
       data-dragging={dragging ? "true" : undefined}
