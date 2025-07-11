@@ -140,18 +140,15 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
   duplicateCategory: (uuid, name, parentUUID) => {
     const rootCategory = structuredClone(get().rootCategory);
     const parent = findItem(parentUUID, rootCategory);
-    if (!parent) return false;
-    const item = findItem(uuid, parent);
-    if (!item) return false;
-    const newItem = { ...structuredClone(item), name, focusAttention: true };
+    if (!parent || !parent.children) return false;
+    const itemIndex = parent.children.findIndex((item) => item.id == uuid);
+    if (itemIndex == -1) return false;
+    const newItem = { ...structuredClone(parent.children[itemIndex]), name, focusAttention: true };
     iterateItem<CategoryTreeItem>(newItem, (item) => {
       item.id = newItemUUID();
     });
-    if (parent.children) {
-      parent.children.push(newItem);
-    } else {
-      parent.children = [newItem];
-    }
+    
+    parent.children.splice(itemIndex + 1, 0, newItem);
     set({ rootCategory: rootCategory });
     return true;
   },
