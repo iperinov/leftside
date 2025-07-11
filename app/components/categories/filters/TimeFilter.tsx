@@ -4,9 +4,11 @@ import { allItem } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 
-export default function TimeFilter(props: FilterGroupProps) {
+export default function TimeFilter({categoryUUID, filterGroupUUID}: FilterGroupProps) {
   const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
   const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
+  const statusFilter = useCategoryTreeStore((state) => state.statusFilter);
+
   const choices = useMemo(
     () => [
       allItem,
@@ -32,7 +34,9 @@ export default function TimeFilter(props: FilterGroupProps) {
       items={choices}
       filterSelection={timeFilter}
       updateFilterSelection={updateTimeFilters}
-      {...props}
+      disabled={statusFilter(categoryUUID, filterGroupUUID) === "1"}
+      categoryUUID={categoryUUID}
+      filterGroupUUID={filterGroupUUID}
     />
   );
 }
