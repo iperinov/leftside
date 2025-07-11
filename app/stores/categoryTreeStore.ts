@@ -143,7 +143,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     if (!parent) return false;
     const item = findItem(uuid, parent);
     if (!item) return false;
-    const newItem = { ...structuredClone(item), name, changed: true };
+    const newItem = { ...structuredClone(item), name, focusAttention: true };
     iterateItem<CategoryTreeItem>(newItem, (item) => {
       item.id = newItemUUID();
     });
