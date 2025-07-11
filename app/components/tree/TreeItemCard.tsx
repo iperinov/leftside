@@ -29,9 +29,12 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
   const contextMenu = config.contextMenu?.itemsFor?.(item) || [];
 
   useEffect(() => {
-    if (!config.focusAttention?.allow(item)) return; 
+    if (!config.focusAttention?.allow(item)) return;
     setFocusAttention(true);
-    const timeout = setTimeout(() => {setFocusAttention(false); config.focusAttention?.done(item)}, 1000); 
+    const timeout = setTimeout(() => {
+      setFocusAttention(false);
+      config.focusAttention?.done(item);
+    }, 1000);
     return () => clearTimeout(timeout);
   });
 
@@ -50,11 +53,17 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
       data-focus-attention={focusAttention ? "true" : undefined}
       data-dragging={dragging ? "true" : undefined}
     >
-      <Flex align="center" gap="1">
-        <CaretSortIcon data-hidden={enableReorder ? undefined : "true"} {...attributes} {...listeners} />
-        <Text wrap="pretty">{item.name}</Text>
+      <Flex align="center" gap="1" className={styles.treeItemCardContent}>
+        <CaretSortIcon data-hidden={enableReorder ? undefined : "true"} className={styles.treeItemCardReorderIcon} {...attributes} {...listeners} />
+
+        <Box className={styles.treeItemCardLabel}>
+          <Text wrap="pretty" title={item.name}>
+            {item.name}
+          </Text>
+        </Box>
+
         {optionals.map((optional) => (
-          <React.Fragment key={optional.key ? optional.key : undefined}>{optional.node}</React.Fragment>
+          <React.Fragment key={optional.key ?? undefined}>{optional.node}</React.Fragment>
         ))}
       </Flex>
 
