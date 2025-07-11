@@ -3,15 +3,20 @@ import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
+import { allItem } from "../AllItemData";
 
-function generateChoices(sportsSelected: number, marketsSelected: number): ItemData<string>[] {
+function generateChoices(sportFilterUUIDs: string[], marketFilterUUIDs: string[]): ItemData<string>[] {
+  const sportsSelected = sportFilterUUIDs.length;
+  const marketsSelected = marketFilterUUIDs.length;
+  const isAllSportsSelected = sportsSelected === 1 && sportFilterUUIDs.includes(allItem.id);
+  
   switch (true) {
-    case sportsSelected === 1 && marketsSelected === 0:
+    case !isAllSportsSelected && sportsSelected === 1 && marketsSelected === 0:
       return [
         { id: "league.day", name: "League/Day" },
         { id: "day.league", name: "Day/League" },
       ];
-    case sportsSelected > 1 && marketsSelected === 0:
+    case (isAllSportsSelected || sportsSelected > 1) && marketsSelected === 0:
       return [
         { id: "sport.league", name: "Sport/League" },
         { id: "sport.day", name: "Sport/Day" },
@@ -30,7 +35,7 @@ export default function GroupByFilter(props: FilterGroupProps) {
 
   const sportsSelection = sportFilters(categoryUUID, filterGroupUUID);
   const marketsSelection = marketFilters(categoryUUID, filterGroupUUID);
-  const choices = useMemo(() => generateChoices(sportsSelection.length, marketsSelection.length), [sportsSelection.length, marketsSelection.length]);
+  const choices = useMemo(() => generateChoices(sportsSelection, marketsSelection), [sportsSelection.length, marketsSelection.length]);
 
   return (
     <SingleSelectionFilter
