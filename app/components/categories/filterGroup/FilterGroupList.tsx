@@ -5,7 +5,6 @@ import { useState } from "react";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type CategoryTreeItem from "../tree/CategoryTreeItem";
-import EmptyFilterGroupRow from "./EmptyFilterGroupRow";
 import FiltersGroupRow from "./FilterGroupRow";
 import SortableFilterGroupRow from "./SortableFilterGroupRow";
 
@@ -51,7 +50,7 @@ export default function FilterGroupList({ category, menuItems }: FilterGroupList
               easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
             }}
           >
-            {activeFilterGroup && <FiltersGroupRow categoryUUID={category.id} filterGroupUUID={activeFilterGroup.uuid} menuItems={menuItems} dragging />}
+            {activeFilterGroup && <FiltersGroupRow categoryUUID={category.id} filterGroupUUID={activeFilterGroup.uuid} menuItems={menuItems} />}
           </DragOverlay>
         </DndContext>
       )}

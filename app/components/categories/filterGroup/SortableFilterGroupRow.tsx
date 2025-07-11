@@ -3,10 +3,9 @@ import { CSS } from "@dnd-kit/utilities";
 import { Box } from "@radix-ui/themes";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
 import FiltersGroupRow from "./FilterGroupRow";
+import type { FilterGroupProps } from "./FiltersGroup";
 
-interface SortableFilterGroupRowProps {
-  categoryUUID: string;
-  filterGroupUUID: string;
+interface SortableFilterGroupRowProps extends FilterGroupProps {
   menuItems?: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[];
 }
 

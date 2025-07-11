@@ -9,14 +9,12 @@ import FiltersGroup, { type FilterGroupProps } from "./FiltersGroup";
 
 interface FilterGroupRowProps extends FilterGroupProps {
   menuItems?: MenuItem<{ categoryUUID: string; filterGroupUUID: string }>[];
-  dragging?: boolean;
 }
 
 export default function FiltersGroupRow({
   categoryUUID,
   filterGroupUUID,
   menuItems,
-  dragging,
   attributes,
   listeners,
 }: FilterGroupRowProps & ClassNameProps & SortableTriggerProps) {
