@@ -10,7 +10,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
     <Flex px="0" py="0" style={{ backgroundColor: "var(--accent-3)" }}>
       <TextField.Root
-        placeholder="ctrl+k"
+        placeholder="Search"
         size="2"
         variant="soft"
         value={value}
