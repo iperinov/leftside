@@ -96,7 +96,7 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
   }, []);
 
   const getSportItems = (): ItemData<string>[] => {
-    return catalog?.sports?.map((sport) => ({ id: String(sport.id), name: sport.name })) || [];
+    return catalog?.sports?.map((sport) => ({ id: String(sport.uuid), name: sport.name })) || [];
   };
 
   const getLeagueItems = (sportIDs: string[]): ItemData<string>[] => {
