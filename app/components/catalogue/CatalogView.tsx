@@ -93,29 +93,31 @@ export default function CatalogView() {
       filter: filter,
     },
     contextMenu: {
-      menuItems: [
-        {
-          name: "Rename",
-          action: (item?: CatalogueNode) => {
-            if (!item || !catalogRoot) return;
+      itemsFor: (item: CatalogueNode) => {
+        return [
+          {
+            name: "Rename",
+            action: (item?: CatalogueNode) => {
+              if (!item || !catalogRoot) return;
 
-            const level = findItemDepth(item.id, catalogRoot);
-            switch (level) {
-              case CatalogueNodeTypeByLevel.RealSport:
-                setRenameSport({ uuid: item.id, name: item.name });
-                break;
-              case CatalogueNodeTypeByLevel.Region:
-                setRenameRegion({ uuid: item.id, name: item.name });
-                break;
-              case CatalogueNodeTypeByLevel.League:
-                setRenameLeague({ uuid: item.id, name: item.name });
-                break;
-              default:
-                throw new Error(`Unexpected level: ${level}`);
-            }
+              const level = findItemDepth(item.id, catalogRoot);
+              switch (level) {
+                case CatalogueNodeTypeByLevel.RealSport:
+                  setRenameSport({ uuid: item.id, name: item.name });
+                  break;
+                case CatalogueNodeTypeByLevel.Region:
+                  setRenameRegion({ uuid: item.id, name: item.name });
+                  break;
+                case CatalogueNodeTypeByLevel.League:
+                  setRenameLeague({ uuid: item.id, name: item.name });
+                  break;
+                default:
+                  throw new Error(`Unexpected level: ${level}`);
+              }
+            },
           },
-        },
-      ],
+        ];
+      },
     },
   };
 
