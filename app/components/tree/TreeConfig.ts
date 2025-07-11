@@ -30,8 +30,7 @@ interface ContextMenuConfig<T extends TreeItemData<T>> {
 }
 
 interface FilterConfig<T extends TreeItemData<T>> {
-  allowed: (item: T) => boolean;
-  filter: string;
+  hideItem?: (item: T) => boolean;
 }
 
 export interface OptionalNode {

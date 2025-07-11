@@ -1,28 +1,39 @@
 import { Box, Flex, ScrollArea, Separator } from "@radix-ui/themes";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import type { RenameLeagueApiIn, RenameLeagueRegionApiIn, RenameRealSportApiIn } from "~/api/ocs/ocs.types";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import type { CreateLeagueRequest } from "~/stores/createLeagueStore";
-import SearchBar from "../SearchBar";
-import LoadDataDecorator from "../loading/LoadDataDecorator";
-import Tree from "../tree/Tree";
-import type TreeConfig from "../tree/TreeConfig";
-import { findItemDepth, findItemParent } from "../tree/common/findItem";
-import { type CatalogueNode, buildCatalogueTree } from "./CatalogBuilder";
-import { RenameLeagueDialog } from "./RenameLeagueDialog";
-import { RenameRegionDialog } from "./RenameRegionDialog";
-import { RenameSportDialog } from "./RenameSportDialog";
-import { WizzardRoot } from "./wizard/WizardRoot";
+import SearchBar from "../../SearchBar";
+import LoadDataDecorator from "../../loading/LoadDataDecorator";
+import Tree from "../../tree/Tree";
+import type TreeConfig from "../../tree/TreeConfig";
+import { findItemDepth, findItemParent } from "../../tree/common/findItem";
+import { buildCatalogueTree } from "../CatalogBuilder";
+import { RenameLeagueDialog } from "../RenameLeagueDialog";
+import { RenameRegionDialog } from "../RenameRegionDialog";
+import { RenameSportDialog } from "../RenameSportDialog";
+import { WizzardRoot } from "../wizard/WizardRoot";
+import type CatalogueTreeItem from "./CatalogTreeItem";
 
-enum CatalogueNodeTypeByLevel {
+enum CatalogueTreeItemTypeByLevel {
   RealSport = 0,
   Region = 1,
   League = 2,
 }
 
+function shownItems(root: CatalogueTreeItem, filter: string, expand: string[]): string[] {
+  const shownChildren = root.children?.flatMap((child) => shownItems(child, filter, expand)) || [];
+  const shouldExpandRoot = shownChildren.length > 0 && filter !== "";
+  if (shouldExpandRoot) {
+    expand.push(root.id);
+  }
+  return shownChildren.length > 0 || filter === "" || root.name.toLowerCase().includes(filter) ? [root.id, ...shownChildren] : [];
+}
+
 export default function CatalogView() {
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
+  const [shownItemIDs, setShownItemIDs] = useState<string[]>([]);
   const [selectedId, setSelectedId] = useState<string>("");
   const [filter, setFilter] = useState<string>("");
   const [creating, setCreating] = useState<boolean>(false);
@@ -32,39 +43,49 @@ export default function CatalogView() {
   const [renameRegion, setRenameRegion] = useState<RenameLeagueRegionApiIn | null>(null);
   const [renameLeague, setRenameLeague] = useState<RenameLeagueApiIn | null>(null);
   const { data: catalog, isLoading, error } = useCatalog();
+  const catalogRoot = useMemo(() => (catalog ? buildCatalogueTree(catalog) : undefined), [catalog]);
 
-  const catalogRoot = catalog ? buildCatalogueTree(catalog) : undefined;
+  useEffect(() => {
+    if (!catalogRoot || filter.length < 3) return;
+    const expandShownChildrenParents: string[] = [];
+    const shownIDs = shownItems(catalogRoot, filter, expandShownChildrenParents);
+    setShownItemIDs(shownIDs);
+    if (expandShownChildrenParents.length > 0) {
+      console.log("Expanding parents for shown children:", expandShownChildrenParents);
+      setExpandedIds(expandShownChildrenParents);
+    }
+  }, [catalogRoot, filter]);
 
-  const treeConfig: TreeConfig<CatalogueNode> = {
+  const treeConfig: TreeConfig<CatalogueTreeItem> = {
     addToParent: {
-      allowed: (level: number, _parent: CatalogueNode) => {
+      allowed: (level: number, _parent: CatalogueTreeItem) => {
         return level < 3;
       },
-      toString: (level: number, _parent: CatalogueNode) => {
+      toString: (level: number, _parent: CatalogueTreeItem) => {
         switch (level) {
-          case CatalogueNodeTypeByLevel.RealSport:
+          case CatalogueTreeItemTypeByLevel.RealSport:
             return "Create Real Sport";
-          case CatalogueNodeTypeByLevel.Region:
+          case CatalogueTreeItemTypeByLevel.Region:
             return "Create Region";
-          case CatalogueNodeTypeByLevel.League:
+          case CatalogueTreeItemTypeByLevel.League:
             return "Create League";
           default:
             return "";
         }
       },
-      handler: (level: number, parent: CatalogueNode) => {
+      handler: (level: number, parent: CatalogueTreeItem) => {
         if (!catalogRoot) return;
 
         switch (level) {
-          case CatalogueNodeTypeByLevel.RealSport:
+          case CatalogueTreeItemTypeByLevel.RealSport:
             setRealSport("");
             setRegion("");
             break;
-          case CatalogueNodeTypeByLevel.Region:
+          case CatalogueTreeItemTypeByLevel.Region:
             setRealSport(parent.id ?? "");
             setRegion("");
             break;
-          case CatalogueNodeTypeByLevel.League:
+          case CatalogueTreeItemTypeByLevel.League:
             setRealSport(findItemParent(parent.id, catalogRoot)?.id || "");
             setRegion(parent.id);
             break;
@@ -74,7 +95,7 @@ export default function CatalogView() {
     },
     expand: {
       itemIDs: expandedIds,
-      handler: (item: CatalogueNode, expand: boolean) => {
+      handler: (item: CatalogueTreeItem, expand: boolean) => {
         setExpandedIds((prev) => (expand ? [...prev, item.id] : prev.filter((id) => id !== item.id)));
       },
       allowed: () => true,
@@ -84,31 +105,30 @@ export default function CatalogView() {
         return true;
       },
       selectedID: selectedId,
-      handler: (item: CatalogueNode) => {
+      handler: (item: CatalogueTreeItem) => {
         setSelectedId(item.id);
       },
     },
     filter: {
-      allowed: () => true,
-      filter: filter,
+      hideItem: (item) => filter.length >= 3 && !shownItemIDs.includes(item.id),
     },
     contextMenu: {
-      itemsFor: (item: CatalogueNode) => {
+      itemsFor: (item: CatalogueTreeItem) => {
         return [
           {
             name: "Rename",
-            action: (item?: CatalogueNode) => {
+            action: (item?: CatalogueTreeItem) => {
               if (!item || !catalogRoot) return;
 
               const level = findItemDepth(item.id, catalogRoot);
               switch (level) {
-                case CatalogueNodeTypeByLevel.RealSport:
+                case CatalogueTreeItemTypeByLevel.RealSport:
                   setRenameSport({ uuid: item.id, name: item.name });
                   break;
-                case CatalogueNodeTypeByLevel.Region:
+                case CatalogueTreeItemTypeByLevel.Region:
                   setRenameRegion({ uuid: item.id, name: item.name });
                   break;
-                case CatalogueNodeTypeByLevel.League:
+                case CatalogueTreeItemTypeByLevel.League:
                   setRenameLeague({ uuid: item.id, name: item.name });
                   break;
                 default:
@@ -140,7 +160,17 @@ export default function CatalogView() {
         }}
       >
         <LoadDataDecorator error={error} isLoading={isLoading}>
-          <SearchBar value={filter} onChange={setFilter} />
+          <SearchBar
+            value={filter}
+            onChange={(value) =>
+              setFilter((prev) => {
+                if (prev.length > 0 && value.length === 0) {
+                  setExpandedIds([]);
+                }
+                return value.toLowerCase();
+              })
+            }
+          />
           <Separator orientation="horizontal" size="4" mb="2" />
           <Box flexGrow="1" minHeight="0">
             <ScrollArea

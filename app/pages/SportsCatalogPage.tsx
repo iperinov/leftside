@@ -1,5 +1,5 @@
 import { Box, Flex } from "@radix-ui/themes";
-import CatalogView from "~/components/catalogue/CatalogView";
+import CatalogView from "~/components/catalogue/tree/CatalogView";
 
 export default function SportsCatalogPage() {
   return (
