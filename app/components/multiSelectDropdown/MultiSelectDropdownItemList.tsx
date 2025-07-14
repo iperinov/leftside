@@ -1,8 +1,7 @@
-import { Box, Flex } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import { useLayoutEffect, useRef, useState } from "react";
 import { FixedSizeList } from "react-window";
 import useControlledComponentClickOutside from "~/hooks/common/useControlledComponnetClickOutside";
-import useRectOfElement, { useRectWithObserver } from "~/hooks/common/useRectOfElement";
 import type ItemData from "~/types/ItemData";
 import type { ControlledComponentProps } from "../shared/ControlledComponent";
 import styles from "./MultiSelectDropdown.module.css";
@@ -10,6 +9,9 @@ import MultiSelectDropdownItem from "./MultiSelectDropdownItem";
 
 export interface MultiSelectDropdownItemListProps<T extends string | number> {
   items: ItemData<T>[];
+  maxSelections?: number;
+  showAs?: "checkbox" | "plain";
+  scrollToFirstSelected?: boolean;
   selectedIDs: T[];
   onSelect: (selected: boolean, id: T) => void;
   positionPreference: "above" | "below";
@@ -20,6 +22,9 @@ export default function MultiSelectDropdownItemList<T extends string | number>({
   open = false,
   onOpenChange = (open: boolean) => {},
   items,
+  maxSelections = 0,
+  showAs = "checkbox",
+  scrollToFirstSelected = true,
   selectedIDs,
   onSelect,
   positionPreference,
@@ -27,7 +32,9 @@ export default function MultiSelectDropdownItemList<T extends string | number>({
 }: MultiSelectDropdownItemListProps<T> & ControlledComponentProps) {
   const itemsListRef = useRef<HTMLDivElement>(null);
   const [rectOfTrigger, setRectOfTrigger] = useState<DOMRect | null>(null);
+  const listRef = useRef<FixedSizeList | null>(null);
   useControlledComponentClickOutside(itemsListRef, open, onOpenChange);
+  const disableAllNotSelected = maxSelections > 0 && selectedIDs.length >= maxSelections;
 
   useLayoutEffect(() => {
     if (open && triggerRef.current) {
@@ -49,16 +56,23 @@ export default function MultiSelectDropdownItemList<T extends string | number>({
     });
   }, [open, rectOfTrigger, positionPreference]);
 
+  useLayoutEffect(() => {
+    if (!scrollToFirstSelected || !open || !listRef.current) return;
+    const firstSelectedItemIndex = items.findIndex((item) => selectedIDs.includes(item.id));
+    listRef.current.scrollToItem(firstSelectedItemIndex + 1, "center");
+  }, [open, listRef]);
+
   return (
     <>
       {open && (
         <Flex direction="column" ref={itemsListRef} px="3" py="2" className={styles.multiSelectDropdownItemList}>
           <FixedSizeList
+            ref={listRef}
             style={{ overflowX: "hidden" }}
             height={400}
             itemCount={items.length}
             itemSize={35}
-            itemData={{ items, selectedIDs, onSelect }}
+            itemData={{ items, selectedIDs, disabled: disableAllNotSelected, showAs, onSelect }}
             width={"100%"}
             itemKey={(index, data) => data.items[index].id}
           >

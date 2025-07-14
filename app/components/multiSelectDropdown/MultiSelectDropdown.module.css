@@ -27,6 +27,9 @@
 .multiSelectDropdownItem {
   align-content: center;
   min-height: 35px;
+  border-radius: 0.4rem;;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .multiSelectDropdownItem,
@@ -35,6 +38,11 @@
 }
 .multiSelectDropdownItem:hover {
   background-color: var(--accent-4);
+}
+
+.multiSelectDropdownItem[data-selected] {
+  background-color: var(--accent-8);
+  color: var(--accent-12);
 }
 
 @keyframes multiSelectDropDownSlideUpAndFade {

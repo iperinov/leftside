@@ -14,6 +14,10 @@ export interface ResultsSelectionProps<T extends string | number> {
 }
 interface MultiSelectDropdownProps<T extends string | number> {
   items?: ItemData<T>[];
+  placeholder?: string;
+  maxSelections?: number;
+  showAs?: "checkbox" | "plain";
+  scrollToFirstSelected?: boolean;
   defaultSelectedIDs?: T[];
   includeAllItem?: boolean;
   onSelectionChange?: (selectedIDs: T[]) => void;
@@ -23,6 +27,10 @@ interface MultiSelectDropdownProps<T extends string | number> {
 
 export default function MultiSelectDropdown<T extends string | number>({
   items = [],
+  placeholder,
+  maxSelections = 0,
+  showAs = "checkbox",
+  scrollToFirstSelected = true,
   defaultSelectedIDs = [],
   includeAllItem = false,
   onSelectionChange,
@@ -47,16 +55,22 @@ export default function MultiSelectDropdown<T extends string | number>({
 
   const onSelect = useCallback(
     (selected: boolean, id: T) => {
-      const newSelection =
-        includeAllItem && selected && (id === allItem.id || (selectedIDs.includes(allItem.id) && id !== allItem.id))
+      const wasAllItemSelected = includeAllItem && selectedIDs.includes(allItem.id);
+      const isAllItemSelected = includeAllItem && selected && id === allItem.id;
+      const shouldDeselectAllItem = wasAllItemSelected && id !== allItem.id;
+      const isSingleSelection = maxSelections === 1;
+      const newSelection = selected
+        ? isSingleSelection || isAllItemSelected || shouldDeselectAllItem
           ? [id]
-          : selected
-            ? [...selectedIDs, id]
-            : selectedIDs.filter((s) => s !== id);
+          : [...selectedIDs, id]
+        : selectedIDs.filter((s) => s !== id);
       setSelectedIDs(newSelection);
       onSelectionChange?.(newSelection);
+      if (isSingleSelection || isAllItemSelected) {
+        setOpen(false);
+      }
     },
-    [includeAllItem, selectedIDs, onSelectionChange, allItem.id],
+    [includeAllItem, selectedIDs, onSelectionChange, allItem.id]
   );
 
   useEffect(() => {
@@ -75,6 +89,7 @@ export default function MultiSelectDropdown<T extends string | number>({
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           className={`${styles.multiSelectDropdownTextField} hide-scrollbar`}
+          placeholder={selectedIDs?.length <= 0 ? placeholder : undefined}
         >
           <TextField.Slot className={styles.multiSelectDropdownTextFieldSlot}>
             <ResultsPanel
@@ -103,6 +118,9 @@ export default function MultiSelectDropdown<T extends string | number>({
             setSearchValue("");
           }}
           items={filteredItems}
+          maxSelections={maxSelections}
+          scrollToFirstSelected={scrollToFirstSelected}
+          showAs={showAs}
           selectedIDs={selectedIDs}
           onSelect={onSelect}
           positionPreference={positionPreference}
