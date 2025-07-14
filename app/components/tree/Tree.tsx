@@ -13,7 +13,6 @@ interface TreeProps<T extends TreeItemData<T>> {
 
 export default function Tree<T extends TreeItemData<T>>({ root, level, ...config }: TreeProps<T> & TreeConfig<T>) {
   const isReorderEnabled = config.reorder?.enabled || false;
-  console.log("Tree render", root.id, level, isReorderEnabled);
   return (
     <Flex direction={"column"} gap="2" ml={level === 0 ? undefined : "5"}>
       {/* Render items in section */}
