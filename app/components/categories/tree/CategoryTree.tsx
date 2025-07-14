@@ -77,6 +77,7 @@ export default function CategoryTree({
       getFor: getOptionalNodes,
     },
     reorder: {
+      enabled: true,
       allowed: (item, parent) => true,
       handler: onReorder,
     },

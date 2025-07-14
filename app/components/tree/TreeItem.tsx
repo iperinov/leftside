@@ -26,8 +26,9 @@ export default function TreeItem<T extends TreeItemData<T>>({
   const hasChildren = item.children && item.children.length > 0;
   const canExpandItem = (config.expand?.allowed(item, level) || false) && (hasChildren || config.addToParent?.allowed(level + 1, item) || false);
   const itemExpanded = config.expand?.itemIDs.includes(item.id);
+  const hideItem = config.filter ? config.filter.hideItem?.(item) : false;
 
-  return (
+  return !hideItem && (
     <>
       <Flex gap="2" align="center">
         <IconButton
@@ -43,5 +44,5 @@ export default function TreeItem<T extends TreeItemData<T>>({
 
       {!dragging && canExpandItem && itemExpanded && <Tree root={item} level={level + 1} {...config} />}
     </>
-  );
+  )
 }
