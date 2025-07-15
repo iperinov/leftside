@@ -103,6 +103,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
   addCategory: (parentUUID, newItem) => {
     newItem.focusAttention = true;
     const rootCategory = structuredClone(get().rootCategory);
+    console.log("Adding new item:", newItem, "to parent:", parentUUID);
     if (parentUUID === rootCategoryUUID) {
       rootCategory.children = [...(rootCategory.children || []), newItem];
     } else if (rootCategory.children) {

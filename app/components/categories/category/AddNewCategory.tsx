@@ -19,7 +19,7 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
   if (!parent || parent.type !== "nested") throw new Error(`Parent with ID ${parentUUID} not found or not nested type`);
   const siblings = parent.children || [];
 
-  const onAddConfirmed = (name: string, type: TemplateType, sports: string[], leagues: string[]) => {
+  const onAddConfirmed = (name: string, type: TemplateType, sports: string[], leagues: string[], metaSport?: string, icon?: string) => {
     const baseCategory = {
       id: uuidv4(),
       name,
@@ -30,6 +30,8 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
         addCategory(parentUUID, {
           ...baseCategory,
           type: "nested",
+          iconID: icon,
+          sportID: metaSport,
           children: [],
         });
         break;

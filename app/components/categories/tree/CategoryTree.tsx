@@ -15,7 +15,7 @@ interface CategoryTreeProps {
   onDelete?: (item: { id: string }) => void;
   onDuplicate?: (item: { id: string; name: string }) => void;
   onReorder?: (parent: CategoryTreeItem, childID: string, movedOnPlaceOfChildID: string) => void;
-  getOptionalNodes?: (item: CategoryTreeItem) => OptionalNode[];
+  getOptionalNodes?: (item: CategoryTreeItem, level: number) => OptionalNode[];
 }
 
 export default function CategoryTree({

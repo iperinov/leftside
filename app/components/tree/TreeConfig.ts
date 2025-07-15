@@ -39,7 +39,7 @@ export interface OptionalNode {
   node: React.ReactNode;
 }
 interface OptionalsConfig<T extends TreeItemData<T>> {
-  getFor: (item: T) => OptionalNode[];
+  getFor: (item: T, level: number) => OptionalNode[];
 }
 
 interface FocusAttentionConfig<T extends TreeItemData<T>> {

@@ -10,6 +10,7 @@ import type CategoryTreeItem from "./tree/CategoryTreeItem";
 import ConfirmDialog from "../dialogs/ConfirmDialog.";
 import { BookmarkFilledIcon, BookmarkIcon, StarFilledIcon, StarIcon } from "@radix-ui/react-icons";
 import TwoStateIconWithHint from "../shared/TwoStateIconWithHintProps";
+import AwesomeIcon, { getAwesomeIconClassForSport } from "./AwesomeIcon";
 
 interface ConfigurationContentSidebarProps {
   selectedUUID: string;
@@ -74,7 +75,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     setChangePreselectionData(undefined);
   };
 
-  const preselectionIconsFor = (item: CategoryTreeItem) => {
+  const preselectionIconsFor = (item: CategoryTreeItem, level: number) => {
     const isItemFlat = item.type === "flat";
     if (!isItemFlat) return [];
     const isItemPreselected = preselected.some((preselectedItem) => preselectedItem.uuid === item.id);
@@ -113,6 +114,16 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     return icons;
   };
 
+  const sportIconFor = (sportCategory: CategoryTreeItem, level: number) => {
+    if (level !== 0 || sportCategory.type !== "nested") return [];
+    return sportCategory.iconID ? [{key: sportCategory.iconID, node: <AwesomeIcon sportUUID={sportCategory.iconID} size="1"/>}] : [];
+  }
+
+  const optionalNodes = (item: CategoryTreeItem, level: number) => [
+    ...preselectionIconsFor(item, level),
+    ...sportIconFor(item, level),
+  ];
+
   return (
     <>
       <aside className={className}>
@@ -124,7 +135,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
           onDelete={setDeleteItemData}
           onDuplicate={(item) => setDuplicateItemData({ ...item, parentID: findParentCategory(item.id)?.id || "" })}
           onReorder={(parent, childID, movedOnPlaceOfChildID) => moveCategoryTo(parent.id, childID, movedOnPlaceOfChildID)}
-          getOptionalNodes={preselectionIconsFor}
+          getOptionalNodes={optionalNodes}
         />
       </aside>
 

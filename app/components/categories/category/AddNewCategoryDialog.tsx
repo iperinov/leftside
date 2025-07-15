@@ -91,7 +91,7 @@ export default function AddNewCategoryDialog({
   const handleSave = useCallback(() => {
     onConfirm(name.trim(), type, selectedSportIDs, selectedLeagueIDs, selectedMetaSportID, selectedIconID);
     setIsOpen(false);
-  }, [name, type, selectedLeagueIDs, selectedSportIDs, onConfirm]);
+  }, [name, type, selectedLeagueIDs, selectedSportIDs, selectedMetaSportID, selectedIconID, onConfirm]);
 
   const handlMetaSportSelectionChange = useCallback((selectedIDs: string[]) => {
     if (selectedIDs.length > 1) throw new Error("Only one meta sport can be selected");
@@ -160,7 +160,7 @@ export default function AddNewCategoryDialog({
                   />
                 </FormRow>
                 <FormRow label="Select icon">
-                  <AwesomeIconSelect sports={sportItems} fallbackIconID="medal" selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
+                  <AwesomeIconSelect sports={sportItems} fallbackIconID="fa-medal" selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
                 </FormRow>
               </>
             )}

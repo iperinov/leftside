@@ -1,10 +1,10 @@
-import { Avatar, Button, Flex, Grid, Popover } from "@radix-ui/themes";
+import { Button, Flex, Popover } from "@radix-ui/themes";
 import type ItemData from "~/types/ItemData";
 import styles from "./AwesomeIconSelect.module.css";
-import { sportInfo } from "~/api/general/sport-info-uuid.service";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useState } from "react";
 import { isClassAvailable } from "~/utils/isClassAvailable";
+import AwesomeIcon, { awesomeIconClassStyles, DefaultAwesomeIcon, getAwesomeIconClassForSport } from "../AwesomeIcon";
 
 interface AwesomeIconSelectProps {
   sports: ItemData<string>[];
@@ -13,31 +13,28 @@ interface AwesomeIconSelectProps {
   onSelect?: (iconID: string) => void;
 }
 
-export default function AwesomeIconSelect({ sports, selectedID, fallbackIconID = "image", onSelect }: AwesomeIconSelectProps) {
+export default function AwesomeIconSelect({ sports, selectedID, fallbackIconID = "fa-image", onSelect }: AwesomeIconSelectProps) {
   const [open, setOpen] = useState(false);
-
-  const iconClassStyles = "fa-solid fa-3x";
-  const fallbackAwesomeIconClass = `${iconClassStyles} fa-${fallbackIconID}`;
-  const getAwesomeIconClass = (sportUUID: string): string | undefined => {
-    const iconClass = `${iconClassStyles} fa-${sportInfo.getShortDescription(sportUUID)}`;
-    return isClassAvailable(iconClass) ? iconClass : undefined;
-  };
-  const availableIconClasses = [...sports.flatMap((sport) => {
-    const iconClassForSport = getAwesomeIconClass(sport.id);
-    return iconClassForSport && isClassAvailable(iconClassForSport) ? {id: sport.id, value: iconClassForSport} : [];
-  }), {id: "", value: fallbackAwesomeIconClass}];
-  const columns = availableIconClasses.length > 4 ? 4 : availableIconClasses.length;
-  const rows = availableIconClasses.length > 4 ? Math.ceil(availableIconClasses.length / 4) : 1;
+  const iconSize = "3";
+  const fallbackAwesomeIconClass = `${awesomeIconClassStyles(iconSize)} ${fallbackIconID}`;
+  const availableIconClasses = [
+    ...sports.flatMap((sport) => {
+      const iconClassForSport = getAwesomeIconClassForSport(sport.id, iconSize);
+      return iconClassForSport && isClassAvailable(iconClassForSport) ? { id: sport.id, value: iconClassForSport } : [];
+    }),
+    { id: "", value: fallbackAwesomeIconClass },
+  ];
 
   return (
     <Popover.Root open={open} onOpenChange={setOpen} modal={true}>
       <Popover.Trigger>
-        <i className={`${styles.iconTrigger} ${selectedID ? getAwesomeIconClass(selectedID) || fallbackAwesomeIconClass : fallbackAwesomeIconClass}`} />
+        <span>{selectedID ? <AwesomeIcon sportUUID={selectedID} fallbackAwesomeIconClass={fallbackIconID} size="3" /> : <DefaultAwesomeIcon size="3" />}</span>
       </Popover.Trigger>
       <Popover.Content className={styles.iconContent} maxWidth="300px" sideOffset={5} align="start">
         <Flex gap="2" wrap="wrap" justify="between">
           {availableIconClasses.map((iconClass) => (
-            <i
+            <AwesomeIcon
+              sportUUID={iconClass.id}
               key={iconClass.id}
               className={`${styles.icon} ${iconClass.value}`}
               onClick={() => {

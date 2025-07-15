@@ -10,12 +10,14 @@ import type TreeItemData from "./TreeItemData";
 interface TreeItemCardProps<T extends TreeItemData<T>> {
   item: T;
   parent: T;
+  level: number;
   dragging?: boolean;
 }
 
 export default function TreeItemCard<T extends TreeItemData<T>>({
   item,
   parent,
+  level,
   attributes,
   listeners,
   dragging = false,
@@ -25,7 +27,7 @@ export default function TreeItemCard<T extends TreeItemData<T>>({
   const isSelectable = config.selection?.allowed(item);
   const enableReorder = config.reorder?.allowed(item, parent) && !item.pending;
   const isSelected = config.selection?.selectedID === item.id;
-  const optionals = config.additionalElements?.getFor(item) || [];
+  const optionals = config.additionalElements?.getFor(item, level) || [];
   const contextMenu = config.contextMenu?.itemsFor?.(item) || [];
 
   useEffect(() => {
