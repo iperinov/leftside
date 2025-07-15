@@ -79,7 +79,7 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
       open={true}
       onConfirm={onAddConfirmed}
       onCancel={onCanceled}
-      validName={(name) => !siblings.find((item) => item.name === name.trim())}
+      validName={(name) => name !== "" && !siblings.find((item) => item.name === name.trim())}
     />
   );
 }
