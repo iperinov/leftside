@@ -1,5 +1,5 @@
 import { Button, Dialog, Flex, Select, Text, TextField } from "@radix-ui/themes";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import type ItemData from "~/types/ItemData";
 import formatOrdinal from "~/utils/formatOrdinal";
@@ -7,6 +7,7 @@ import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
 import { TemplateType } from "../TemplateType";
 import styles from "./AddNewCategoryDialog.module.css";
+import AwesomeIconSelect from "~/components/categories/category/AwesomeIconSelect";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;
@@ -55,17 +56,27 @@ function FormRow({ label, children }: React.PropsWithChildren<FormRowProps>) {
 interface AddNewCategoryDialogProps {
   open?: boolean;
   level: number;
-  onConfirm: (name: string, type: TemplateType, sports: string[], leagues: string[]) => void;
+  templateType?: TemplateType;
+  onConfirm: (name: string, type: TemplateType, sports: string[], leagues: string[], metaSport?: string, icon?: string) => void;
   onCancel?: () => void;
   validName?: (name: string) => boolean;
 }
 
-export default function AddNewCategoryDialog({ open = true, level, onConfirm, onCancel = () => {}, validName = () => true }: AddNewCategoryDialogProps) {
+export default function AddNewCategoryDialog({
+  open = true,
+  level,
+  templateType = TemplateType.Parent,
+  onConfirm,
+  onCancel = () => {},
+  validName = () => true,
+}: AddNewCategoryDialogProps) {
   const { data: catalog, isLoading, error } = useCatalog();
   const [isOpen, setIsOpen] = useState(open);
   const [name, setName] = useState("");
-  const [type, setType] = useState<TemplateType>(TemplateType.Child);
+  const [type, setType] = useState<TemplateType>(templateType);
   const [selectedSportIDs, setSelectedSportsIDs] = useState<string[]>([]);
+  const [selectedIconID, setSelectedIconID] = useState<string | undefined>(undefined);
+  const [selectedMetaSportID, setSelectedMetaSportID] = useState<string | undefined>(undefined);
   const [selectedLeagueIDs, setSelectedLeaguesIDs] = useState<string[]>([]);
 
   const handleClose = useCallback(
@@ -74,13 +85,25 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
       //setName("");
       onCancel();
     },
-    [onCancel],
+    [onCancel]
   );
 
   const handleSave = useCallback(() => {
-    onConfirm(name.trim(), type, selectedSportIDs, selectedLeagueIDs);
+    onConfirm(name.trim(), type, selectedSportIDs, selectedLeagueIDs, selectedMetaSportID, selectedIconID);
     setIsOpen(false);
   }, [name, type, selectedLeagueIDs, selectedSportIDs, onConfirm]);
+
+  const handlMetaSportSelectionChange = useCallback((selectedIDs: string[]) => {
+    if (selectedIDs.length > 1) throw new Error("Only one meta sport can be selected");
+    setSelectedMetaSportID(selectedIDs.length >= 1 ? selectedIDs[0] : undefined);
+    if (selectedIDs.length >= 1) {
+      setSelectedIconID(selectedIDs[0]);
+    }
+  }, []);
+
+  const handleIconSelectionChange = useCallback((selectedID?: string) => {
+    setSelectedIconID(selectedID);
+  }, []);
 
   const handleSportsSelectionChange = useCallback(
     (selectedIDs: string[]) => {
@@ -88,20 +111,27 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
       setSelectedSportsIDs(selectedIDs);
       setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
     },
-    [selectedLeagueIDs, catalog],
+    [selectedLeagueIDs, catalog]
   );
 
   const handleLeaguesSelectionChange = useCallback((selectedIDs: string[]) => {
     setSelectedLeaguesIDs(selectedIDs);
   }, []);
 
-  const getSportItems = (): ItemData<string>[] => {
+  const sportItems = useMemo((): ItemData<string>[] => {
     return catalog?.sports?.map((sport) => ({ id: String(sport.uuid), name: sport.name })) || [];
-  };
+  }, [catalog]);
 
   const getLeagueItems = (sportIDs: string[]): ItemData<string>[] => {
     return catalog?.filteredLeaguesBy(sportIDs).map((league) => ({ id: league.uuid, name: league.name })) || [];
   };
+
+  const validForm = useCallback(() => {
+    if (!validName(name)) return false;
+    if (type === TemplateType.AllLeagues && selectedSportIDs.length === 0) return false; 
+    if (type === TemplateType.LiveAndUpcoming && (selectedLeagueIDs.length === 0 || selectedSportIDs.length === 0)) return false;
+    return true;
+  }, [name, type, level, selectedIconID, selectedSportIDs, selectedLeagueIDs, validName]);
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>
@@ -117,9 +147,26 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
             <FormRow label="Type">
               <ItemTypeSelect value={type} level={level + 1} onChange={(type) => setType(type)} />
             </FormRow>
+            {type === TemplateType.Parent && level === 0 && (
+              <>
+                <FormRow label="Select sport (optional)">
+                  <MultiSelectDropdown
+                    items={sportItems}
+                    placeholder="Select sport (optional)"
+                    defaultSelectedIDs={selectedSportIDs}
+                    onSelectionChange={handlMetaSportSelectionChange}
+                    maxSelections={1}
+                    showAs="plain"
+                  />
+                </FormRow>
+                <FormRow label="Select icon">
+                  <AwesomeIconSelect sports={sportItems} fallbackIconID="medal" selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
+                </FormRow>
+              </>
+            )}
             {(type === TemplateType.AllLeagues || type === TemplateType.LiveAndUpcoming) && (
               <FormRow label="Select sport">
-                <MultiSelectDropdown items={getSportItems()} defaultSelectedIDs={selectedSportIDs} onSelectionChange={handleSportsSelectionChange} />
+                <MultiSelectDropdown items={sportItems} defaultSelectedIDs={selectedSportIDs} onSelectionChange={handleSportsSelectionChange} />
               </FormRow>
             )}
             {type === TemplateType.LiveAndUpcoming && (
@@ -140,7 +187,7 @@ export default function AddNewCategoryDialog({ open = true, level, onConfirm, on
               Cancel
             </Button>
           </Dialog.Close>
-          <Button onClick={handleSave} disabled={name === "" || !validName(name)}>
+          <Button onClick={handleSave} disabled={!validForm()}>
             Save
           </Button>
         </Flex>

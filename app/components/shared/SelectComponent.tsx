@@ -1,5 +1,4 @@
 import { Select } from "@radix-ui/themes";
-import { useMemo } from "react";
 import type ItemData from "~/types/ItemData";
 
 interface ItemTypeSelectProps<T> {

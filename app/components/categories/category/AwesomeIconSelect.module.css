@@ -1,0 +1,17 @@
+.icon {
+    opacity: 0.6;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--accent-8);
+}
+
+.icon[data-selected] {
+    opacity: 1 !important;
+    border: 2px solid var(--accent-12);
+}
+
+.icon:hover {
+    opacity: 1;
+    box-shadow: 2px 2px 5px var(--accent-8);
+}

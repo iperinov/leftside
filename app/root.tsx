@@ -9,7 +9,6 @@ import { Toaster } from "sonner";
 import { queryClient } from "~/lib/queryClient";
 import type { Route } from "./+types/root";
 import "~/styles/global.css";
-import { useBooks } from "./hooks/useBooks";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
