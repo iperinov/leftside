@@ -160,7 +160,7 @@ export default function AddNewCategoryDialog({
                   />
                 </FormRow>
                 <FormRow label="Select icon">
-                  <AwesomeIconSelect sports={sportItems} fallbackIconID="fa-medal" selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
+                  <AwesomeIconSelect sports={sportItems} selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
                 </FormRow>
               </>
             )}

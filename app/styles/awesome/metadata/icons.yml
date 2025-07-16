@@ -1,0 +1,715 @@
+---
+snooker:
+  label: snooker
+  styles:
+    - custom
+  unicode: e062
+  voted: false
+ico-arrowup:
+  label: ico-arrowup
+  styles:
+    - custom
+  unicode: e00f
+  voted: false
+ico-mute:
+  label: ico-mute
+  styles:
+    - custom
+  unicode: e015
+  voted: false
+ico-mybetsoff:
+  label: ico-mybetsoff
+  styles:
+    - custom
+  unicode: e08d
+  voted: false
+tennis:
+  label: tennis
+  styles:
+    - custom
+  unicode: e065
+  voted: false
+ilu-biometric-default:
+  label: ilu-biometric-default
+  styles:
+    - custom
+  unicode: e08f
+  voted: false
+ico-upcoming:
+  label: ico-upcoming
+  styles:
+    - custom
+  unicode: e031
+  voted: false
+ico-compass:
+  label: ico-compass
+  styles:
+    - custom
+  unicode: e008
+  voted: false
+ico-lock:
+  label: ico-lock
+  styles:
+    - custom
+  unicode: e013
+  voted: false
+ico-arrowtop:
+  label: ico-arrowtop
+  styles:
+    - custom
+  unicode: e003
+  voted: false
+motorsport:
+  label: motorsport
+  styles:
+    - custom
+  unicode: e069
+  voted: false
+golf:
+  label: golf
+  styles:
+    - custom
+  unicode: e06d
+  voted: false
+ico-chevronsright:
+  label: ico-chevronsright
+  styles:
+    - custom
+  unicode: e01b
+  voted: false
+ico-useroff:
+  label: ico-useroff
+  styles:
+    - custom
+  unicode: e08b
+  voted: false
+ico-chat:
+  label: ico-chat
+  styles:
+    - custom
+  unicode: e05b
+  voted: false
+ico-transactions:
+  label: ico-transactions
+  styles:
+    - custom
+  unicode: e00b
+  voted: false
+ico-clear:
+  label: ico-clear
+  styles:
+    - custom
+  unicode: e051
+  voted: false
+ico-call:
+  label: ico-call
+  styles:
+    - custom
+  unicode: e059
+  voted: false
+ico-inbox:
+  label: ico-inbox
+  styles:
+    - custom
+  unicode: e052
+  voted: false
+ico-signout:
+  label: ico-signout
+  styles:
+    - custom
+  unicode: e00a
+  voted: false
+ico-email:
+  label: ico-email
+  styles:
+    - custom
+  unicode: e05a
+  voted: false
+ilu-ios-face:
+  label: ilu-ios-face
+  styles:
+    - custom
+  unicode: e076
+  voted: false
+baseball:
+  label: baseball
+  styles:
+    - custom
+  unicode: e068
+  voted: false
+ico-detach:
+  label: ico-detach
+  styles:
+    - custom
+  unicode: e072
+  voted: false
+ico-futures:
+  label: ico-futures
+  styles:
+    - custom
+  unicode: e034
+  voted: false
+ico-mybets:
+  label: ico-mybets
+  styles:
+    - custom
+  unicode: e018
+  voted: false
+sportgeneric:
+  label: sportgeneric
+  styles:
+    - custom
+  unicode: e05d
+  voted: false
+ilu-no-content:
+  label: ilu-no-content
+  styles:
+    - custom
+  unicode: e089
+  voted: false
+ico-unpin:
+  label: ico-unpin
+  styles:
+    - custom
+  unicode: e002
+  voted: false
+ico-volume:
+  label: ico-volume
+  styles:
+    - custom
+  unicode: e055
+  voted: false
+ico-donut:
+  label: ico-donut
+  styles:
+    - custom
+  unicode: e057
+  voted: false
+ico-homeoff:
+  label: ico-homeoff
+  styles:
+    - custom
+  unicode: e08c
+  voted: false
+ico-trash:
+  label: ico-trash
+  styles:
+    - custom
+  unicode: e02c
+  voted: false
+ico-plus:
+  label: ico-plus
+  styles:
+    - custom
+  unicode: e026
+  voted: false
+ico-2chevronright:
+  label: ico-2chevronright
+  styles:
+    - custom
+  unicode: e085
+  voted: false
+rugby:
+  label: rugby
+  styles:
+    - custom
+  unicode: e06e
+  voted: false
+ico-minus:
+  label: ico-minus
+  styles:
+    - custom
+  unicode: e027
+  voted: false
+boxing:
+  label: boxing
+  styles:
+    - custom
+  unicode: e064
+  voted: false
+ilu-android-face:
+  label: ilu-android-face
+  styles:
+    - custom
+  unicode: e07f
+  voted: false
+ilu-stream-loader:
+  label: ilu-stream-loader
+  styles:
+    - custom
+  unicode: e07a
+  voted: false
+ilu-sent:
+  label: ilu-sent
+  styles:
+    - custom
+  unicode: e075
+  voted: false
+ico-chevronright:
+  label: ico-chevronright
+  styles:
+    - custom
+  unicode: e04c
+  voted: false
+ico-betslip:
+  label: ico-betslip
+  styles:
+    - custom
+  unicode: e01a
+  voted: false
+ico-user:
+  label: ico-user
+  styles:
+    - custom
+  unicode: e03c
+  voted: false
+ico-live:
+  label: ico-live
+  styles:
+    - custom
+  unicode: e033
+  voted: false
+ico-communication:
+  label: ico-communication
+  styles:
+    - custom
+  unicode: e005
+  voted: false
+ico-live1:
+  label: ico-live1
+  styles:
+    - custom
+  unicode: e088
+  voted: false
+ico-success:
+  label: ico-success
+  styles:
+    - custom
+  unicode: e012
+  voted: false
+ico-leagues:
+  label: ico-leagues
+  styles:
+    - custom
+  unicode: e058
+  voted: false
+ico-chevronup:
+  label: ico-chevronup
+  styles:
+    - custom
+  unicode: e023
+  voted: false
+volley:
+  label: volley
+  styles:
+    - custom
+  unicode: e066
+  voted: false
+cricket:
+  label: cricket
+  styles:
+    - custom
+  unicode: e060
+  voted: false
+ico-info:
+  label: ico-info
+  styles:
+    - custom
+  unicode: e011
+  voted: false
+ico-arrowdown:
+  label: ico-arrowdown
+  styles:
+    - custom
+  unicode: e047
+  voted: false
+ico-locationoff:
+  label: ico-locationoff
+  styles:
+    - custom
+  unicode: e00e
+  voted: false
+ico-playerprotection:
+  label: ico-playerprotection
+  styles:
+    - custom
+  unicode: e009
+  voted: false
+ico-search:
+  label: ico-search
+  styles:
+    - custom
+  unicode: e02b
+  voted: false
+ico-collapseall:
+  label: ico-collapseall
+  styles:
+    - custom
+  unicode: e024
+  voted: false
+ico-chevronleft:
+  label: ico-chevronleft
+  styles:
+    - custom
+  unicode: e021
+  voted: false
+ico-multibet:
+  label: ico-multibet
+  styles:
+    - custom
+  unicode: e030
+  voted: false
+handball:
+  label: handball
+  styles:
+    - custom
+  unicode: e05e
+  voted: false
+ico-breadcrumb:
+  label: ico-breadcrumb
+  styles:
+    - custom
+  unicode: e014
+  voted: false
+ico-edit:
+  label: ico-edit
+  styles:
+    - custom
+  unicode: e029
+  voted: false
+ico-show:
+  label: ico-show
+  styles:
+    - custom
+  unicode: e04b
+  voted: false
+basketball:
+  label: basketball
+  styles:
+    - custom
+  unicode: e067
+  voted: false
+ilu-acc-blocked:
+  label: ilu-acc-blocked
+  styles:
+    - custom
+  unicode: e074
+  voted: false
+ico-account:
+  label: ico-account
+  styles:
+    - custom
+  unicode: e00c
+  voted: false
+ico-wallet:
+  label: ico-wallet
+  styles:
+    - custom
+  unicode: e054
+  voted: false
+table-tenn:
+  label: table-tenn
+  styles:
+    - custom
+  unicode: e05c
+  voted: false
+ico-refresh:
+  label: ico-refresh
+  styles:
+    - custom
+  unicode: e02d
+  voted: false
+ilu-location-error:
+  label: ilu-location-error
+  styles:
+    - custom
+  unicode: e077
+  voted: false
+ico-support:
+  label: ico-support
+  styles:
+    - custom
+  unicode: e053
+  voted: false
+ilu-kyc:
+  label: ilu-kyc
+  styles:
+    - custom
+  unicode: e073
+  voted: false
+ico-burger:
+  label: ico-burger
+  styles:
+    - custom
+  unicode: e02e
+  voted: false
+ico-video:
+  label: ico-video
+  styles:
+    - custom
+  unicode: e04a
+  voted: false
+darts:
+  label: darts
+  styles:
+    - custom
+  unicode: e071
+  voted: false
+ico-2chevronleft:
+  label: ico-2chevronleft
+  styles:
+    - custom
+  unicode: e084
+  voted: false
+racetrack:
+  label: racetrack
+  styles:
+    - custom
+  unicode: e092
+  voted: false
+futsal:
+  label: futsal
+  styles:
+    - custom
+  unicode: e06a
+  voted: false
+ico-expandall:
+  label: ico-expandall
+  styles:
+    - custom
+  unicode: e025
+  voted: false
+mma:
+  label: mma
+  styles:
+    - custom
+  unicode: e05f
+  voted: false
+ico-close:
+  label: ico-close
+  styles:
+    - custom
+  unicode: e028
+  voted: false
+ico-starsolid:
+  label: ico-starsolid
+  styles:
+    - custom
+  unicode: e01f
+  voted: false
+ice-hock:
+  label: ice-hock
+  styles:
+    - custom
+  unicode: e06f
+  voted: false
+ico-pause:
+  label: ico-pause
+  styles:
+    - custom
+  unicode: e017
+  voted: false
+ico-derexpand:
+  label: ico-derexpand
+  styles:
+    - custom
+  unicode: e01e
+  voted: false
+ilu-ios-finger:
+  label: ilu-ios-finger
+  styles:
+    - custom
+  unicode: e080
+  voted: false
+ico-time:
+  label: ico-time
+  styles:
+    - custom
+  unicode: e086
+  voted: false
+ilu-inbox:
+  label: ilu-inbox
+  styles:
+    - custom
+  unicode: e08a
+  voted: false
+ico-pin:
+  label: ico-pin
+  styles:
+    - custom
+  unicode: e04e
+  voted: false
+ico-rules:
+  label: ico-rules
+  styles:
+    - custom
+  unicode: e049
+  voted: false
+ico-security:
+  label: ico-security
+  styles:
+    - custom
+  unicode: e006
+  voted: false
+ico-star:
+  label: ico-star
+  styles:
+    - custom
+  unicode: e01d
+  voted: false
+ico-hide:
+  label: ico-hide
+  styles:
+    - custom
+  unicode: e02a
+  voted: false
+ilu-betslip-empty:
+  label: ilu-betslip-empty
+  styles:
+    - custom
+  unicode: e07c
+  voted: false
+ico-legal:
+  label: ico-legal
+  styles:
+    - custom
+  unicode: e048
+  voted: false
+entertainm:
+  label: entertainm
+  styles:
+    - custom
+  unicode: e063
+  voted: false
+ico-x-point:
+  label: ico-x-point
+  styles:
+    - custom
+  unicode: e081
+  voted: false
+ico-play:
+  label: ico-play
+  styles:
+    - custom
+  unicode: e016
+  voted: false
+jaialai:
+  label: jaialai
+  styles:
+    - custom
+  unicode: e06b
+  voted: false
+ilu-stream-error:
+  label: ilu-stream-error
+  styles:
+    - custom
+  unicode: e078
+  voted: false
+esports:
+  label: esports
+  styles:
+    - custom
+  unicode: e061
+  voted: false
+ilu-flag:
+  label: ilu-flag
+  styles:
+    - custom
+  unicode: e082
+  voted: false
+ilu-no-results:
+  label: ilu-no-results
+  styles:
+    - custom
+  unicode: e079
+  voted: false
+ico-addfunds:
+  label: ico-addfunds
+  styles:
+    - custom
+  unicode: e02f
+  voted: false
+ico-privacy:
+  label: ico-privacy
+  styles:
+    - custom
+  unicode: e010
+  voted: false
+ico-activity:
+  label: ico-activity
+  styles:
+    - custom
+  unicode: e007
+  voted: false
+soccer:
+  label: soccer
+  styles:
+    - custom
+  unicode: e06c
+  voted: false
+ico-check:
+  label: ico-check
+  styles:
+    - custom
+  unicode: e020
+  voted: false
+ico-dercollapse:
+  label: ico-dercollapse
+  styles:
+    - custom
+  unicode: e01c
+  voted: false
+ilu-android-finger:
+  label: ilu-android-finger
+  styles:
+    - custom
+  unicode: e07b
+  voted: false
+ico-home:
+  label: ico-home
+  styles:
+    - custom
+  unicode: e019
+  voted: false
+ico-date:
+  label: ico-date
+  styles:
+    - custom
+  unicode: e087
+  voted: false
+football:
+  label: football
+  styles:
+    - custom
+  unicode: e070
+  voted: false
+ico-chevrondown:
+  label: ico-chevrondown
+  styles:
+    - custom
+  unicode: e022
+  voted: false
+ico-cleartxt:
+  label: ico-cleartxt
+  styles:
+    - custom
+  unicode: e00d
+  voted: false
+ico-warning:
+  label: ico-warning
+  styles:
+    - custom
+  unicode: e03d
+  voted: false
+ico-betslipoff:
+  label: ico-betslipoff
+  styles:
+    - custom
+  unicode: e08e
+  voted: false
+ico-settings:
+  label: ico-settings
+  styles:
+    - custom
+  unicode: e001
+  voted: false

@@ -1,7 +1,6 @@
 import { Button, Flex, Popover } from "@radix-ui/themes";
 import type ItemData from "~/types/ItemData";
 import styles from "./AwesomeIconSelect.module.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useState } from "react";
 import { isClassAvailable } from "~/utils/isClassAvailable";
 import AwesomeIcon, { awesomeIconClassStyles, DefaultAwesomeIcon, getAwesomeIconClassForSport } from "../AwesomeIcon";
@@ -13,7 +12,7 @@ interface AwesomeIconSelectProps {
   onSelect?: (iconID: string) => void;
 }
 
-export default function AwesomeIconSelect({ sports, selectedID, fallbackIconID = "fa-image", onSelect }: AwesomeIconSelectProps) {
+export default function AwesomeIconSelect({ sports, selectedID, fallbackIconID = "fa-sportsgeneric", onSelect }: AwesomeIconSelectProps) {
   const [open, setOpen] = useState(false);
   const iconSize = "3";
   const fallbackAwesomeIconClass = `${awesomeIconClassStyles(iconSize)} ${fallbackIconID}`;
@@ -41,7 +40,7 @@ export default function AwesomeIconSelect({ sports, selectedID, fallbackIconID =
                 onSelect?.(iconClass.id);
                 setOpen(false);
               }}
-              data-selected={selectedID === iconClass.id ? "true" : undefined}
+              selected={selectedID === iconClass.id}
             />
           ))}
         </Flex>

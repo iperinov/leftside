@@ -1,0 +1,182 @@
+// variables
+// --------------------------
+
+@fa-css-prefix            : fa;
+@fa-style                 : 900;
+@fa-style-family          : "Font Awesome 6 Pro";
+
+@fa-icon-property         : --fa;
+@fa-duotone-icon-property : --fa--fa;
+
+@fa-display               : inline-block;
+
+@fa-fw-width              : (20em / 16);
+@fa-inverse               : #fff;
+
+@fa-border-color          : #eee;
+@fa-border-padding        : .2em .25em .15em;
+@fa-border-radius         : .1em;
+@fa-border-style          : solid;
+@fa-border-width          : .08em;
+
+@fa-size-scale-2xs        : 10;
+@fa-size-scale-xs         : 12;
+@fa-size-scale-sm         : 14;
+@fa-size-scale-base       : 16;
+@fa-size-scale-lg         : 20;
+@fa-size-scale-xl         : 24;
+@fa-size-scale-2xl        : 32;
+
+.fa-sizes() {
+  2xs                     : @fa-size-scale-2xs;
+  xs                      : @fa-size-scale-xs;
+  sm                      : @fa-size-scale-sm;
+  lg                      : @fa-size-scale-lg;
+  xl                      : @fa-size-scale-xl;
+  2xl                     : @fa-size-scale-2xl;
+}
+
+@fa-li-width              : 2em;
+@fa-li-margin             : (@fa-li-width * 5/4);
+
+@fa-pull-margin           : .3em;
+
+@fa-primary-opacity       : 1;
+@fa-secondary-opacity     : .4;
+
+@fa-stack-vertical-align  : middle;
+@fa-stack-width           : (@fa-fw-width * 2);
+@fa-stack-z-index         : auto;
+
+@fa-font-display          : block;
+@fa-font-path             : "../webfonts";
+
+
+
+.fa-icons() {
+}
+
+.fa-brand-icons() {
+}
+
+.fa-custom-icons() {
+  baseball: "\e068";
+  basketball: "\e067";
+  boxing: "\e064";
+  cricket: "\e060";
+  darts: "\e071";
+  entertainm: "\e063";
+  esports: "\e061";
+  football: "\e070";
+  futsal: "\e06a";
+  golf: "\e06d";
+  handball: "\e05e";
+  ice-hock: "\e06f";
+  ico-2chevronleft: "\e084";
+  ico-2chevronright: "\e085";
+  ico-account: "\e00c";
+  ico-activity: "\e007";
+  ico-addfunds: "\e02f";
+  ico-arrowdown: "\e047";
+  ico-arrowtop: "\e003";
+  ico-arrowup: "\e00f";
+  ico-betslip: "\e01a";
+  ico-betslipoff: "\e08e";
+  ico-breadcrumb: "\e014";
+  ico-burger: "\e02e";
+  ico-call: "\e059";
+  ico-chat: "\e05b";
+  ico-check: "\e020";
+  ico-chevrondown: "\e022";
+  ico-chevronleft: "\e021";
+  ico-chevronright: "\e04c";
+  ico-chevronsright: "\e01b";
+  ico-chevronup: "\e023";
+  ico-clear: "\e051";
+  ico-cleartxt: "\e00d";
+  ico-close: "\e028";
+  ico-collapseall: "\e024";
+  ico-communication: "\e005";
+  ico-compass: "\e008";
+  ico-date: "\e087";
+  ico-dercollapse: "\e01c";
+  ico-derexpand: "\e01e";
+  ico-detach: "\e072";
+  ico-donut: "\e057";
+  ico-edit: "\e029";
+  ico-email: "\e05a";
+  ico-expandall: "\e025";
+  ico-futures: "\e034";
+  ico-hide: "\e02a";
+  ico-home: "\e019";
+  ico-homeoff: "\e08c";
+  ico-inbox: "\e052";
+  ico-info: "\e011";
+  ico-leagues: "\e058";
+  ico-legal: "\e048";
+  ico-live: "\e033";
+  ico-live1: "\e088";
+  ico-locationoff: "\e00e";
+  ico-lock: "\e013";
+  ico-minus: "\e027";
+  ico-multibet: "\e030";
+  ico-mute: "\e015";
+  ico-mybets: "\e018";
+  ico-mybetsoff: "\e08d";
+  ico-pause: "\e017";
+  ico-pin: "\e04e";
+  ico-play: "\e016";
+  ico-playerprotection: "\e009";
+  ico-plus: "\e026";
+  ico-privacy: "\e010";
+  ico-refresh: "\e02d";
+  ico-rules: "\e049";
+  ico-search: "\e02b";
+  ico-security: "\e006";
+  ico-settings: "\e001";
+  ico-show: "\e04b";
+  ico-signout: "\e00a";
+  ico-star: "\e01d";
+  ico-starsolid: "\e01f";
+  ico-success: "\e012";
+  ico-support: "\e053";
+  ico-time: "\e086";
+  ico-transactions: "\e00b";
+  ico-trash: "\e02c";
+  ico-unpin: "\e002";
+  ico-upcoming: "\e031";
+  ico-user: "\e03c";
+  ico-useroff: "\e08b";
+  ico-video: "\e04a";
+  ico-volume: "\e055";
+  ico-wallet: "\e054";
+  ico-warning: "\e03d";
+  ico-x-point: "\e081";
+  ilu-acc-blocked: "\e074";
+  ilu-android-face: "\e07f";
+  ilu-android-finger: "\e07b";
+  ilu-betslip-empty: "\e07c";
+  ilu-biometric-default: "\e08f";
+  ilu-flag: "\e082";
+  ilu-inbox: "\e08a";
+  ilu-ios-face: "\e076";
+  ilu-ios-finger: "\e080";
+  ilu-kyc: "\e073";
+  ilu-location-error: "\e077";
+  ilu-no-content: "\e089";
+  ilu-no-results: "\e079";
+  ilu-sent: "\e075";
+  ilu-stream-error: "\e078";
+  ilu-stream-loader: "\e07a";
+  jaialai: "\e06b";
+  mma: "\e05f";
+  motorsport: "\e069";
+  racetrack: "\e092";
+  rugby: "\e06e";
+  snooker: "\e062";
+  soccer: "\e06c";
+  sportgeneric: "\e05d";
+  table-tenn: "\e05c";
+  tennis: "\e065";
+  volley: "\e066";
+}

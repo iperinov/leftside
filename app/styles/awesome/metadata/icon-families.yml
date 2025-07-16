@@ -1,0 +1,953 @@
+---
+snooker:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: snooker
+  unicode: e062
+  voted: false
+ico-arrowup:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-arrowup
+  unicode: e00f
+  voted: false
+ico-mute:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-mute
+  unicode: e015
+  voted: false
+ico-mybetsoff:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-mybetsoff
+  unicode: e08d
+  voted: false
+tennis:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: tennis
+  unicode: e065
+  voted: false
+ilu-biometric-default:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-biometric-default
+  unicode: e08f
+  voted: false
+ico-upcoming:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-upcoming
+  unicode: e031
+  voted: false
+ico-compass:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-compass
+  unicode: e008
+  voted: false
+ico-lock:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-lock
+  unicode: e013
+  voted: false
+ico-arrowtop:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-arrowtop
+  unicode: e003
+  voted: false
+motorsport:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: motorsport
+  unicode: e069
+  voted: false
+golf:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: golf
+  unicode: e06d
+  voted: false
+ico-chevronsright:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-chevronsright
+  unicode: e01b
+  voted: false
+ico-useroff:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-useroff
+  unicode: e08b
+  voted: false
+ico-chat:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-chat
+  unicode: e05b
+  voted: false
+ico-transactions:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-transactions
+  unicode: e00b
+  voted: false
+ico-clear:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-clear
+  unicode: e051
+  voted: false
+ico-call:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-call
+  unicode: e059
+  voted: false
+ico-inbox:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-inbox
+  unicode: e052
+  voted: false
+ico-signout:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-signout
+  unicode: e00a
+  voted: false
+ico-email:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-email
+  unicode: e05a
+  voted: false
+ilu-ios-face:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-ios-face
+  unicode: e076
+  voted: false
+baseball:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: baseball
+  unicode: e068
+  voted: false
+ico-detach:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-detach
+  unicode: e072
+  voted: false
+ico-futures:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-futures
+  unicode: e034
+  voted: false
+ico-mybets:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-mybets
+  unicode: e018
+  voted: false
+sportgeneric:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: sportgeneric
+  unicode: e05d
+  voted: false
+ilu-no-content:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-no-content
+  unicode: e089
+  voted: false
+ico-unpin:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-unpin
+  unicode: e002
+  voted: false
+ico-volume:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-volume
+  unicode: e055
+  voted: false
+ico-donut:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-donut
+  unicode: e057
+  voted: false
+ico-homeoff:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-homeoff
+  unicode: e08c
+  voted: false
+ico-trash:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-trash
+  unicode: e02c
+  voted: false
+ico-plus:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-plus
+  unicode: e026
+  voted: false
+ico-2chevronright:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-2chevronright
+  unicode: e085
+  voted: false
+rugby:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: rugby
+  unicode: e06e
+  voted: false
+ico-minus:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-minus
+  unicode: e027
+  voted: false
+boxing:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: boxing
+  unicode: e064
+  voted: false
+ilu-android-face:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-android-face
+  unicode: e07f
+  voted: false
+ilu-stream-loader:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-stream-loader
+  unicode: e07a
+  voted: false
+ilu-sent:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-sent
+  unicode: e075
+  voted: false
+ico-chevronright:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-chevronright
+  unicode: e04c
+  voted: false
+ico-betslip:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-betslip
+  unicode: e01a
+  voted: false
+ico-user:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-user
+  unicode: e03c
+  voted: false
+ico-live:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-live
+  unicode: e033
+  voted: false
+ico-communication:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-communication
+  unicode: e005
+  voted: false
+ico-live1:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-live1
+  unicode: e088
+  voted: false
+ico-success:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-success
+  unicode: e012
+  voted: false
+ico-leagues:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-leagues
+  unicode: e058
+  voted: false
+ico-chevronup:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-chevronup
+  unicode: e023
+  voted: false
+volley:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: volley
+  unicode: e066
+  voted: false
+cricket:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: cricket
+  unicode: e060
+  voted: false
+ico-info:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-info
+  unicode: e011
+  voted: false
+ico-arrowdown:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-arrowdown
+  unicode: e047
+  voted: false
+ico-locationoff:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-locationoff
+  unicode: e00e
+  voted: false
+ico-playerprotection:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-playerprotection
+  unicode: e009
+  voted: false
+ico-search:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-search
+  unicode: e02b
+  voted: false
+ico-collapseall:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-collapseall
+  unicode: e024
+  voted: false
+ico-chevronleft:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-chevronleft
+  unicode: e021
+  voted: false
+ico-multibet:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-multibet
+  unicode: e030
+  voted: false
+handball:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: handball
+  unicode: e05e
+  voted: false
+ico-breadcrumb:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-breadcrumb
+  unicode: e014
+  voted: false
+ico-edit:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-edit
+  unicode: e029
+  voted: false
+ico-show:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-show
+  unicode: e04b
+  voted: false
+basketball:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: basketball
+  unicode: e067
+  voted: false
+ilu-acc-blocked:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-acc-blocked
+  unicode: e074
+  voted: false
+ico-account:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-account
+  unicode: e00c
+  voted: false
+ico-wallet:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-wallet
+  unicode: e054
+  voted: false
+table-tenn:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: table-tenn
+  unicode: e05c
+  voted: false
+ico-refresh:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-refresh
+  unicode: e02d
+  voted: false
+ilu-location-error:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-location-error
+  unicode: e077
+  voted: false
+ico-support:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-support
+  unicode: e053
+  voted: false
+ilu-kyc:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-kyc
+  unicode: e073
+  voted: false
+ico-burger:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-burger
+  unicode: e02e
+  voted: false
+ico-video:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-video
+  unicode: e04a
+  voted: false
+darts:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: darts
+  unicode: e071
+  voted: false
+ico-2chevronleft:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-2chevronleft
+  unicode: e084
+  voted: false
+racetrack:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: racetrack
+  unicode: e092
+  voted: false
+futsal:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: futsal
+  unicode: e06a
+  voted: false
+ico-expandall:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-expandall
+  unicode: e025
+  voted: false
+mma:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: mma
+  unicode: e05f
+  voted: false
+ico-close:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-close
+  unicode: e028
+  voted: false
+ico-starsolid:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-starsolid
+  unicode: e01f
+  voted: false
+ice-hock:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ice-hock
+  unicode: e06f
+  voted: false
+ico-pause:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-pause
+  unicode: e017
+  voted: false
+ico-derexpand:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-derexpand
+  unicode: e01e
+  voted: false
+ilu-ios-finger:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-ios-finger
+  unicode: e080
+  voted: false
+ico-time:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-time
+  unicode: e086
+  voted: false
+ilu-inbox:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-inbox
+  unicode: e08a
+  voted: false
+ico-pin:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-pin
+  unicode: e04e
+  voted: false
+ico-rules:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-rules
+  unicode: e049
+  voted: false
+ico-security:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-security
+  unicode: e006
+  voted: false
+ico-star:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-star
+  unicode: e01d
+  voted: false
+ico-hide:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-hide
+  unicode: e02a
+  voted: false
+ilu-betslip-empty:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-betslip-empty
+  unicode: e07c
+  voted: false
+ico-legal:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-legal
+  unicode: e048
+  voted: false
+entertainm:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: entertainm
+  unicode: e063
+  voted: false
+ico-x-point:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-x-point
+  unicode: e081
+  voted: false
+ico-play:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-play
+  unicode: e016
+  voted: false
+jaialai:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: jaialai
+  unicode: e06b
+  voted: false
+ilu-stream-error:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-stream-error
+  unicode: e078
+  voted: false
+esports:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: esports
+  unicode: e061
+  voted: false
+ilu-flag:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-flag
+  unicode: e082
+  voted: false
+ilu-no-results:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-no-results
+  unicode: e079
+  voted: false
+ico-addfunds:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-addfunds
+  unicode: e02f
+  voted: false
+ico-privacy:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-privacy
+  unicode: e010
+  voted: false
+ico-activity:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-activity
+  unicode: e007
+  voted: false
+soccer:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: soccer
+  unicode: e06c
+  voted: false
+ico-check:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-check
+  unicode: e020
+  voted: false
+ico-dercollapse:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-dercollapse
+  unicode: e01c
+  voted: false
+ilu-android-finger:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ilu-android-finger
+  unicode: e07b
+  voted: false
+ico-home:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-home
+  unicode: e019
+  voted: false
+ico-date:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-date
+  unicode: e087
+  voted: false
+football:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: football
+  unicode: e070
+  voted: false
+ico-chevrondown:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-chevrondown
+  unicode: e022
+  voted: false
+ico-cleartxt:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-cleartxt
+  unicode: e00d
+  voted: false
+ico-warning:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-warning
+  unicode: e03d
+  voted: false
+ico-betslipoff:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-betslipoff
+  unicode: e08e
+  voted: false
+ico-settings:
+  familyStylesByLicense:
+    other:
+      - family: kit
+        style: custom
+  label: ico-settings
+  unicode: e001
+  voted: false
