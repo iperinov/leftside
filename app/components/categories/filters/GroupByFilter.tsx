@@ -1,28 +1,29 @@
 import { useMemo } from "react";
+import { GroupBy } from "~/api/scs/configurations/config.consts";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
+import { allItem } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
-import { allItem } from "../AllItemData";
 
 function generateChoices(sportFilterUUIDs: string[], marketFilterUUIDs: string[]): ItemData<string>[] {
   const sportsSelected = sportFilterUUIDs.length;
   const marketsSelected = marketFilterUUIDs.length;
   const isAllSportsSelected = sportsSelected === 1 && sportFilterUUIDs.includes(allItem.id);
-  
+
   switch (true) {
     case !isAllSportsSelected && sportsSelected === 1 && marketsSelected === 0:
       return [
-        { id: "league.day", name: "League/Day" },
-        { id: "day.league", name: "Day/League" },
+        { id: GroupBy.LeagueDay, name: "League/Day" },
+        { id: GroupBy.DayLeague, name: "Day/League" },
       ];
     case (isAllSportsSelected || sportsSelected > 1) && marketsSelected === 0:
       return [
-        { id: "sport.league", name: "Sport/League" },
-        { id: "sport.day", name: "Sport/Day" },
+        { id: GroupBy.SportLeague, name: "Sport/League" },
+        { id: GroupBy.Day, name: "Sport/Day" },
       ];
     default: //case sportsSelected > 0 && marketsSelected > 0
-      return [{ id: "day.game", name: "Day/Game" }];
+      return [{ id: GroupBy.Day, name: "Day/Game" }];
   }
 }
 
@@ -35,7 +36,7 @@ export default function GroupByFilter(props: FilterGroupProps) {
 
   const sportsSelection = sportFilters(categoryUUID, filterGroupUUID);
   const marketsSelection = marketFilters(categoryUUID, filterGroupUUID);
-  const choices = useMemo(() => generateChoices(sportsSelection, marketsSelection), [sportsSelection.length, marketsSelection.length]);
+  const choices = useMemo(() => generateChoices(sportsSelection, marketsSelection), [sportsSelection, marketsSelection]);
 
   return (
     <SingleSelectionFilter

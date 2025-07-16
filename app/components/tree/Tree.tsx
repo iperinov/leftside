@@ -1,9 +1,8 @@
-
 import { Flex } from "@radix-ui/themes";
 import AddTreeItemButton from "./AddTreeItemButton";
+import SortableTreeItems from "./SortableTreeItems";
 import type TreeConfig from "./TreeConfig";
 import type TreeItemData from "./TreeItemData";
-import SortableTreeItems from "./SortableTreeItems";
 import TreeItems from "./TreeItems";
 
 interface TreeProps<T extends TreeItemData<T>> {
@@ -16,10 +15,7 @@ export default function Tree<T extends TreeItemData<T>>({ root, level, ...config
   return (
     <Flex direction={"column"} gap="2" ml={level === 0 ? undefined : "5"}>
       {/* Render items in section */}
-      {isReorderEnabled 
-        ? <SortableTreeItems root={root} level={level} {...config}/>
-        : <TreeItems root={root} level={level} {...config} />
-      }
+      {isReorderEnabled ? <SortableTreeItems root={root} level={level} {...config} /> : <TreeItems root={root} level={level} {...config} />}
       {/* Add button for the items section */}
       {config.addToParent?.allowed(level, root) && (
         <AddTreeItemButton

@@ -1,13 +1,14 @@
-export interface Filter {
-  type: "sport" | "region" | "league" | "game" | "period" | "market" | "time" | "status";
-  value: string[];
+import type { FilterGroup } from "~/api/scs/configurations/config.types";
+
+export interface Contender {
+  id: number;
+  name: string;
 }
 
-export interface FilterGroup {
-  filters: Filter[];
-  groupBy?: "league" | "date" | "league.date" | "date.league" | "sport.league" | "sport.date" | "date.game";
-  order?: "asc" | "desc";
-  limit?: number;
+export interface Banner {
+  description: string;
+  top: string;
+  bottom: string;
 }
 
 export interface Game {
@@ -20,20 +21,13 @@ export interface Game {
   idSport: string;
   eventId?: number;
   description?: string;
-  periodId?: number;
+  periodId: number;
   //regionId?: number;
-  banners?: {
-    description: string;
-    top: string;
-    bottom: string;
-  }[];
+  banners: Banner[];
   realSportName: string;
   leagueName: string;
   //regionName: string;
-  contenders: {
-    id: number;
-    name: string;
-  }[];
+  contenders: Contender[];
   propCount: number;
   liveGame: boolean;
   startTime: string; // ISO 8601 date-time format
@@ -41,23 +35,13 @@ export interface Game {
   periodDescription: string;
 }
 
-export interface FilteredGamesResponse {
-  status: number;
-  description: string;
+export interface FilteredGameGroup {
+  filterGroup: FilterGroup;
   games: Game[];
 }
 
-export enum GroupBy {
-  League = "league",
-  Date = "date",
-  LeagueDate = "league.date",
-  DateLeague = "date.league",
-  SportLeague = "sport.league",
-  SportDate = "sport.date",
-  DateGame = "date.game",
-}
-
-export enum Order {
-  Asc = "asc",
-  Desc = "desc",
+export interface FilteredGamesResponse {
+  status: number;
+  description: string;
+  groups: FilteredGameGroup[];
 }

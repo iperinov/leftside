@@ -70,7 +70,7 @@ export default function MultiSelectDropdown<T extends string | number>({
         setOpen(false);
       }
     },
-    [includeAllItem, selectedIDs, onSelectionChange, allItem.id]
+    [includeAllItem, selectedIDs, onSelectionChange, allItem.id, maxSelections],
   );
 
   useEffect(() => {

@@ -1,5 +1,3 @@
 import type TreeItemData from "~/components/tree/TreeItemData";
 
-export default interface CatalogueNode extends TreeItemData<CatalogueNode> {
-
-}
+export default interface CatalogueNode extends TreeItemData<CatalogueNode> {}

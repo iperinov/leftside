@@ -2,11 +2,11 @@ import { Button, Flex } from "@radix-ui/themes";
 import { useState } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type { MenuItem } from "../dropdownContextMenu/DropdownContextMenu";
+import type ClassNameProps from "../shared/ClassNameProps";
 import DeleteFilterGroup from "./filterGroup/DeleteFilterGroup";
 import DuplicateFilterGroup from "./filterGroup/DuplicateFilterGroup";
 import EmptyFilterGroupRow from "./filterGroup/EmptyFilterGroupRow";
 import FilterGroupList from "./filterGroup/FilterGroupList";
-import type ClassNameProps from "../shared/ClassNameProps";
 
 interface ConfigurationContentMainProps {
   categoryUUID: string;

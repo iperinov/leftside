@@ -1,3 +1,3 @@
 export default interface MouseClickProps {
-    onClick?: React.MouseEventHandler<HTMLElement>
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }

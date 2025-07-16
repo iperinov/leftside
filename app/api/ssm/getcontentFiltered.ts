@@ -1,6 +1,7 @@
+import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { getAppConfig } from "~/lib/runtimeConfig";
-import { mockContentFiltered } from "./mock/mockContentFilteredFull";
-import type { FilterGroup, FilteredGamesResponse } from "./ssm.types";
+import { mockContentFilteredSmall } from "./mock/mockContentFiltered";
+import type { FilteredGamesResponse } from "./ssm.types";
 
 const ssmUrl = getAppConfig().ssm.baseUrl;
 
@@ -31,6 +32,6 @@ export const getContentFiltered = async (input: {
   return {
     status: 0,
     description: "OK",
-    games: mockContentFiltered,
+    groups: mockContentFilteredSmall,
   };
 };

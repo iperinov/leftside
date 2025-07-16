@@ -1,4 +1,4 @@
-export function isClassAvailable(className: string): boolean { 
+export function isClassAvailable(className: string): boolean {
   const testElement = document.createElement("i");
   testElement.className = className;
   document.body.appendChild(testElement);

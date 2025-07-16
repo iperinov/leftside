@@ -38,7 +38,7 @@ export const WizzardRoot = ({ open, onClose, create, sportId, regionId }: Wizzar
 
   const { data: catalog, isLoading, error } = useCatalog();
 
-  const showCancel = Boolean(sportId);
+  const showSelectRegionBack = Boolean(sportId);
 
   useEffect(() => {
     if (open) {
@@ -103,11 +103,11 @@ export const WizzardRoot = ({ open, onClose, create, sportId, regionId }: Wizzar
 
           {step === CreationStep.CreateSport && <CreateSport handler={handleSport} onClose={onClose} />}
 
-          {step === CreationStep.SelectRegion && <SelectRegion onConfirm={handleSelectRegion} onClose={onClose} onBack={setGoToStep} onNew={setGoToStep} />}
-
-          {step === CreationStep.CreateRegion && (
-            <CreateRegion handler={handleRegion} onClose={onClose} onBack={!showCancel ? setGoToStep : undefined} showCancel={showCancel} />
+          {step === CreationStep.SelectRegion && (
+            <SelectRegion onConfirm={handleSelectRegion} onClose={onClose} onBack={!showSelectRegionBack ? setGoToStep : undefined} onNew={setGoToStep} />
           )}
+
+          {step === CreationStep.CreateRegion && <CreateRegion handler={handleRegion} onClose={onClose} onBack={setGoToStep} showCancel={false} />}
 
           {step === CreationStep.CreateLeague && <CreateLeague handler={handleLeague} onClose={onClose} />}
 

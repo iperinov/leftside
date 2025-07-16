@@ -63,7 +63,7 @@ export const useCreateLeagueStore = create<LeagueStore>((set, get) => ({
           ...prev.data,
           realSport: config,
         },
-        step: CreationStep.CreateRegion,
+        step: CreationStep.SelectRegion,
       };
     });
   },

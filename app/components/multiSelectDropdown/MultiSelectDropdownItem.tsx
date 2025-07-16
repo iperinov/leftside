@@ -1,7 +1,7 @@
+import { CheckIcon } from "@radix-ui/react-icons";
 import { Box, Checkbox, Flex, Text } from "@radix-ui/themes";
 import type ItemData from "~/types/ItemData";
 import styles from "./MultiSelectDropdown.module.css";
-import { CheckIcon } from "@radix-ui/react-icons";
 
 interface MultiSelectDropdownItemProps<T extends string | number> {
   items: ItemData<T>[];

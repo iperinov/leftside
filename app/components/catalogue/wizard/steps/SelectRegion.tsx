@@ -9,7 +9,7 @@ import { SingleSelect } from "../../../shared/SingleSelect";
 
 interface SelectRegionProps {
   onClose: () => void;
-  onBack: (step: number) => void;
+  onBack?: (step: number) => void;
   onConfirm: (region: BasicEntity) => void;
   onNew: (step: number) => void;
 }
@@ -19,19 +19,20 @@ export function SelectRegion({ onClose, onBack, onConfirm, onNew }: SelectRegion
   const [selected, setSelected] = useState<BasicEntity | null>(null);
   const [search, setSearch] = useState("");
 
-  const filtered = catalog?.allRegions().filter((r) => r.name.toLowerCase().includes(search.toLowerCase()));
+  const filtered = catalog
+    ?.allUniqueRegions()
+    .filter((r) => r.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <BaseDialog
       open={true}
       onClose={onClose}
-      onBack={() => {
-        onBack(CreationStep.CreateSport);
-      }}
+      onBack={onBack ? () => onBack(CreationStep.CreateSport) : undefined}
       onConfirm={() => selected && onConfirm(selected)}
       title="Select Region"
       confirmLabel="Next Step"
-      showCancel={false}
+      showCancel={!onBack}
       disableConfirm={!selected}
       renderActionsStart={
         <Button

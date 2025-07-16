@@ -1,5 +1,6 @@
 import { Button, Dialog, Flex, Select, Text, TextField } from "@radix-ui/themes";
 import { useCallback, useMemo, useState } from "react";
+import AwesomeIconSelect from "~/components/categories/category/AwesomeIconSelect";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import type ItemData from "~/types/ItemData";
 import formatOrdinal from "~/utils/formatOrdinal";
@@ -7,7 +8,6 @@ import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
 import { TemplateType } from "../TemplateType";
 import styles from "./AddNewCategoryDialog.module.css";
-import AwesomeIconSelect from "~/components/categories/category/AwesomeIconSelect";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;
@@ -85,7 +85,7 @@ export default function AddNewCategoryDialog({
       //setName("");
       onCancel();
     },
-    [onCancel]
+    [onCancel],
   );
 
   const handleSave = useCallback(() => {
@@ -111,7 +111,7 @@ export default function AddNewCategoryDialog({
       setSelectedSportsIDs(selectedIDs);
       setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
     },
-    [selectedLeagueIDs, catalog]
+    [selectedLeagueIDs, catalog],
   );
 
   const handleLeaguesSelectionChange = useCallback((selectedIDs: string[]) => {
@@ -128,10 +128,10 @@ export default function AddNewCategoryDialog({
 
   const validForm = useCallback(() => {
     if (!validName(name)) return false;
-    if (type === TemplateType.AllLeagues && selectedSportIDs.length === 0) return false; 
+    if (type === TemplateType.AllLeagues && selectedSportIDs.length === 0) return false;
     if (type === TemplateType.LiveAndUpcoming && (selectedLeagueIDs.length === 0 || selectedSportIDs.length === 0)) return false;
     return true;
-  }, [name, type, level, selectedIconID, selectedSportIDs, selectedLeagueIDs, validName]);
+  }, [name, type, selectedSportIDs, selectedLeagueIDs, validName]);
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleClose}>

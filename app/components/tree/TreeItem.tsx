@@ -28,21 +28,23 @@ export default function TreeItem<T extends TreeItemData<T>>({
   const itemExpanded = config.expand?.itemIDs.includes(item.id);
   const hideItem = config.filter ? config.filter.hideItem?.(item) : false;
 
-  return !hideItem && (
-    <>
-      <Flex gap="2" align="center">
-        <IconButton
-          style={{ visibility: !dragging && canExpandItem ? undefined : "hidden" }}
-          onClick={() => config.expand?.handler(item, !itemExpanded)}
-          variant="ghost"
-        >
-          {itemExpanded ? <MinusIcon /> : <PlusIcon />}
-        </IconButton>
+  return (
+    !hideItem && (
+      <>
+        <Flex gap="2" align="center">
+          <IconButton
+            style={{ visibility: !dragging && canExpandItem ? undefined : "hidden" }}
+            onClick={() => config.expand?.handler(item, !itemExpanded)}
+            variant="ghost"
+          >
+            {itemExpanded ? <MinusIcon /> : <PlusIcon />}
+          </IconButton>
 
-        <TreeItemCard item={item} parent={parent} level={level} attributes={attributes} listeners={listeners} dragging={dragging} {...config} />
-      </Flex>
+          <TreeItemCard item={item} parent={parent} level={level} attributes={attributes} listeners={listeners} dragging={dragging} {...config} />
+        </Flex>
 
-      {!dragging && canExpandItem && itemExpanded && <Tree root={item} level={level + 1} {...config} />}
-    </>
-  )
+        {!dragging && canExpandItem && itemExpanded && <Tree root={item} level={level + 1} {...config} />}
+      </>
+    )
+  );
 }

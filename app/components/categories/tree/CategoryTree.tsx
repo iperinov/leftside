@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
 import Tree from "~/components/tree/Tree";
 import type TreeConfig from "~/components/tree/TreeConfig";
+import type { OptionalNode } from "~/components/tree/TreeConfig";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import formatOrdinal from "~/utils/formatOrdinal";
 import type CategoryTreeItem from "./CategoryTreeItem";
-import type { OptionalNode } from "~/components/tree/TreeConfig";
 
 interface CategoryTreeProps {
   selectedUUID?: string;
@@ -18,16 +18,7 @@ interface CategoryTreeProps {
   getOptionalNodes?: (item: CategoryTreeItem, level: number) => OptionalNode[];
 }
 
-export default function CategoryTree({
-  selectedUUID,
-  onSelected,
-  onAdd,
-  onRename,
-  onDelete,
-  onDuplicate,
-  onReorder,
-  getOptionalNodes,
-}: CategoryTreeProps) {
+export default function CategoryTree({ selectedUUID, onSelected, onAdd, onRename, onDelete, onDuplicate, onReorder, getOptionalNodes }: CategoryTreeProps) {
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   const findCategoryTrail = useCategoryTreeStore((state) => state.findCategotyTrail);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
@@ -51,7 +42,7 @@ export default function CategoryTree({
   const menuItems: MenuItem<CategoryTreeItem>[] = [
     { name: "Rename", action: (context) => context && onRename?.({ id: context.id, name: context.name }) },
     { name: "Delete", action: (context) => context && onDelete?.({ id: context.id }) },
-    { name: "Duplicate", action: (context) => context && onDuplicate?.({ id: context.id, name: context.name }) }
+    { name: "Duplicate", action: (context) => context && onDuplicate?.({ id: context.id, name: context.name }) },
   ];
 
   const config = {
@@ -83,7 +74,9 @@ export default function CategoryTree({
     },
     focusAttention: {
       allow: (item) => item.focusAttention || false,
-      done: (item) => item.focusAttention = false
+      done: (item) => {
+        item.focusAttention = false;
+      },
     },
   } as TreeConfig<CategoryTreeItem>;
 

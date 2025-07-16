@@ -4,7 +4,7 @@ import { allItem } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 
-export default function TimeFilter({categoryUUID, filterGroupUUID}: FilterGroupProps) {
+export default function TimeFilter({ categoryUUID, filterGroupUUID }: FilterGroupProps) {
   const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
   const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
   const statusFilter = useCategoryTreeStore((state) => state.statusFilter);

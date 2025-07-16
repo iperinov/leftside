@@ -60,7 +60,7 @@ export default function MultiSelectDropdownItemList<T extends string | number>({
     if (!scrollToFirstSelected || !open || !listRef.current) return;
     const firstSelectedItemIndex = items.findIndex((item) => selectedIDs.includes(item.id));
     listRef.current.scrollToItem(firstSelectedItemIndex + 1, "center");
-  }, [open, listRef]);
+  }, [open, scrollToFirstSelected, selectedIDs, items]);
 
   return (
     <>
@@ -88,7 +88,7 @@ function positionItemsList(
   rectOfTrigger: DOMRect,
   rectOfItemsList: DOMRect,
   itemsListRef: React.RefObject<HTMLDivElement | null>,
-  positionPreference: "above" | "below"
+  positionPreference: "above" | "below",
 ) {
   if (!itemsListRef.current || rectOfItemsList.width === 0 || rectOfItemsList.height === 0) {
     return;

@@ -51,7 +51,6 @@ export default function CatalogView() {
     const shownIDs = shownItems(catalogRoot, filter, expandShownChildrenParents);
     setShownItemIDs(shownIDs);
     if (expandShownChildrenParents.length > 0) {
-      console.log("Expanding parents for shown children:", expandShownChildrenParents);
       setExpandedIds(expandShownChildrenParents);
     }
   }, [catalogRoot, filter]);

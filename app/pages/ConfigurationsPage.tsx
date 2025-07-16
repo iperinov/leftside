@@ -5,7 +5,6 @@ import { ConfigurationList } from "../components/configurations/ConfigurationLis
 import { CreateConfiguration } from "../components/configurations/CreateConfiguration";
 import { DeleteConfiguration } from "../components/configurations/DeleteConfiguration";
 import { DuplicateConfiguration } from "../components/configurations/DuplicateConfiguration";
-import { EditConfiguration } from "../components/configurations/EditConfiguration";
 import { RenameConfiguration } from "../components/configurations/RenameConfiguration";
 
 export default function ConfigurationsPage() {
@@ -86,8 +85,6 @@ export default function ConfigurationsPage() {
         </Box>
 
         <CreateConfiguration open={createAction} onClose={() => setCreateAction(false)} />
-
-        {editAction && <EditConfiguration uuid={editAction.id} name={editAction.name} onClose={() => setEditAction(null)} />}
 
         {renameAction && <RenameConfiguration open={!!renameAction} onClose={() => setRenameAction(null)} uuid={renameAction.id} rev={renameAction.rev} />}
 

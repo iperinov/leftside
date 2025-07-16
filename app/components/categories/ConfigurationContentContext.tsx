@@ -1,7 +1,7 @@
 import { Box, Flex } from "@radix-ui/themes";
 import { useState } from "react";
-import type { FilterGroup } from "~/api/ssm/ssm.types";
-import { GroupBy, Order } from "~/api/ssm/ssm.types";
+import { GroupBy, Order } from "~/api/scs/configurations/config.consts";
+import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import AssignedBooks from "../configurations/AssignedBooks";
 import ContentPreview from "../configurations/ContentPreview";
@@ -14,27 +14,29 @@ interface ConfigurationContentContextProps {
 // TODO replace with API call
 const mockFilterGroups: FilterGroup[] = [
   {
+    uuid: "1235560F-5325-48A4-A0A2-632419148D34",
     filters: [
       {
-        // USA - MLS
+        //ECUADOR - LIGA SERIE A
         type: "league",
-        value: ["8ADE19BD-BC0C-489C-9568-87913DE486C7"],
+        values: ["6615560F-5325-48A4-A0A2-632419148D34"],
       },
     ],
-    groupBy: GroupBy.SportDate,
-    order: Order.Asc,
+    groupBy: GroupBy.LeagueDay,
+    order: Order.Desc,
     //limit: 1,
   },
   {
+    uuid: "4565560F-5325-48A4-A0A2-632419148D34",
     filters: [
       {
-        //NFL
+        // NFL
         type: "league",
-        value: ["F47370AC-44C3-4CC6-8358-8798C1E0DA9A"],
+        values: ["F47370AC-44C3-4CC6-8358-8798C1E0DA9A"],
       },
     ],
-    groupBy: GroupBy.Date,
-    order: Order.Desc,
+    groupBy: GroupBy.SportLeague,
+    order: Order.Asc,
     //limit: 1,
   },
 ];
@@ -44,22 +46,24 @@ export default function ConfigurationContentContext({ categoryID, className }: C
 
   const categorySelected = categoryID !== "";
 
+  const filterGroups = category?.filterGroups;
+  console.log("ConfigurationContentContext filterGroups", filterGroups);
   const books = [1, 16, 26, 27, 28];
   const [assignedBooks, setAssignedBooks] = useState<number[]>(books);
-  const [originalAssignedBooks, setoriginalAssignedBooks] = useState<number[]>(books);
+  const [originalAssignedBooks, setOriginalAssignedBooks] = useState<number[]>(books);
 
   return (
     <Flex
       gap="0"
       direction="column"
       flexGrow="1"
+      className={className}
       style={{
         border: "1px solid var(--accent-9)",
         borderRadius: "0.5rem",
         marginTop: "0.5rem",
         overflow: "hidden",
       }}
-      className={className}
     >
       <Box style={{ backgroundColor: "var(--accent-4)" }}>
         <AssignedBooks assignedBooks={assignedBooks} originalAssignedBooks={originalAssignedBooks} onUpdate={setAssignedBooks} />
@@ -74,7 +78,7 @@ export default function ConfigurationContentContext({ categoryID, className }: C
           overflow: "auto",
         }}
       >
-        <ContentPreview filterGroups={categorySelected ? mockFilterGroups : []} />
+        <ContentPreview filterGroups={filterGroups ? filterGroups : []} />
       </Box>
     </Flex>
   );

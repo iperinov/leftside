@@ -21,10 +21,7 @@ export default function ConfigurationContent({ className, selectedUUID, setSelec
 
       <ConfigurationContentMain categoryUUID={selectedUUID} className={styles.main} />
 
-      <ConfigurationContentContext
-        categoryID={selectedUUID}
-        className={styles.context}
-      />
+      <ConfigurationContentContext categoryID={selectedUUID} className={styles.context} />
     </Flex>
   );
 }

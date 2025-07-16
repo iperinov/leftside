@@ -142,13 +142,13 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     const rootCategory = structuredClone(get().rootCategory);
     const parent = findItem(parentUUID, rootCategory);
     if (!parent || !parent.children) return false;
-    const itemIndex = parent.children.findIndex((item) => item.id == uuid);
-    if (itemIndex == -1) return false;
+    const itemIndex = parent.children.findIndex((item) => item.id === uuid);
+    if (itemIndex === -1) return false;
     const newItem = { ...structuredClone(parent.children[itemIndex]), name, focusAttention: true };
     iterateItem<CategoryTreeItem>(newItem, (item) => {
       item.id = newItemUUID();
     });
-    
+
     parent.children.splice(itemIndex + 1, 0, newItem);
     set({ rootCategory: rootCategory });
     return true;

@@ -15,6 +15,7 @@ export interface SportCatalogItem extends BasicEntity {
 export interface CatalogActions {
   allSports(): SportCatalogItem[];
   allRegions(): RegionCatalogItem[];
+  allUniqueRegions(): RegionCatalogItem[];
   allLeagues(): LeagueCatalogItem[];
 
   findSport(uuid: string): SportCatalogItem | undefined;
@@ -75,6 +76,17 @@ export class Catalog implements CatalogActions {
   }
   allRegions(): RegionCatalogItem[] {
     return this.sports.flatMap((sport) => sport.regions);
+  }
+  allUniqueRegions(): RegionCatalogItem[] {
+    const regionMap = new Map<string, RegionCatalogItem>();
+    for (const sport of this.sports) {
+      for (const region of sport.regions) {
+        if (!regionMap.has(region.uuid)) {
+          regionMap.set(region.uuid, region);
+        }
+      }
+    }
+    return Array.from(regionMap.values());
   }
   allLeagues(): LeagueCatalogItem[] {
     return this.sports.flatMap((sport) => sport.regions.flatMap((region) => region.leagues));

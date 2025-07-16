@@ -183,13 +183,12 @@ class SportInfoUuidService {
   }
 
   getShortDescription(uuid: string): string | undefined {
-    return this.data[uuid]?.shortDescription.replace(/\s+/g, '-').toLowerCase();
+    return this.data[uuid]?.shortDescription.replace(/\s+/g, "-").toLowerCase();
   }
 
   getDescription(uuid: string): string | undefined {
     return this.data[uuid]?.description;
   }
 }
-
 
 export const sportInfo = new SportInfoUuidService();

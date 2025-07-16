@@ -1,6 +1,7 @@
 import { Box, Text } from "@radix-ui/themes";
-import type { FilterGroup, Game } from "~/api/ssm/ssm.types";
-import { GroupBy, Order } from "~/api/ssm/ssm.types";
+import { GroupBy, Order } from "~/api/scs/configurations/config.consts";
+import type { FilterGroup } from "~/api/scs/configurations/config.types";
+import type { FilteredGameGroup, Game } from "~/api/ssm/ssm.types";
 import { useContentFiltered } from "~/hooks/useContentFiltered";
 import InfoBanner from "../shared/InfoBanner";
 import LoadingIndicator from "../shared/LoadingIndicator";
@@ -16,45 +17,58 @@ const getGroupKey = (game: Game, groupBy: GroupBy): string[] => {
   switch (groupBy) {
     case GroupBy.League:
       return [league];
-    case GroupBy.Date:
+    case GroupBy.Day:
       return [date];
-    case GroupBy.LeagueDate:
+    case GroupBy.LeagueDay:
       return [league, date];
-    case GroupBy.DateLeague:
+    case GroupBy.DayLeague:
       return [date, league];
     case GroupBy.SportLeague:
       return [sport, league];
-    case GroupBy.SportDate:
+    case GroupBy.SportDay:
       return [sport, date];
-    case GroupBy.DateGame:
+    case GroupBy.DayGame:
       return [date, game.gameUUID];
     default:
       return [league];
   }
 };
 
-//TODO: Implement the rest of the filters.
+// Use for real-time notifications when it is implemented.
 const matchesFilterGroup = (game: Game, filterGroup: FilterGroup): boolean => {
   return filterGroup.filters.every((filter) => {
+    const values = Array.isArray(filter.values) ? filter.values : [filter.values];
     switch (filter.type) {
       case "sport":
-        return filter.value.includes(game.realSportUUID);
-      // case "region":
-      //   return filter.value.includes(game.regionUUID);
+        return values.includes(game.realSportUUID);
       case "league":
-        return filter.value.includes(game.leagueUUID);
+        return values.includes(game.leagueUUID);
+      case "market":
+        if (game.eventId === null || game.eventId === undefined) {
+          return false;
+        }
+        return values.includes(String(game.eventId));
+      case "period":
+        if (game.eventId !== null && game.eventId !== undefined) {
+          return false;
+        }
+        return values.includes(String(game.periodId));
+      // case "region":
+      //   return values.includes(game.regionUUID);
       case "game":
-        return filter.value.includes(game.gameUUID);
-      // case "period":
-      //   return filter.value.includes(game.periodUUID);
-      // case "market":
-      //   return filter.value.includes(game.marketUUID);
-      case "time":
-        return filter.value.includes(game.startTime); // Or transform as needed
-      // case "status":
-      //   return filter.value.includes(game.status);
+        return values.includes(game.gameUUID);
+      case "status":
+        return values.includes(String(game.liveGame));
+      case "time": {
+        const now = Date.now();
+        return values.some((v) => {
+          const hours = Number.parseInt(v);
+          if (Number.isNaN(hours)) return false;
+          return new Date(game.startTime).getTime() - now <= hours * 3600000;
+        });
+      }
       default:
-        return false;
+        return true;
     }
   });
 };
@@ -62,18 +76,16 @@ const matchesFilterGroup = (game: Game, filterGroup: FilterGroup): boolean => {
 const renderGroupLabel = (groupBy: GroupBy, labelParts: string[]) => {
   switch (groupBy) {
     case GroupBy.League:
-    case GroupBy.Date:
+    case GroupBy.Day:
       return (
-        <>
-          <Text size="2" weight="bold">
-            {labelParts[0]}
-          </Text>
-        </>
+        <Text size="2" weight="bold">
+          {labelParts[0]}
+        </Text>
       );
-    case GroupBy.LeagueDate:
-    case GroupBy.DateLeague:
+    case GroupBy.LeagueDay:
+    case GroupBy.DayLeague:
     case GroupBy.SportLeague:
-    case GroupBy.SportDate:
+    case GroupBy.SportDay:
       return (
         <>
           <Box mb="2">
@@ -131,9 +143,7 @@ const renderGameCard = (game: Game, showBanner: boolean) => (
 );
 
 export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
-  const { data, isLoading } = useContentFiltered({ filterGroups });
-  const games = (data?.games ?? []) as Game[];
-
+  console.log("ContentPreview", filterGroups);
   if (!filterGroups.length) {
     return (
       <Box style={{ flex: 1, padding: "0.75rem" }}>
@@ -142,16 +152,22 @@ export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
     );
   }
 
+  const { data, isLoading } = useContentFiltered({ filterGroups });
+  const groups = (data?.groups ?? []) as FilteredGameGroup[];
+
   if (isLoading) return <LoadingIndicator />;
 
   return (
     <Box style={{ flex: 1, overflowY: "auto", padding: "0.75rem" }}>
-      {filterGroups.map((filterGroup) => {
+      {groups.map((group, index) => {
+        const filterGroup = group.filterGroup;
         const groupBy = (filterGroup.groupBy ?? GroupBy.League) as GroupBy;
         const order = (filterGroup.order ?? Order.Asc) as Order;
         const groupLimit = filterGroup.limit;
 
-        const filteredGames = games.filter((game) => matchesFilterGroup(game, filterGroup));
+        // Use for real-time notifications when it is implemented.
+        //const filteredGames = group.games.filter((game) => matchesFilterGroup(game, filterGroup));
+        const filteredGames = group.games;
         const grouped = new Map<string, Game[]>();
 
         for (const game of filteredGames) {
@@ -159,9 +175,9 @@ export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
           if (!grouped.has(groupLabel)) grouped.set(groupLabel, []);
           grouped.get(groupLabel)?.push(game);
         }
-
+        const key = `filterGroup-${index}`;
         return (
-          <Box key={`filterGroup-${groupBy}-${groupLimit ?? "all"}`} mb="6">
+          <Box key={`filterGroup-${key}"}`} mb="6">
             {[...grouped.entries()].map(([groupLabel, groupedGames]) => {
               const sortedGames = [...groupedGames].sort((a, b) => {
                 const aTime = new Date(a.startTime).getTime();
@@ -174,7 +190,7 @@ export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
               return (
                 <Box key={groupLabel} mb="5">
                   <Box mb="2">{renderGroupLabel(groupBy, labelParts)}</Box>
-                  {displayGames.map((game) => renderGameCard(game, groupBy !== GroupBy.Date))}
+                  {displayGames.map((game) => renderGameCard(game, groupBy !== GroupBy.Day))}
                 </Box>
               );
             })}
