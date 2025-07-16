@@ -1,124 +1,601 @@
-.fak.fa-baseball, .fa-kit.fa-baseball { --fa: "\e068"; --fa--fa: "\e068\e068"; }
-.fak.fa-basketball, .fa-kit.fa-basketball { --fa: "\e067"; --fa--fa: "\e067\e067"; }
-.fak.fa-boxing, .fa-kit.fa-boxing { --fa: "\e064"; --fa--fa: "\e064\e064"; }
-.fak.fa-cricket, .fa-kit.fa-cricket { --fa: "\e060"; --fa--fa: "\e060\e060"; }
-.fak.fa-darts, .fa-kit.fa-darts { --fa: "\e071"; --fa--fa: "\e071\e071"; }
-.fak.fa-entertainm, .fa-kit.fa-entertainm { --fa: "\e063"; --fa--fa: "\e063\e063"; }
-.fak.fa-esports, .fa-kit.fa-esports { --fa: "\e061"; --fa--fa: "\e061\e061"; }
-.fak.fa-football, .fa-kit.fa-football { --fa: "\e070"; --fa--fa: "\e070\e070"; }
-.fak.fa-futsal, .fa-kit.fa-futsal { --fa: "\e06a"; --fa--fa: "\e06a\e06a"; }
-.fak.fa-golf, .fa-kit.fa-golf { --fa: "\e06d"; --fa--fa: "\e06d\e06d"; }
-.fak.fa-handball, .fa-kit.fa-handball { --fa: "\e05e"; --fa--fa: "\e05e\e05e"; }
-.fak.fa-ice-hock, .fa-kit.fa-ice-hock { --fa: "\e06f"; --fa--fa: "\e06f\e06f"; }
-.fak.fa-ico-2chevronleft, .fa-kit.fa-ico-2chevronleft { --fa: "\e084"; --fa--fa: "\e084\e084"; }
-.fak.fa-ico-2chevronright, .fa-kit.fa-ico-2chevronright { --fa: "\e085"; --fa--fa: "\e085\e085"; }
-.fak.fa-ico-account, .fa-kit.fa-ico-account { --fa: "\e00c"; --fa--fa: "\e00c\e00c"; }
-.fak.fa-ico-activity, .fa-kit.fa-ico-activity { --fa: "\e007"; --fa--fa: "\e007\e007"; }
-.fak.fa-ico-addfunds, .fa-kit.fa-ico-addfunds { --fa: "\e02f"; --fa--fa: "\e02f\e02f"; }
-.fak.fa-ico-arrowdown, .fa-kit.fa-ico-arrowdown { --fa: "\e047"; --fa--fa: "\e047\e047"; }
-.fak.fa-ico-arrowtop, .fa-kit.fa-ico-arrowtop { --fa: "\e003"; --fa--fa: "\e003\e003"; }
-.fak.fa-ico-arrowup, .fa-kit.fa-ico-arrowup { --fa: "\e00f"; --fa--fa: "\e00f\e00f"; }
-.fak.fa-ico-betslip, .fa-kit.fa-ico-betslip { --fa: "\e01a"; --fa--fa: "\e01a\e01a"; }
-.fak.fa-ico-betslipoff, .fa-kit.fa-ico-betslipoff { --fa: "\e08e"; --fa--fa: "\e08e\e08e"; }
-.fak.fa-ico-breadcrumb, .fa-kit.fa-ico-breadcrumb { --fa: "\e014"; --fa--fa: "\e014\e014"; }
-.fak.fa-ico-burger, .fa-kit.fa-ico-burger { --fa: "\e02e"; --fa--fa: "\e02e\e02e"; }
-.fak.fa-ico-call, .fa-kit.fa-ico-call { --fa: "\e059"; --fa--fa: "\e059\e059"; }
-.fak.fa-ico-chat, .fa-kit.fa-ico-chat { --fa: "\e05b"; --fa--fa: "\e05b\e05b"; }
-.fak.fa-ico-check, .fa-kit.fa-ico-check { --fa: "\e020"; --fa--fa: "\e020\e020"; }
-.fak.fa-ico-chevrondown, .fa-kit.fa-ico-chevrondown { --fa: "\e022"; --fa--fa: "\e022\e022"; }
-.fak.fa-ico-chevronleft, .fa-kit.fa-ico-chevronleft { --fa: "\e021"; --fa--fa: "\e021\e021"; }
-.fak.fa-ico-chevronright, .fa-kit.fa-ico-chevronright { --fa: "\e04c"; --fa--fa: "\e04c\e04c"; }
-.fak.fa-ico-chevronsright, .fa-kit.fa-ico-chevronsright { --fa: "\e01b"; --fa--fa: "\e01b\e01b"; }
-.fak.fa-ico-chevronup, .fa-kit.fa-ico-chevronup { --fa: "\e023"; --fa--fa: "\e023\e023"; }
-.fak.fa-ico-clear, .fa-kit.fa-ico-clear { --fa: "\e051"; --fa--fa: "\e051\e051"; }
-.fak.fa-ico-cleartxt, .fa-kit.fa-ico-cleartxt { --fa: "\e00d"; --fa--fa: "\e00d\e00d"; }
-.fak.fa-ico-close, .fa-kit.fa-ico-close { --fa: "\e028"; --fa--fa: "\e028\e028"; }
-.fak.fa-ico-collapseall, .fa-kit.fa-ico-collapseall { --fa: "\e024"; --fa--fa: "\e024\e024"; }
-.fak.fa-ico-communication, .fa-kit.fa-ico-communication { --fa: "\e005"; --fa--fa: "\e005\e005"; }
-.fak.fa-ico-compass, .fa-kit.fa-ico-compass { --fa: "\e008"; --fa--fa: "\e008\e008"; }
-.fak.fa-ico-date, .fa-kit.fa-ico-date { --fa: "\e087"; --fa--fa: "\e087\e087"; }
-.fak.fa-ico-dercollapse, .fa-kit.fa-ico-dercollapse { --fa: "\e01c"; --fa--fa: "\e01c\e01c"; }
-.fak.fa-ico-derexpand, .fa-kit.fa-ico-derexpand { --fa: "\e01e"; --fa--fa: "\e01e\e01e"; }
-.fak.fa-ico-detach, .fa-kit.fa-ico-detach { --fa: "\e072"; --fa--fa: "\e072\e072"; }
-.fak.fa-ico-donut, .fa-kit.fa-ico-donut { --fa: "\e057"; --fa--fa: "\e057\e057"; }
-.fak.fa-ico-edit, .fa-kit.fa-ico-edit { --fa: "\e029"; --fa--fa: "\e029\e029"; }
-.fak.fa-ico-email, .fa-kit.fa-ico-email { --fa: "\e05a"; --fa--fa: "\e05a\e05a"; }
-.fak.fa-ico-expandall, .fa-kit.fa-ico-expandall { --fa: "\e025"; --fa--fa: "\e025\e025"; }
-.fak.fa-ico-futures, .fa-kit.fa-ico-futures { --fa: "\e034"; --fa--fa: "\e034\e034"; }
-.fak.fa-ico-hide, .fa-kit.fa-ico-hide { --fa: "\e02a"; --fa--fa: "\e02a\e02a"; }
-.fak.fa-ico-home, .fa-kit.fa-ico-home { --fa: "\e019"; --fa--fa: "\e019\e019"; }
-.fak.fa-ico-homeoff, .fa-kit.fa-ico-homeoff { --fa: "\e08c"; --fa--fa: "\e08c\e08c"; }
-.fak.fa-ico-inbox, .fa-kit.fa-ico-inbox { --fa: "\e052"; --fa--fa: "\e052\e052"; }
-.fak.fa-ico-info, .fa-kit.fa-ico-info { --fa: "\e011"; --fa--fa: "\e011\e011"; }
-.fak.fa-ico-leagues, .fa-kit.fa-ico-leagues { --fa: "\e058"; --fa--fa: "\e058\e058"; }
-.fak.fa-ico-legal, .fa-kit.fa-ico-legal { --fa: "\e048"; --fa--fa: "\e048\e048"; }
-.fak.fa-ico-live, .fa-kit.fa-ico-live { --fa: "\e033"; --fa--fa: "\e033\e033"; }
-.fak.fa-ico-live1, .fa-kit.fa-ico-live1 { --fa: "\e088"; --fa--fa: "\e088\e088"; }
-.fak.fa-ico-locationoff, .fa-kit.fa-ico-locationoff { --fa: "\e00e"; --fa--fa: "\e00e\e00e"; }
-.fak.fa-ico-lock, .fa-kit.fa-ico-lock { --fa: "\e013"; --fa--fa: "\e013\e013"; }
-.fak.fa-ico-minus, .fa-kit.fa-ico-minus { --fa: "\e027"; --fa--fa: "\e027\e027"; }
-.fak.fa-ico-multibet, .fa-kit.fa-ico-multibet { --fa: "\e030"; --fa--fa: "\e030\e030"; }
-.fak.fa-ico-mute, .fa-kit.fa-ico-mute { --fa: "\e015"; --fa--fa: "\e015\e015"; }
-.fak.fa-ico-mybets, .fa-kit.fa-ico-mybets { --fa: "\e018"; --fa--fa: "\e018\e018"; }
-.fak.fa-ico-mybetsoff, .fa-kit.fa-ico-mybetsoff { --fa: "\e08d"; --fa--fa: "\e08d\e08d"; }
-.fak.fa-ico-pause, .fa-kit.fa-ico-pause { --fa: "\e017"; --fa--fa: "\e017\e017"; }
-.fak.fa-ico-pin, .fa-kit.fa-ico-pin { --fa: "\e04e"; --fa--fa: "\e04e\e04e"; }
-.fak.fa-ico-play, .fa-kit.fa-ico-play { --fa: "\e016"; --fa--fa: "\e016\e016"; }
-.fak.fa-ico-playerprotection, .fa-kit.fa-ico-playerprotection { --fa: "\e009"; --fa--fa: "\e009\e009"; }
-.fak.fa-ico-plus, .fa-kit.fa-ico-plus { --fa: "\e026"; --fa--fa: "\e026\e026"; }
-.fak.fa-ico-privacy, .fa-kit.fa-ico-privacy { --fa: "\e010"; --fa--fa: "\e010\e010"; }
-.fak.fa-ico-refresh, .fa-kit.fa-ico-refresh { --fa: "\e02d"; --fa--fa: "\e02d\e02d"; }
-.fak.fa-ico-rules, .fa-kit.fa-ico-rules { --fa: "\e049"; --fa--fa: "\e049\e049"; }
-.fak.fa-ico-search, .fa-kit.fa-ico-search { --fa: "\e02b"; --fa--fa: "\e02b\e02b"; }
-.fak.fa-ico-security, .fa-kit.fa-ico-security { --fa: "\e006"; --fa--fa: "\e006\e006"; }
-.fak.fa-ico-settings, .fa-kit.fa-ico-settings { --fa: "\e001"; --fa--fa: "\e001\e001"; }
-.fak.fa-ico-show, .fa-kit.fa-ico-show { --fa: "\e04b"; --fa--fa: "\e04b\e04b"; }
-.fak.fa-ico-signout, .fa-kit.fa-ico-signout { --fa: "\e00a"; --fa--fa: "\e00a\e00a"; }
-.fak.fa-ico-star, .fa-kit.fa-ico-star { --fa: "\e01d"; --fa--fa: "\e01d\e01d"; }
-.fak.fa-ico-starsolid, .fa-kit.fa-ico-starsolid { --fa: "\e01f"; --fa--fa: "\e01f\e01f"; }
-.fak.fa-ico-success, .fa-kit.fa-ico-success { --fa: "\e012"; --fa--fa: "\e012\e012"; }
-.fak.fa-ico-support, .fa-kit.fa-ico-support { --fa: "\e053"; --fa--fa: "\e053\e053"; }
-.fak.fa-ico-time, .fa-kit.fa-ico-time { --fa: "\e086"; --fa--fa: "\e086\e086"; }
-.fak.fa-ico-transactions, .fa-kit.fa-ico-transactions { --fa: "\e00b"; --fa--fa: "\e00b\e00b"; }
-.fak.fa-ico-trash, .fa-kit.fa-ico-trash { --fa: "\e02c"; --fa--fa: "\e02c\e02c"; }
-.fak.fa-ico-unpin, .fa-kit.fa-ico-unpin { --fa: "\e002"; --fa--fa: "\e002\e002"; }
-.fak.fa-ico-upcoming, .fa-kit.fa-ico-upcoming { --fa: "\e031"; --fa--fa: "\e031\e031"; }
-.fak.fa-ico-user, .fa-kit.fa-ico-user { --fa: "\e03c"; --fa--fa: "\e03c\e03c"; }
-.fak.fa-ico-useroff, .fa-kit.fa-ico-useroff { --fa: "\e08b"; --fa--fa: "\e08b\e08b"; }
-.fak.fa-ico-video, .fa-kit.fa-ico-video { --fa: "\e04a"; --fa--fa: "\e04a\e04a"; }
-.fak.fa-ico-volume, .fa-kit.fa-ico-volume { --fa: "\e055"; --fa--fa: "\e055\e055"; }
-.fak.fa-ico-wallet, .fa-kit.fa-ico-wallet { --fa: "\e054"; --fa--fa: "\e054\e054"; }
-.fak.fa-ico-warning, .fa-kit.fa-ico-warning { --fa: "\e03d"; --fa--fa: "\e03d\e03d"; }
-.fak.fa-ico-x-point, .fa-kit.fa-ico-x-point { --fa: "\e081"; --fa--fa: "\e081\e081"; }
-.fak.fa-ilu-acc-blocked, .fa-kit.fa-ilu-acc-blocked { --fa: "\e074"; --fa--fa: "\e074\e074"; }
-.fak.fa-ilu-android-face, .fa-kit.fa-ilu-android-face { --fa: "\e07f"; --fa--fa: "\e07f\e07f"; }
-.fak.fa-ilu-android-finger, .fa-kit.fa-ilu-android-finger { --fa: "\e07b"; --fa--fa: "\e07b\e07b"; }
-.fak.fa-ilu-betslip-empty, .fa-kit.fa-ilu-betslip-empty { --fa: "\e07c"; --fa--fa: "\e07c\e07c"; }
-.fak.fa-ilu-biometric-default, .fa-kit.fa-ilu-biometric-default { --fa: "\e08f"; --fa--fa: "\e08f\e08f"; }
-.fak.fa-ilu-flag, .fa-kit.fa-ilu-flag { --fa: "\e082"; --fa--fa: "\e082\e082"; }
-.fak.fa-ilu-inbox, .fa-kit.fa-ilu-inbox { --fa: "\e08a"; --fa--fa: "\e08a\e08a"; }
-.fak.fa-ilu-ios-face, .fa-kit.fa-ilu-ios-face { --fa: "\e076"; --fa--fa: "\e076\e076"; }
-.fak.fa-ilu-ios-finger, .fa-kit.fa-ilu-ios-finger { --fa: "\e080"; --fa--fa: "\e080\e080"; }
-.fak.fa-ilu-kyc, .fa-kit.fa-ilu-kyc { --fa: "\e073"; --fa--fa: "\e073\e073"; }
-.fak.fa-ilu-location-error, .fa-kit.fa-ilu-location-error { --fa: "\e077"; --fa--fa: "\e077\e077"; }
-.fak.fa-ilu-no-content, .fa-kit.fa-ilu-no-content { --fa: "\e089"; --fa--fa: "\e089\e089"; }
-.fak.fa-ilu-no-results, .fa-kit.fa-ilu-no-results { --fa: "\e079"; --fa--fa: "\e079\e079"; }
-.fak.fa-ilu-sent, .fa-kit.fa-ilu-sent { --fa: "\e075"; --fa--fa: "\e075\e075"; }
-.fak.fa-ilu-stream-error, .fa-kit.fa-ilu-stream-error { --fa: "\e078"; --fa--fa: "\e078\e078"; }
-.fak.fa-ilu-stream-loader, .fa-kit.fa-ilu-stream-loader { --fa: "\e07a"; --fa--fa: "\e07a\e07a"; }
-.fak.fa-jaialai, .fa-kit.fa-jaialai { --fa: "\e06b"; --fa--fa: "\e06b\e06b"; }
-.fak.fa-mma, .fa-kit.fa-mma { --fa: "\e05f"; --fa--fa: "\e05f\e05f"; }
-.fak.fa-motorsport, .fa-kit.fa-motorsport { --fa: "\e069"; --fa--fa: "\e069\e069"; }
-.fak.fa-racetrack, .fa-kit.fa-racetrack { --fa: "\e092"; --fa--fa: "\e092\e092"; }
-.fak.fa-rugby, .fa-kit.fa-rugby { --fa: "\e06e"; --fa--fa: "\e06e\e06e"; }
-.fak.fa-snooker, .fa-kit.fa-snooker { --fa: "\e062"; --fa--fa: "\e062\e062"; }
-.fak.fa-soccer, .fa-kit.fa-soccer { --fa: "\e06c"; --fa--fa: "\e06c\e06c"; }
-.fak.fa-sportgeneric, .fa-kit.fa-sportgeneric { --fa: "\e05d"; --fa--fa: "\e05d\e05d"; }
-.fak.fa-table-tenn, .fa-kit.fa-table-tenn { --fa: "\e05c"; --fa--fa: "\e05c\e05c"; }
-.fak.fa-tennis, .fa-kit.fa-tennis { --fa: "\e065"; --fa--fa: "\e065\e065"; }
-.fak.fa-volley, .fa-kit.fa-volley { --fa: "\e066"; --fa--fa: "\e066\e066"; }
+.fak.fa-baseball,
+.fa-kit.fa-baseball {
+  --fa: "\e068";
+  --fa--fa: "\e068\e068";
+}
+.fak.fa-basketball,
+.fa-kit.fa-basketball {
+  --fa: "\e067";
+  --fa--fa: "\e067\e067";
+}
+.fak.fa-boxing,
+.fa-kit.fa-boxing {
+  --fa: "\e064";
+  --fa--fa: "\e064\e064";
+}
+.fak.fa-cricket,
+.fa-kit.fa-cricket {
+  --fa: "\e060";
+  --fa--fa: "\e060\e060";
+}
+.fak.fa-darts,
+.fa-kit.fa-darts {
+  --fa: "\e071";
+  --fa--fa: "\e071\e071";
+}
+.fak.fa-entertainm,
+.fa-kit.fa-entertainm {
+  --fa: "\e063";
+  --fa--fa: "\e063\e063";
+}
+.fak.fa-esports,
+.fa-kit.fa-esports {
+  --fa: "\e061";
+  --fa--fa: "\e061\e061";
+}
+.fak.fa-football,
+.fa-kit.fa-football {
+  --fa: "\e070";
+  --fa--fa: "\e070\e070";
+}
+.fak.fa-futsal,
+.fa-kit.fa-futsal {
+  --fa: "\e06a";
+  --fa--fa: "\e06a\e06a";
+}
+.fak.fa-golf,
+.fa-kit.fa-golf {
+  --fa: "\e06d";
+  --fa--fa: "\e06d\e06d";
+}
+.fak.fa-handball,
+.fa-kit.fa-handball {
+  --fa: "\e05e";
+  --fa--fa: "\e05e\e05e";
+}
+.fak.fa-ice-hock,
+.fa-kit.fa-ice-hock {
+  --fa: "\e06f";
+  --fa--fa: "\e06f\e06f";
+}
+.fak.fa-ico-2chevronleft,
+.fa-kit.fa-ico-2chevronleft {
+  --fa: "\e084";
+  --fa--fa: "\e084\e084";
+}
+.fak.fa-ico-2chevronright,
+.fa-kit.fa-ico-2chevronright {
+  --fa: "\e085";
+  --fa--fa: "\e085\e085";
+}
+.fak.fa-ico-account,
+.fa-kit.fa-ico-account {
+  --fa: "\e00c";
+  --fa--fa: "\e00c\e00c";
+}
+.fak.fa-ico-activity,
+.fa-kit.fa-ico-activity {
+  --fa: "\e007";
+  --fa--fa: "\e007\e007";
+}
+.fak.fa-ico-addfunds,
+.fa-kit.fa-ico-addfunds {
+  --fa: "\e02f";
+  --fa--fa: "\e02f\e02f";
+}
+.fak.fa-ico-arrowdown,
+.fa-kit.fa-ico-arrowdown {
+  --fa: "\e047";
+  --fa--fa: "\e047\e047";
+}
+.fak.fa-ico-arrowtop,
+.fa-kit.fa-ico-arrowtop {
+  --fa: "\e003";
+  --fa--fa: "\e003\e003";
+}
+.fak.fa-ico-arrowup,
+.fa-kit.fa-ico-arrowup {
+  --fa: "\e00f";
+  --fa--fa: "\e00f\e00f";
+}
+.fak.fa-ico-betslip,
+.fa-kit.fa-ico-betslip {
+  --fa: "\e01a";
+  --fa--fa: "\e01a\e01a";
+}
+.fak.fa-ico-betslipoff,
+.fa-kit.fa-ico-betslipoff {
+  --fa: "\e08e";
+  --fa--fa: "\e08e\e08e";
+}
+.fak.fa-ico-breadcrumb,
+.fa-kit.fa-ico-breadcrumb {
+  --fa: "\e014";
+  --fa--fa: "\e014\e014";
+}
+.fak.fa-ico-burger,
+.fa-kit.fa-ico-burger {
+  --fa: "\e02e";
+  --fa--fa: "\e02e\e02e";
+}
+.fak.fa-ico-call,
+.fa-kit.fa-ico-call {
+  --fa: "\e059";
+  --fa--fa: "\e059\e059";
+}
+.fak.fa-ico-chat,
+.fa-kit.fa-ico-chat {
+  --fa: "\e05b";
+  --fa--fa: "\e05b\e05b";
+}
+.fak.fa-ico-check,
+.fa-kit.fa-ico-check {
+  --fa: "\e020";
+  --fa--fa: "\e020\e020";
+}
+.fak.fa-ico-chevrondown,
+.fa-kit.fa-ico-chevrondown {
+  --fa: "\e022";
+  --fa--fa: "\e022\e022";
+}
+.fak.fa-ico-chevronleft,
+.fa-kit.fa-ico-chevronleft {
+  --fa: "\e021";
+  --fa--fa: "\e021\e021";
+}
+.fak.fa-ico-chevronright,
+.fa-kit.fa-ico-chevronright {
+  --fa: "\e04c";
+  --fa--fa: "\e04c\e04c";
+}
+.fak.fa-ico-chevronsright,
+.fa-kit.fa-ico-chevronsright {
+  --fa: "\e01b";
+  --fa--fa: "\e01b\e01b";
+}
+.fak.fa-ico-chevronup,
+.fa-kit.fa-ico-chevronup {
+  --fa: "\e023";
+  --fa--fa: "\e023\e023";
+}
+.fak.fa-ico-clear,
+.fa-kit.fa-ico-clear {
+  --fa: "\e051";
+  --fa--fa: "\e051\e051";
+}
+.fak.fa-ico-cleartxt,
+.fa-kit.fa-ico-cleartxt {
+  --fa: "\e00d";
+  --fa--fa: "\e00d\e00d";
+}
+.fak.fa-ico-close,
+.fa-kit.fa-ico-close {
+  --fa: "\e028";
+  --fa--fa: "\e028\e028";
+}
+.fak.fa-ico-collapseall,
+.fa-kit.fa-ico-collapseall {
+  --fa: "\e024";
+  --fa--fa: "\e024\e024";
+}
+.fak.fa-ico-communication,
+.fa-kit.fa-ico-communication {
+  --fa: "\e005";
+  --fa--fa: "\e005\e005";
+}
+.fak.fa-ico-compass,
+.fa-kit.fa-ico-compass {
+  --fa: "\e008";
+  --fa--fa: "\e008\e008";
+}
+.fak.fa-ico-date,
+.fa-kit.fa-ico-date {
+  --fa: "\e087";
+  --fa--fa: "\e087\e087";
+}
+.fak.fa-ico-dercollapse,
+.fa-kit.fa-ico-dercollapse {
+  --fa: "\e01c";
+  --fa--fa: "\e01c\e01c";
+}
+.fak.fa-ico-derexpand,
+.fa-kit.fa-ico-derexpand {
+  --fa: "\e01e";
+  --fa--fa: "\e01e\e01e";
+}
+.fak.fa-ico-detach,
+.fa-kit.fa-ico-detach {
+  --fa: "\e072";
+  --fa--fa: "\e072\e072";
+}
+.fak.fa-ico-donut,
+.fa-kit.fa-ico-donut {
+  --fa: "\e057";
+  --fa--fa: "\e057\e057";
+}
+.fak.fa-ico-edit,
+.fa-kit.fa-ico-edit {
+  --fa: "\e029";
+  --fa--fa: "\e029\e029";
+}
+.fak.fa-ico-email,
+.fa-kit.fa-ico-email {
+  --fa: "\e05a";
+  --fa--fa: "\e05a\e05a";
+}
+.fak.fa-ico-expandall,
+.fa-kit.fa-ico-expandall {
+  --fa: "\e025";
+  --fa--fa: "\e025\e025";
+}
+.fak.fa-ico-futures,
+.fa-kit.fa-ico-futures {
+  --fa: "\e034";
+  --fa--fa: "\e034\e034";
+}
+.fak.fa-ico-hide,
+.fa-kit.fa-ico-hide {
+  --fa: "\e02a";
+  --fa--fa: "\e02a\e02a";
+}
+.fak.fa-ico-home,
+.fa-kit.fa-ico-home {
+  --fa: "\e019";
+  --fa--fa: "\e019\e019";
+}
+.fak.fa-ico-homeoff,
+.fa-kit.fa-ico-homeoff {
+  --fa: "\e08c";
+  --fa--fa: "\e08c\e08c";
+}
+.fak.fa-ico-inbox,
+.fa-kit.fa-ico-inbox {
+  --fa: "\e052";
+  --fa--fa: "\e052\e052";
+}
+.fak.fa-ico-info,
+.fa-kit.fa-ico-info {
+  --fa: "\e011";
+  --fa--fa: "\e011\e011";
+}
+.fak.fa-ico-leagues,
+.fa-kit.fa-ico-leagues {
+  --fa: "\e058";
+  --fa--fa: "\e058\e058";
+}
+.fak.fa-ico-legal,
+.fa-kit.fa-ico-legal {
+  --fa: "\e048";
+  --fa--fa: "\e048\e048";
+}
+.fak.fa-ico-live,
+.fa-kit.fa-ico-live {
+  --fa: "\e033";
+  --fa--fa: "\e033\e033";
+}
+.fak.fa-ico-live1,
+.fa-kit.fa-ico-live1 {
+  --fa: "\e088";
+  --fa--fa: "\e088\e088";
+}
+.fak.fa-ico-locationoff,
+.fa-kit.fa-ico-locationoff {
+  --fa: "\e00e";
+  --fa--fa: "\e00e\e00e";
+}
+.fak.fa-ico-lock,
+.fa-kit.fa-ico-lock {
+  --fa: "\e013";
+  --fa--fa: "\e013\e013";
+}
+.fak.fa-ico-minus,
+.fa-kit.fa-ico-minus {
+  --fa: "\e027";
+  --fa--fa: "\e027\e027";
+}
+.fak.fa-ico-multibet,
+.fa-kit.fa-ico-multibet {
+  --fa: "\e030";
+  --fa--fa: "\e030\e030";
+}
+.fak.fa-ico-mute,
+.fa-kit.fa-ico-mute {
+  --fa: "\e015";
+  --fa--fa: "\e015\e015";
+}
+.fak.fa-ico-mybets,
+.fa-kit.fa-ico-mybets {
+  --fa: "\e018";
+  --fa--fa: "\e018\e018";
+}
+.fak.fa-ico-mybetsoff,
+.fa-kit.fa-ico-mybetsoff {
+  --fa: "\e08d";
+  --fa--fa: "\e08d\e08d";
+}
+.fak.fa-ico-pause,
+.fa-kit.fa-ico-pause {
+  --fa: "\e017";
+  --fa--fa: "\e017\e017";
+}
+.fak.fa-ico-pin,
+.fa-kit.fa-ico-pin {
+  --fa: "\e04e";
+  --fa--fa: "\e04e\e04e";
+}
+.fak.fa-ico-play,
+.fa-kit.fa-ico-play {
+  --fa: "\e016";
+  --fa--fa: "\e016\e016";
+}
+.fak.fa-ico-playerprotection,
+.fa-kit.fa-ico-playerprotection {
+  --fa: "\e009";
+  --fa--fa: "\e009\e009";
+}
+.fak.fa-ico-plus,
+.fa-kit.fa-ico-plus {
+  --fa: "\e026";
+  --fa--fa: "\e026\e026";
+}
+.fak.fa-ico-privacy,
+.fa-kit.fa-ico-privacy {
+  --fa: "\e010";
+  --fa--fa: "\e010\e010";
+}
+.fak.fa-ico-refresh,
+.fa-kit.fa-ico-refresh {
+  --fa: "\e02d";
+  --fa--fa: "\e02d\e02d";
+}
+.fak.fa-ico-rules,
+.fa-kit.fa-ico-rules {
+  --fa: "\e049";
+  --fa--fa: "\e049\e049";
+}
+.fak.fa-ico-search,
+.fa-kit.fa-ico-search {
+  --fa: "\e02b";
+  --fa--fa: "\e02b\e02b";
+}
+.fak.fa-ico-security,
+.fa-kit.fa-ico-security {
+  --fa: "\e006";
+  --fa--fa: "\e006\e006";
+}
+.fak.fa-ico-settings,
+.fa-kit.fa-ico-settings {
+  --fa: "\e001";
+  --fa--fa: "\e001\e001";
+}
+.fak.fa-ico-show,
+.fa-kit.fa-ico-show {
+  --fa: "\e04b";
+  --fa--fa: "\e04b\e04b";
+}
+.fak.fa-ico-signout,
+.fa-kit.fa-ico-signout {
+  --fa: "\e00a";
+  --fa--fa: "\e00a\e00a";
+}
+.fak.fa-ico-star,
+.fa-kit.fa-ico-star {
+  --fa: "\e01d";
+  --fa--fa: "\e01d\e01d";
+}
+.fak.fa-ico-starsolid,
+.fa-kit.fa-ico-starsolid {
+  --fa: "\e01f";
+  --fa--fa: "\e01f\e01f";
+}
+.fak.fa-ico-success,
+.fa-kit.fa-ico-success {
+  --fa: "\e012";
+  --fa--fa: "\e012\e012";
+}
+.fak.fa-ico-support,
+.fa-kit.fa-ico-support {
+  --fa: "\e053";
+  --fa--fa: "\e053\e053";
+}
+.fak.fa-ico-time,
+.fa-kit.fa-ico-time {
+  --fa: "\e086";
+  --fa--fa: "\e086\e086";
+}
+.fak.fa-ico-transactions,
+.fa-kit.fa-ico-transactions {
+  --fa: "\e00b";
+  --fa--fa: "\e00b\e00b";
+}
+.fak.fa-ico-trash,
+.fa-kit.fa-ico-trash {
+  --fa: "\e02c";
+  --fa--fa: "\e02c\e02c";
+}
+.fak.fa-ico-unpin,
+.fa-kit.fa-ico-unpin {
+  --fa: "\e002";
+  --fa--fa: "\e002\e002";
+}
+.fak.fa-ico-upcoming,
+.fa-kit.fa-ico-upcoming {
+  --fa: "\e031";
+  --fa--fa: "\e031\e031";
+}
+.fak.fa-ico-user,
+.fa-kit.fa-ico-user {
+  --fa: "\e03c";
+  --fa--fa: "\e03c\e03c";
+}
+.fak.fa-ico-useroff,
+.fa-kit.fa-ico-useroff {
+  --fa: "\e08b";
+  --fa--fa: "\e08b\e08b";
+}
+.fak.fa-ico-video,
+.fa-kit.fa-ico-video {
+  --fa: "\e04a";
+  --fa--fa: "\e04a\e04a";
+}
+.fak.fa-ico-volume,
+.fa-kit.fa-ico-volume {
+  --fa: "\e055";
+  --fa--fa: "\e055\e055";
+}
+.fak.fa-ico-wallet,
+.fa-kit.fa-ico-wallet {
+  --fa: "\e054";
+  --fa--fa: "\e054\e054";
+}
+.fak.fa-ico-warning,
+.fa-kit.fa-ico-warning {
+  --fa: "\e03d";
+  --fa--fa: "\e03d\e03d";
+}
+.fak.fa-ico-x-point,
+.fa-kit.fa-ico-x-point {
+  --fa: "\e081";
+  --fa--fa: "\e081\e081";
+}
+.fak.fa-ilu-acc-blocked,
+.fa-kit.fa-ilu-acc-blocked {
+  --fa: "\e074";
+  --fa--fa: "\e074\e074";
+}
+.fak.fa-ilu-android-face,
+.fa-kit.fa-ilu-android-face {
+  --fa: "\e07f";
+  --fa--fa: "\e07f\e07f";
+}
+.fak.fa-ilu-android-finger,
+.fa-kit.fa-ilu-android-finger {
+  --fa: "\e07b";
+  --fa--fa: "\e07b\e07b";
+}
+.fak.fa-ilu-betslip-empty,
+.fa-kit.fa-ilu-betslip-empty {
+  --fa: "\e07c";
+  --fa--fa: "\e07c\e07c";
+}
+.fak.fa-ilu-biometric-default,
+.fa-kit.fa-ilu-biometric-default {
+  --fa: "\e08f";
+  --fa--fa: "\e08f\e08f";
+}
+.fak.fa-ilu-flag,
+.fa-kit.fa-ilu-flag {
+  --fa: "\e082";
+  --fa--fa: "\e082\e082";
+}
+.fak.fa-ilu-inbox,
+.fa-kit.fa-ilu-inbox {
+  --fa: "\e08a";
+  --fa--fa: "\e08a\e08a";
+}
+.fak.fa-ilu-ios-face,
+.fa-kit.fa-ilu-ios-face {
+  --fa: "\e076";
+  --fa--fa: "\e076\e076";
+}
+.fak.fa-ilu-ios-finger,
+.fa-kit.fa-ilu-ios-finger {
+  --fa: "\e080";
+  --fa--fa: "\e080\e080";
+}
+.fak.fa-ilu-kyc,
+.fa-kit.fa-ilu-kyc {
+  --fa: "\e073";
+  --fa--fa: "\e073\e073";
+}
+.fak.fa-ilu-location-error,
+.fa-kit.fa-ilu-location-error {
+  --fa: "\e077";
+  --fa--fa: "\e077\e077";
+}
+.fak.fa-ilu-no-content,
+.fa-kit.fa-ilu-no-content {
+  --fa: "\e089";
+  --fa--fa: "\e089\e089";
+}
+.fak.fa-ilu-no-results,
+.fa-kit.fa-ilu-no-results {
+  --fa: "\e079";
+  --fa--fa: "\e079\e079";
+}
+.fak.fa-ilu-sent,
+.fa-kit.fa-ilu-sent {
+  --fa: "\e075";
+  --fa--fa: "\e075\e075";
+}
+.fak.fa-ilu-stream-error,
+.fa-kit.fa-ilu-stream-error {
+  --fa: "\e078";
+  --fa--fa: "\e078\e078";
+}
+.fak.fa-ilu-stream-loader,
+.fa-kit.fa-ilu-stream-loader {
+  --fa: "\e07a";
+  --fa--fa: "\e07a\e07a";
+}
+.fak.fa-jaialai,
+.fa-kit.fa-jaialai {
+  --fa: "\e06b";
+  --fa--fa: "\e06b\e06b";
+}
+.fak.fa-mma,
+.fa-kit.fa-mma {
+  --fa: "\e05f";
+  --fa--fa: "\e05f\e05f";
+}
+.fak.fa-motorsport,
+.fa-kit.fa-motorsport {
+  --fa: "\e069";
+  --fa--fa: "\e069\e069";
+}
+.fak.fa-racetrack,
+.fa-kit.fa-racetrack {
+  --fa: "\e092";
+  --fa--fa: "\e092\e092";
+}
+.fak.fa-rugby,
+.fa-kit.fa-rugby {
+  --fa: "\e06e";
+  --fa--fa: "\e06e\e06e";
+}
+.fak.fa-snooker,
+.fa-kit.fa-snooker {
+  --fa: "\e062";
+  --fa--fa: "\e062\e062";
+}
+.fak.fa-soccer,
+.fa-kit.fa-soccer {
+  --fa: "\e06c";
+  --fa--fa: "\e06c\e06c";
+}
+.fak.fa-sportgeneric,
+.fa-kit.fa-sportgeneric {
+  --fa: "\e05d";
+  --fa--fa: "\e05d\e05d";
+}
+.fak.fa-table-tenn,
+.fa-kit.fa-table-tenn {
+  --fa: "\e05c";
+  --fa--fa: "\e05c\e05c";
+}
+.fak.fa-tennis,
+.fa-kit.fa-tennis {
+  --fa: "\e065";
+  --fa--fa: "\e065\e065";
+}
+.fak.fa-volley,
+.fa-kit.fa-volley {
+  --fa: "\e066";
+  --fa--fa: "\e066\e066";
+}
 
-.fak, .fa-kit {
+.fak,
+.fa-kit {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: var(--fa-display, inline-block);
@@ -130,7 +607,8 @@
   text-rendering: auto;
 }
 
-.fak::before, .fa-kit::before {
+.fak::before,
+.fa-kit::before {
   content: var(--fa);
 }
 

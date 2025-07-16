@@ -1,9 +1,9 @@
 import { Button, Flex, Popover } from "@radix-ui/themes";
-import type ItemData from "~/types/ItemData";
-import styles from "./AwesomeIconSelect.module.css";
 import { useState } from "react";
+import type ItemData from "~/types/ItemData";
 import { isClassAvailable } from "~/utils/isClassAvailable";
 import AwesomeIcon, { awesomeIconClassStyles, DefaultAwesomeIcon, getAwesomeIconClassForSport } from "../AwesomeIcon";
+import styles from "./AwesomeIconSelect.module.css";
 
 interface AwesomeIconSelectProps {
   sports: ItemData<string>[];

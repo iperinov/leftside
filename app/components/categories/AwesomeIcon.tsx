@@ -1,11 +1,10 @@
+import { Button } from "@radix-ui/themes";
 import { sportInfo } from "~/api/general/sport-info-uuid.service";
 import { isClassAvailable } from "~/utils/isClassAvailable";
 import type ClassNameProps from "../shared/ClassNameProps";
 import type MouseClickProps from "../shared/MouseClickProps";
-import { Button } from "@radix-ui/themes";
 import "~/styles/awesome/css/custom-icons.min.css";
 import "~/styles/awesome/css/all.min.css";
-
 
 interface AwesomeIconProps {
   sportUUID: string;
@@ -14,15 +13,22 @@ interface AwesomeIconProps {
   size?: "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10";
 }
 
-export default function AwesomeIcon({ sportUUID, selected = false, fallbackAwesomeIconClass, size, className, onClick }: AwesomeIconProps & ClassNameProps & MouseClickProps) {
+export default function AwesomeIcon({
+  sportUUID,
+  selected = false,
+  fallbackAwesomeIconClass,
+  size,
+  className,
+  onClick,
+}: AwesomeIconProps & ClassNameProps & MouseClickProps) {
   return (
     <Button variant="ghost" onClick={onClick} className={"nohover noselect"}>
       <i
         style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
         className={`${
-          getAwesomeIconClassForSport(sportUUID, size || "1") 
-          || getAwesomeIconClass(fallbackAwesomeIconClass || "fa-kit fa-sportgeneric", size || "1")
-          || getAwesomeIconClass("fa-kit fa-sportgeneric", size || "1")
+          getAwesomeIconClassForSport(sportUUID, size || "1") ||
+          getAwesomeIconClass(fallbackAwesomeIconClass || "fa-kit fa-sportgeneric", size || "1") ||
+          getAwesomeIconClass("fa-kit fa-sportgeneric", size || "1")
         } ${className}`}
         data-selected={selected ? "true" : undefined}
       />

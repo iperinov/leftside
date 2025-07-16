@@ -16,5 +16,10 @@
       "enabled": true,
       "indentStyle": "space"
     }
+  },
+  "files" : {
+    "ignore": [
+      "app/styles/awesome/"
+    ]
   }
 }

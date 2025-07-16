@@ -1,6 +1,7 @@
 .fa {
   font-family: var(--fa-style-family, "Font Awesome 6 Pro");
-  font-weight: var(--fa-style, 900); }
+  font-weight: var(--fa-style, 900);
+}
 
 .fas,
 .fass,
@@ -35,7 +36,8 @@
   font-style: normal;
   font-variant: normal;
   line-height: 1;
-  text-rendering: auto; }
+  text-rendering: auto;
+}
 
 .fas::before,
 .fass::before,
@@ -64,7 +66,8 @@
 .fa-sharp::before,
 .fa-sharp-duotone::before,
 .fa::before {
-  content: var(--fa); }
+  content: var(--fa);
+}
 
 .fad::after,
 .fa-duotone.fa-solid::after,
@@ -84,22 +87,27 @@
 .fa-sharp-duotone.fa-light::after,
 .fasdt::after,
 .fa-sharp-duotone.fa-thin::after {
-  content: var(--fa--fa); }
+  content: var(--fa--fa);
+}
 
 .fa-classic.fa-duotone {
-  font-family: 'Font Awesome 6 Duotone'; }
+  font-family: "Font Awesome 6 Duotone";
+}
 
 .fass,
 .fa-sharp {
-  font-weight: 900; }
+  font-weight: 900;
+}
 
 .fad,
 .fa-duotone {
-  font-weight: 900; }
+  font-weight: 900;
+}
 
 .fasds,
 .fa-sharp-duotone {
-  font-weight: 900; }
+  font-weight: 900;
+}
 
 .fa-classic,
 .fas,
@@ -110,125 +118,153 @@
 .fa-light,
 .fat,
 .fa-thin {
-  font-family: 'Font Awesome 6 Pro'; }
+  font-family: "Font Awesome 6 Pro";
+}
 
 .fa-duotone,
 .fad,
 .fadr,
 .fadl,
 .fadt {
-  font-family: 'Font Awesome 6 Duotone'; }
+  font-family: "Font Awesome 6 Duotone";
+}
 
 .fa-brands,
 .fab {
-  font-family: 'Font Awesome 6 Brands'; }
+  font-family: "Font Awesome 6 Brands";
+}
 
 .fa-sharp,
 .fass,
 .fasr,
 .fasl,
 .fast {
-  font-family: 'Font Awesome 6 Sharp'; }
+  font-family: "Font Awesome 6 Sharp";
+}
 
 .fa-sharp-duotone,
 .fasds,
 .fasdr,
 .fasdl,
 .fasdt {
-  font-family: 'Font Awesome 6 Sharp Duotone'; }
+  font-family: "Font Awesome 6 Sharp Duotone";
+}
 
 .fa-1x {
-  font-size: 1em; }
+  font-size: 1em;
+}
 
 .fa-2x {
-  font-size: 2em; }
+  font-size: 2em;
+}
 
 .fa-3x {
-  font-size: 3em; }
+  font-size: 3em;
+}
 
 .fa-4x {
-  font-size: 4em; }
+  font-size: 4em;
+}
 
 .fa-5x {
-  font-size: 5em; }
+  font-size: 5em;
+}
 
 .fa-6x {
-  font-size: 6em; }
+  font-size: 6em;
+}
 
 .fa-7x {
-  font-size: 7em; }
+  font-size: 7em;
+}
 
 .fa-8x {
-  font-size: 8em; }
+  font-size: 8em;
+}
 
 .fa-9x {
-  font-size: 9em; }
+  font-size: 9em;
+}
 
 .fa-10x {
-  font-size: 10em; }
+  font-size: 10em;
+}
 
 .fa-2xs {
   font-size: 0.625em;
   line-height: 0.1em;
-  vertical-align: 0.225em; }
+  vertical-align: 0.225em;
+}
 
 .fa-xs {
   font-size: 0.75em;
   line-height: 0.08333em;
-  vertical-align: 0.125em; }
+  vertical-align: 0.125em;
+}
 
 .fa-sm {
   font-size: 0.875em;
   line-height: 0.07143em;
-  vertical-align: 0.05357em; }
+  vertical-align: 0.05357em;
+}
 
 .fa-lg {
   font-size: 1.25em;
   line-height: 0.05em;
-  vertical-align: -0.075em; }
+  vertical-align: -0.075em;
+}
 
 .fa-xl {
   font-size: 1.5em;
   line-height: 0.04167em;
-  vertical-align: -0.125em; }
+  vertical-align: -0.125em;
+}
 
 .fa-2xl {
   font-size: 2em;
   line-height: 0.03125em;
-  vertical-align: -0.1875em; }
+  vertical-align: -0.1875em;
+}
 
 .fa-fw {
   text-align: center;
-  width: 1.25em; }
+  width: 1.25em;
+}
 
 .fa-ul {
   list-style-type: none;
   margin-left: var(--fa-li-margin, 2.5em);
-  padding-left: 0; }
-  .fa-ul > li {
-    position: relative; }
+  padding-left: 0;
+}
+.fa-ul > li {
+  position: relative;
+}
 
 .fa-li {
   left: calc(-1 * var(--fa-li-width, 2em));
   position: absolute;
   text-align: center;
   width: var(--fa-li-width, 2em);
-  line-height: inherit; }
+  line-height: inherit;
+}
 
 .fa-border {
   border-color: var(--fa-border-color, #eee);
   border-radius: var(--fa-border-radius, 0.1em);
   border-style: var(--fa-border-style, solid);
   border-width: var(--fa-border-width, 0.08em);
-  padding: var(--fa-border-padding, 0.2em 0.25em 0.15em); }
+  padding: var(--fa-border-padding, 0.2em 0.25em 0.15em);
+}
 
 .fa-pull-left {
   float: left;
-  margin-right: var(--fa-pull-margin, 0.3em); }
+  margin-right: var(--fa-pull-margin, 0.3em);
+}
 
 .fa-pull-right {
   float: right;
-  margin-left: var(--fa-pull-margin, 0.3em); }
+  margin-left: var(--fa-pull-margin, 0.3em);
+}
 
 .fa-beat {
   animation-name: fa-beat;
@@ -236,7 +272,8 @@
   animation-direction: var(--fa-animation-direction, normal);
   animation-duration: var(--fa-animation-duration, 1s);
   animation-iteration-count: var(--fa-animation-iteration-count, infinite);
-  animation-timing-function: var(--fa-animation-timing, ease-in-out); }
+  animation-timing-function: var(--fa-animation-timing, ease-in-out);
+}
 
 .fa-bounce {
   animation-name: fa-bounce;
@@ -244,7 +281,8 @@
   animation-direction: var(--fa-animation-direction, normal);
   animation-duration: var(--fa-animation-duration, 1s);
   animation-iteration-count: var(--fa-animation-iteration-count, infinite);
-  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1)); }
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));
+}
 
 .fa-fade {
   animation-name: fa-fade;
@@ -252,7 +290,8 @@
   animation-direction: var(--fa-animation-direction, normal);
   animation-duration: var(--fa-animation-duration, 1s);
   animation-iteration-count: var(--fa-animation-iteration-count, infinite);
-  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1)); }
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
 
 .fa-beat-fade {
   animation-name: fa-beat-fade;
@@ -260,7 +299,8 @@
   animation-direction: var(--fa-animation-direction, normal);
   animation-duration: var(--fa-animation-duration, 1s);
   animation-iteration-count: var(--fa-animation-iteration-count, infinite);
-  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1)); }
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
 
 .fa-flip {
   animation-name: fa-flip;
@@ -268,7 +308,8 @@
   animation-direction: var(--fa-animation-direction, normal);
   animation-duration: var(--fa-animation-duration, 1s);
   animation-iteration-count: var(--fa-animation-iteration-count, infinite);
-  animation-timing-function: var(--fa-animation-timing, ease-in-out); }
+  animation-timing-function: var(--fa-animation-timing, ease-in-out);
+}
 
 .fa-shake {
   animation-name: fa-shake;
@@ -276,7 +317,8 @@
   animation-direction: var(--fa-animation-direction, normal);
   animation-duration: var(--fa-animation-duration, 1s);
   animation-iteration-count: var(--fa-animation-iteration-count, infinite);
-  animation-timing-function: var(--fa-animation-timing, linear); }
+  animation-timing-function: var(--fa-animation-timing, linear);
+}
 
 .fa-spin {
   animation-name: fa-spin;
@@ -284,10 +326,12 @@
   animation-direction: var(--fa-animation-direction, normal);
   animation-duration: var(--fa-animation-duration, 2s);
   animation-iteration-count: var(--fa-animation-iteration-count, infinite);
-  animation-timing-function: var(--fa-animation-timing, linear); }
+  animation-timing-function: var(--fa-animation-timing, linear);
+}
 
 .fa-spin-reverse {
-  --fa-animation-direction: reverse; }
+  --fa-animation-direction: reverse;
+}
 
 .fa-pulse,
 .fa-spin-pulse {
@@ -295,7 +339,8 @@
   animation-direction: var(--fa-animation-direction, normal);
   animation-duration: var(--fa-animation-duration, 1s);
   animation-iteration-count: var(--fa-animation-iteration-count, infinite);
-  animation-timing-function: var(--fa-animation-timing, steps(8)); }
+  animation-timing-function: var(--fa-animation-timing, steps(8));
+}
 
 @media (prefers-reduced-motion: reduce) {
   .fa-beat,
@@ -311,93 +356,138 @@
     animation-duration: 1ms;
     animation-iteration-count: 1;
     transition-delay: 0s;
-    transition-duration: 0s; } }
+    transition-duration: 0s;
+  }
+}
 
 @keyframes fa-beat {
-  0%, 90% {
-    transform: scale(1); }
+  0%,
+  90% {
+    transform: scale(1);
+  }
   45% {
-    transform: scale(var(--fa-beat-scale, 1.25)); } }
+    transform: scale(var(--fa-beat-scale, 1.25));
+  }
+}
 
 @keyframes fa-bounce {
   0% {
-    transform: scale(1, 1) translateY(0); }
+    transform: scale(1, 1) translateY(0);
+  }
   10% {
-    transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0); }
+    transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+  }
   30% {
-    transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em)); }
+    transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+  }
   50% {
-    transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0); }
+    transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+  }
   57% {
-    transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em)); }
+    transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+  }
   64% {
-    transform: scale(1, 1) translateY(0); }
+    transform: scale(1, 1) translateY(0);
+  }
   100% {
-    transform: scale(1, 1) translateY(0); } }
+    transform: scale(1, 1) translateY(0);
+  }
+}
 
 @keyframes fa-fade {
   50% {
-    opacity: var(--fa-fade-opacity, 0.4); } }
+    opacity: var(--fa-fade-opacity, 0.4);
+  }
+}
 
 @keyframes fa-beat-fade {
-  0%, 100% {
+  0%,
+  100% {
     opacity: var(--fa-beat-fade-opacity, 0.4);
-    transform: scale(1); }
+    transform: scale(1);
+  }
   50% {
     opacity: 1;
-    transform: scale(var(--fa-beat-fade-scale, 1.125)); } }
+    transform: scale(var(--fa-beat-fade-scale, 1.125));
+  }
+}
 
 @keyframes fa-flip {
   50% {
-    transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg)); } }
+    transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+  }
+}
 
 @keyframes fa-shake {
   0% {
-    transform: rotate(-15deg); }
+    transform: rotate(-15deg);
+  }
   4% {
-    transform: rotate(15deg); }
-  8%, 24% {
-    transform: rotate(-18deg); }
-  12%, 28% {
-    transform: rotate(18deg); }
+    transform: rotate(15deg);
+  }
+  8%,
+  24% {
+    transform: rotate(-18deg);
+  }
+  12%,
+  28% {
+    transform: rotate(18deg);
+  }
   16% {
-    transform: rotate(-22deg); }
+    transform: rotate(-22deg);
+  }
   20% {
-    transform: rotate(22deg); }
+    transform: rotate(22deg);
+  }
   32% {
-    transform: rotate(-12deg); }
+    transform: rotate(-12deg);
+  }
   36% {
-    transform: rotate(12deg); }
-  40%, 100% {
-    transform: rotate(0deg); } }
+    transform: rotate(12deg);
+  }
+  40%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
 
 @keyframes fa-spin {
   0% {
-    transform: rotate(0deg); }
+    transform: rotate(0deg);
+  }
   100% {
-    transform: rotate(360deg); } }
+    transform: rotate(360deg);
+  }
+}
 
 .fa-rotate-90 {
-  transform: rotate(90deg); }
+  transform: rotate(90deg);
+}
 
 .fa-rotate-180 {
-  transform: rotate(180deg); }
+  transform: rotate(180deg);
+}
 
 .fa-rotate-270 {
-  transform: rotate(270deg); }
+  transform: rotate(270deg);
+}
 
 .fa-flip-horizontal {
-  transform: scale(-1, 1); }
+  transform: scale(-1, 1);
+}
 
 .fa-flip-vertical {
-  transform: scale(1, -1); }
+  transform: scale(1, -1);
+}
 
 .fa-flip-both,
 .fa-flip-horizontal.fa-flip-vertical {
-  transform: scale(-1, -1); }
+  transform: scale(-1, -1);
+}
 
 .fa-rotate-by {
-  transform: rotate(var(--fa-rotate-angle, 0)); }
+  transform: rotate(var(--fa-rotate-angle, 0));
+}
 
 .fa-stack {
   display: inline-block;
@@ -405,7 +495,8 @@
   line-height: 2em;
   position: relative;
   vertical-align: middle;
-  width: 2.5em; }
+  width: 2.5em;
+}
 
 .fa-stack-1x,
 .fa-stack-2x {
@@ -413,16 +504,20 @@
   position: absolute;
   text-align: center;
   width: 100%;
-  z-index: var(--fa-stack-z-index, auto); }
+  z-index: var(--fa-stack-z-index, auto);
+}
 
 .fa-stack-1x {
-  line-height: inherit; }
+  line-height: inherit;
+}
 
 .fa-stack-2x {
-  font-size: 2em; }
+  font-size: 2em;
+}
 
 .fa-inverse {
-  color: var(--fa-inverse, #fff); }
+  color: var(--fa-inverse, #fff);
+}
 
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
 readers do not read off random characters that represent icons */
@@ -437,7 +532,8 @@ readers do not read off random characters that represent icons */
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border-width: 0; }
+  border-width: 0;
+}
 
 .sr-only-focusable:not(:focus),
 .fa-sr-only-focusable:not(:focus) {
@@ -449,4 +545,5 @@ readers do not read off random characters that represent icons */
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border-width: 0; }
+  border-width: 0;
+}
