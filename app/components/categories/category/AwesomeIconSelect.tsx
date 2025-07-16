@@ -1,8 +1,8 @@
-import { Button, Flex, Popover } from "@radix-ui/themes";
+import { Flex, Popover } from "@radix-ui/themes";
 import { useState } from "react";
 import type ItemData from "~/types/ItemData";
 import { isClassAvailable } from "~/utils/isClassAvailable";
-import AwesomeIcon, { awesomeIconClassStyles, DefaultAwesomeIcon, getAwesomeIconClassForSport } from "../AwesomeIcon";
+import SportAwesomeIcon, { awesomeIconClassStyles, DefaultSportAwesomeIcon, getAwesomeIconClassForSport } from "../SportAwesomeIcon";
 import styles from "./AwesomeIconSelect.module.css";
 
 interface AwesomeIconSelectProps {
@@ -27,12 +27,12 @@ export default function AwesomeIconSelect({ sports, selectedID, fallbackIconID =
   return (
     <Popover.Root open={open} onOpenChange={setOpen} modal={true}>
       <Popover.Trigger>
-        <span>{selectedID ? <AwesomeIcon sportUUID={selectedID} fallbackAwesomeIconClass={fallbackIconID} size="3" /> : <DefaultAwesomeIcon size="3" />}</span>
+        <span>{selectedID ? <SportAwesomeIcon sportUUID={selectedID} fallbackAwesomeIconClass={fallbackIconID} size="3" /> : <DefaultSportAwesomeIcon size="3" />}</span>
       </Popover.Trigger>
       <Popover.Content className={styles.iconContent} maxWidth="300px" sideOffset={5} align="start">
         <Flex gap="2" wrap="wrap" justify="between">
           {availableIconClasses.map((iconClass) => (
-            <AwesomeIcon
+            <SportAwesomeIcon
               sportUUID={iconClass.id}
               key={iconClass.id}
               className={`${styles.icon} ${iconClass.value}`}

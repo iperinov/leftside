@@ -4,7 +4,7 @@ import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import ConfirmDialog from "../dialogs/ConfirmDialog.";
 import type ClassNameProps from "../shared/ClassNameProps";
 import TwoStateIconWithHint from "../shared/TwoStateIconWithHintProps";
-import AwesomeIcon, { getAwesomeIconClassForSport } from "./AwesomeIcon";
+import SportAwesomeIcon, { getAwesomeIconClassForSport } from "./SportAwesomeIcon";
 import AddNewCategory from "./category/AddNewCategory";
 import DeleteCategory from "./category/DeleteCategory";
 import DuplicateCategory from "./category/DuplicateCategory";
@@ -116,7 +116,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
 
   const sportIconFor = (sportCategory: CategoryTreeItem, level: number) => {
     if (level !== 0 || sportCategory.type !== "nested") return [];
-    return sportCategory.iconID ? [{ key: sportCategory.iconID, node: <AwesomeIcon sportUUID={sportCategory.iconID} size="1" /> }] : [];
+    return sportCategory.iconID ? [{ key: sportCategory.iconID, node: <SportAwesomeIcon sportUUID={sportCategory.iconID} size="1" /> }] : [];
   };
 
   const optionalNodes = (item: CategoryTreeItem, level: number) => [...preselectionIconsFor(item, level), ...sportIconFor(item, level)];

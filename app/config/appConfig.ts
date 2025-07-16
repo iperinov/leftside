@@ -14,6 +14,10 @@ export interface AppConfig {
   cdb: {
     baseUrl: string;
     timeout: number;
+    auth?: { 
+      username: string;
+      password: string;
+    };
   };
   features: {
     enableRename: boolean;
@@ -47,8 +51,12 @@ export const defaultAppConfig: AppConfig = {
     timeout: 10000,
   },
   cdb: {
-    baseUrl: import.meta.env.VITE_CDB_BASE_URL || "http://localhost:6000",
+    baseUrl: import.meta.env.VITE_CDB_BASE_URL || "http://integ-couchdb01.im.priv:5984/sccs/_design/catalogue/_view",
     timeout: 10000,
+    auth: {
+      username: import.meta.env.VITE_CDB_USERNAME || "admin",
+      password: import.meta.env.VITE_CDB_PASSWORD || "admin1",
+    },
   },
   features: {
     enableRename: true,
