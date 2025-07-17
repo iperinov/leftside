@@ -19,7 +19,8 @@
   },
   "files" : {
     "ignore": [
-      "app/styles/awesome/"
+      "app/styles/awesome/",
+      "app/api/sccs/"
     ]
   }
 }

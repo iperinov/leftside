@@ -1,0 +1,523 @@
+openapi: 3.0.3
+info:
+  title: Sportsbook Content Configurations Service
+  description: "The following document describes the REST API that will be exposed by the Sportsbook Content Configurations service."
+  version: 0.0.1
+tags:
+  - name: auth
+    description: "Authentication endpoints"
+  - name: catalogue
+    description: "Catalogue endpoints"
+  - name: config
+    description: "Configs endpoints"
+
+paths:
+########################### AUTH #######################################
+  /sccs/auth/login:
+    post:
+      tags:
+        - auth
+      summary: "Login a user into the sportsbook-content-configurations service"
+      description: "This method is used to login a user"
+      security: []
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  $ref: "#/components/schemas/AuthorizedUsername"
+                password:
+                  $ref: "#/components/schemas/AuthorizedUserPassword"
+      responses:
+        200:
+          description: "Response"
+          headers:
+            Set-Cookie:
+              description: "Sets a session cookie"
+              schema:
+                $ref: "#/components/schemas/SCSSessionID"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseOK"
+              example:
+                description: "Ok"
+##################################################################
+  /sccs/auth/logout:
+    post:
+      tags:
+        - auth
+      summary: "Logout a user from the sportsbook-content-configurations service"
+      description: "This method is used to logout a user"
+      operationId: logout
+      responses:
+        200:
+          description: "OK. Sets session cookie (SCS_SESSION_ID) in response."
+          headers:
+            Set-Cookie:
+              description: "Sets a session cookie"
+              schema:
+                $ref: "#/components/schemas/SCSSessionID"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseOK"
+              example:
+                description: "Successfully logged out"
+########################### CATALOGUE #######################################
+  /sccs/catalog/entity/create:
+    post:
+      tags:
+        - catalogue
+      summary: "Creates a league, and the corresponding real sport and region if not existent"
+      description: "This method is used to create a league"
+      operationId: createLeague
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLeagueRequest"
+      responses:
+        200:
+          description: "OK. League was created."
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ResponseOK'
+                  - $ref: '#/components/schemas/CreateLeagueResponse'
+########################### CONFIG #######################################
+  /sccs/config:
+    post:
+      tags:
+        - config
+      summary: Creates a new configuration
+      operationId: createConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewConfig'
+      responses:
+        200:
+          description: "OK. League was created."
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CreateConfigResponse'
+                  - $ref: '#/components/schemas/ResponseOK'
+  /sccs/config/{uuid}:
+    post:
+      tags:
+        - config
+      summary: Updated a configuration
+      operationId: updateConfig
+      parameters: 
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConfig'
+      responses:
+        200:
+          description: "OK. League was created."
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/UpdateConfigResponse'
+                  - $ref: '#/components/schemas/ResponseOK'
+#Security
+security:
+  - sessionKey: []
+  
+# Components
+components:
+  securitySchemes:
+    sessionKey:
+      type: apiKey
+      in: cookie
+      name: SCS_SESSION_ID
+  schemas:
+########################### GENERAL #######################################
+    StatusCode:
+      type: integer
+      enum:
+        - 200
+        - 400
+        - 401
+        - 403
+        - 404
+        - 409
+        - 500 
+        - 503
+      x-enumNames:
+        - "OK"
+        - "BadRequest"
+        - "Unauthorized"
+        - "Forbidden"
+        - "NotFound"
+        - "Conflict"
+        - "InternalServerError"
+        - "ServiceUnavailable"
+    ResponseOK:
+      type: object
+      required:
+        - code
+        - description
+      properties:
+        code:
+          $ref: '#/components/schemas/StatusCode'
+        description:
+          type: string
+    UUID:
+      type: string
+      format: uuid
+      x-go-type: uuid.UUID
+      x-go-type-import:
+        path: gitlab.im.priv/integ/schedule/sportsbook-content-config-service/src/uuid
+        name: uuid
+      description: "Unique Identifier"
+      example: "a65b6162-251d-4a3b-bbf4-13b7bd5ddfa8"
+########################### AUTH #######################################
+    SCSSessionID:
+      type: string
+      minLength: 1
+      description: "SessionID of a logged user"
+      example: SCS_SESSION_ID=abcde12345; Path=/; HttpOnly
+
+    AuthorizedUsername:
+      type: string
+      minLength: 1
+      description: "The domain username"
+      example: "john.smith@im.priv"
+
+    AuthorizedUserPassword:
+      type: string
+      description: "The domain password"
+      example: "qwe@123!#"
+########################### CATALOGUE #######################################      
+    Region:
+      type: object
+      required: 
+        - description
+        - short
+        - pre-game-delay
+        - live-delay
+        - enabled
+      properties:
+        description:
+          minLength: 1
+          type: string
+        short:
+          minLength: 1
+          type: string
+        pre-game-delay:
+          type: integer
+        live-delay:
+          type: integer
+        enabled:
+          type: boolean
+          
+    ExistingRegion:
+      type: object
+      required:
+        - uuid
+      properties:
+        uuid:
+          $ref: '#/components/schemas/UUID'
+    
+    RealSport:
+      type: object
+      required: 
+        - description
+        - order
+        - enabled
+      properties:
+        description:
+          minLength: 1
+          type: string
+        order:
+          type: integer
+        enabled:
+          type: boolean
+          
+    ExistingRealSport:
+      type: object
+      required:
+        - uuid
+      properties:
+        uuid:
+          $ref: '#/components/schemas/UUID'
+    
+    League:
+      type: object
+      required: 
+        - sport
+        - description
+        - short
+        - order
+        - team-fk-required
+        - take-back-profile
+        - hide-for-master
+        - enabled
+      properties:
+        sport:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        short:
+          type: string
+          minLength: 1
+        order:
+          type: integer
+        team-fk-required:
+          type: boolean
+        take-back-profile:
+          type: integer
+        hide-for-master:
+          type: boolean
+        enabled:
+          type: boolean
+          
+    CreateLeagueRequest:
+      type: object
+      required: 
+        - region
+        - real-sport
+      properties:
+        region:
+          oneOf:
+            - $ref: '#/components/schemas/Region'
+            - $ref: '#/components/schemas/ExistingRegion'
+        real-sport:
+          oneOf:
+            - $ref: '#/components/schemas/RealSport'
+            - $ref: '#/components/schemas/ExistingRealSport'
+        league:
+          $ref: '#/components/schemas/League'
+          
+    CreateLeagueResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResponseOK'
+        - type: object
+          properties:
+            entities: 
+              $ref: '#/components/schemas/ResponseEntities'
+    
+    Entity:
+      type: object
+      required:
+        - id
+        - uuid
+      properties:
+        id:
+          type: integer
+        uuid:
+          $ref: '#/components/schemas/UUID'
+        
+    ResponseEntities:
+      type: object
+      required:
+        - region
+        - real-sport
+        - league
+      properties:
+        region:
+          $ref: '#/components/schemas/Entity'
+        real-sport:
+          $ref: '#/components/schemas/Entity'
+        league:
+          $ref: '#/components/schemas/Entity'
+          
+########################### CONFIG #######################################
+    FiltersTypeString:
+      type: array
+      items:
+        type: string
+        minLength: 1
+      
+    FiltersTypeBool:
+      type: array
+      items:
+        type: boolean
+      
+    FiltersTypeInteger:
+      type: array
+      items:
+        type: integer
+
+    Filter:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          type: string
+          enum: 
+            - sport
+            - region
+            - league
+            - game
+            - period
+            - market
+            - time
+            - status
+          x-enumNames:
+            - "Sport"
+            - "Region"
+            - "League"
+            - "Game"
+            - "Period"
+            - "Market"
+            - "Time"
+            - "Status"
+        value:
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/FiltersTypeBool'
+            - $ref: '#/components/schemas/FiltersTypeInteger'
+          description: Values to filter by, can be a an array of objects of a single type.
+          
+    Filters:
+      type: array
+      items:
+        $ref: '#/components/schemas/Filter'
+        
+    FilterGroup:
+      type: object
+      required:
+          - uuid
+          - filters
+          - groupBy
+          - order
+          - limit
+      properties:
+        uuid:
+          $ref: '#/components/schemas/UUID'
+        filters:
+          $ref: '#/components/schemas/Filters'
+        groupBy:
+          type: string
+          description: One or more attributes to group by (e.g. league, date)
+          enum: 
+            - league.day
+            - day.league
+            - sport.day
+            - sport.league
+            - day.game
+          x-enumNames:
+            - "ByLeagueByDay"
+            - "ByDayByLeague"
+            - "BySportByDay"
+            - "BySportByLeague"
+            - "ByDayByGame"
+        order:
+          type: string
+          enum: 
+            - asc
+            - desc
+          x-enumNames:
+            - "Asc"
+            - "Desc"
+        limit:
+          type: integer
+          description: 0 means unlimited
+          
+    CategoryType:
+      type: string
+      enum: 
+        - flat
+        - nested
+      x-enumNames:
+            - "Flat"
+            - "Nested"
+        
+    Category:
+      type: object
+      required:
+        - uuid
+        - name
+        - type
+        - filter-groups
+      properties:
+        uuid:
+          $ref: '#/components/schemas/UUID'
+        name:
+          type: string
+          minLength: 1
+          description: Display name
+        type:
+          $ref: '#/components/schemas/CategoryType'
+        filter-groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterGroup'
+        children:
+          $ref: '#/components/schemas/Categories'
+          
+    Categories:
+      type: array
+      items:
+        $ref: '#/components/schemas/Category'
+            
+    NewConfig:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          
+    UpdateConfig:
+      type: object
+      required:
+        - uuid
+      properties:
+        uuid:
+          $ref: '#/components/schemas/UUID'
+        name:
+          type: string
+          minLength: 1
+        categories:
+          $ref: '#/components/schemas/Categories'
+    
+    CreateConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResponseOK'
+        - type: object
+          required:
+            - uuid
+          properties:
+            uuid:
+              $ref: '#/components/schemas/UUID'
+              
+    UpdateConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResponseOK'
+        - type: object
+          required:
+            - uuid
+          properties:
+            uuid:
+              $ref: '#/components/schemas/UUID'

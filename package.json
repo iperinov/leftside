@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
+    "api": "openapi --input ./api/sccs/openapi.yml --output ./app/api/sccs/ --name SCCSClient",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
@@ -54,6 +55,7 @@
     "@vitest/coverage-v8": "^3.2.3",
     "@vitest/ui": "^3.2.3",
     "jsdom": "^26.1.0",
+    "openapi-typescript-codegen": "^0.29.0",
     "react-window": "^1.8.11",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
