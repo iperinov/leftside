@@ -10,5 +10,7 @@ interface LoadDataDecoratorProps {
 }
 
 export default function LoadDataDecorator({ children, error, isLoading, retry, className }: LoadDataDecoratorProps & ClassNameProps) {
-  return <>{error ? <LoadingErrorSection error={error} retry={retry} className={className} /> : isLoading ? <LoadingSection className={className} /> : children}</>;
+  return (
+    <>{error ? <LoadingErrorSection error={error} retry={retry} className={className} /> : isLoading ? <LoadingSection className={className} /> : children}</>
+  );
 }

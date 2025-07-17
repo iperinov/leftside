@@ -6230,4 +6230,4 @@ export const mockCatalogItemsJson = `
     }
   ]
 }
-`
+`;

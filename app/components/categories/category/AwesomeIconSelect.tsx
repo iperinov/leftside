@@ -27,7 +27,9 @@ export default function AwesomeIconSelect({ sports, selectedID, fallbackIconID =
   return (
     <Popover.Root open={open} onOpenChange={setOpen} modal={true}>
       <Popover.Trigger>
-        <span>{selectedID ? <SportAwesomeIcon sportUUID={selectedID} fallbackAwesomeIconClass={fallbackIconID} size="3" /> : <DefaultSportAwesomeIcon size="3" />}</span>
+        <span>
+          {selectedID ? <SportAwesomeIcon sportUUID={selectedID} fallbackAwesomeIconClass={fallbackIconID} size="3" /> : <DefaultSportAwesomeIcon size="3" />}
+        </span>
       </Popover.Trigger>
       <Popover.Content className={styles.iconContent} maxWidth="300px" sideOffset={5} align="start">
         <Flex gap="2" wrap="wrap" justify="between">

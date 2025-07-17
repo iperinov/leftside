@@ -87,7 +87,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
         node: (
           <TwoStateIconWithHint
             selected={isItemPreselected}
-            hint="Automatically open a category when its top-level parent is selected by the user."
+            hint={{ title: "Preselected", desc: "This category will be automatically opened, when its top-level parent is selected by the user." }}
             SelectedIcon={BookmarkFilledIcon}
             NotSelectedIcon={BookmarkIcon}
             onSelected={() => onPreselected(item)}
@@ -102,7 +102,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
         node: (
           <TwoStateIconWithHint
             selected={isItemMainPreselected}
-            hint="Mark this category as the default selection. It will automatically open when the user first visits the website."
+            hint={{ title: "Default preselected", desc: "This category will be automatically opened, when the user open the website." }}
             SelectedIcon={StarFilledIcon}
             NotSelectedIcon={StarIcon}
             onSelected={() => onMainPreselected(item)}
@@ -153,7 +153,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
           title="Change preselection"
           description={
             mainPreselected === changePreselectionData.currentItem.id
-              ? `Change preselection for "${changePreselectionData.firstParent.name}" from "${changePreselectionData.currentItem.name}" to "${changePreselectionData.newItem.name}" and transfer main preselection?`
+              ? `Change preselection for "${changePreselectionData.firstParent.name}" from "${changePreselectionData.currentItem.name}" to "${changePreselectionData.newItem.name}" and transfer default preselection?`
               : `Change preselection for "${changePreselectionData.firstParent.name}" from "${changePreselectionData.currentItem.name}" to "${changePreselectionData.newItem.name}"?`
           }
           confirmText="Change"
@@ -165,8 +165,8 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
 
       {mainPreselectedData && (
         <ConfirmDialog
-          title="Change main preselection"
-          description={`Change main preselection from "${mainPreselectedData.currentItem.name}" to "${mainPreselectedData.newItem.name}"?`}
+          title="Change default preselection"
+          description={`Change default preselection from "${mainPreselectedData.currentItem.name}" to "${mainPreselectedData.newItem.name}"?`}
           confirmText="Change"
           destructive={true}
           onCancel={() => setMainPreselectedData(undefined)}

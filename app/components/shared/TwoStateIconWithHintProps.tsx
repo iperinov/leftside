@@ -1,8 +1,8 @@
-import { HoverCard, IconButton, Text } from "@radix-ui/themes";
+import { Flex, HoverCard, IconButton, Text } from "@radix-ui/themes";
 
 interface TwoStateIconWithHintProps {
   selected: boolean;
-  hint: string;
+  hint: { title: string; desc: string };
   onSelected?: () => void;
   onDeselected?: () => void;
   SelectedIcon: React.ComponentType<{ color?: string; onClick?: () => void }>;
@@ -23,7 +23,12 @@ export default function TwoStateIconWithHint({ selected = false, hint, onSelecte
         </IconButton>
       </HoverCard.Trigger>
       <HoverCard.Content maxWidth="300px" hideWhenDetached={true}>
-        <Text wrap="pretty">{hint}</Text>
+        <Flex direction="column" gap="3">
+          <Text weight="bold" wrap="pretty">
+            {hint.title}
+          </Text>
+          <Text wrap="pretty">{hint.desc}</Text>
+        </Flex>
       </HoverCard.Content>
     </HoverCard.Root>
   );

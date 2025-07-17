@@ -3,8 +3,8 @@ import { sportInfo } from "~/api/general/sport-info-uuid.service";
 import { isClassAvailable } from "~/utils/isClassAvailable";
 import type ClassNameProps from "../shared/ClassNameProps";
 import type MouseClickProps from "../shared/MouseClickProps";
-import "~/styles/awesome/sportKit/css/custom-icons.min.css";
-import "~/styles/awesome/sportKit/css/all.min.css";
+import "~/styles/awesome/sportsKit/css/custom-icons.min.css";
+import "~/styles/awesome/sportsKit/css/all.min.css";
 
 interface SportAwesomeIconProps {
   sportUUID: string;
