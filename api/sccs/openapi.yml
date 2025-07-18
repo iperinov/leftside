@@ -504,7 +504,8 @@ components:
         uuid:
           $ref: '#/components/schemas/UUID'
         name:
-          $ref: '#/components/schemas/ConfigName'
+          type: string
+          minLength: 1
         categories:
           $ref: '#/components/schemas/Categories'
     
