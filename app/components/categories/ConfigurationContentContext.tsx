@@ -1,11 +1,10 @@
 import { Box, Flex } from "@radix-ui/themes";
 import { useState } from "react";
-import { GroupBy, Order } from "~/api/scs/configurations/config.consts";
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import AssignedBooks from "../configurations/AssignedBooks";
 import ContentPreview from "../configurations/ContentPreview";
 import type ClassNameProps from "../shared/ClassNameProps";
+import type { FilterGroup } from "~/api/sccs/types.gen";
 
 interface ConfigurationContentContextProps {
   categoryID: string;
@@ -19,12 +18,12 @@ const mockFilterGroups: FilterGroup[] = [
       {
         //ECUADOR - LIGA SERIE A
         type: "league",
-        values: ["6615560F-5325-48A4-A0A2-632419148D34"],
+        value: ["6615560F-5325-48A4-A0A2-632419148D34"],
       },
     ],
-    groupBy: GroupBy.LeagueDay,
-    order: Order.Desc,
-    //limit: 1,
+    groupBy: "leagueDay",
+    order: "desc",
+    limit: 1,
   },
   {
     uuid: "4565560F-5325-48A4-A0A2-632419148D34",
@@ -32,12 +31,12 @@ const mockFilterGroups: FilterGroup[] = [
       {
         // NFL
         type: "league",
-        values: ["F47370AC-44C3-4CC6-8358-8798C1E0DA9A"],
+        value: ["F47370AC-44C3-4CC6-8358-8798C1E0DA9A"],
       },
     ],
-    groupBy: GroupBy.SportLeague,
-    order: Order.Asc,
-    //limit: 1,
+    groupBy: "sportLeague",
+    order: "asc",
+    limit: 1,
   },
 ];
 

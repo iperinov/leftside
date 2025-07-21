@@ -1,7 +1,8 @@
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
+
 import { getAppConfig } from "~/lib/runtimeConfig";
 import { mockContentFilteredSmall } from "./mock/mockContentFiltered";
 import type { FilteredGamesResponse } from "./ssm.types";
+import type { FilterGroup } from "../sccs/types.gen";
 
 const ssmUrl = getAppConfig().ssm.baseUrl;
 

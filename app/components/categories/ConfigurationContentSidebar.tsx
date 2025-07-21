@@ -21,7 +21,7 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
   const [addItemData, setAddItemData] = useState<{ level: number; parentUUID: string }>();
   const [renameItemData, setRenameItemData] = useState<{ id: string; name: string }>();
   const [duplicateItemData, setDuplicateItemData] = useState<{ id: string; name: string; parentID: string }>();
-  const [deleteItemData, setDeleteItemData] = useState<{ id: string }>();
+  const [deleteItemData, setDeleteItemData] = useState<{ id: string, name: string }>();
   const [preselected, setPreselected] = useState<{ firstLevelParent: string; uuid: string }[]>([]);
   const [changePreselectionData, setChangePreselectionData] = useState<{
     currentItem: CategoryTreeItem;

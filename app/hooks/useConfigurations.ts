@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getConfigurations } from "../api/scs/configurations/getConfigurations";
 import { queryKeys } from "../lib/queryKeys";
+import getConfigurations from "~/api/cdb/getConfigurations";
 
 export const useConfigurations = () => {
   return useQuery({

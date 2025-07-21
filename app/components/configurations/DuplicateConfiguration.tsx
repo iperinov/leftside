@@ -1,6 +1,8 @@
-import { Flex, Text } from "@radix-ui/themes";
+
 import { useDuplicateConfiguration } from "../../hooks/useDuplicateConfiguration";
-import { BaseDialog } from "../shared/BaseDialog";
+import LoadDataDecorator from "../loading/LoadDataDecorator";
+import EditNameDialog from "../dialogs/EditNameDialog";
+import { useConfigurations } from "~/hooks/useConfigurations";
 
 export interface DuplicateConfigurationProps {
   open: boolean;
@@ -11,27 +13,30 @@ export interface DuplicateConfigurationProps {
 }
 
 export const DuplicateConfiguration = ({ open, onClose, id, rev, name }: DuplicateConfigurationProps) => {
-  const mutation = useDuplicateConfiguration();
+  const duplicateConfiguration = useDuplicateConfiguration();
+  const { data: configurations, isLoading, error } = useConfigurations();
 
-  const handleProceed = async () => {
-    try {
-      await mutation.mutateAsync({ uuid: id, rev });
-      onClose();
-    } catch (err) {
-      console.error("Failed to duplicate configuration:", err);
-    }
+  const handleConfirm = (name: string) => {
+    // try {
+    //   await mutation.mutateAsync({ uuid: id, rev });
+    //   onClose();
+    // } catch (err) {
+    //   console.error("Failed to duplicate configuration:", err);
+    // }
   };
 
   return (
-    <BaseDialog open={open} onClose={onClose} title="Duplicate configuration" isProcessing={mutation.isPending} onConfirm={handleProceed}>
-      <Flex direction="column" align="center" mb="4">
-        <Text size="1" mb="3" className="iconCircle" style={{ color: "var(--accent-11)" }}>
-          !
-        </Text>
-        <Text size="2" align="center" style={{ color: "var(--accent-11)", paddingTop: "1rem" }}>
-          Are you sure you want to duplicate configuration <strong>'{name}'</strong>?
-        </Text>
-      </Flex>
-    </BaseDialog>
+    <LoadDataDecorator isLoading={isLoading /*|| duplicateConfiguration.isPending*/} error={error}>
+      <EditNameDialog
+        title="Duplicate category"
+        description="Enter a new name for the duplicated category:"
+        confirmText="Duplicate"
+        open={true}
+        currentName={name}
+        onConfirm={handleConfirm}
+        onCancel={onClose}
+        validName={(name) => !configurations?.find((item) => item.name === name.trim())}
+      />
+    </LoadDataDecorator>
   );
 };

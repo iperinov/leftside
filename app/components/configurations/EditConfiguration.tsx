@@ -1,10 +1,10 @@
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, Text } from "@radix-ui/themes";
 import { useState } from "react";
-import type { FilterGroup } from "~/api/ssm/ssm.types";
-import { GroupBy, Order } from "~/api/ssm/ssm.types";
 import AssignedBooks from "./AssignedBooks";
 import ContentPreview from "./ContentPreview";
+import type { FilterGroup } from "~/api/sccs/types.gen";
+import { GroupBy, Order } from "~/api/sccs/configurations/config.consts";
 
 interface EditConfigurationProps {
   uuid: string;
@@ -14,6 +14,7 @@ interface EditConfigurationProps {
 
 const mockFilterGroups: FilterGroup[] = [
   {
+    uuid: "A1B2C3D4-E5F6-7890-ABCD-EF1234567890",
     filters: [
       {
         // USA - MLS
@@ -21,11 +22,12 @@ const mockFilterGroups: FilterGroup[] = [
         value: ["8ADE19BD-BC0C-489C-9568-87913DE486C7"],
       },
     ],
-    groupBy: GroupBy.SportDate,
+    groupBy: GroupBy.SportDay,
     order: Order.Asc,
-    //limit: 1,
+    limit: 1,
   },
   {
+    uuid: "4565560F-5325-48A4-A0A2-632419148D34",
     filters: [
       {
         //NFL
@@ -33,9 +35,9 @@ const mockFilterGroups: FilterGroup[] = [
         value: ["F47370AC-44C3-4CC6-8358-8798C1E0DA9A"],
       },
     ],
-    groupBy: GroupBy.Date,
+    groupBy: GroupBy.DayLeague,
     order: Order.Desc,
-    //limit: 1,
+    limit: 1,
   },
 ];
 

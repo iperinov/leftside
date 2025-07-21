@@ -1,5 +1,5 @@
 export interface AppConfig {
-  scs: {
+  sccs: {
     baseUrl: string;
     timeout: number;
   };
@@ -38,7 +38,7 @@ export interface AppConfig {
 }
 
 export const defaultAppConfig: AppConfig = {
-  scs: {
+  sccs: {
     baseUrl: import.meta.env.VITE_SCS_BASE_URL || "http://localhost:3000",
     timeout: 10000,
   },

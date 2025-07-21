@@ -1,4 +1,5 @@
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
+import type { FilterGroup } from "../sccs/types.gen";
+
 
 export interface Contender {
   id: number;

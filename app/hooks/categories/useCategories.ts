@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getConfigurationCategories } from "~/api/scs/categories/getConfigurationCategories";
-import type { Category } from "~/api/scs/configurations/config.types";
+import { getConfiguration } from "~/api/cdb/getConfiguration";
+import type { Category } from "~/api/sccs/types.gen";
 import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
 import { queryKeys } from "~/lib/queryKeys";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
@@ -25,9 +25,9 @@ export const useCategories = (uuid: string) => {
   return useQuery({
     queryKey: queryKeys.configurationCategories(uuid),
     queryFn: async () => {
-      const categories = await getConfigurationCategories(uuid);
-      const tree = toCategoryTree(categories);
-      resetTreeStore(tree);
+      const configuration = await getConfiguration(uuid);
+      const tree = toCategoryTree(configuration.categories);
+      resetTreeStore(configuration, tree);
       return { root: rootCategory };
     },
   });

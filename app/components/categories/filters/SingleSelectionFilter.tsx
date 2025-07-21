@@ -10,10 +10,10 @@ interface SingleSelectionFilterProps<T> {
   label: string;
   title: string;
   items: ItemData<T>[];
-
-  filterSelection(categoryUUID: string, filterGroupUUID: string): T;
-  updateFilterSelection(categoryUUID: string, filterGroupUUID: string, selected: T | undefined): void;
+  selection: T | undefined;
   disabled?: boolean;
+
+  updateFilterSelection(categoryUUID: string, filterGroupUUID: string, selected: T): void;
 }
 
 export default function SingleSelectionFilter<T>({
@@ -23,13 +23,13 @@ export default function SingleSelectionFilter<T>({
   label,
   title,
   items,
-  filterSelection,
-  updateFilterSelection,
+  selection,
   disabled = false,
+
+  updateFilterSelection,
 }: SingleSelectionFilterProps<T> & FilterGroupProps) {
   const [show, setShow] = useState(false);
-  const selection = filterSelection(categoryUUID, filterGroupUUID);
-  const selectionName = items.find((item) => item.id === selection)?.name;
+  const selectionName = selection ? items.find((item) => item.id === selection)?.name : undefined;
 
   return (
     <>

@@ -4,6 +4,7 @@ import type DialogBasicProps from "./DialogBasicProps";
 
 interface EditNameDialogProps extends DialogBasicProps {
   currentName?: string;
+  placeholder?: string;
   onConfirm: (name: string) => void;
   validName?: (name: string) => boolean;
 }
@@ -16,6 +17,7 @@ export default function EditNameDialog({
   cancelText = "Cancel",
   open = true,
   currentName = "",
+  placeholder = "Enter name",
   onConfirm,
   onCancel = () => {},
   validName = (name) => true,
@@ -44,7 +46,7 @@ export default function EditNameDialog({
         <Dialog.Description>{description}</Dialog.Description>
 
         {/* Input fields */}
-        <TextField.Root value={name} placeholder="New name" mt="3" onChange={(e) => setName(e.target.value)} />
+        <TextField.Root value={name} placeholder={placeholder} mt="3" onChange={(e) => setName(e.target.value)} />
 
         {/* Buttons */}
         <Flex justify="end" gap="3" mt="4">

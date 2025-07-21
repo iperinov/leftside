@@ -1,7 +1,6 @@
 import { useState } from "react";
-import type { Configuration } from "../api/scs/configurations/config.types";
-import { updateConfiguration } from "../api/scs/configurations/updateConfiguration";
 import { useConfigStore } from "../stores/configStore";
+import type { Configuration } from "~/api/cdb/cdb.types";
 
 export const useEditConfiguration = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +19,7 @@ export const useEditConfiguration = () => {
 
     setIsLoading(true);
     try {
-      const result = await updateConfiguration(toUpdate);
+      const result = await editConfiguration(toUpdate);
       // editConfiguration(result);
     } catch (err) {
       console.error("Failed to update configuration", err);

@@ -20,7 +20,7 @@ export default function SortByFilter(props: FilterGroupProps) {
       label={"Sort By"}
       title={"Sort by"}
       items={choices}
-      filterSelection={sortByFilter}
+      selection={sortByFilter(props.categoryUUID, props.filterGroupUUID)}
       updateFilterSelection={updateSortByFilters}
       {...props}
     />
