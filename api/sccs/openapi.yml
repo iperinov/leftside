@@ -7,9 +7,11 @@ tags:
   - name: auth
     description: "Authentication endpoints"
   - name: catalogue
-    description: "Catalogue endpoints"
+    description: "Catalogue related endpoints"
   - name: config
-    description: "Configs endpoints"
+    description: "Configs related endpoints"
+  - name: books
+    description: "Books related endpoints"
 
 paths:
 ########################### AUTH #######################################
@@ -92,8 +94,8 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/ResponseOK'
                   - $ref: '#/components/schemas/CreateLeagueResponse'
+                  - $ref: '#/components/schemas/ResponseOK'
 ########################### CONFIG #######################################
   /sccs/config:
     post:
@@ -106,10 +108,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ConfigName'
+              $ref: '#/components/schemas/CreateConfigRequest'
       responses:
         200:
-          description: "OK. League was created."
+          description: "OK. Config was created."
           content:
             application/json:
               schema:
@@ -120,7 +122,7 @@ paths:
     post:
       tags:
         - config
-      summary: Updated a configuration
+      summary: Updates a configuration
       operationId: updateConfig
       parameters: 
         - name: uuid
@@ -133,17 +135,124 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Config'
+              $ref: '#/components/schemas/UpdateConfigRequest'
       responses:
         200:
-          description: "OK. Configuration was created."
+          description: "OK. Configuration was updated."
           content:
             application/json:
               schema:
                 oneOf:
                   - $ref: '#/components/schemas/UpdateConfigResponse'
                   - $ref: '#/components/schemas/ResponseOK'
+                  
+  /sccs/config/{uuid}/rename:
+    post:
+      tags:
+        - config
+      summary: Renames a configuration
+      description: Rename, changes the configuration's name.
+      operationId: renameConfig
+      parameters: 
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameConfigRequest'
+      responses:
+        200:
+          description: "OK. Configuration was renamed."
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/RenameConfigResponse'
+                  - $ref: '#/components/schemas/ResponseOK'
 
+  /sccs/config/{uuid}/delete:
+    post:
+      tags:
+        - config
+      summary: Deletes a configuration
+      description: Deletes a configuration permanently.
+      operationId: deleteConfig
+      parameters: 
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteConfigRequest'
+      responses:
+        200:
+          description: "OK. Configuration was deleted."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteConfigResponse'
+
+  /sccs/config/{uuid}/duplicate:
+    post:
+      tags:
+        - config
+      summary: Duplicates a configuration
+      description: |
+        Duplicates a configuration. The category tree is duplicated, a new name is generated and returned in the response.
+      operationId: duplicateConfig
+      parameters: 
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DuplicateConfigRequest'
+      responses:
+        200:
+          description: "OK. Configuration duplicated."
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DuplicateConfigResponse'
+                  - $ref: '#/components/schemas/ResponseOK'
+########################### BOOKS #######################################
+  /sccs/books/assign:
+    post:
+      tags:
+        - books
+      summary: Assigns a config to books
+      operationId: assignBooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignBooksRequest'
+      responses:
+        200:
+          description: "OK. Books assigned."
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AssignBooksResponse'
+                  - $ref: '#/components/schemas/ResponseOK'
 #Security
 security:
   - sessionKey: []
@@ -187,6 +296,7 @@ components:
           $ref: '#/components/schemas/StatusCode'
         description:
           type: string
+          example: "Ok."
     UUID:
       type: string
       format: uuid
@@ -196,6 +306,12 @@ components:
         name: uuid
       description: "Unique Identifier"
       example: "A65B6162-251D-4A3B-BBF4-13B7BD5DDFA8"
+      
+    Revision:
+      type: string
+      description: The object's revision
+      minLength: 1
+      example: "14-29ad1ec1a9a1246aa6106eea3c4e48b0"
 ########################### AUTH #######################################
     SCSSessionID:
       type: string
@@ -299,7 +415,32 @@ components:
           type: boolean
         enabled:
           type: boolean
-          
+
+    Entity:
+      type: object
+      required:
+        - id
+        - uuid
+      properties:
+        id:
+          type: integer
+        uuid:
+          $ref: '#/components/schemas/UUID'
+
+    ResponseEntities:
+      type: object
+      required:
+        - region
+        - realSport
+        - league
+      properties:
+        region:
+          $ref: '#/components/schemas/Entity'
+        realSport:
+          $ref: '#/components/schemas/Entity'
+        league:
+          $ref: '#/components/schemas/Entity'
+
     CreateLeagueRequest:
       type: object
       required: 
@@ -324,31 +465,7 @@ components:
           properties:
             entities: 
               $ref: '#/components/schemas/ResponseEntities'
-    
-    Entity:
-      type: object
-      required:
-        - id
-        - uuid
-      properties:
-        id:
-          type: integer
-        uuid:
-          $ref: '#/components/schemas/UUID'
-        
-    ResponseEntities:
-      type: object
-      required:
-        - region
-        - realSport
-        - league
-      properties:
-        region:
-          $ref: '#/components/schemas/Entity'
-        realSport:
-          $ref: '#/components/schemas/Entity'
-        league:
-          $ref: '#/components/schemas/Entity'
+
           
 ########################### CONFIG #######################################
     FiltersTypeString:
@@ -369,6 +486,93 @@ components:
       type: array
       items:
         type: integer
+        
+    FilterType:
+      type: string
+      enum: 
+        - sport
+        - region
+        - league
+        - game
+        - period
+        - market
+        - time
+        - status
+      x-enumNames:
+        - "Sport"
+        - "Region"
+        - "League"
+        - "Game"
+        - "Period"
+        - "Market"
+        - "Time"
+        - "Status"
+    
+    SportFilter:
+      type: object
+      required: [type, value]
+      properties:
+        type:
+          type: string
+          enum:
+            - sport
+          x-enumNames: 
+            - "Sport"
+        value:
+          $ref: '#/components/schemas/FiltersTypeString'
+          
+    RegionFilter:
+      type: object
+      required: [type, value]
+      properties:
+        type:
+          type: string
+          enum:
+            - region
+          x-enumNames: 
+            - "Region"
+        value:
+          $ref: '#/components/schemas/FiltersTypeString'
+          
+    LeagueFilter:
+      type: object
+      required: [type, value]
+      properties:
+        type:
+          type: string
+          enum:
+            - league
+          x-enumNames: 
+            - "League"
+        value:
+          $ref: '#/components/schemas/FiltersTypeString'
+    
+    MyNewFilter:
+      oneOf:
+        - $ref: '#/components/schemas/SportFilter'
+        - $ref: '#/components/schemas/RegionFilter'
+        - $ref: '#/components/schemas/LeagueFilter'
+      discriminator:
+        propertyName: type
+        mapping:
+          sport: '#/components/schemas/SportFilter'
+          region: '#/components/schemas/RegionFilter'
+          league: '#/components/schemas/LeagueFilter'
+      
+    MyNewFilter2:
+      type: object
+      properties:
+          sport:
+            $ref: '#/components/schemas/SportFilter'
+          region:
+            $ref: '#/components/schemas/RegionFilter'
+          league:
+            $ref: '#/components/schemas/LeagueFilter'
+      oneOf:
+        - required: ['sport']
+        - required: ['region']
+        - required: ['league']
+      additionalProperties: false
 
     Filter:
       type: object
@@ -377,25 +581,7 @@ components:
         - value
       properties:
         type:
-          type: string
-          enum: 
-            - sport
-            - region
-            - league
-            - game
-            - period
-            - market
-            - time
-            - status
-          x-enumNames:
-            - "Sport"
-            - "Region"
-            - "League"
-            - "Game"
-            - "Period"
-            - "Market"
-            - "Time"
-            - "Status"
+          $ref: '#/components/schemas/FilterType'
         value:
           oneOf:
             - $ref: '#/components/schemas/FiltersTypeString'
@@ -408,10 +594,33 @@ components:
       items:
         $ref: '#/components/schemas/Filter'
         
+    GroupType:
+      type: string
+      enum: 
+        - leagueDay
+        - dayLeague
+        - sportDay
+        - sportLeague
+        - dayGame
+      x-enumNames:
+        - "ByLeagueByDay"
+        - "ByDayByLeague"
+        - "BySportByDay"
+        - "BySportByLeague"
+        - "ByDayByGame"
+    
+    OrderType:
+      type: string
+      enum: 
+        - asc
+        - desc
+      x-enumNames:
+        - "Asc"
+        - "Desc"
+        
     FilterGroup:
       type: object
       required:
-          - uuid
           - filters
           - groupBy
           - order
@@ -422,28 +631,9 @@ components:
         filters:
           $ref: '#/components/schemas/Filters'
         groupBy:
-          type: string
-          description: One or more attributes to group by (e.g. league, date)
-          enum: 
-            - leagueDay
-            - dayLeague
-            - sportDay
-            - sportLeague
-            - dayGame
-          x-enumNames:
-            - "ByLeagueByDay"
-            - "ByDayByLeague"
-            - "BySportByDay"
-            - "BySportByLeague"
-            - "ByDayByGame"
+          $ref: '#/components/schemas/GroupType'
         order:
-          type: string
-          enum: 
-            - asc
-            - desc
-          x-enumNames:
-            - "Asc"
-            - "Desc"
+          $ref: '#/components/schemas/OrderType'
         limit:
           type: integer
           description: 0 means unlimited
@@ -460,10 +650,8 @@ components:
     Category:
       type: object
       required:
-        - uuid
         - name
         - type
-        - filterGroups
       properties:
         uuid:
           $ref: '#/components/schemas/UUID'
@@ -498,28 +686,148 @@ components:
       type: object
       required:
         - uuid
+        - _rev
         - name
         - categories
       properties:
         uuid:
           $ref: '#/components/schemas/UUID'
+        _rev:
+          $ref: '#/components/schemas/Revision'
         name:
           type: string
           minLength: 1
         categories:
           $ref: '#/components/schemas/Categories'
-    
+## Requests
+    CreateConfigRequest:
+      $ref: '#/components/schemas/ConfigName'
+
+    UpdateConfigRequest:
+      $ref: '#/components/schemas/Config'
+
+    DeleteConfigRequest:
+      type: object
+      required:
+        - _rev
+      properties:
+        _rev:
+          $ref: '#/components/schemas/Revision'
+
+    RenameConfigRequest:
+      type: object
+      required:
+        - _rev
+      properties:
+        _rev:
+          $ref: '#/components/schemas/Revision'
+
+    DuplicateConfigRequest:
+      type: object
+      required:
+        - _rev
+      properties:
+        _rev:
+          $ref: '#/components/schemas/Revision'
+
+## Responses
     CreateConfigResponse:
       allOf:
         - $ref: '#/components/schemas/ResponseOK'
         - type: object
           required:
             - uuid
+            - _rev
           properties:
             uuid:
               $ref: '#/components/schemas/UUID'
-              
+            _rev:
+              $ref: '#/components/schemas/Revision'
+
     UpdateConfigResponse:
       allOf:
         - $ref: '#/components/schemas/ResponseOK'
+        - type: object
+          required:
+            - _rev
+          properties:
+            _rev:
+              $ref: '#/components/schemas/Revision'
+    
+    DeleteConfigResponse:
+      $ref: '#/components/schemas/ResponseOK'
+        
+    RenameConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResponseOK'
+        - type: object
+          required:
+            - _rev
+          properties:
+            _rev:
+              $ref: '#/components/schemas/Revision'
+      
+    DuplicateConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResponseOK'
+        - type: object
+          required:
+            - uuid
+            - _rev
+            - name
+          properties:
+            uuid:
+              $ref: '#/components/schemas/UUID'
+            _rev:
+              $ref: '#/components/schemas/Revision'
+            name:
+              type: string
+              minLength: 1
+########################### BOOKS #######################################
+    Book:
+      type: object
+      required:
+        - id
+        - config
+        - _rev
+      properties:
+        id: 
+          type: integer
+        _rev:
+          $ref: '#/components/schemas/Revision'
+        config: 
+          $ref: '#/components/schemas/UUID'
+
+    Books:
+      type: array
+      items: 
+        $ref: '#/components/schemas/Book'
+        
+    BookRev:
+      type: object
+      required:
+        - id
+        - _rev
+      properties:
+        id: 
+          type: integer
+        _rev:
+          $ref: '#/components/schemas/Revision'
+          
+    BookRevs:
+      type: array
+      items:
+        $ref: '#/components/schemas/BookRev'
+        
+## Requests
+    AssignBooksRequest:
+      $ref: '#/components/schemas/Books'
+## Responses
+    AssignBooksResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResponseOK'
+        - type: object
+          properties:
+            revs:
+              $ref: '#/components/schemas/BookRevs'
 
