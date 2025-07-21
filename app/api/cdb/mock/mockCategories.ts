@@ -9,37 +9,110 @@ export const mockConfigurationCategoriesJson = `{
       "key": "DB9CAEBE-31C6-4116-9051-E1D7978BC3D7",
       "value": {
         "_id": "cfg-DB9CAEBE-31C6-4116-9051-E1D7978BC3D7",
-        "_rev": "20-6f99618836e0075523bf4636ad2a6a51",
+        "_rev": "22-d2d158e3ba04584ce97ed199db94805e",
         "type": "cfg",
         "categories": [
           {
+            "uuid": "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
+            "name": "Soccer",
+            "type": "nested",
             "children": [
               {
+                "uuid": "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p7",
+                "name": "Europe",
+                "type": "nested",
+                "children": [
+                  {
+                    "uuid": "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p9",
+                    "name": "Premier League",
+                    "type": "flat",
+                    "filterGroups": [
+                      {
+                        "uuid": "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p8",
+                        "filters": [
+                          {
+                            "type": "sport",
+                            "value": [
+                              "414E274C-CC37-459A-86A7-B1A68C5E8CAD"
+                            ]
+                          },
+                          {
+                            "type": "league",
+                            "value": [
+                              "1316AFDA-10DC-496E-AE40-E822D62319A9"
+                            ]
+                          }
+                        ],
+                        "groupBy": "league.day",
+                        "order": "asc",
+                        "limit": 10
+                      }
+                    ]
+                  },
+                  {
+                    "uuid": "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p0",
+                    "name": "Seria A",
+                    "type": "flat",
+                    "filterGroups": [
+                      {
+                        "uuid": "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p1",
+                        "filters": [
+                          {
+                            "type": "sport",
+                            "value": [
+                              "414E274C-CC37-459A-86A7-B1A68C5E8CAD"
+                            ]
+                          },
+                          {
+                            "type": "league",
+                            "value": [
+                              "67F5C8E0-0890-408A-8652-1B19EB9F9AAB"
+                            ]
+                          }
+                        ],
+                        "groupBy": "day.league",
+                        "order": "asc",
+                        "limit": 10
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "445b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
+            "name": "Basketball",
+            "type": "nested",
+            "children": [
+              {
+                "uuid": "445b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p7",
+                "name": "NBA",
+                "type": "flat",
                 "filterGroups": [
                   {
+                    "uuid": "445b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p8",
                     "filters": [
                       {
                         "type": "sport",
-                        "value": [
-                          "Basketball",
-                          "Soccer"
+                        "values": [
+                          "1FF9C505-A137-4F8B-873E-59ABB38B3FAF"
+                        ]
+                      },
+                      {
+                        "type": "league",
+                        "values": [
+                          "E1D88475-4FF6-41DC-BDA9-C65D16923F34"
                         ]
                       }
                     ],
-                    "groupBy": "leagueDay",
-                    "limit": 0,
+                    "groupBy": "league.day",
                     "order": "asc",
-                    "uuid": "EC79D274-793B-4A43-BEE1-C5C633453946"
+                    "limit": 10
                   }
-                ],
-                "name": "My Second Category",
-                "type": "nested",
-                "uuid": "67AE8E4B-5F7F-4710-9C37-5669BBB6F3A9"
+                ]
               }
-            ],
-            "name": "My First Category",
-            "type": "flat",
-            "uuid": "48AF51AD-C6BC-4296-B1C4-F8F35C46C906"
+            ]
           }
         ],
         "name": "Premier League Weekend Config",
