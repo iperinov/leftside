@@ -1,29 +1,34 @@
 
 import { useState } from "react";
-import { useRenameConfiguration } from "../../hooks/useRenameConfiguration";
+import { useRenameConfiguration } from "../../hooks/configuraitons/useRenameConfiguration";
 import EditNameDialog from "../dialogs/EditNameDialog";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
-import { useConfigurations } from "~/hooks/useConfigurations";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
+import { toast } from "sonner";
 
 interface RenameConfigurationProps {
-  open: boolean;
   onClose: () => void;
-  uuid: string;
-  rev: string;
+  id: string;
+  _rev: string;
+  name: string;
 }
 
-export const RenameConfiguration = ({ open, onClose, uuid, rev }: RenameConfigurationProps) => {
-  const [name, setName] = useState("");
-  const renameConfiguration = useRenameConfiguration();
+export const RenameConfiguration = ({ onClose, id, _rev, name }: RenameConfigurationProps) => {
   const { data: configurations, isLoading, error } = useConfigurations();
-
-  const handleConfirm = () => {
-    // try {
-    //   await mutation.mutateAsync({ uuid, rev, name });
-    //   onClose();
-    // } catch (err) {
-    //   console.error("Failed to rename configuration:", err);
-    // }
+  const renameConfiguration = useRenameConfiguration({
+    onSuccess: (response) => {
+      toast.success("Configuration renamed successfully");
+    },
+    onError: (error) => {
+      toast.error("Failed to rename configuration");
+      console.error(error);
+    },
+    onSettled: () => {
+      onClose();
+    },
+  });
+  const handleConfirm = (name: string) => {
+    renameConfiguration.mutate({ path: { uuid: id }, body: { _rev, name } });
   };
 
   return (

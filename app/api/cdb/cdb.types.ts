@@ -23,20 +23,10 @@ export interface CatalogItem extends CbdBase {
   regionUUID: string; // maps from `ruuid`
 }
 
-[
-    {
-      "id": "cfg-DB9CAEBE-31C6-4116-9051-E1D7978BC3D7",
-      "key": "DB9CAEBE-31C6-4116-9051-E1D7978BC3D7",
-      "value": {
-        "_id": "cfg-DB9CAEBE-31C6-4116-9051-E1D7978BC3D7",
-        "_rev": "20-6f99618836e0075523bf4636ad2a6a51",
-        "type": "cfg",
-        "categories": [],
-        "name": "Premier League Weekend Config",
-        "uuid": "DB9CAEBE-31C6-4116-9051-E1D7978BC3D7"
-      }
-    }
-  ]
+export interface BookPerConfiguration extends CbdBase {
+  configID: string; 
+  bookID: number;
+}
 
 export interface Configuration extends CbdBase {
   uuid: string;

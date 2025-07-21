@@ -1,25 +1,31 @@
 
-import { useDeleteConfiguration } from "../../hooks/useDeleteConfiguration";
+import { useDeleteConfiguration } from "../../hooks/configuraitons/useDeleteConfiguration";
+import { toast } from "sonner";
 import EditNameDialog from "../dialogs/EditNameDialog";
 
 export interface DeleteConfigurationProps {
-  open: boolean;
   onClose: () => void;
   id: string;
-  rev: string;
+  _rev: string;
   name: string;
 }
 
-export const DeleteConfiguration = ({ open, onClose, id, rev, name }: DeleteConfigurationProps) => {
-  const mutation = useDeleteConfiguration();
+export const DeleteConfiguration = ({ onClose, id, _rev, name }: DeleteConfigurationProps) => {
+  const deleteConfig = useDeleteConfiguration({
+    onSuccess: (response) => {
+      toast.success("Configuration deleted successfully");
+    },
+    onError: (error) => {
+      toast.error("Failed to delete configuration");
+      console.error(error);
+    },
+    onSettled: () => {
+      onClose();
+    },
+  });
 
   const handleConfirm = () => {
-    // try {
-    //   await mutation.mutateAsync({ uuid: id, rev });
-    //   onClose();
-    // } catch (err) {
-    //   console.error("Failed to delete configuration:", err);
-    // }
+    deleteConfig.mutate({path: { uuid: id }, body: { _rev } });
   };
 
   return (

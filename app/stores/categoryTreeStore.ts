@@ -32,6 +32,10 @@ interface CategoryTreeState {
   rootCategory: CategoryTreeItem;
 }
 
+interface ConfigurationMutations {
+  updateConfigurationName: (name: string) => void;
+}
+
 interface CategoryTreeGetters {
   getFilterGroup: (categoryUUID: string, filterGroupUUID: string) => FilterGroup | undefined;
 
@@ -86,10 +90,17 @@ function newItemUUID(): string {
   return uuidv4();
 }
 
-export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGetters & CategoryTreeMutations>((set, get) => ({
+export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGetters & CategoryTreeMutations & ConfigurationMutations>((set, get) => ({
   // State
   configuration: {} as Config,
   rootCategory: { id: rootCategoryUUID, name: "", type: "nested", children: [] },
+
+  // Configuration Mutations
+  updateConfigurationName: (name) => {
+    const newConfig = structuredClone(get().configuration);
+    newConfig.name = name;
+    set({ configuration: newConfig });
+  },
 
   // Getters
   findCategory: (uuid: string) => findItem(uuid, get().rootCategory),

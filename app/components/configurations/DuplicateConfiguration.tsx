@@ -1,28 +1,35 @@
-
-import { useDuplicateConfiguration } from "../../hooks/useDuplicateConfiguration";
+import { useDuplicateConfiguration } from "../../hooks/configuraitons/useDuplicateConfiguration";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
 import EditNameDialog from "../dialogs/EditNameDialog";
-import { useConfigurations } from "~/hooks/useConfigurations";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
+import { toast } from "sonner";
 
 export interface DuplicateConfigurationProps {
-  open: boolean;
   onClose: () => void;
   id: string;
-  rev: string;
   name: string;
 }
 
-export const DuplicateConfiguration = ({ open, onClose, id, rev, name }: DuplicateConfigurationProps) => {
-  const duplicateConfiguration = useDuplicateConfiguration();
+export const DuplicateConfiguration = ({ onClose, id, name }: DuplicateConfigurationProps) => {
   const { data: configurations, isLoading, error } = useConfigurations();
+  const duplicateConfiguration = useDuplicateConfiguration({
+    onSuccess: (response) => {
+      toast.success("Configuration duplicated successfully");
+    },
+    onError: (error) => {
+      toast.error("Failed to duplicate configuration");
+      console.error(error);
+    },
+    onSettled: () => {
+      onClose();
+    },
+  });
 
   const handleConfirm = (name: string) => {
-    // try {
-    //   await mutation.mutateAsync({ uuid: id, rev });
-    //   onClose();
-    // } catch (err) {
-    //   console.error("Failed to duplicate configuration:", err);
-    // }
+    duplicateConfiguration.mutate({
+      path: { uuid: id },
+      body: { name },
+    });
   };
 
   return (

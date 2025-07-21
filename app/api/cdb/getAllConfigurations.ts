@@ -1,10 +1,10 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
 import type { CdbViewResponse, Configuration } from "./cdb.types";
 import { mockConfigurationsJson } from "./mock/mockConfigurations";
+import type { Config } from "../sccs/types.gen";
 
-const scsUrl = getAppConfig().sccs.baseUrl;
 
-export default async function getConfigurations(): Promise<Configuration[]> {
+export default async function getAllConfigurations(): Promise<Config[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
@@ -13,7 +13,7 @@ export default async function getConfigurations(): Promise<Configuration[]> {
 
   // MOCK:
   await new Promise((res) => setTimeout(res, 500));
-  const data = JSON.parse(mockConfigurationsJson) as CdbViewResponse<Configuration>;
+  const data = JSON.parse(mockConfigurationsJson) as CdbViewResponse<Config>;
 
   // const headers = new Headers();
   // if (auth) {

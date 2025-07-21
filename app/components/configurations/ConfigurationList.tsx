@@ -4,7 +4,7 @@ import DropdownContextMenu from "~/components/dropdownContextMenu/DropdownContex
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
 import { useBooks } from "~/hooks/useBooks";
 import { formatDateTime } from "~/utils/date";
-import { useConfigurations } from "../../hooks/useConfigurations";
+import { useConfigurations } from "../../hooks/configuraitons/useConfigurations";
 import styles from "./ConfigurationList.module.css";
 import type { Configuration } from "~/api/cdb/cdb.types";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
@@ -22,37 +22,26 @@ export const ConfigurationList = ({ onEdit, onRename, onDuplicate, onDelete }: C
 
   const resolveBookNames = React.useMemo(() => {
     return (ids: number[]): string[] => {
-      return booksData ? ids.map((bid) => booksData.find((b) => b.id === bid)?.name).filter(Boolean) as string[] : [];
+      return booksData ? (ids.map((bid) => booksData.find((b) => b.id === bid)?.name).filter(Boolean) as string[]) : [];
     };
   }, [booksData]);
+
+  const menuItemsWithoutDelete: MenuItem<Configuration>[] = [
+    { name: "Edit", action: (context) => context && onEdit(context.uuid, context.name) },
+    { name: "Rename", action: (context) => context && onRename(context.uuid, context._rev, context.name) },
+    { name: "Duplicate", action: (context) => context && onDuplicate(context.uuid, context._rev, context.name) },
+  ];
+
+  const menuItems: MenuItem<Configuration>[] = [
+    ...menuItemsWithoutDelete,
+    { name: "Delete", action: (context) => context && onDelete(context.uuid, context._rev, context.name) },
+  ];
 
   return (
     <LoadDataDecorator isLoading={isLoadingConfigs || isLoadingBooks} error={errorConfigs || errorBooks}>
       <Box className={styles.inner}>
         <Flex direction="column" gap="1">
           {configurations?.map((config: Configuration) => {
-            const menuItems: MenuItem<Configuration>[] = [
-              {
-                name: "Edit",
-                action: () => onEdit(config.uuid, config.name),
-              },
-              {
-                name: "Rename",
-                action: () => onRename(config.uuid, config._rev, config.name),
-              },
-              {
-                name: "Duplicate",
-                action: () => onDuplicate(config.uuid, config._rev, config.name),
-              },
-            ];
-
-            if (config.books.length === 0) {
-              menuItems.push({
-                name: "Delete",
-                action: () => onDelete(config.uuid, config._rev, config.name),
-              });
-            }
-
             return (
               <Card key={config.uuid} variant="classic" style={{ borderRadius: 6 }}>
                 <Flex direction="row" justify="between" align="center" p="2">
@@ -82,7 +71,7 @@ export const ConfigurationList = ({ onEdit, onRename, onDuplicate, onDelete }: C
                     </Box>
                   </Flex>
 
-                  <DropdownContextMenu items={menuItems} context={config} />
+                  <DropdownContextMenu items={config.books.length === 0 ? menuItems : menuItemsWithoutDelete} context={config} />
                 </Flex>
               </Card>
             );

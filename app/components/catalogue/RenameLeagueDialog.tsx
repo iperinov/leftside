@@ -25,6 +25,7 @@ export function RenameLeagueDialog({ league, onClose, onRename }: RenameLeaguePr
         <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
           League Name
         </Text>
+        
         <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter new name" variant="soft" />
       </Flex>
     </BaseDialog>

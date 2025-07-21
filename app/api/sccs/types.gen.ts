@@ -236,10 +236,11 @@ export type DeleteConfigRequest = {
 
 export type RenameConfigRequest = {
     _rev: Revision;
+    name: string;
 };
 
 export type DuplicateConfigRequest = {
-    _rev: Revision;
+    name: string;
 };
 
 export type CreateConfigResponse = ResponseOk & {

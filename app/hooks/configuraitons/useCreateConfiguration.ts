@@ -5,9 +5,10 @@ import type { CreateConfigResponse } from "~/api/sccs/types.gen";
 interface CreateConfigurationProps {
   onError?: (error: DefaultError) => void;
   onSuccess?: (data: CreateConfigResponse) => void;
+  onSettled?: () => void;
 }
 
-export function useCreateConfiguration({ onError, onSuccess }: CreateConfigurationProps) {
+export function useCreateConfiguration({ onError, onSuccess, onSettled }: CreateConfigurationProps) {
   const queryClient = useQueryClient();
   return useMutation({
     ...createConfigMutation(),
@@ -18,6 +19,9 @@ export function useCreateConfiguration({ onError, onSuccess }: CreateConfigurati
     },
     onError: (error) => {
       onError?.(error);
+    },
+    onSettled: () => {
+      onSettled?.();
     },
   });
 }

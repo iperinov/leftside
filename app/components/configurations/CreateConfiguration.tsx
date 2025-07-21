@@ -2,18 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import type { CreateConfigResponse } from "~/api/sccs/types.gen";
-import { useCreateConfiguration } from "~/hooks/useCreateConfiguration";
+import { useCreateConfiguration } from "~/hooks/configuraitons/useCreateConfiguration";
 import EditNameDialog from "../dialogs/EditNameDialog";
-import { useConfigurations } from "~/hooks/useConfigurations";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
 
 export interface CreateConfigurationProps {
-  open: boolean;
   onClose: () => void;
 }
 
-export const CreateConfiguration = ({ open, onClose }: CreateConfigurationProps) => {
-  const [name, setName] = useState("");
+export const CreateConfiguration = ({ onClose }: CreateConfigurationProps) => {
   const navigate = useNavigate();
   const { data: configurations, isLoading, error } = useConfigurations();
 
@@ -23,7 +21,6 @@ export const CreateConfiguration = ({ open, onClose }: CreateConfigurationProps)
       navigate(`/configuration/${response.uuid}`, {
         state: {
           id: response.uuid,
-          name: name,
           edit: false,
         },
       });
@@ -31,6 +28,9 @@ export const CreateConfiguration = ({ open, onClose }: CreateConfigurationProps)
     onError: (error: Error) => {
       toast.error(error.message || "Failed to create configuration");
       console.error(error);
+    },
+    onSettled: () => {
+      onClose();
     },
   });
 
@@ -45,7 +45,6 @@ export const CreateConfiguration = ({ open, onClose }: CreateConfigurationProps)
         description="Enter a name for the configuration:"
         confirmText="Create"
         open={true}
-        currentName={name}
         onConfirm={handleConfirm}
         onCancel={onClose}
         validName={(name) => !configurations?.find((item) => item.name === name.trim())}
