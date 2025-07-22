@@ -1,4 +1,5 @@
-import type { League } from "../ocs.types";
+import type { League } from "~/types/sport/types";
+
 
 export const mockLeagues: League[] = [
   {

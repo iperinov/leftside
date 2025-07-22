@@ -1,4 +1,5 @@
-import type { Book } from "../ocs.types";
+import type { Book } from "~/types/sport/types";
+
 
 export const mockBooks: Book[] = [
   { id: 1, name: "DEFAULT", webColumnId: 1, enabled: true },

@@ -1,4 +1,4 @@
-import type { RealSport } from "../ocs.types";
+import type { RealSport } from "~/types/sport/types";
 
 export const mockRealSports: RealSport[] = [
   {

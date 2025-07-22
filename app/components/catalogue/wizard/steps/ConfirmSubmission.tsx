@@ -1,5 +1,4 @@
-import { Box, Flex, Separator, Text } from "@radix-ui/themes";
-import type { LeagueRegion } from "~/api/ocs/ocs.types";
+import { Box, Text } from "@radix-ui/themes";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { CreationStep } from "~/stores/createLeagueStore";
 

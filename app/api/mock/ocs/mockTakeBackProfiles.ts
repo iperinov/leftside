@@ -1,4 +1,4 @@
-import type { TakeBackProfile } from "../ocs.types";
+import type { TakeBackProfile } from "~/types/sport/types";
 
 export const mockTakeBackProfiles: TakeBackProfile[] = [
   {

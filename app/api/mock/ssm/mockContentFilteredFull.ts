@@ -1,4 +1,4 @@
-import type { Game } from "../ssm.types";
+import type { Game } from "~/api/ssm/ssm.types";
 
 export const mockContentFiltered: Game[] = [
   {

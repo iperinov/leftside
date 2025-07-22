@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { League, LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
+import type { League, LeagueRegion, RealSport } from "~/types/sport/types";
 
 type ExistingEntity = {
   uuid: string;

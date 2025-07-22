@@ -1,4 +1,4 @@
-import type { BasicEntity } from "~/api/ocs/ocs.types";
+import type { BasicEntity } from "~/types/sport/types";
 import type { Catalog, LeagueCatalogItem, RegionCatalogItem, SportCatalogItem } from "~/types/catalog/Catalog";
 import type TreeItemData from "../tree/TreeItemData";
 

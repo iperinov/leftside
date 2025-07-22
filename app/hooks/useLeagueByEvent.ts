@@ -1,10 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { getLeagueByEvent } from "../api/ocs/getLeagueByEvent";
-import { queryKeys } from "../lib/queryKeys";
+import { getConfigLeaguesByEventsOptions } from "~/api/ocs/@tanstack/react-query.gen";
+import type { LeagueByEventArray } from "~/api/ocs/types.gen";
+import { ocsClient } from "~/lib/clients/ocsClient";
+import type { LeagueByEvent } from "~/types/sport/types";
+
+function toLeagueByEvent(data?: LeagueByEventArray): LeagueByEvent[] {
+  return data?.map(item => ({
+      id: item.eid,
+      leagueId: item.lid,
+      leagueUUID: item.luuid,
+      realSportId: item.rsid,
+      realSportUUID: item.rsuuid,
+      gameTypeId: item.gtid,
+  } as LeagueByEvent)) || [];
+}
 
 export const useLeagueByEvent = () => {
-  return useQuery({
-    queryKey: queryKeys.leagueByEvent(),
-    queryFn: () => getLeagueByEvent([]),
+  const result = useQuery({
+    ...getConfigLeaguesByEventsOptions({client: ocsClient}),
   });
+  return {...result, data: toLeagueByEvent(result.data)};
 };

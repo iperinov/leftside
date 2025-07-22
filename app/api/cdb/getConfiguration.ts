@@ -1,7 +1,7 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
 import type { Config } from "../sccs/types.gen";
-import { mockConfigurationCategoriesJson } from "./mock/mockConfiguration";
 import type { CdbViewResponse } from "./cdb.types";
+import { mockConfigurationCategoriesJson } from "../mock/cbd/mockConfiguration";
 
 export const getConfiguration = async (configID: string): Promise<Config> => {
   const cdbUrl = getAppConfig().cdb.baseUrl;

@@ -1,4 +1,5 @@
-import type { LeagueByEvent } from "../ocs.types";
+import type { LeagueByEvent } from "~/types/sport/types";
+
 
 export const mockLeagueByEvent: LeagueByEvent[] = [
   {

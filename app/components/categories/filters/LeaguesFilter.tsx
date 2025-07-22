@@ -1,4 +1,4 @@
-import type { BasicEntity, League } from "~/api/ocs/ocs.types";
+import type { BasicEntity, League } from "~/types/sport/types";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";

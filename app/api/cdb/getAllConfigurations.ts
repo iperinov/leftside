@@ -1,7 +1,7 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
 import type { CdbViewResponse, Configuration } from "./cdb.types";
-import { mockConfigurationsJson } from "./mock/mockConfigurations";
 import type { Config } from "../sccs/types.gen";
+import { mockConfigurationsJson } from "../mock/cbd/mockConfigurations";
 
 
 export default async function getAllConfigurations(): Promise<Config[]> {

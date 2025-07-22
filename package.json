@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "api": "openapi-ts",
+    "api:sccs": "openapi-ts --file openapi-ts.sccs.config.ts",
+    "api:ocs": "openapi-ts --file openapi-ts.ocs.config.ts",
+    "api": "npm run api:sccs && npm run api:ocs",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",

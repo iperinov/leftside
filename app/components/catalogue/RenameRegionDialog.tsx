@@ -1,6 +1,6 @@
 import { Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import type { RenameLeagueRegionApiIn } from "~/api/ocs/ocs.types";
+import type { RenameLeagueRegionApiIn } from "~/types/sport/types";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 
 interface RenameRegionProps {

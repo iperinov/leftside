@@ -1,5 +1,5 @@
 import type { GroupType, OrderType } from "~/api/sccs/types.gen";
-import type { FilteredGameGroup } from "../ssm.types";
+import type { FilteredGameGroup } from "~/api/ssm/ssm.types";
 
 export const mockContentFilteredSmall: FilteredGameGroup[] = [
   {

@@ -32,21 +32,16 @@ export interface League extends BasicEntity {
   shortDesc: string; // maps from `lsd`
   takeBackProfile: number; // maps from `tbp`
   realSportId: number; // maps from `rsid`
-  realSportUUID: string; // maps from `rsuuid`
+  realSportUUID?: string; // maps from `rsuuid`
   sportId: string; // maps from `sid`
-  hideForMaster: boolean; // maps from `hfm`
-  regionId: number; // maps from `rid`
-  regionUUID: string; // maps from `ruuid`
+  hideForMaster?: boolean; // maps from `hfm`
 
   // TODO: Missing in ocs/leagues/
+  regionId?: number; // maps from `rid`
+  regionUUID?: string; // maps from `ruuid`
   order?: number; // maps from `lrro`
   teamFKRequired?: boolean; // maps from `tfkr`
   enabled?: boolean; // maps from `enabled`
-}
-
-export interface RenameLeagueApiIn {
-  uuid: string; // maps from `uuid`
-  name: string; // maps from `ln`
 }
 
 export interface Team {
@@ -56,9 +51,9 @@ export interface Team {
 }
 
 export interface Event {
-  id: number; // maps from `eid`
-  description: string; // maps from `ed`
-  gameDescription: string; // maps from `egd`
+  id?: number; // maps from `eid`
+  description?: string; // maps from `ed`
+  gameDescription?: string; // maps from `egd`
 }
 
 export interface LeagueByEvent {
@@ -71,13 +66,13 @@ export interface LeagueByEvent {
 }
 
 export interface TakeBackProfile {
-  id: number; // maps from `pid`
-  moneyLine: number; // maps from `ml`
-  spread: number; // maps from `sp`
-  total: number; // maps from `tot`
+  id?: number; // maps from `pid`
+  moneyLine?: number; // maps from `ml`
+  spread?: number; // maps from `sp`
+  total?: number; // maps from `tot`
 
   // TODO: Missing in ocs/realsports/
-  description: string; // maps from `tbpd`
+  description?: string; // maps from `tbpd`
 }
 
 export interface Book {

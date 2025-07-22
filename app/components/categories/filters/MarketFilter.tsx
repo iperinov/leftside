@@ -1,4 +1,4 @@
-import type { Event } from "~/api/ocs/ocs.types";
+import type { Event } from "~/types/sport/types";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import useFilteredMarketsBy from "~/hooks/useFilteredMarketsBy";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";

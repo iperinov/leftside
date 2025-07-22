@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBooks } from "../api/ocs/getBooks";
-import { queryKeys } from "../lib/queryKeys";
+import { getConfigBooksOptions } from "~/api/ocs/@tanstack/react-query.gen";
+import { ocsClient } from "~/lib/clients/ocsClient";
 
 export const useBooks = () => {
   return useQuery({
-    queryKey: queryKeys.books(),
-    queryFn: () => getBooks([]),
-    //staleTime: 1000 * 60 * 5, // 5 minutes
+    ...getConfigBooksOptions({client: ocsClient}),
   });
 };

@@ -2,7 +2,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Dialog } from "radix-ui";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import type { BasicEntity, League, LeagueRegion, RealSport } from "~/api/ocs/ocs.types";
+import type { BasicEntity, League, LeagueRegion, RealSport } from "~/types/sport/types";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import { type CreateLeagueRequest, CreationStep, useCreateLeagueStore } from "~/stores/createLeagueStore";
 import { ConfirmSubmission } from "./steps/ConfirmSubmission";

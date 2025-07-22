@@ -1,6 +1,6 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
 import type { CatalogItem, CdbViewResponse } from "./cdb.types";
-import { mockCatalogItemsJson } from "./mock/mockCatalogItems";
+import { mockCatalogItemsJson } from "../mock/cbd/mockBooks";
 //import { mockCatalogItemsJson } from "./mock/mockCatalogItems";
 
 export default async function getCatalogItems(): Promise<CatalogItem[]> {

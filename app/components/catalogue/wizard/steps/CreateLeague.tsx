@@ -1,6 +1,6 @@
 import { Box, Checkbox, Flex, Select, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import type { League } from "~/api/ocs/ocs.types";
+import type { League } from "~/types/sport/types";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { useTakeBackProfile } from "~/hooks/useTakeBackProfile";
 
@@ -87,7 +87,7 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
               <Select.Trigger placeholder="Select take-back profile" />
               <Select.Content>
                 {tbProfiles.map((tbp) => (
-                  <Select.Item key={tbp.id} value={tbp.id.toString()}>
+                  <Select.Item key={tbp.id} value={tbp.id?.toString() || ""}>
                     {tbp.description}
                   </Select.Item>
                 ))}

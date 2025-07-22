@@ -1,6 +1,6 @@
 import { Button, Flex, Separator } from "@radix-ui/themes";
 import { useState } from "react";
-import type { BasicEntity } from "~/api/ocs/ocs.types";
+import type { BasicEntity } from "~/types/sport/types";
 import SearchBar from "~/components/SearchBar";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { useCatalog } from "~/hooks/catalog/useCatalog";

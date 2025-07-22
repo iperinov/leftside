@@ -1,4 +1,5 @@
-import type { Event } from "../ocs.types";
+
+import type { Event } from "~/types/sport/types";
 
 export const mockEvents: Event[] = [
   {

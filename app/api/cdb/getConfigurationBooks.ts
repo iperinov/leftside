@@ -1,6 +1,6 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
 import type { BookPerConfiguration, CdbViewResponse } from "./cdb.types";
-import { mockCatalogItemsJson } from "./mock/mockBooks";
+import { mockCatalogItemsJson } from "../mock/cbd/mockBooks";
 
 export default async function getConfigurationBooks(configID: string): Promise<number[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;

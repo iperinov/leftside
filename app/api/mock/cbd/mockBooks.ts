@@ -1,4 +1,3 @@
-import type { CatalogItem } from "../cdb.types";
 
 export const mockCatalogItemsJson = `
 {
