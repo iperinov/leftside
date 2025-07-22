@@ -45,8 +45,8 @@ export const ConfigurationList = ({ onEdit, onRename, onDuplicate, onDelete }: C
             return (
               <Card key={config.uuid} variant="classic" style={{ borderRadius: 6 }}>
                 <Flex direction="row" justify="between" align="center" p="2">
-                  <Flex direction="row" justify="between" style={{ width: "100%" }}>
-                    <Box style={{ flexBasis: "33%", paddingRight: "1rem" }}>
+                  <Flex direction="row"  justify="between" style={{ width: "100%" }}>
+                    <Box style={{ flexBasis: "33%", paddingRight: "1rem", alignContent: "center" }}>
                       <Text weight="bold" size="2" mb="1" style={{ color: "var(--accent-11)" }}>
                         {config.name}
                       </Text>
