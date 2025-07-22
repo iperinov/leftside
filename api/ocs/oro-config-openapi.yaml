@@ -1,0 +1,1575 @@
+openapi: 3.0.1
+info:
+  title: ORO Config Service API
+  description: "The following document describes the REST API that will be exposed by the ORO Config Service."
+  version: 1.0.0
+tags:
+  - name: v1.0
+    description: "Version 1.0 of the api"
+servers:
+  - url: http://localhost:8080
+  - url: http://integ-fbsd-apps.im.priv:8080
+  - url: http://qa2-fbsd-apps.im.priv:8080
+paths:
+  /config/league-by-event/{id}:
+    get:
+      tags:
+        - v1
+      summary: "Get league by event"
+      description: "This method is used to get a league identifier mapped to a specific event."
+      parameters:
+        - name: id
+          description: "event identifier"
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 123
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeagueByEventArray"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Missing path parameter"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Event not found"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+  /config/leagues-by-events/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get leagues listed per event"
+      description: "This method is used to get a list of leagues mapped to events."
+      parameters:
+        - name: rsid
+          in: query
+          description: The list of real sports to filter by
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeagueByEventArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/league/{id}:
+    get:
+      tags:
+        - v1
+      summary: "Get league configuration"
+      description: "This method is used to get an information for a specific league."
+      parameters:
+        - name: id
+          description: "league identifier"
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 123
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeagueArray"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Missing path parameter"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "League not found"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+  /config/leagues/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get leagues configuration"
+      description: "This method is used to get a list of league configurations."
+      parameters:
+        - name: rsid
+          in: query
+          description: The list of real sports to filter by
+          schema:
+            type: array
+            items:
+              type: integer
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeagueArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/leagues/translations/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get translations for leagues"
+      description: "Returns translated descriptions for leagues, optionally filtered by league IDs."
+      parameters:
+        - name: lid
+          in: query
+          description: "Filter by League IDs"
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeagueTranslationArray"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "League not found"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/take-back-profile/{id}:
+    get:
+      tags:
+        - v1
+      summary: "Get a take-back profile configuration"
+      description: "This method is used to get a specific take-back profile configuration."
+      parameters:
+        - name: id
+          description: "profile identifier"
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 123
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TakeBackProfileArray"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Missing path parameter"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Take-back profile not found"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+  /config/take-back-profiles/:
+    get:
+      tags:
+        - v1
+      summary: "Get a list of all take-back profiles"
+      description: "This method is used to get the configurations of all available take-back profiles."
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TakeBackProfileArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/events/:
+    get:
+      tags:
+        - v1
+      summary: "Get Events configuration"
+      description: "This method is used to get a list of Events configurations."
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventsArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/events/translations/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get translations for events"
+      description: "Returns translated descriptions for events, optionally filtered by event IDs."
+      parameters:
+        - name: eid
+          in: query
+          description: "Filter by Event IDs"
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventTranslationArray"
+        404:
+          description: "Player not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "No such player in the system"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/realsports/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get a list of all real sports"
+      description: "This method is used to get all the real sports available in the system"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RealSportsArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/realsports/translations/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get translations for real sports"
+      description: "Returns translated descriptions for real sports by optional list of rsid values."
+      parameters:
+        - name: rsid
+          in: query
+          description: "Filter by RealSport IDs"
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RealSportTranslationArray"
+        404:
+          description: "RealSport translation not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "No such RealSport translation in the system"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/periods/:
+    get:
+      tags:
+        - v1
+      summary: "Get Periods configuration"
+      description: "This method is used to get a list of Periods configurations."
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PeriodsArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/player/{id}:
+    get:
+      tags:
+        - v1.1
+      summary: "Get player information"
+      description: "This method is used to get an information about a player registered in the system"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            description: "player identifier in ORO"
+            example: 1001
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerInfo"
+        404:
+          description: "Player not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "No such player in the system"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+  /config/player/by-account/{number}:
+    get:
+      tags:
+        - v1.1
+      summary: "Get player information by account number"
+      description: "This method is used to get an information about a player registered in the system"
+      parameters:
+        - name: number
+          in: path
+          required: true
+          schema:
+            type: string
+            description: "Account number is the Player in ORO"
+            example: 1001
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerInfo"
+        404:
+          description: "Player not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "No such player in the system"
+
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/take-back-settings/:
+    get:
+      tags:
+        - v1
+      summary: "Get TakeBack Settings configuration"
+      description: "This method is used to get a list of TakeBack Settings configurations."
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TakeBackSettingsArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/game-types/:
+    get:
+      tags:
+        - v1
+      summary: "Get Game Type configuration"
+      description: "This method is used to get a list of Game Type configurations."
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameTypeArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/teams/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get a list of teams"
+      description: "Get a list of teams. Optionally can provide only the teams whose IDs are added as parametes in the request"
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: The IDs of teams needed
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamsFullArray"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Parameter id is required"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+    post:
+      tags:
+        - v1.1
+      summary: "storing a list of ORO teams."
+      description: "The method will accept a JSON will an array of teams."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamsFullArray"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Success"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Invalid parameter"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/teams/search/{pattern}:
+    get:
+      tags:
+        - v1.1
+      summary: "Get a list of teams that match a condition"
+      description: "Get a list of teams whose names start with the specified pattern. The search is case insensitive and pattern must contain at least 3 symbols"
+      parameters:
+        - name: pattern
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 3
+            description: "Case-insensitive start of the teams' name"
+            example: Seattle
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamsArray"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Pattern must contain at least 3 symbols"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/cashouts-rules-per-league:
+    get:
+      tags:
+        - v1.1
+      summary: "Get Cashout Rules per League"
+      description: "This method is used to get a list of Cashout Rules per League. Optionally can provide a league id"
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: integer
+            description: "League ID to query cashout rules for. Use 0 for all leagues."
+            example: 0
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CashoutRulesArray"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/cashouts-rules-per-event:
+    get:
+      tags:
+        - v1.1
+      summary: "Get Cashout Rules per Event"
+      description: "This method is used to get a list of Cashout Rules per Event. Optionally can provide a Event id"
+      parameters:
+        - name: eventId
+          in: query
+          required: false
+          schema:
+            type: integer
+            description: "Event ID to query cashout rules for. Use 0 for all events."
+            example: 0
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CashoutRulesPerEventArray"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "There are no rules for this Event"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/books/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get Books"
+      description: "This method is used to get a list of books. Optionally a list of books ids can be provided to filter the result"
+      parameters:
+        - name: bid
+          in: query
+          required: false
+          description: "Filter by Book IDs"
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookArray"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Book not found"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/banners/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get Banners"
+      description: "This method is used to get a list of banners. Optionally a list of banner uuids can be provided to filter the result"
+      parameters:
+        - name: uuid
+          in: query
+          required: false
+          description: "Filter by Banner UUIDs"
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BannerArray"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Banner not found"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/banners/translations/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get translations for banners"
+      description: "Returns translated descriptions for banners by optional list of banner id values."
+      parameters:
+        - name: bid
+          in: query
+          description: "Filter by Banner IDs"
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BannerTranslationArray"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Banner not found"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /config/regions/:
+    get:
+      tags:
+        - v1.1
+      summary: "Get League Regions"
+      description: "This method is used to get a list of available league regions. Optionally a list of league region uuids can be provided to filter the result"
+      parameters:
+        - name: uuid
+          in: query
+          required: false
+          description: "Filter by League Region UUIDs"
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeagueRegionArray"
+        404:
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Region not found"
+        500:
+          description: "Service Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Cannot connect to the database"
+
+  /sport/entities:
+    post:
+      tags:
+        - v1.1      
+      summary: Create real-sport, region, and league entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SportEntitiesIn'
+      responses:
+        200:
+          description: Successful creation of entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportEntitiesOut'
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Description"
+              example:
+                description: "Invalid parameter"                
+        500:
+          description: Internal server error
+
+components:
+  schemas:
+    Description:
+      type: object
+      required:
+        - description
+      properties:
+        description:
+          type: string
+
+    LeagueByEvent:
+      type: object
+      properties:
+        eid:
+          type: integer
+          description: "The IdEvent in ORO."
+          example: 1024
+        lid:
+          type: integer
+          description: "The IdLeague mapped to the IdEvent"
+          example: 11
+        rsid:
+          type: integer
+          description: "The IdRealSport in ORO."
+          example: 11
+        gtid:
+          type: integer
+          description: "The IdGameTyoe in ORO."
+          example: 112
+        luuid:
+          type: string
+          description: "Unique identifier for the League entry"
+          example: "fa0c86af-e7b7-4c65-b7ef-6c820da39492"
+        rsuuid:
+          type: string
+          description: "Unique identifier for the Real Sport entry"
+          example: "fa0c86af-e7b7-4c65-b7ef-6c820da39492"
+
+    LeagueByEventArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/LeagueByEvent"
+
+    League:
+      type: object
+      required: [luuid, lid, ln, lsd, tbp, rsid, sid]
+      properties:
+        luuid:
+          type: string
+          description: "The UUID of the League"
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        lid:
+          type: integer
+          description: "The IdLeague in ORO"
+          example: 11
+        ln:
+          type: string
+          description: "The league name in ORO"
+          example: "NBA"
+        lsd:
+          type: string
+          description: "The league short description in ORO"
+          example: "BKUSS"
+        tbp:
+          type: integer
+          description: "The IdTakeBackProfile mapped to the IdLeague."
+          example: 1024
+        rsid:
+          type: integer
+          description: "The Real Sport ID from ORO."
+          example: 1
+        rsuuid:
+          type: string
+          description: "Unique identifier for the Real Sport entry"
+          example: "fa0c86af-e7b7-4c65-b7ef-6c820da39492"
+        sid:
+          type: string
+          description: "The IdSport in ORO"
+          example: SOC
+        hfm:
+          type: boolean
+          description: "The league value for HideForMaster in ORO"
+          example: false
+        lrid:
+          type: integer
+          description: "The League Region ID in ORO"
+          example: 25
+        lruuid:
+          type: string
+          description: "Unique identifier for the League Region entry"
+          example: "fa0c86af-e7b7-4c65-b7ef-6c820da39492"
+
+    LeagueArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/League"
+
+    LeagueTranslation:
+      type: object
+      properties:
+        lid:
+          type: integer
+          description: "The IdLeague in ORO"
+          example: 101
+        uuid:
+          type: string
+          description: "Unique identifier for the translation entry"
+          example: "fa0c86af-e7b7-4c65-b7ef-6c820da39492"
+        lang:
+          type: integer
+          description: "Language ID"
+          example: 1
+        desc:
+          type: string
+          description: "Localized league description"
+          example: "National Basketball Association"
+    LeagueTranslationArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/LeagueTranslation"
+
+    TakeBackProfile:
+      type: object
+      properties:
+        pid:
+          type: integer
+          description: "The IdTakeBackProfile in ORO"
+          example: 1003
+        ml:
+          type: integer
+          description: "The take-back coefficient for moneyline markets"
+          example: -110
+        sp:
+          type: integer
+          description: "The take-back coefficient for spread markets"
+          example: -120
+        tot:
+          type: integer
+          description: "The take-back coefficient for total markets"
+          example: 120
+
+    TakeBackProfileArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/TakeBackProfile"
+
+    Event:
+      type: object
+      properties:
+        eid:
+          type: integer
+          description: "The IdEvent in ORO"
+          example: 7934
+        ed:
+          type: string
+          description: "The Event Description in ORO"
+          example: "Alternative Total (1)"
+        egd:
+          type: string
+          description: "The Event GameDescription in ORO"
+          example: "<VT> vrs <HT>: Alternative Total"
+    EventsArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Event"
+
+    EventTranslation:
+      type: object
+      properties:
+        eid:
+          type: integer
+          description: "The IdEvent in ORO"
+          example: 1002
+        lang:
+          type: integer
+          description: "Language ID"
+          example: 1
+        desc:
+          type: string
+          description: "Localized event description"
+          example: "Championship Final - Game 7"
+    EventTranslationArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/EventTranslation"
+
+    RealSport:
+      type: object
+      required: [rsuuid, rsid, rsd, gd, gdl]
+      properties:
+        rsuuid:
+          type: string
+          description: "The UUID of the RealSport"
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        rsid:
+          type: integer
+          description: "The IdRealSport in ORO"
+          example: 11
+        rsd:
+          type: string
+          description: "The real sport description in ORO"
+          example: BOXING
+        gd:
+          type: integer
+          description: "The Game Delay for Pregame in ORO"
+          example: 0
+        gdl:
+          type: integer
+          description: "The Game Delay for Live game in ORO"
+          example: 6
+    RealSportsArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/RealSport"
+
+    RealSportTranslation:
+      type: object
+      properties:
+        rsid:
+          type: integer
+          description: "The IdRealSport in ORO"
+          example: 11
+        uuid:
+          type: string
+          description: "Unique identifier"
+          example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        lang:
+          type: integer
+          description: "Language identifier"
+          example: 1
+        sdesc:
+          type: string
+          description: "Short description"
+          example: "Box"
+        desc:
+          type: string
+          description: "Full description"
+          example: "Boxing"
+    RealSportTranslationArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/RealSportTranslation"
+
+    Period:
+      type: object
+      properties:
+        sid:
+          type: string
+          description: "The IdSport in ORO"
+          example: SOC
+        pn:
+          type: integer
+          description: "The period number. 0 if Full Game, other values have sport-specific meaning, e.g. 1 is First Half, First Quarter, etc."
+          enum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          example: 0
+        pd:
+          type: string
+          description: "The Period Description in ORO"
+          example: "Game"
+    PeriodsArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Period"
+
+    PlayerInfo:
+      type: object
+      properties:
+        pid:
+          type: integer
+          description: "The IdPlayer in ORO"
+          example: 1001
+        nickname:
+          type: string
+          description: "The nickname of the player in ORO"
+          example: "AceVentura"
+
+    TakeBackSetting:
+      type: object
+      properties:
+        tbsid:
+          type: integer
+          description: "The IdTakeBackSettings in ORO"
+          example: 66
+        sid:
+          type: string
+          description: "The IdSport in ORO"
+          example: "SOC"
+        ltid:
+          type: integer
+          description: "The Line Type ID in ORO"
+          example: 39
+        gtid:
+          type: integer
+          description: "The Game Type ID in ORO"
+          example: 55
+        ln:
+          type: integer
+          description: "Affected line component - 1 for Spread, 2 for Total, 3 for MoneyLine"
+          example: 2
+        rp:
+          type: integer
+          description: "The Rebate percentage for the lines determined by the other fields"
+          example: 10
+    TakeBackSettingsArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/TakeBackSetting"
+
+    GameType:
+      type: object
+      properties:
+        gtid:
+          type: integer
+          description: "The IdGameType in ORO"
+          example: 66
+        s:
+          type: string
+          description: "The 2-character unique identifier of the game type in ORO"
+          example: "M2"
+        d:
+          type: string
+          description: "The description of the game type in ORO"
+          example: "1K USD Masters Half"
+        ahu:
+          type: boolean
+          description: "The AllowHookUps setting in ORO"
+          example: 1
+        abp:
+          type: boolean
+          description: "The AllowBuyPoints setting in ORO"
+          example: 0
+        bkc:
+          type: integer
+          description: "Background color (for display purposes)"
+          example: 16777124
+        fkc:
+          type: integer
+          description: "Foreground color for (display purposes)"
+          example: 255
+    GameTypeArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/GameType"
+
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "The IdTeam in ORO"
+          example: 103817
+        name:
+          type: string
+          description: "The Teamnname in ORO"
+          example: Seattle Seahawks
+
+    TeamFull:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "The IdTeam in ORO"
+          example: 103817
+        name:
+          type: string
+          description: "The Teamnname in ORO"
+          example: Seattle Seahawks
+        lname:
+          type: string
+          description: "The long team name in ORO"
+          example: Seattle Seahawks
+
+    TeamsArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Team"
+
+    TeamsFullArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/TeamFull"
+
+    CashoutRule:
+      type: object
+      properties:
+        lid:
+          type: integer
+          description: "The LeagueID in ORO"
+          example: 103817
+        presp:
+          type: boolean
+          description: "Wether it allows pre spread"
+          example: true
+        pretot:
+          type: boolean
+          description: "Wether it allows pre total"
+          example: true
+        preml:
+          type: boolean
+          description: "Wether it allows pre money line"
+          example: true
+        lsp:
+          type: boolean
+          description: "Wether it allows live spread"
+          example: true
+        ltot:
+          type: boolean
+          description: "Wether it allows live total"
+          example: true
+        lml:
+          type: boolean
+          description: "Wether it allows live money line"
+          example: true
+
+    CashoutRulesArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/CashoutRule"
+
+    CashoutRulesPerEvent:
+      type: object
+      properties:
+        eid:
+          type: integer
+          description: "The EventID in ORO"
+          example: 103817
+          x-go-name: EventId
+        presp:
+          type: boolean
+          description: "Indicates if pre-game spread cashout is allowed."
+          example: true
+          x-go-name: AllowPreSpread
+        pretot:
+          type: boolean
+          description: "Indicates if pre-game total cashout is allowed."
+          example: false
+          x-go-name: AllowPreTotal
+        preml:
+          type: boolean
+          description: "Indicates if pre-game money line cashout is allowed."
+          example: true
+          x-go-name: AllowPreMoneyLine
+        lsp:
+          type: boolean
+          description: "Indicates if live-game spread cashout is allowed."
+          example: false
+          x-go-name: AllowLiveSpread
+        ltot:
+          type: boolean
+          description: "Indicates if live-game total cashout is allowed."
+          example: true
+          x-go-name: AllowLiveTotal
+        lml:
+          type: boolean
+          description: "Indicates if live-game money line cashout is allowed."
+          example: false
+          x-go-name: AllowLiveMoneyLine
+
+    CashoutRulesPerEventArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/CashoutRulesPerEvent"
+
+    Book:
+      type: object
+      properties:
+        bid:
+          type: integer
+          description: "The IdBook in ORO"
+          example: 101
+        name:
+          type: string
+          description: "The Book name"
+          example: "ACR"
+        wcid:
+          type: integer
+          description: "Web Column ID"
+          example: 1
+        enabled:
+          type: boolean
+          description: "Indicates if the book is enabled."
+          example: true
+
+    BookArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Book"
+
+    Banner:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: "Unique identifier for the Banner entry"
+          example: "fa0c86af-e7b7-4c65-b7ef-6c820da39492"
+        desc:
+          type: string
+          description: "The banner description"
+          example: "MLB"
+        tl:
+          type: string
+          description: "The banner top line"
+          example: "MLB 2025 - Regular Season"
+        bl:
+          type: string
+          description: "The banner bottom line"
+          example: "Player Total Hits"
+    BannerArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Banner"        
+
+    BannerTranslation:
+          type: object
+          properties:
+            uuid:
+              type: string
+              description: "Unique identifier"
+              example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            lang:
+              type: integer
+              description: "Language identifier"
+              example: 1
+            tl:
+              type: string
+              description: "The banner top line"
+              example: "MLB 2025 - Regular Season"
+            bl:
+              type: string
+              description: "The banner bottom line"
+              example: "Player Total Hits"
+    BannerTranslationArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/BannerTranslation"
+
+    LeagueRegion:
+      type: object
+      properties:
+        lrid:
+          type: integer
+          description: "League region ID"
+        lruuid:
+          type: string
+          description: "Unique identifier for the League Region entry"
+          example: "fa0c86af-e7b7-4c65-b7ef-6c820da39492"
+        lrd:
+          type: string
+          description: "The league region description"
+          example: "League Region Description"
+        lrro:
+          type: integer
+          description: "League region order"
+          example: 1
+        lre:
+          type: boolean
+          description: "Signals if league region is enabled"
+          example: true
+    LeagueRegionArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/LeagueRegion"
+
+    SportEntitiesIn:
+      type: object
+      properties:
+        real-sport:
+          $ref: '#/components/schemas/RealSportIn'
+        region:
+          $ref: '#/components/schemas/RegionIn'
+        league:
+          $ref: '#/components/schemas/LeagueIn'
+
+    RealSportIn:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ORO UUID
+        description:
+          type: string
+        short:
+          type: string
+        pre-game-delay:
+          type: integer
+        live-delay:
+          type: integer
+        enabled:
+          type: boolean
+
+    RegionIn:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ORO UUID
+        description:
+          type: string
+        order:
+          type: integer
+        enabled:
+          type: boolean
+
+    LeagueIn:
+      type: object
+      properties:
+        sport:
+          type: string
+          description: ORO IdSport
+        description:
+          type: string
+        short:
+          type: string
+        order:
+          type: integer
+        team-fk-required:
+          type: boolean
+        take-back-profile:
+          type: integer
+        hide-for-master:
+          type: boolean
+        enabled:
+          type: boolean
+
+    SportEntitiesOut:
+      type: object
+      properties:
+        real-sport:
+          $ref: '#/components/schemas/RealSportOut'
+        region:
+          $ref: '#/components/schemas/RegionOut'
+        league:
+          $ref: '#/components/schemas/LeagueOut'
+
+    RealSportOut:
+      required: [id, uuid]
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ORO ID
+        uuid:
+          type: string
+          description: ORO UUID
+
+    RegionOut:
+      required: [id, uuid]
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ORO ID
+        uuid:
+          type: string
+          description: ORO UUID
+
+    LeagueOut:
+      required: [id, uuid]
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ORO ID
+        uuid:
+          type: string
+          description: ORO UUID
