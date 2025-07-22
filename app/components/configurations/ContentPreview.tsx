@@ -1,71 +1,77 @@
 import { Box, Text } from "@radix-ui/themes";
-import { GroupBy, Order } from "~/api/scs/configurations/config.consts";
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import type { FilteredGameGroup, Game } from "~/api/ssm/ssm.types";
 import { useContentFiltered } from "~/hooks/useContentFiltered";
 import InfoBanner from "../shared/InfoBanner";
 import LoadingIndicator from "../shared/LoadingIndicator";
+import type { FilterGroup, FiltersTypeInteger, FiltersTypeString, GroupType, OrderType, TimeString } from "~/api/sccs/types.gen";
+import { isAllFilter } from "../categories/AllItemData";
 
 interface ContentPreviewProps {
   filterGroups: FilterGroup[];
 }
 
-const getGroupKey = (game: Game, groupBy: GroupBy): string[] => {
+const getGroupKey = (game: Game, groupBy: GroupType): string[] => {
   const date = new Date(game.startTime).toLocaleDateString();
   const league = game.leagueName;
   const sport = game.realSportName;
   switch (groupBy) {
-    case GroupBy.League:
-      return [league];
-    case GroupBy.Day:
-      return [date];
-    case GroupBy.LeagueDay:
+    case "leagueDay":
       return [league, date];
-    case GroupBy.DayLeague:
+    case "dayLeague":
       return [date, league];
-    case GroupBy.SportLeague:
+    case "sportLeague":
       return [sport, league];
-    case GroupBy.SportDay:
+    case "sportDay":
       return [sport, date];
-    case GroupBy.DayGame:
+    case "dayGame":
       return [date, game.gameUUID];
     default:
       return [league];
   }
 };
 
+function toHours(timeString: TimeString): number {
+  switch (timeString) {
+    case "1h": return 1;
+    case "3h": return 3;
+    case "6h": return 6;
+    case "12h": return 12;
+    case "1d": return 24;
+    case "2d": return 48;
+    case "3d": return 72;
+  }
+}
+
 // Use for real-time notifications when it is implemented.
 const matchesFilterGroup = (game: Game, filterGroup: FilterGroup): boolean => {
   return filterGroup.filters.every((filter) => {
-    const values = Array.isArray(filter.values) ? filter.values : [filter.values];
+    if (isAllFilter(filter)) return true;
+
     switch (filter.type) {
       case "sport":
-        return values.includes(game.realSportUUID);
+        return (filter.value as FiltersTypeString).includes(game.realSportUUID);
       case "league":
-        return values.includes(game.leagueUUID);
+        return (filter.value as FiltersTypeString).includes(game.leagueUUID);
       case "market":
         if (game.eventId === null || game.eventId === undefined) {
           return false;
         }
-        return values.includes(String(game.eventId));
+        return (filter.value as FiltersTypeInteger).includes(game.eventId);
       case "period":
         if (game.eventId !== null && game.eventId !== undefined) {
           return false;
         }
-        return values.includes(String(game.periodId));
+        return (filter.value as FiltersTypeInteger).includes(game.periodId);
       // case "region":
-      //   return values.includes(game.regionUUID);
+      //   return (filter.value as FiltersTypeString).includes(game.regionUUID);
       case "game":
-        return values.includes(game.gameUUID);
+        return (filter.value as FiltersTypeString).includes(game.gameUUID);
       case "status":
-        return values.includes(String(game.liveGame));
+        return (filter.value as boolean) === game.liveGame;
       case "time": {
         const now = Date.now();
-        return values.some((v) => {
-          const hours = Number.parseInt(v);
-          if (Number.isNaN(hours)) return false;
-          return new Date(game.startTime).getTime() - now <= hours * 3600000;
-        });
+        const hours = toHours(filter.type as TimeString);
+        return new Date(game.startTime).getTime() - now <= hours * 3600000;
       }
       default:
         return true;
@@ -73,19 +79,12 @@ const matchesFilterGroup = (game: Game, filterGroup: FilterGroup): boolean => {
   });
 };
 
-const renderGroupLabel = (groupBy: GroupBy, labelParts: string[]) => {
+const renderGroupLabel = (groupBy: GroupType, labelParts: string[]) => {
   switch (groupBy) {
-    case GroupBy.League:
-    case GroupBy.Day:
-      return (
-        <Text size="2" weight="bold">
-          {labelParts[0]}
-        </Text>
-      );
-    case GroupBy.LeagueDay:
-    case GroupBy.DayLeague:
-    case GroupBy.SportLeague:
-    case GroupBy.SportDay:
+    case "leagueDay":
+    case "dayLeague":
+    case "sportLeague":
+    case "sportDay":
       return (
         <>
           <Box mb="2">
@@ -161,8 +160,8 @@ export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
     <Box style={{ flex: 1, overflowY: "auto", padding: "0.75rem" }}>
       {groups.map((group, index) => {
         const filterGroup = group.filterGroup;
-        const groupBy = (filterGroup.groupBy ?? GroupBy.League) as GroupBy;
-        const order = (filterGroup.order ?? Order.Asc) as Order;
+        const groupBy = (filterGroup.groupBy ?? "league") as GroupType;
+        const order = (filterGroup.order ?? "asc") as OrderType;
         const groupLimit = filterGroup.limit;
 
         // Use for real-time notifications when it is implemented.
@@ -182,7 +181,7 @@ export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
               const sortedGames = [...groupedGames].sort((a, b) => {
                 const aTime = new Date(a.startTime).getTime();
                 const bTime = new Date(b.startTime).getTime();
-                return order === Order.Desc ? bTime - aTime : aTime - bTime;
+                return order === "desc" ? bTime - aTime : aTime - bTime;
               });
               const displayGames = groupLimit != null ? sortedGames.slice(0, groupLimit) : sortedGames;
               const labelParts = groupLabel.split(" > ");
@@ -190,7 +189,7 @@ export default function ContentPreview({ filterGroups }: ContentPreviewProps) {
               return (
                 <Box key={groupLabel} mb="5">
                   <Box mb="2">{renderGroupLabel(groupBy, labelParts)}</Box>
-                  {displayGames.map((game) => renderGameCard(game, groupBy !== GroupBy.Day))}
+                  {displayGames.map((game) => renderGameCard(game, true))}
                 </Box>
               );
             })}

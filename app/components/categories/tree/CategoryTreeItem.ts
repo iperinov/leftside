@@ -1,4 +1,5 @@
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
+
+import type { FilterGroup } from "~/api/sccs/types.gen";
 import type TreeItemData from "../../tree/TreeItemData";
 
 interface InternalFlags {

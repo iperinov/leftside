@@ -12,7 +12,7 @@ interface CategoryTreeProps {
   onSelected?: (item: CategoryTreeItem) => void;
   onAdd?: (level: number, parentID: string) => void;
   onRename?: (item: { id: string; name: string }) => void;
-  onDelete?: (item: { id: string }) => void;
+  onDelete?: (item: { id: string; name: string }) => void;
   onDuplicate?: (item: { id: string; name: string }) => void;
   onReorder?: (parent: CategoryTreeItem, childID: string, movedOnPlaceOfChildID: string) => void;
   getOptionalNodes?: (item: CategoryTreeItem, level: number) => OptionalNode[];
@@ -20,7 +20,7 @@ interface CategoryTreeProps {
 
 export default function CategoryTree({ selectedUUID, onSelected, onAdd, onRename, onDelete, onDuplicate, onReorder, getOptionalNodes }: CategoryTreeProps) {
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
-  const findCategoryTrail = useCategoryTreeStore((state) => state.findCategotyTrail);
+  const findCategoryTrail = useCategoryTreeStore((state) => state.findCategoryTrail);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function CategoryTree({ selectedUUID, onSelected, onAdd, onRename
 
   const menuItems: MenuItem<CategoryTreeItem>[] = [
     { name: "Rename", action: (context) => context && onRename?.({ id: context.id, name: context.name }) },
-    { name: "Delete", action: (context) => context && onDelete?.({ id: context.id }) },
+    { name: "Delete", action: (context) => context && onDelete?.({ id: context.id, name: context.name }) },
     { name: "Duplicate", action: (context) => context && onDuplicate?.({ id: context.id, name: context.name }) },
   ];
 

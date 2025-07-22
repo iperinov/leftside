@@ -1,60 +1,54 @@
-import { Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import type { CreateConfigApiSuccess } from "~/api/scs/configurations/config.types";
-import { useCreateConfiguration } from "../../hooks/useCreateConfiguration";
-import { BaseDialog } from "../shared/BaseDialog";
+import type { CreateConfigResponse } from "~/api/sccs/types.gen";
+import { useCreateConfiguration } from "~/hooks/configuraitons/useCreateConfiguration";
+import EditNameDialog from "../dialogs/EditNameDialog";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
+import LoadDataDecorator from "../loading/LoadDataDecorator";
 
 export interface CreateConfigurationProps {
-  open: boolean;
   onClose: () => void;
 }
 
-export const CreateConfiguration = ({ open, onClose }: CreateConfigurationProps) => {
-  const [name, setName] = useState("");
+export const CreateConfiguration = ({ onClose }: CreateConfigurationProps) => {
   const navigate = useNavigate();
+  const { data: configurations, isLoading, error } = useConfigurations();
 
-  const mutation = useCreateConfiguration({
-    onSuccess: (created: CreateConfigApiSuccess) => {
+  const createConfig = useCreateConfiguration({
+    onSuccess: (response: CreateConfigResponse) => {
       toast.success("Configuration created successfully");
-      navigate(`/configuration/${created.uuid}`, {
+      navigate(`/configuration/${response.uuid}`, {
         state: {
-          id: created.uuid,
-          name: created.name,
-          edit: true,
+          id: response.uuid,
+          edit: false,
         },
       });
     },
-    onError: () => {
-      toast.error("Failed to create configuration");
+    onError: (error: Error) => {
+      toast.error(error.message || "Failed to create configuration");
+      console.error(error);
+    },
+    onSettled: () => {
+      onClose();
     },
   });
 
-  const handleCreate = () => {
-    mutation.mutate({ name });
-  };
-
-  const handleClose = () => {
-    setName("");
-    onClose();
+  const handleConfirm = (name: string) => {
+    createConfig.mutate({ body: { name: name.trim() } });
   };
 
   return (
-    <BaseDialog
-      open={open}
-      onClose={handleClose}
-      title="Create new configuration"
-      isProcessing={mutation.isPending}
-      disableConfirm={!name.trim()}
-      onConfirm={handleCreate}
-    >
-      <Flex direction="column" gap="3" mb="4">
-        <Text size="1" style={{ color: "var(--accent-11)", fontWeight: 500 }}>
-          Title
-        </Text>
-        <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter configuration name" variant="soft" className="inputField" />
-      </Flex>
-    </BaseDialog>
+    <LoadDataDecorator isLoading={isLoading || createConfig.isPending} error={error}>
+      <EditNameDialog
+        title="Create new configuration"
+        description="Enter a name for the configuration:"
+        confirmText="Create"
+        open={true}
+        onConfirm={handleConfirm}
+        onCancel={onClose}
+        validName={(name) => !configurations?.find((item) => item.name === name.trim())}
+      />
+    </LoadDataDecorator>
   );
 };

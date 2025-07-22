@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import { allItem } from "../AllItemData";
+import { allItemString, isAllFilter } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 
@@ -8,22 +8,21 @@ export default function TimeFilter({ categoryUUID, filterGroupUUID }: FilterGrou
   const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
   const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
   const statusFilter = useCategoryTreeStore((state) => state.statusFilter);
-
+  const filterValue = statusFilter(categoryUUID, filterGroupUUID).value
+  const isLiveStatusSelected = isAllFilter(filterValue) ? false : (filterValue as boolean);
+  
   const choices = useMemo(
     () => [
-      allItem,
-      { id: "1", name: "1h" },
-      { id: "3", name: "3h" },
-      { id: "6", name: "6h" },
-      { id: "12", name: "12h" },
-      { id: "24", name: "1 day" },
-      { id: "48", name: "2 days" },
-      { id: "72", name: "3 days" },
-      { id: "168", name: "1 week" },
-      { id: "336", name: "2 weeks" },
-      { id: "720", name: "1 month" },
+      allItemString,
+      { id: "1h", name: "1h" },
+      { id: "3h", name: "3h" },
+      { id: "6h", name: "6h" },
+      { id: "12h", name: "12h" },
+      { id: "1d", name: "1 day" },
+      { id: "2d", name: "2 days" },
+      { id: "3d", name: "3 days" },
     ],
-    [],
+    []
   );
 
   return (
@@ -32,9 +31,9 @@ export default function TimeFilter({ categoryUUID, filterGroupUUID }: FilterGrou
       label={"Time"}
       title={"Select Time"}
       items={choices}
-      filterSelection={timeFilter}
+      selection={timeFilter(categoryUUID, filterGroupUUID).value}
       updateFilterSelection={updateTimeFilters}
-      disabled={statusFilter(categoryUUID, filterGroupUUID) === "1"}
+      disabled={isLiveStatusSelected}
       categoryUUID={categoryUUID}
       filterGroupUUID={filterGroupUUID}
     />

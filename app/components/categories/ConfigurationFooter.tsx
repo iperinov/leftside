@@ -2,31 +2,31 @@ import { Button, Flex } from "@radix-ui/themes";
 import type ClassNameProps from "../shared/ClassNameProps";
 
 interface ConfigurationHeaderProps {
-  onCanceled?: () => void;
-  onCompleted?: () => void;
+  onCancel?: () => void;
+  onSave: () => void;
   isProcessing?: boolean;
 }
 
-export default function ConfigurationHeader({ onCanceled, onCompleted, isProcessing, className }: ConfigurationHeaderProps & ClassNameProps) {
+export default function ConfigurationHeader({ onCancel, onSave, isProcessing, className }: ConfigurationHeaderProps & ClassNameProps) {
   return (
     <Flex justify="end" gap="3" className={className}>
       <Button
         variant="ghost"
         style={{ color: "white" }}
-        onClick={onCanceled}
+        onClick={onCancel}
         className="buttonGhost"
-        disabled={isProcessing} //TODO: Implement
+        disabled={isProcessing} 
       >
         Cancel
       </Button>
       <Button
         variant="ghost"
         style={{ color: "white" }}
-        onClick={onCompleted}
+        onClick={onSave}
         className="buttonGhost"
-        disabled={isProcessing} //TODO: Implement
+        disabled={isProcessing}
       >
-        {isProcessing ? "Processing…" : "Save changes"}
+        {isProcessing ? "Saving..." : "Save changes"}
       </Button>
     </Flex>
   );

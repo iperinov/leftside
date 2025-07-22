@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { TemplateType } from "~/components/categories/TemplateType";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type CategoryTreeItem from "../tree/CategoryTreeItem";
 import AddNewCategoryDialog from "./AddNewCategoryDialog";
+import type { FilterGroup } from "~/api/sccs/types.gen";
 
 interface AddNewCategoryProps {
   parentUUID: string;
@@ -45,8 +45,8 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
             {
               uuid: uuidv4(),
               filters: [
-                { type: "sport", values: sports },
-                { type: "league", values: leagues },
+                { type: "sport", value: sports },
+                { type: "league", value: leagues },
               ],
             } as FilterGroup,
           ],
@@ -59,8 +59,8 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
             {
               uuid: uuidv4(),
               filters: [
-                { type: "sport", values: sports },
-                { type: "league", values: ["all"] },
+                { type: "sport", value: sports },
+                { type: "league", value: ["all"] },
               ],
             } as FilterGroup,
           ],

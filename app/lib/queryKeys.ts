@@ -1,5 +1,6 @@
 export const queryKeys = {
   configurations: () => ["configurations"] as const,
+  configurationsBooks: () => ["configurations-books"] as const,
   books: () => ["books"] as const,
   realSports: () => ["real-sports"] as const,
   regions: () => ["regions"] as const,

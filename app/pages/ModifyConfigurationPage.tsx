@@ -6,38 +6,63 @@ import ConfigurationContent from "~/components/categories/ConfigurationContent";
 import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import { useCategories } from "~/hooks/categories/useCategories";
+import { useInitConfigStore } from "~/hooks/categories/useInitConfigStore";
 import styles from "./ModifyConfigurationPage.module.css";
+import { useUpdateConfiguration } from "~/hooks/configuraitons/useUpdateConfiguration";
+import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import { useAuthStore } from "~/stores/useAuthStore";
 
 interface ModifyConfigurationPageProps {
   uuid?: string;
-  name?: string;
   edit?: boolean;
 }
 
-export default function ModifyConfigurationPage({ uuid = "", name = "", edit = false }: ModifyConfigurationPageProps) {
-  const { error, isLoading } = useCategories(uuid);
+export default function ModifyConfigurationPage({ uuid = "", edit = false }: ModifyConfigurationPageProps) {
+  const { error, isLoading } = useInitConfigStore(uuid);
   const [selectedUUID, setSelectedUUID] = useState<string>("");
-  const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
+  const configuration = useCategoryTreeStore((state) => state.configuration);
+  const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
+  const email = useAuthStore((state) => state.auth?.email);
+  const updateConfig = useUpdateConfiguration({
+    onSuccess: (response) => {
+      toast.success("Configuration updated successfully");
+    },
+    onError: (error) => {
+      toast.error("Failed to update configuration");
+      console.error(error);
+    },
+    onSettled: () => {
+      navigate("/configurations/");
+    },
+  });
 
-  const onCanceled = () => {
-    if (!isProcessing) navigate("/configurations/");
-  };
+  if (!email) throw new Error("Not logged in user is trying to modify configuration");
 
-  const onCompleted = async () => {
-    setIsProcessing(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    toast.success(`Configuration "${name}" saved successfully.`);
+  const onCancel = () => {
     navigate("/configurations/");
   };
 
+  const onSave = async () => {
+    updateConfig.mutate({
+      path: {uuid: selectedUUID},
+      body: {
+        uuid: uuid,
+        _rev: configuration._rev,
+        name: configuration.name,
+        categories: rootCategory.children || [],
+        lmt: Date.now(),
+        lmu: email
+      },
+    });
+  };
+
   return (
-    <LoadDataDecorator error={error} isLoading={isLoading}>
+    <LoadDataDecorator error={error} isLoading={isLoading || updateConfig.isPending}>
       <Flex direction="column" className={styles.page}>
-        <ConfigurationHeader name={name} edit={edit} className={styles.header} />
+        <ConfigurationHeader edit={edit} className={styles.header} />
         <ConfigurationContent selectedUUID={selectedUUID} setSelectedID={setSelectedUUID} className={styles.content} />
-        <ConfigurationFooter onCanceled={onCanceled} onCompleted={onCompleted} className={styles.footer} isProcessing={isProcessing} />
+        <ConfigurationFooter onCancel={onCancel} onSave={onSave} className={styles.footer} isProcessing={updateConfig.isPending} />
       </Flex>
     </LoadDataDecorator>
   );

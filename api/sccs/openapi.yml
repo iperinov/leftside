@@ -312,6 +312,22 @@ components:
       description: The object's revision
       minLength: 1
       example: "14-29ad1ec1a9a1246aa6106eea3c4e48b0"
+      
+    UnixTimestamp:
+      type: integer
+      format: int64
+      minimum: 0
+      description: |
+        A Unix timestamp representing the number of seconds since January 1, 1970 (UTC).
+        This must be expressed in UTC and **must include milliseconds**.
+      example: 1721217037123
+      
+    Username:
+      type: string
+      format: email
+      minLength: 1
+      description: "The domain username"
+      example: "john.smith@im.priv"
 ########################### AUTH #######################################
     SCSSessionID:
       type: string
@@ -320,11 +336,7 @@ components:
       example: SCS_SESSION_ID=abcde12345; Path=/; HttpOnly
 
     AuthorizedUsername:
-      type: string
-      format: email
-      minLength: 1
-      description: "The domain username"
-      example: "john.smith@im.priv"
+      $ref: '#/components/schemas/Username'
 
     AuthorizedUserPassword:
       type: string
@@ -486,109 +498,180 @@ components:
       type: array
       items:
         type: integer
-        
+
+
+       
     FilterType:
+      oneOf:
+        - $ref: '#/components/schemas/SportFilterType'
+        - $ref: '#/components/schemas/RegionFilterType'
+        - $ref: '#/components/schemas/LeagueFilterType'
+        - $ref: '#/components/schemas/GameFilterType'
+        - $ref: '#/components/schemas/PeriodFilterType'
+        - $ref: '#/components/schemas/MarketFilterType'
+        - $ref: '#/components/schemas/TimeFilterType'
+        - $ref: '#/components/schemas/StatusFilterType'
+
+    AllFilter:
       type: string
-      enum: 
-        - sport
-        - region
-        - league
-        - game
-        - period
-        - market
-        - time
-        - status
-      x-enumNames:
-        - "Sport"
-        - "Region"
-        - "League"
-        - "Game"
-        - "Period"
-        - "Market"
-        - "Time"
-        - "Status"
-    
+      enum: [all]
+      x-enumNames: [All]
+      
+    SportFilterType:
+      type: string
+      enum: [sport]
+      x-enumNames: [Sport]
+
     SportFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum:
-            - sport
-          x-enumNames: 
-            - "Sport"
+          $ref: '#/components/schemas/SportFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeString'
-          
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/AllFilter'
+
+    RegionFilterType:
+      type: string
+      enum: [region]
+      x-enumNames: [Region]
+
     RegionFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum:
-            - region
-          x-enumNames: 
-            - "Region"
+          $ref: '#/components/schemas/RegionFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeString'
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/AllFilter'
           
+    LeagueFilterType:
+      type: string
+      enum: [league]
+      x-enumNames: [League]
+
     LeagueFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum:
-            - league
-          x-enumNames: 
-            - "League"
+          $ref: '#/components/schemas/LeagueFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeString'
-    
-    MyNewFilter:
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/AllFilter'
+
+    MarketFilterType:
+      type: string
+      enum: [market]
+      x-enumNames: [Market]
+
+    MarketFilter:
+      type: object
+      required: [type, value]
+      properties:
+        type:
+          $ref: '#/components/schemas/MarketFilterType'
+        value:
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeInteger'
+            - $ref: '#/components/schemas/AllFilter'
+
+    GameFilterType:
+      type: string
+      enum: [game]
+      x-enumNames: [Game]
+
+    GameFilter:
+      type: object
+      required: [type, value]
+      properties:
+        type:
+          $ref: '#/components/schemas/GameFilterType'
+        value:
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/AllFilter'
+
+    PeriodFilterType:
+      type: string
+      enum: [period]
+      x-enumNames: [Period]
+
+    PeriodFilter:
+      type: object
+      required: [type, value]
+      properties:
+        type:
+          $ref: '#/components/schemas/PeriodFilterType'
+        value:
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeInteger'
+            - $ref: '#/components/schemas/AllFilter'
+
+    TimeString:
+      type: string
+      enum: [1h, 3h, 6h, 12h, 1d, 2d, 3d]
+      x-enumNames: [1h, 3h, 6h, 12h, 1d, 2d, 3d]
+
+    TimeFilterType:
+      type: string
+      enum: [time]
+      x-enumNames: [Time]
+
+    TimeFilter:
+      type: object
+      required: [type, value]
+      properties:
+        type:
+          $ref: '#/components/schemas/TimeFilterType'
+        value:
+          oneOf:
+            - $ref: '#/components/schemas/TimeString'
+            - $ref: '#/components/schemas/AllFilter'
+
+    StatusFilterType:
+      type: string
+      enum: [status]
+      x-enumNames: [Status]
+
+    StatusFilter:
+      type: object
+      required: [type, value]
+      properties:
+        type:
+          $ref: '#/components/schemas/StatusFilterType' 
+        value:
+          oneOf:
+            - type: boolean
+            - $ref: '#/components/schemas/AllFilter'
+
+    Filter:
       oneOf:
         - $ref: '#/components/schemas/SportFilter'
         - $ref: '#/components/schemas/RegionFilter'
         - $ref: '#/components/schemas/LeagueFilter'
+        - $ref: '#/components/schemas/GameFilter'
+        - $ref: '#/components/schemas/PeriodFilter'
+        - $ref: '#/components/schemas/MarketFilter'
+        - $ref: '#/components/schemas/TimeFilter'
+        - $ref: '#/components/schemas/StatusFilter'
       discriminator:
         propertyName: type
         mapping:
           sport: '#/components/schemas/SportFilter'
           region: '#/components/schemas/RegionFilter'
           league: '#/components/schemas/LeagueFilter'
-      
-    MyNewFilter2:
-      type: object
-      properties:
-          sport:
-            $ref: '#/components/schemas/SportFilter'
-          region:
-            $ref: '#/components/schemas/RegionFilter'
-          league:
-            $ref: '#/components/schemas/LeagueFilter'
-      oneOf:
-        - required: ['sport']
-        - required: ['region']
-        - required: ['league']
-      additionalProperties: false
+          game: '#/components/schemas/GameFilter'
+          period: '#/components/schemas/PeriodFilter'
+          market: '#/components/schemas/MarketFilter'
+          time: '#/components/schemas/TimeFilter'
+          status: '#/components/schemas/StatusFilter'
 
-    Filter:
-      type: object
-      required:
-        - type
-        - value
-      properties:
-        type:
-          $ref: '#/components/schemas/FilterType'
-        value:
-          oneOf:
-            - $ref: '#/components/schemas/FiltersTypeString'
-            - $ref: '#/components/schemas/FiltersTypeBool'
-            - $ref: '#/components/schemas/FiltersTypeInteger'
-          description: Values to filter by, can be a an array of objects of a single type.
-          
     Filters:
       type: array
       items:
@@ -624,7 +707,6 @@ components:
           - filters
           - groupBy
           - order
-          - limit
       properties:
         uuid:
           $ref: '#/components/schemas/UUID'
@@ -689,6 +771,8 @@ components:
         - _rev
         - name
         - categories
+        - lmt
+        - lmu
       properties:
         uuid:
           $ref: '#/components/schemas/UUID'
@@ -699,6 +783,10 @@ components:
           minLength: 1
         categories:
           $ref: '#/components/schemas/Categories'
+        lmt:
+          $ref: '#/components/schemas/UnixTimestamp'
+        lmu:
+          $ref: '#/components/schemas/Username'
 ## Requests
     CreateConfigRequest:
       $ref: '#/components/schemas/ConfigName'
@@ -718,17 +806,25 @@ components:
       type: object
       required:
         - _rev
+        - name
       properties:
         _rev:
           $ref: '#/components/schemas/Revision'
+        name: 
+          type: string
+          minLength: 1
 
     DuplicateConfigRequest:
       type: object
       required:
         - _rev
+        - name
       properties:
         _rev:
           $ref: '#/components/schemas/Revision'
+        name: 
+          type: string
+          minLength: 1
 
 ## Responses
     CreateConfigResponse:
@@ -830,4 +926,5 @@ components:
           properties:
             revs:
               $ref: '#/components/schemas/BookRevs'
+        
 

@@ -1,4 +1,5 @@
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
+import type { FilterGroup } from "../sccs/types.gen";
+
 
 export interface Contender {
   id: number;
@@ -17,6 +18,7 @@ export interface Game {
   gameUUID: string;
   parentUUID: string;
   realSportUUID: string;
+  //regionUUID: string;
   leagueUUID: string;
   idSport: string;
   eventId?: number;

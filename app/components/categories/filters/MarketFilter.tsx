@@ -6,14 +6,16 @@ import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import styles from "./Filters.module.css";
 import MultiSelectionFilter from "./MultiSelectionFilter";
+import { allItemNumber, isAllFilter } from "../AllItemData";
+import type { FiltersTypeString } from "~/api/sccs/types.gen";
 
 interface MarketFilterProps {
-  onChange?: (selectedIDs: string[]) => void;
+  onChange?: (selectedIDs: number[]) => void;
 }
 
-function choices(markets: Event[]): ItemData<string>[] {
+function choices(markets: Event[]): ItemData<number>[] {
   return markets.map((market) => ({
-    id: String(market.id),
+    id: market.id,
     name: market.description,
   }));
 }
@@ -23,9 +25,11 @@ export default function MarketFilter({ categoryUUID, filterGroupUUID, onChange }
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
   const updateMarketsFilter = useCategoryTreeStore((state) => state.updateMarketsFilter);
-  const sportsSelection = sportFilters(categoryUUID, filterGroupUUID);
-  const leaguesSelection = leagueFilters(categoryUUID, filterGroupUUID);
-  const { data: markets, isLoading, error } = useFilteredMarketsBy(sportsSelection, leaguesSelection);
+  const sportFilter = sportFilters(categoryUUID, filterGroupUUID);
+  const leagueFilter = leagueFilters(categoryUUID, filterGroupUUID);
+  const { data: markets, isLoading, error } = useFilteredMarketsBy(sportFilter, leagueFilter);
+  const filterValue = marketFilters(categoryUUID, filterGroupUUID).value
+  const selections = isAllFilter(filterValue) ? [allItemNumber.id] : filterValue as number[];
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
@@ -36,10 +40,10 @@ export default function MarketFilter({ categoryUUID, filterGroupUUID, onChange }
         label="Markets"
         title="Select Markets"
         items={choices(markets || [])}
-        filterSelections={marketFilters}
+        selections={selections}
         updateFilterSelection={updateMarketsFilter}
         onChange={onChange}
-        disabled={sportsSelection.length === 0}
+        disabled={!isAllFilter(sportFilter) || (sportFilter.value as FiltersTypeString).length === 0}
       />
     </LoadDataDecorator>
   );

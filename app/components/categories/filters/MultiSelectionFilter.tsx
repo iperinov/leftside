@@ -1,37 +1,37 @@
 import { useState } from "react";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import type ItemData from "~/types/ItemData";
-import { allItem } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
 import styles from "./Filters.module.css";
+import { allFilter, isAllItemID } from "../AllItemData";
+import type { AllFilter } from "~/api/sccs/types.gen";
 
-interface MultiSelectionFilterProps {
+interface MultiSelectionFilterProps<T extends string | number> {
   keyStr: string;
   label: string;
   title: string;
-  items: ItemData<string>[];
+  items: ItemData<T>[];
+  selections: T[];
   disabled?: boolean;
-
-  filterSelections(categoryID: string, filterID: string): string[];
-  updateFilterSelection(categoryID: string, filterID: string, selected: string[]): void;
-  onChange?: (selectedIDs: string[]) => void;
+  
+  updateFilterSelection(categoryID: string, filterID: string, selected: T[] | AllFilter): void;
+  onChange?: (selectedIDs: T[]) => void;
 }
 
-export default function MultiSelectionFilter({
+export default function MultiSelectionFilter<T extends string | number>({
   categoryUUID,
   filterGroupUUID,
   keyStr,
   label,
   title,
   items,
+  selections,
   disabled = false,
-
-  filterSelections,
+  
   updateFilterSelection,
   onChange,
-}: MultiSelectionFilterProps & FilterGroupProps) {
-  const selections = filterSelections(categoryUUID, filterGroupUUID);
+}: MultiSelectionFilterProps<T> & FilterGroupProps) {
   const [show, setShow] = useState(false);
 
   return (
@@ -39,22 +39,18 @@ export default function MultiSelectionFilter({
       <Filter
         key={keyStr}
         label={label}
-        values={selections.flatMap((id) => {
-          if (id === allItem.id) return [allItem.name];
-          const item = items?.find((item) => String(item.id) === id);
-          return item ? [item.name] : [];
-        })}
+        values={items.flatMap((item) => selections.includes(item.id) ? item.name : [])}
         onClick={() => setShow(true)}
         className={`${styles.filter}`}
         disabled={disabled}
       />
 
       {show && items && (
-        <MultiSelectDialog<string>
+        <MultiSelectDialog<T>
           items={items}
           includeAllItem={true}
           onConfirm={(selectedIDs) => {
-            updateFilterSelection(categoryUUID, filterGroupUUID, selectedIDs);
+            updateFilterSelection(categoryUUID, filterGroupUUID, selectedIDs.length === 1 && isAllItemID(selectedIDs[0]) ? allFilter : selectedIDs);
             setShow(false);
           }}
           onCancel={() => setShow(false)}

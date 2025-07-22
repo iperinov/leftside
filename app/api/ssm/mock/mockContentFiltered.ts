@@ -1,5 +1,4 @@
-import { GroupBy, Order } from "~/api/scs/configurations/config.consts";
-import FiltersGroup from "~/components/categories/filterGroup/FiltersGroup";
+import type { GroupType, OrderType } from "~/api/sccs/types.gen";
 import type { FilteredGameGroup } from "../ssm.types";
 
 export const mockContentFilteredSmall: FilteredGameGroup[] = [
@@ -10,12 +9,12 @@ export const mockContentFilteredSmall: FilteredGameGroup[] = [
         {
           //NFL
           type: "league",
-          values: ["6615560F-5325-48A4-A0A2-632419148D34"],
+          value: ["6615560F-5325-48A4-A0A2-632419148D34"],
         },
       ],
-      groupBy: GroupBy.Day,
-      order: Order.Desc,
-      //limit: 1,
+      groupBy: "dayLeague" as GroupType,
+      order: "desc" as OrderType,
+      limit: 1,
     },
     games: [
       {
@@ -114,12 +113,12 @@ export const mockContentFilteredSmall: FilteredGameGroup[] = [
         {
           // USA - MLS
           type: "league",
-          values: ["F47370AC-44C3-4CC6-8358-8798C1E0DA9A"],
+          value: ["F47370AC-44C3-4CC6-8358-8798C1E0DA9A"],
         },
       ],
-      groupBy: GroupBy.SportLeague,
-      order: Order.Asc,
-      //limit: 1,
+      groupBy: "sportLeague" as GroupType,
+      order: "asc" as OrderType,
+      limit: 1,
     },
     games: [
       {

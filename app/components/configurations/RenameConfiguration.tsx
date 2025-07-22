@@ -1,43 +1,48 @@
-import { Flex, Text, TextField } from "@radix-ui/themes";
+
 import { useState } from "react";
-import { useRenameConfiguration } from "../../hooks/useRenameConfiguration";
-import { BaseDialog } from "../shared/BaseDialog";
+import { useRenameConfiguration } from "../../hooks/configuraitons/useRenameConfiguration";
+import EditNameDialog from "../dialogs/EditNameDialog";
+import LoadDataDecorator from "../loading/LoadDataDecorator";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
+import { toast } from "sonner";
 
 interface RenameConfigurationProps {
-  open: boolean;
   onClose: () => void;
-  uuid: string;
-  rev: string;
+  id: string;
+  _rev: string;
+  name: string;
 }
 
-export const RenameConfiguration = ({ open, onClose, uuid, rev }: RenameConfigurationProps) => {
-  const [name, setName] = useState("");
-  const mutation = useRenameConfiguration();
-
-  const handleRename = async () => {
-    try {
-      await mutation.mutateAsync({ uuid, rev, name });
+export const RenameConfiguration = ({ onClose, id, _rev, name }: RenameConfigurationProps) => {
+  const { data: configurations, isLoading, error } = useConfigurations();
+  const renameConfiguration = useRenameConfiguration({
+    onSuccess: (response) => {
+      toast.success("Configuration renamed successfully");
+    },
+    onError: (error) => {
+      toast.error("Failed to rename configuration");
+      console.error(error);
+    },
+    onSettled: () => {
       onClose();
-    } catch (err) {
-      console.error("Failed to rename configuration:", err);
-    }
+    },
+  });
+  const handleConfirm = (name: string) => {
+    renameConfiguration.mutate({ path: { uuid: id }, body: { _rev, name } });
   };
 
   return (
-    <BaseDialog
-      open={open}
-      onClose={onClose}
-      title="Rename configuration"
-      isProcessing={mutation.isPending}
-      disableConfirm={!name.trim()}
-      onConfirm={handleRename}
-    >
-      <Flex direction="column" gap="3" mb="4">
-        <Text size="1" style={{ color: "var(--accent-7)", fontWeight: 500 }}>
-          Title
-        </Text>
-        <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter new name" variant="soft" className="inputField" />
-      </Flex>
-    </BaseDialog>
+    <LoadDataDecorator isLoading={isLoading || renameConfiguration.isPending} error={error}>
+      <EditNameDialog
+        title="Rename configuration"
+        description="Enter a new name for the configuration:"
+        confirmText="Rename"
+        open={true}
+        currentName={name}
+        onConfirm={handleConfirm}
+        onCancel={onClose}
+        validName={(name) => !configurations?.find((item) => item.name === name.trim())}
+      />
+    </LoadDataDecorator>
   );
 };

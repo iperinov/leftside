@@ -1,37 +1,50 @@
-import { Flex, Text } from "@radix-ui/themes";
-import { useDuplicateConfiguration } from "../../hooks/useDuplicateConfiguration";
-import { BaseDialog } from "../shared/BaseDialog";
+import { useDuplicateConfiguration } from "../../hooks/configuraitons/useDuplicateConfiguration";
+import LoadDataDecorator from "../loading/LoadDataDecorator";
+import EditNameDialog from "../dialogs/EditNameDialog";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
+import { toast } from "sonner";
 
 export interface DuplicateConfigurationProps {
-  open: boolean;
   onClose: () => void;
   id: string;
-  rev: string;
+  _rev: string;
   name: string;
 }
 
-export const DuplicateConfiguration = ({ open, onClose, id, rev, name }: DuplicateConfigurationProps) => {
-  const mutation = useDuplicateConfiguration();
-
-  const handleProceed = async () => {
-    try {
-      await mutation.mutateAsync({ uuid: id, rev });
+export const DuplicateConfiguration = ({ onClose, id, _rev, name }: DuplicateConfigurationProps) => {
+  const { data: configurations, isLoading, error } = useConfigurations();
+  const duplicateConfiguration = useDuplicateConfiguration({
+    onSuccess: (response) => {
+      toast.success("Configuration duplicated successfully");
+    },
+    onError: (error) => {
+      toast.error("Failed to duplicate configuration");
+      console.error(error);
+    },
+    onSettled: () => {
       onClose();
-    } catch (err) {
-      console.error("Failed to duplicate configuration:", err);
-    }
+    },
+  });
+
+  const handleConfirm = (name: string) => {
+    duplicateConfiguration.mutate({
+      path: { uuid: id },
+      body: { _rev, name },
+    });
   };
 
   return (
-    <BaseDialog open={open} onClose={onClose} title="Duplicate configuration" isProcessing={mutation.isPending} onConfirm={handleProceed}>
-      <Flex direction="column" align="center" mb="4">
-        <Text size="1" mb="3" className="iconCircle" style={{ color: "var(--accent-11)" }}>
-          !
-        </Text>
-        <Text size="2" align="center" style={{ color: "var(--accent-11)", paddingTop: "1rem" }}>
-          Are you sure you want to duplicate configuration <strong>'{name}'</strong>?
-        </Text>
-      </Flex>
-    </BaseDialog>
+    <LoadDataDecorator isLoading={isLoading /*|| duplicateConfiguration.isPending*/} error={error}>
+      <EditNameDialog
+        title="Duplicate category"
+        description="Enter a new name for the duplicated category:"
+        confirmText="Duplicate"
+        open={true}
+        currentName={name}
+        onConfirm={handleConfirm}
+        onCancel={onClose}
+        validName={(name) => !configurations?.find((item) => item.name === name.trim())}
+      />
+    </LoadDataDecorator>
   );
 };

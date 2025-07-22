@@ -6,6 +6,8 @@ import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import styles from "./Filters.module.css";
 import MultiSelectionFilter from "./MultiSelectionFilter";
+import { allFilter, allItemString, isAllFilter } from "../AllItemData";
+import type { FiltersTypeString } from "~/api/sccs/types.gen";
 
 interface LeagueFilterProps {
   onChange?: (selectedIDs: string[]) => void;
@@ -22,9 +24,11 @@ export default function LeaguesFilter({ categoryUUID, filterGroupUUID, onChange 
   const leagueFilters = useCategoryTreeStore((state) => state.leagueFilters);
   const updateLeaguesFilter = useCategoryTreeStore((state) => state.updateLeaguesFilter);
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
-  const sportsSelections = sportFilters(categoryUUID, filterGroupUUID);
+  const sportFilter = sportFilters(categoryUUID, filterGroupUUID);
   const { data: catalog, isLoading, error } = useCatalog();
-  const leagues = catalog?.filteredLeaguesBy(sportsSelections);
+  const leagues = catalog?.filteredLeaguesBy(sportFilter);
+  const filterValue = leagueFilters(categoryUUID, filterGroupUUID).value
+  const selections = isAllFilter(filterValue) ? [allItemString.id] : filterValue as string[];
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
@@ -35,10 +39,10 @@ export default function LeaguesFilter({ categoryUUID, filterGroupUUID, onChange 
         label="Leagues"
         title="Select Leagues"
         items={choices(leagues || [])}
-        filterSelections={leagueFilters}
+        selections={selections}
         updateFilterSelection={updateLeaguesFilter}
         onChange={onChange}
-        disabled={sportsSelections.length === 0}
+        disabled={!isAllFilter(sportFilter) || (sportFilter.value as FiltersTypeString).length === 0}
       />
     </LoadDataDecorator>
   );

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import type { FilterGroup } from "~/api/scs/configurations/config.types";
 import { getContentFiltered } from "../api/ssm/getcontentFiltered";
 import type { FilteredGamesResponse } from "../api/ssm/ssm.types";
 import { queryKeys } from "../lib/queryKeys";
+import type { FilterGroup } from "~/api/sccs/types.gen";
 
 interface UseContentFilteredOptions {
   filterGroups: FilterGroup[];
