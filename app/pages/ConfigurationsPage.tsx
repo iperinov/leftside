@@ -11,7 +11,7 @@ export default function ConfigurationsPage() {
   const navigate = useNavigate();
   const [createAction, setCreateAction] = useState(false);
   const [renameAction, setRenameAction] = useState<{ id: string, _rev: string, name: string }>();
-  const [duplicateAction, setDuplicateAction] = useState<{ id: string, name: string }>();
+  const [duplicateAction, setDuplicateAction] = useState<{ id: string, _rev: string, name: string }>();
   const [deleteAction, setDeleteAction] = useState<{ id: string, _rev: string, name: string }>();
 
   return (
@@ -56,7 +56,7 @@ export default function ConfigurationsPage() {
             <ConfigurationList
               onEdit={(id, name) => navigate(`/configuration/${id}`, { state: { id, edit: true } })}
               onRename={(id, rev, name) => setRenameAction({ id, _rev: rev, name })}
-              onDuplicate={(id, rev, name) => setDuplicateAction({ id, name })}
+              onDuplicate={(id, rev, name) => setDuplicateAction({ id, _rev: rev, name })}
               onDelete={(id, rev, name) => setDeleteAction({ id, _rev: rev, name })}
             />
           </Box>

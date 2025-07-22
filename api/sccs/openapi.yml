@@ -817,8 +817,11 @@ components:
     DuplicateConfigRequest:
       type: object
       required:
+        - _rev
         - name
       properties:
+        _rev:
+          $ref: '#/components/schemas/Revision'
         name: 
           type: string
           minLength: 1

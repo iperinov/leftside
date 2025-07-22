@@ -240,6 +240,7 @@ export type RenameConfigRequest = {
 };
 
 export type DuplicateConfigRequest = {
+    _rev: Revision;
     name: string;
 };
 

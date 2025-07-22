@@ -7,10 +7,11 @@ import { toast } from "sonner";
 export interface DuplicateConfigurationProps {
   onClose: () => void;
   id: string;
+  _rev: string;
   name: string;
 }
 
-export const DuplicateConfiguration = ({ onClose, id, name }: DuplicateConfigurationProps) => {
+export const DuplicateConfiguration = ({ onClose, id, _rev, name }: DuplicateConfigurationProps) => {
   const { data: configurations, isLoading, error } = useConfigurations();
   const duplicateConfiguration = useDuplicateConfiguration({
     onSuccess: (response) => {
@@ -28,7 +29,7 @@ export const DuplicateConfiguration = ({ onClose, id, name }: DuplicateConfigura
   const handleConfirm = (name: string) => {
     duplicateConfiguration.mutate({
       path: { uuid: id },
-      body: { name },
+      body: { _rev, name },
     });
   };
 
