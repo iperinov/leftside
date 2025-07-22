@@ -18,6 +18,7 @@ export interface Game {
   gameUUID: string;
   parentUUID: string;
   realSportUUID: string;
+  //regionUUID: string;
   leagueUUID: string;
   idSport: string;
   eventId?: number;

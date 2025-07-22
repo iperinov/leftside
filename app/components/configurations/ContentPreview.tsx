@@ -3,7 +3,8 @@ import type { FilteredGameGroup, Game } from "~/api/ssm/ssm.types";
 import { useContentFiltered } from "~/hooks/useContentFiltered";
 import InfoBanner from "../shared/InfoBanner";
 import LoadingIndicator from "../shared/LoadingIndicator";
-import type { FilterGroup, GroupType, OrderType } from "~/api/sccs/types.gen";
+import type { FilterGroup, FiltersTypeInteger, FiltersTypeString, GroupType, OrderType, TimeString } from "~/api/sccs/types.gen";
+import { isAllFilter } from "../categories/AllItemData";
 
 interface ContentPreviewProps {
   filterGroups: FilterGroup[];
@@ -29,38 +30,48 @@ const getGroupKey = (game: Game, groupBy: GroupType): string[] => {
   }
 };
 
+function toHours(timeString: TimeString): number {
+  switch (timeString) {
+    case "1h": return 1;
+    case "3h": return 3;
+    case "6h": return 6;
+    case "12h": return 12;
+    case "1d": return 24;
+    case "2d": return 48;
+    case "3d": return 72;
+  }
+}
+
 // Use for real-time notifications when it is implemented.
 const matchesFilterGroup = (game: Game, filterGroup: FilterGroup): boolean => {
   return filterGroup.filters.every((filter) => {
-    const values = Array.isArray(filter.value) ? filter.value : [filter.value];
+    if (isAllFilter(filter)) return true;
+
     switch (filter.type) {
       case "sport":
-        return values.includes(game.realSportUUID);
+        return (filter.value as FiltersTypeString).includes(game.realSportUUID);
       case "league":
-        return values.includes(game.leagueUUID);
+        return (filter.value as FiltersTypeString).includes(game.leagueUUID);
       case "market":
         if (game.eventId === null || game.eventId === undefined) {
           return false;
         }
-        return values.includes(String(game.eventId));
+        return (filter.value as FiltersTypeInteger).includes(game.eventId);
       case "period":
         if (game.eventId !== null && game.eventId !== undefined) {
           return false;
         }
-        return values.includes(String(game.periodId));
+        return (filter.value as FiltersTypeInteger).includes(game.periodId);
       // case "region":
-      //   return values.includes(game.regionUUID);
+      //   return (filter.value as FiltersTypeString).includes(game.regionUUID);
       case "game":
-        return values.includes(game.gameUUID);
+        return (filter.value as FiltersTypeString).includes(game.gameUUID);
       case "status":
-        return values.includes(String(game.liveGame));
+        return (filter.value as boolean) === game.liveGame;
       case "time": {
         const now = Date.now();
-        return values.some((v) => {
-          const hours = Number.parseInt(v);
-          if (Number.isNaN(hours)) return false;
-          return new Date(game.startTime).getTime() - now <= hours * 3600000;
-        });
+        const hours = toHours(filter.type as TimeString);
+        return new Date(game.startTime).getTime() - now <= hours * 3600000;
       }
       default:
         return true;
