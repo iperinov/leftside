@@ -8,3 +8,7 @@
 # Testing
 /coverage/
 junit.xml
+
+# OpenAPI clients
+/app/api/ocs/
+/app/api/sccs/
