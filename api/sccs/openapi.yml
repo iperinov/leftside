@@ -499,95 +499,152 @@ components:
       items:
         type: integer
 
+
+       
+    FilterType:
+      oneOf:
+        - $ref: '#/components/schemas/SportFilterType'
+        - $ref: '#/components/schemas/RegionFilterType'
+        - $ref: '#/components/schemas/LeagueFilterType'
+        - $ref: '#/components/schemas/GameFilterType'
+        - $ref: '#/components/schemas/PeriodFilterType'
+        - $ref: '#/components/schemas/MarketFilterType'
+        - $ref: '#/components/schemas/TimeFilterType'
+        - $ref: '#/components/schemas/StatusFilterType'
+
+    AllFilter:
+      type: string
+      enum: [all]
+      x-enumNames: [All]
+      
+    SportFilterType:
+      type: string
+      enum: [sport]
+      x-enumNames: [Sport]
+
     SportFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum: [sport]
-          x-enumNames: [Sport]
+          $ref: '#/components/schemas/SportFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeString'
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/AllFilter'
+
+    RegionFilterType:
+      type: string
+      enum: [region]
+      x-enumNames: [Region]
 
     RegionFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum: [region]
-          x-enumNames: [Region]
+          $ref: '#/components/schemas/RegionFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeString'
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/AllFilter'
+          
+    LeagueFilterType:
+      type: string
+      enum: [league]
+      x-enumNames: [League]
 
     LeagueFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum: [league]
-          x-enumNames: [League]
+          $ref: '#/components/schemas/LeagueFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeString'
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/AllFilter'
+
+    MarketFilterType:
+      type: string
+      enum: [market]
+      x-enumNames: [Market]
 
     MarketFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum: [market]
-          x-enumNames: [Market]
+          $ref: '#/components/schemas/MarketFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeInteger'
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeInteger'
+            - $ref: '#/components/schemas/AllFilter'
+
+    GameFilterType:
+      type: string
+      enum: [game]
+      x-enumNames: [Game]
 
     GameFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum: [game]
-          x-enumNames: [Game]
+          $ref: '#/components/schemas/GameFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeString'
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeString'
+            - $ref: '#/components/schemas/AllFilter'
+
+    PeriodFilterType:
+      type: string
+      enum: [period]
+      x-enumNames: [Period]
 
     PeriodFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum: [period]
-          x-enumNames: [Period]
+          $ref: '#/components/schemas/PeriodFilterType'
         value:
-          $ref: '#/components/schemas/FiltersTypeInteger'
+          oneOf:
+            - $ref: '#/components/schemas/FiltersTypeInteger'
+            - $ref: '#/components/schemas/AllFilter'
+
+    TimeFilterType:
+      type: string
+      enum: [time]
+      x-enumNames: [Time]
 
     TimeFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          type: string
-          enum: [time]
-          x-enumNames: [Time]
+          $ref: '#/components/schemas/TimeFilterType'
         value:
-          type: integer
-          description: "number of hours"
+          oneOf:
+            - type: integer
+              description: "Number of hours"
+            - $ref: '#/components/schemas/AllFilter'
+
+    StatusFilterType:
+      type: string
+      enum: [status]
+      x-enumNames: [Status]
 
     StatusFilter:
       type: object
       required: [type, value]
       properties:
-        type: 
-          type: string
-          enum: [status]
-          x-enumNames: [Status]
+        type:
+          $ref: '#/components/schemas/StatusFilterType' 
         value:
-          type: boolean
-          description: "True for live and false for pregame"
+          oneOf:
+            - type: boolean
+            - $ref: '#/components/schemas/AllFilter'
 
     Filter:
       oneOf:
@@ -623,6 +680,7 @@ components:
         type: string
         minLength: 1
       description: "Possible values: leagueDay, dayLeague, sportDay, sportLeague, dayGame"
+
     
     OrderType:
       type: string
