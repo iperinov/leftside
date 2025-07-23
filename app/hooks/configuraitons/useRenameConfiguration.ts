@@ -1,6 +1,7 @@
 import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 import { renameConfigMutation, renameConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { RenameConfigResponse } from "~/api/sccs/types.gen";
+import { client } from "~/lib/clients/sccs/client";
 
 interface RenameConfigurationProps {
   onError?: (error: DefaultError) => void;
@@ -11,7 +12,7 @@ interface RenameConfigurationProps {
 export function useRenameConfiguration({ onError, onSuccess, onSettled }: RenameConfigurationProps) {
   const queryClient = useQueryClient();
   return useMutation({
-    ...renameConfigMutation(),
+    ...renameConfigMutation({client: client}),
     onSuccess: (data, variables) => {
       const renamed = data as RenameConfigResponse;
       queryClient.invalidateQueries({ queryKey: renameConfigQueryKey(variables) });

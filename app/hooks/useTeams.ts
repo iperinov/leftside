@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getConfigTeamsOptions } from "~/api/ocs/@tanstack/react-query.gen";
 import type { TeamsFullArray } from "~/api/ocs/types.gen";
-import { ocsClient } from "~/lib/clients/ocsClient";
+import { client } from "~/lib/clients/ocs/client";
 import type { Team } from "~/types/sport/types";
 
 function toTeams(data?: TeamsFullArray): Team[] {
@@ -20,7 +20,7 @@ function toTeams(data?: TeamsFullArray): Team[] {
 export const useTeams = () => {
   const result = useQuery({
     ...getConfigTeamsOptions({
-      client: ocsClient,
+      client: client,
       query: { id: [] },
     }),
   });

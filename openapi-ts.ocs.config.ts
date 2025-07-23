@@ -8,5 +8,10 @@ export default defineConfig({
   },
   plugins: [
     '@tanstack/react-query', 
+    '@hey-api/client-fetch',
+    {
+      name: '@hey-api/client-fetch',
+      runtimeConfigPath: './app/lib/clients/ocs/customFetch.ts',
+    },
   ],
 });

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getConfigRealsportsOptions } from "~/api/ocs/@tanstack/react-query.gen";
 import type { RealSportsArray } from "~/api/ocs/types.gen";
-import { ocsClient } from "~/lib/clients/ocsClient";
+import { client } from "~/lib/clients/ocs/client";
 import type { RealSport } from "~/types/sport/types";
 
 function toRealSport(data?: RealSportsArray): RealSport[] {
@@ -22,7 +22,7 @@ function toRealSport(data?: RealSportsArray): RealSport[] {
 export const useRealSports = () => {
   const result = useQuery({
     ...getConfigRealsportsOptions({
-      client: ocsClient,
+      client: client,
     }),
   });
   return { ...result, data: toRealSport(result.data) };

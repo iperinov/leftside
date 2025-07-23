@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getConfigRegionsOptions } from "~/api/ocs/@tanstack/react-query.gen";
 import type { LeagueRegionArray } from "~/api/ocs/types.gen";
-import { ocsClient } from "~/lib/clients/ocsClient";
+import { client } from "~/lib/clients/ocs/client";
 import type { LeagueRegion } from "~/types/sport/types";
 
 function toRegion(data?: LeagueRegionArray): LeagueRegion[] {
@@ -21,7 +21,7 @@ function toRegion(data?: LeagueRegionArray): LeagueRegion[] {
 
 export const useRegions = () => {
   const result = useQuery({
-    ...getConfigRegionsOptions({ client: ocsClient }),
+    ...getConfigRegionsOptions({ client: client }),
   });
   return { ...result, data: toRegion(result.data) };
 };

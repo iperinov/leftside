@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getConfigLeaguesOptions } from "~/api/ocs/@tanstack/react-query.gen";
 import type { LeagueArray } from "~/api/ocs/types.gen";
-import { ocsClient } from "~/lib/clients/ocsClient";
+import { client } from "~/lib/clients/ocs/client";
 import type { League } from "~/types/sport/types";
 
 function toLeague(data?: LeagueArray): League[] {
@@ -25,7 +25,7 @@ function toLeague(data?: LeagueArray): League[] {
 
 export const useLeagues = () => {
   const result = useQuery({
-    ...getConfigLeaguesOptions({ client: ocsClient }),
+    ...getConfigLeaguesOptions({ client: client }),
   });
   return { ...result, data: toLeague(result.data) };
 };

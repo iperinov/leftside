@@ -13,13 +13,9 @@ export default async function getCatalogItems(): Promise<CatalogItem[]> {
   // await new Promise((res) => setTimeout(res, 500));
   // const data = JSON.parse(mockCatalogItemsJson) as CdbViewResponse<CatalogItem>;
 
-  const headers = new Headers();
-  if (auth) {
-    headers.set("Authorization", `Basic ${btoa(`${auth.username}:${auth.password}`)}`);
-  }
   const response = await fetch(url, {
     method: "GET",
-    headers,
+    credentials: 'include', // Ensure cookies are sent if needed
   });
 
   if (!response.ok) {

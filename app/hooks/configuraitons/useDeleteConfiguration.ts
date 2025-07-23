@@ -1,6 +1,7 @@
 import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteConfigMutation, deleteConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { DeleteConfigResponse } from "~/api/sccs/types.gen";
+import { client } from "~/lib/clients/sccs/client";
 
 export interface DeleteConfig {
   uuid: string;
@@ -16,7 +17,7 @@ interface DeleteConfigurationProps {
 export const useDeleteConfiguration = ({ onError, onSuccess, onSettled }: DeleteConfigurationProps) => {
   const queryClient = useQueryClient();
   return useMutation({
-    ...deleteConfigMutation(),
+    ...deleteConfigMutation({client: client}),
     onSuccess: (data, variables) => {
       const created = data as DeleteConfigResponse;
       queryClient.invalidateQueries({ queryKey: deleteConfigQueryKey(variables) });

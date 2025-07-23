@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getConfigEventsOptions } from "~/api/ocs/@tanstack/react-query.gen";
 import type { EventsArray } from "~/api/ocs/types.gen";
-import { ocsClient } from "~/lib/clients/ocsClient";
+import { client } from "~/lib/clients/ocs/client";
 import type { Event } from "~/types/sport/types";
 
 function toEvents(data?: EventsArray): Event[] {
@@ -19,7 +19,7 @@ function toEvents(data?: EventsArray): Event[] {
 
 export const useEvents = () => {
   const result = useQuery({
-    ...getConfigEventsOptions({ client: ocsClient }),
+    ...getConfigEventsOptions({ client: client }),
   });
   return { ...result, data: toEvents(result.data) };
 };
