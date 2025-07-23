@@ -1,10 +1,10 @@
 import { Button, Flex, Separator } from "@radix-ui/themes";
 import { useState } from "react";
-import type { BasicEntity } from "~/types/sport/types";
 import SearchBar from "~/components/SearchBar";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import { CreationStep } from "~/stores/createLeagueStore";
+import type { BasicEntity } from "~/types/sport/types";
 import { SingleSelect } from "../../../shared/SingleSelect";
 
 interface SelectRegionProps {

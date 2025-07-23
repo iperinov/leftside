@@ -8,5 +8,5 @@ export default function Configuration() {
   }
   const location = useLocation();
   const { name, edit } = location.state || {};
-  return <ModifyConfigurationPage uuid={uuid} name={name} edit={edit} />;
+  return <ModifyConfigurationPage uuid={uuid} edit={edit} />;
 }

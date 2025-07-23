@@ -1,4 +1,3 @@
-
 import type { FilterGroup } from "~/api/sccs/types.gen";
 import type TreeItemData from "../../tree/TreeItemData";
 

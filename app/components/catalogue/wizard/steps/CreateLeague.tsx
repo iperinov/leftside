@@ -1,8 +1,8 @@
 import { Box, Checkbox, Flex, Select, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import type { League } from "~/types/sport/types";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { useTakeBackProfile } from "~/hooks/useTakeBackProfile";
+import type { League } from "~/types/sport/types";
 
 export interface CreateLeagueProps {
   handler: (cfg: League) => void;

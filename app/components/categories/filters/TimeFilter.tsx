@@ -8,9 +8,9 @@ export default function TimeFilter({ categoryUUID, filterGroupUUID }: FilterGrou
   const timeFilter = useCategoryTreeStore((state) => state.timeFilter);
   const updateTimeFilters = useCategoryTreeStore((state) => state.updateTimeFilter);
   const statusFilter = useCategoryTreeStore((state) => state.statusFilter);
-  const filterValue = statusFilter(categoryUUID, filterGroupUUID).value
+  const filterValue = statusFilter(categoryUUID, filterGroupUUID).value;
   const isLiveStatusSelected = isAllFilter(filterValue) ? false : (filterValue as boolean);
-  
+
   const choices = useMemo(
     () => [
       allItemString,
@@ -22,7 +22,7 @@ export default function TimeFilter({ categoryUUID, filterGroupUUID }: FilterGrou
       { id: "2d", name: "2 days" },
       { id: "3d", name: "3 days" },
     ],
-    []
+    [],
   );
 
   return (

@@ -1,6 +1,5 @@
 import type { Book } from "~/types/sport/types";
 
-
 export const mockBooks: Book[] = [
   { id: 1, name: "DEFAULT", webColumnId: 1, enabled: true },
   { id: 2, name: "GALAXY", webColumnId: 31, enabled: true },

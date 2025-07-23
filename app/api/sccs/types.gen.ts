@@ -3,8 +3,8 @@
 export type StatusCode = 200 | 400 | 401 | 403 | 404 | 409 | 500 | 503;
 
 export type ResponseOk = {
-    code: StatusCode;
-    description: string;
+  code: StatusCode;
+  description: string;
 };
 
 /**
@@ -42,57 +42,57 @@ export type AuthorizedUsername = Username;
 export type AuthorizedUserPassword = string;
 
 export type Region = {
-    description: string;
-    short: string;
-    preGameDelay: number;
-    liveDelay: number;
-    enabled: boolean;
+  description: string;
+  short: string;
+  preGameDelay: number;
+  liveDelay: number;
+  enabled: boolean;
 };
 
 export type ExistingRegion = {
-    uuid: Uuid;
+  uuid: Uuid;
 };
 
 export type RealSport = {
-    description: string;
-    order: number;
-    enabled: boolean;
+  description: string;
+  order: number;
+  enabled: boolean;
 };
 
 export type ExistingRealSport = {
-    uuid: Uuid;
+  uuid: Uuid;
 };
 
 export type League = {
-    sport: string;
-    description: string;
-    short: string;
-    order: number;
-    teamFkRequired: boolean;
-    takebackProfile?: number;
-    hideForMaster: boolean;
-    enabled: boolean;
+  sport: string;
+  description: string;
+  short: string;
+  order: number;
+  teamFkRequired: boolean;
+  takebackProfile?: number;
+  hideForMaster: boolean;
+  enabled: boolean;
 };
 
 export type Entity = {
-    id: number;
-    uuid: Uuid;
+  id: number;
+  uuid: Uuid;
 };
 
 export type ResponseEntities = {
-    region: Entity;
-    realSport: Entity;
-    league: Entity;
+  region: Entity;
+  realSport: Entity;
+  league: Entity;
 };
 
 export type CreateLeagueRequest = {
-    region: Region | ExistingRegion;
-    realSport: RealSport | ExistingRealSport;
-    league?: League;
+  region: Region | ExistingRegion;
+  realSport: RealSport | ExistingRealSport;
+  league?: League;
 };
 
 export type CreateLeagueResponse = ResponseOk & {
-    entities?: ResponseEntities;
+  entities?: ResponseEntities;
 };
 
 export type FiltersTypeString = Array<string>;
@@ -101,129 +101,145 @@ export type FiltersTypeBool = Array<boolean>;
 
 export type FiltersTypeInteger = Array<number>;
 
-export type FilterType = SportFilterType | RegionFilterType | LeagueFilterType | GameFilterType | PeriodFilterType | MarketFilterType | TimeFilterType | StatusFilterType;
+export type FilterType =
+  | SportFilterType
+  | RegionFilterType
+  | LeagueFilterType
+  | GameFilterType
+  | PeriodFilterType
+  | MarketFilterType
+  | TimeFilterType
+  | StatusFilterType;
 
-export type AllFilter = 'all';
+export type AllFilter = "all";
 
-export type SportFilterType = 'sport';
+export type SportFilterType = "sport";
 
 export type SportFilter = {
-    type: SportFilterType;
-    value: FiltersTypeString | AllFilter;
+  type: SportFilterType;
+  value: FiltersTypeString | AllFilter;
 };
 
-export type RegionFilterType = 'region';
+export type RegionFilterType = "region";
 
 export type RegionFilter = {
-    type: RegionFilterType;
-    value: FiltersTypeString | AllFilter;
+  type: RegionFilterType;
+  value: FiltersTypeString | AllFilter;
 };
 
-export type LeagueFilterType = 'league';
+export type LeagueFilterType = "league";
 
 export type LeagueFilter = {
-    type: LeagueFilterType;
-    value: FiltersTypeString | AllFilter;
+  type: LeagueFilterType;
+  value: FiltersTypeString | AllFilter;
 };
 
-export type MarketFilterType = 'market';
+export type MarketFilterType = "market";
 
 export type MarketFilter = {
-    type: MarketFilterType;
-    value: FiltersTypeInteger | AllFilter;
+  type: MarketFilterType;
+  value: FiltersTypeInteger | AllFilter;
 };
 
-export type GameFilterType = 'game';
+export type GameFilterType = "game";
 
 export type GameFilter = {
-    type: GameFilterType;
-    value: FiltersTypeString | AllFilter;
+  type: GameFilterType;
+  value: FiltersTypeString | AllFilter;
 };
 
-export type PeriodFilterType = 'period';
+export type PeriodFilterType = "period";
 
 export type PeriodFilter = {
-    type: PeriodFilterType;
-    value: FiltersTypeInteger | AllFilter;
+  type: PeriodFilterType;
+  value: FiltersTypeInteger | AllFilter;
 };
 
-export type TimeString = '1h' | '3h' | '6h' | '12h' | '1d' | '2d' | '3d';
+export type TimeString = "1h" | "3h" | "6h" | "12h" | "1d" | "2d" | "3d";
 
-export type TimeFilterType = 'time';
+export type TimeFilterType = "time";
 
 export type TimeFilter = {
-    type: TimeFilterType;
-    value: TimeString | AllFilter;
+  type: TimeFilterType;
+  value: TimeString | AllFilter;
 };
 
-export type StatusFilterType = 'status';
+export type StatusFilterType = "status";
 
 export type StatusFilter = {
-    type: StatusFilterType;
-    value: boolean | AllFilter;
+  type: StatusFilterType;
+  value: boolean | AllFilter;
 };
 
-export type Filter = ({
-    type: 'sport';
-} & SportFilter) | ({
-    type: 'region';
-} & RegionFilter) | ({
-    type: 'league';
-} & LeagueFilter) | ({
-    type: 'game';
-} & GameFilter) | ({
-    type: 'period';
-} & PeriodFilter) | ({
-    type: 'market';
-} & MarketFilter) | ({
-    type: 'time';
-} & TimeFilter) | ({
-    type: 'status';
-} & StatusFilter);
+export type Filter =
+  | ({
+      type: "sport";
+    } & SportFilter)
+  | ({
+      type: "region";
+    } & RegionFilter)
+  | ({
+      type: "league";
+    } & LeagueFilter)
+  | ({
+      type: "game";
+    } & GameFilter)
+  | ({
+      type: "period";
+    } & PeriodFilter)
+  | ({
+      type: "market";
+    } & MarketFilter)
+  | ({
+      type: "time";
+    } & TimeFilter)
+  | ({
+      type: "status";
+    } & StatusFilter);
 
 export type Filters = Array<Filter>;
 
-export type GroupType = 'leagueDay' | 'dayLeague' | 'sportDay' | 'sportLeague' | 'dayGame';
+export type GroupType = "leagueDay" | "dayLeague" | "sportDay" | "sportLeague" | "dayGame";
 
-export type OrderType = 'asc' | 'desc';
+export type OrderType = "asc" | "desc";
 
 export type FilterGroup = {
-    uuid?: Uuid;
-    filters: Filters;
-    groupBy: GroupType;
-    order: OrderType;
-    /**
-     * 0 means unlimited
-     */
-    limit?: number;
+  uuid?: Uuid;
+  filters: Filters;
+  groupBy: GroupType;
+  order: OrderType;
+  /**
+   * 0 means unlimited
+   */
+  limit?: number;
 };
 
-export type CategoryType = 'flat' | 'nested';
+export type CategoryType = "flat" | "nested";
 
 export type Category = {
-    uuid?: Uuid;
-    /**
-     * Display name
-     */
-    name: string;
-    type: CategoryType;
-    filterGroups?: Array<FilterGroup>;
-    children?: Categories;
+  uuid?: Uuid;
+  /**
+   * Display name
+   */
+  name: string;
+  type: CategoryType;
+  filterGroups?: Array<FilterGroup>;
+  children?: Categories;
 };
 
 export type Categories = Array<Category>;
 
 export type ConfigName = {
-    name: string;
+  name: string;
 };
 
 export type Config = {
-    uuid: Uuid;
-    _rev: Revision;
-    name: string;
-    categories: Categories;
-    lmt: UnixTimestamp;
-    lmu: Username;
+  uuid: Uuid;
+  _rev: Revision;
+  name: string;
+  categories: Categories;
+  lmt: UnixTimestamp;
+  lmu: Username;
 };
 
 export type CreateConfigRequest = ConfigName;
@@ -231,51 +247,51 @@ export type CreateConfigRequest = ConfigName;
 export type UpdateConfigRequest = Config;
 
 export type DeleteConfigRequest = {
-    _rev: Revision;
+  _rev: Revision;
 };
 
 export type RenameConfigRequest = {
-    _rev: Revision;
-    name: string;
+  _rev: Revision;
+  name: string;
 };
 
 export type DuplicateConfigRequest = {
-    _rev: Revision;
-    name: string;
+  _rev: Revision;
+  name: string;
 };
 
 export type CreateConfigResponse = ResponseOk & {
-    uuid: Uuid;
-    _rev: Revision;
+  uuid: Uuid;
+  _rev: Revision;
 };
 
 export type UpdateConfigResponse = ResponseOk & {
-    _rev: Revision;
+  _rev: Revision;
 };
 
 export type DeleteConfigResponse = ResponseOk;
 
 export type RenameConfigResponse = ResponseOk & {
-    _rev: Revision;
+  _rev: Revision;
 };
 
 export type DuplicateConfigResponse = ResponseOk & {
-    uuid: Uuid;
-    _rev: Revision;
-    name: string;
+  uuid: Uuid;
+  _rev: Revision;
+  name: string;
 };
 
 export type Book = {
-    id: number;
-    _rev: Revision;
-    config: Uuid;
+  id: number;
+  _rev: Revision;
+  config: Uuid;
 };
 
 export type Books = Array<Book>;
 
 export type BookRev = {
-    id: number;
-    _rev: Revision;
+  id: number;
+  _rev: Revision;
 };
 
 export type BookRevs = Array<BookRev>;
@@ -283,164 +299,164 @@ export type BookRevs = Array<BookRev>;
 export type AssignBooksRequest = Books;
 
 export type AssignBooksResponse = ResponseOk & {
-    revs?: BookRevs;
+  revs?: BookRevs;
 };
 
 export type LoginData = {
-    body: {
-        username: Username;
-        password: AuthorizedUserPassword;
-    };
-    path?: never;
-    query?: never;
-    url: '/sccs/auth/login';
+  body: {
+    username: Username;
+    password: AuthorizedUserPassword;
+  };
+  path?: never;
+  query?: never;
+  url: "/sccs/auth/login";
 };
 
 export type LoginResponses = {
-    /**
-     * Response
-     */
-    200: ResponseOk;
+  /**
+   * Response
+   */
+  200: ResponseOk;
 };
 
 export type LoginResponse = LoginResponses[keyof LoginResponses];
 
 export type LogoutData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/sccs/auth/logout';
+  body?: never;
+  path?: never;
+  query?: never;
+  url: "/sccs/auth/logout";
 };
 
 export type LogoutResponses = {
-    /**
-     * OK. Sets session cookie (SCS_SESSION_ID) in response.
-     */
-    200: ResponseOk;
+  /**
+   * OK. Sets session cookie (SCS_SESSION_ID) in response.
+   */
+  200: ResponseOk;
 };
 
 export type LogoutResponse = LogoutResponses[keyof LogoutResponses];
 
 export type CreateLeagueData = {
-    body: CreateLeagueRequest;
-    path?: never;
-    query?: never;
-    url: '/sccs/catalog/entity/create';
+  body: CreateLeagueRequest;
+  path?: never;
+  query?: never;
+  url: "/sccs/catalog/entity/create";
 };
 
 export type CreateLeagueResponses = {
-    /**
-     * OK. League was created.
-     */
-    200: CreateLeagueResponse | ResponseOk;
+  /**
+   * OK. League was created.
+   */
+  200: CreateLeagueResponse | ResponseOk;
 };
 
 export type CreateLeagueResponse2 = CreateLeagueResponses[keyof CreateLeagueResponses];
 
 export type CreateConfigData = {
-    body: ConfigName;
-    path?: never;
-    query?: never;
-    url: '/sccs/config';
+  body: ConfigName;
+  path?: never;
+  query?: never;
+  url: "/sccs/config";
 };
 
 export type CreateConfigResponses = {
-    /**
-     * OK. Config was created.
-     */
-    200: CreateConfigResponse | ResponseOk;
+  /**
+   * OK. Config was created.
+   */
+  200: CreateConfigResponse | ResponseOk;
 };
 
 export type CreateConfigResponse2 = CreateConfigResponses[keyof CreateConfigResponses];
 
 export type UpdateConfigData = {
-    body: Config;
-    path: {
-        uuid: Uuid;
-    };
-    query?: never;
-    url: '/sccs/config/{uuid}';
+  body: Config;
+  path: {
+    uuid: Uuid;
+  };
+  query?: never;
+  url: "/sccs/config/{uuid}";
 };
 
 export type UpdateConfigResponses = {
-    /**
-     * OK. Configuration was updated.
-     */
-    200: UpdateConfigResponse | ResponseOk;
+  /**
+   * OK. Configuration was updated.
+   */
+  200: UpdateConfigResponse | ResponseOk;
 };
 
 export type UpdateConfigResponse2 = UpdateConfigResponses[keyof UpdateConfigResponses];
 
 export type RenameConfigData = {
-    body: RenameConfigRequest;
-    path: {
-        uuid: Uuid;
-    };
-    query?: never;
-    url: '/sccs/config/{uuid}/rename';
+  body: RenameConfigRequest;
+  path: {
+    uuid: Uuid;
+  };
+  query?: never;
+  url: "/sccs/config/{uuid}/rename";
 };
 
 export type RenameConfigResponses = {
-    /**
-     * OK. Configuration was renamed.
-     */
-    200: RenameConfigResponse | ResponseOk;
+  /**
+   * OK. Configuration was renamed.
+   */
+  200: RenameConfigResponse | ResponseOk;
 };
 
 export type RenameConfigResponse2 = RenameConfigResponses[keyof RenameConfigResponses];
 
 export type DeleteConfigData = {
-    body: DeleteConfigRequest;
-    path: {
-        uuid: Uuid;
-    };
-    query?: never;
-    url: '/sccs/config/{uuid}/delete';
+  body: DeleteConfigRequest;
+  path: {
+    uuid: Uuid;
+  };
+  query?: never;
+  url: "/sccs/config/{uuid}/delete";
 };
 
 export type DeleteConfigResponses = {
-    /**
-     * OK. Configuration was deleted.
-     */
-    200: ResponseOk;
+  /**
+   * OK. Configuration was deleted.
+   */
+  200: ResponseOk;
 };
 
 export type DeleteConfigResponse2 = DeleteConfigResponses[keyof DeleteConfigResponses];
 
 export type DuplicateConfigData = {
-    body: DuplicateConfigRequest;
-    path: {
-        uuid: Uuid;
-    };
-    query?: never;
-    url: '/sccs/config/{uuid}/duplicate';
+  body: DuplicateConfigRequest;
+  path: {
+    uuid: Uuid;
+  };
+  query?: never;
+  url: "/sccs/config/{uuid}/duplicate";
 };
 
 export type DuplicateConfigResponses = {
-    /**
-     * OK. Configuration duplicated.
-     */
-    200: DuplicateConfigResponse | ResponseOk;
+  /**
+   * OK. Configuration duplicated.
+   */
+  200: DuplicateConfigResponse | ResponseOk;
 };
 
 export type DuplicateConfigResponse2 = DuplicateConfigResponses[keyof DuplicateConfigResponses];
 
 export type AssignBooksData = {
-    body: Books;
-    path?: never;
-    query?: never;
-    url: '/sccs/books/assign';
+  body: Books;
+  path?: never;
+  query?: never;
+  url: "/sccs/books/assign";
 };
 
 export type AssignBooksResponses = {
-    /**
-     * OK. Books assigned.
-     */
-    200: AssignBooksResponse | ResponseOk;
+  /**
+   * OK. Books assigned.
+   */
+  200: AssignBooksResponse | ResponseOk;
 };
 
 export type AssignBooksResponse2 = AssignBooksResponses[keyof AssignBooksResponses];
 
 export type ClientOptions = {
-    baseUrl: `${string}://${string}` | (string & {});
+  baseUrl: `${string}://${string}` | (string & {});
 };

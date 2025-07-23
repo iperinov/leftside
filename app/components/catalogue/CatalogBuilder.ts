@@ -1,5 +1,5 @@
-import type { BasicEntity } from "~/types/sport/types";
 import type { Catalog, LeagueCatalogItem, RegionCatalogItem, SportCatalogItem } from "~/types/catalog/Catalog";
+import type { BasicEntity } from "~/types/sport/types";
 import type TreeItemData from "../tree/TreeItemData";
 
 export interface CatalogueNode extends TreeItemData<CatalogueNode> {}

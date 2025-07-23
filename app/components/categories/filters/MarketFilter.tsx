@@ -1,13 +1,13 @@
-import type { Event } from "~/types/sport/types";
+import type { FiltersTypeString } from "~/api/sccs/types.gen";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import useFilteredMarketsBy from "~/hooks/useFilteredMarketsBy";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
+import type { Event } from "~/types/sport/types";
+import { allItemNumber, isAllFilter } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import styles from "./Filters.module.css";
 import MultiSelectionFilter from "./MultiSelectionFilter";
-import { allItemNumber, isAllFilter } from "../AllItemData";
-import type { FiltersTypeString } from "~/api/sccs/types.gen";
 
 interface MarketFilterProps {
   onChange?: (selectedIDs: number[]) => void;
@@ -28,8 +28,8 @@ export default function MarketFilter({ categoryUUID, filterGroupUUID, onChange }
   const sportFilter = sportFilters(categoryUUID, filterGroupUUID);
   const leagueFilter = leagueFilters(categoryUUID, filterGroupUUID);
   const { data: markets, isLoading, error } = useFilteredMarketsBy(sportFilter, leagueFilter);
-  const filterValue = marketFilters(categoryUUID, filterGroupUUID).value
-  const selections = isAllFilter(filterValue) ? [allItemNumber.id] : filterValue as number[];
+  const filterValue = marketFilters(categoryUUID, filterGroupUUID).value;
+  const selections = isAllFilter(filterValue) ? [allItemNumber.id] : (filterValue as number[]);
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>

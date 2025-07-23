@@ -1,10 +1,9 @@
-
 import { useState } from "react";
+import { toast } from "sonner";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
 import { useRenameConfiguration } from "../../hooks/configuraitons/useRenameConfiguration";
 import EditNameDialog from "../dialogs/EditNameDialog";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
-import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
-import { toast } from "sonner";
 
 interface RenameConfigurationProps {
   onClose: () => void;

@@ -1,6 +1,6 @@
 import { Flex, Text, TextField } from "@radix-ui/themes";
-import type ClassNameProps from "../shared/ClassNameProps";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import type ClassNameProps from "../shared/ClassNameProps";
 
 interface ConfigurationHeaderProps {
   edit: boolean;

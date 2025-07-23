@@ -8,7 +8,7 @@ export default function StatusFilter(props: FilterGroupProps) {
   const statusFilter = useCategoryTreeStore((state) => state.statusFilter);
   const updateStatusFilters = useCategoryTreeStore((state) => state.updateStatusFilter);
   const choices = useMemo(() => [allItemNumber, { id: 0, name: "Pregame" }, { id: 1, name: "Live" }], []);
-  const filterValue = statusFilter(props.categoryUUID, props.filterGroupUUID).value
+  const filterValue = statusFilter(props.categoryUUID, props.filterGroupUUID).value;
   const selection = isAllFilter(filterValue) ? allItemNumber.id : (filterValue as boolean) ? 1 : 0;
 
   return (
@@ -18,7 +18,9 @@ export default function StatusFilter(props: FilterGroupProps) {
       title={"Select Status"}
       items={choices}
       selection={selection}
-      updateFilterSelection={(categoryUUID, filterGroupUUID, selection) => updateStatusFilters(categoryUUID, filterGroupUUID, selection === allItemNumber.id ? allFilter : selection === 1)}
+      updateFilterSelection={(categoryUUID, filterGroupUUID, selection) =>
+        updateStatusFilters(categoryUUID, filterGroupUUID, selection === allItemNumber.id ? allFilter : selection === 1)
+      }
       {...props}
     />
   );

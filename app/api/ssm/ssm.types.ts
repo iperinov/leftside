@@ -1,6 +1,5 @@
 import type { FilterGroup } from "../sccs/types.gen";
 
-
 export interface Contender {
   id: number;
   name: string;

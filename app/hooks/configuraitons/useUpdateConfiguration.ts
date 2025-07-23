@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient, type DefaultError } from "@tanstack/react-query";
-import type { UpdateConfigResponse } from "~/api/sccs/types.gen";
+import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateConfigMutation, updateConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
+import type { UpdateConfigResponse } from "~/api/sccs/types.gen";
 
 interface UpdateConfigurationProps {
   onError?: (error: DefaultError) => void;
@@ -24,4 +24,4 @@ export function useUpdateConfiguration({ onError, onSuccess, onSettled }: Update
       onSettled?.();
     },
   });
-};
+}

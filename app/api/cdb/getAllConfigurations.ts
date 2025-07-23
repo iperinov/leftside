@@ -1,8 +1,7 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import type { CdbViewResponse, Configuration } from "./cdb.types";
-import type { Config } from "../sccs/types.gen";
 import { mockConfigurationsJson } from "../mock/cbd/mockConfigurations";
-
+import type { Config } from "../sccs/types.gen";
+import type { CdbViewResponse, Configuration } from "./cdb.types";
 
 export default async function getAllConfigurations(): Promise<Config[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;
@@ -12,22 +11,22 @@ export default async function getAllConfigurations(): Promise<Config[]> {
   console.log("getLeagues: ", cdbUrl, url);
 
   // MOCK:
-  await new Promise((res) => setTimeout(res, 500));
-  const data = JSON.parse(mockConfigurationsJson) as CdbViewResponse<Config>;
+  // await new Promise((res) => setTimeout(res, 500));
+  // const data = JSON.parse(mockConfigurationsJson) as CdbViewResponse<Config>;
 
-  // const headers = new Headers();
-  // if (auth) {
-  //   hheaders.set("Authorization", `Basic ${btoa(`${auth.username}:${auth.password}`)}`);
-  // }
-  // const response = await fetch(url, {
-  //   method: "GET",
-  //   headers,
-  // });
+  const headers = new Headers();
+  if (auth) {
+    headers.set("Authorization", `Basic ${btoa(`${auth.username}:${auth.password}`)}`);
+  }
+  const response = await fetch(url, {
+    method: "GET",
+    headers,
+  });
 
-  // if (!response.ok) {
-  //   throw new Error("Failed to fetch catalog items");
-  // }
-  //const data: CbdViewResponse<Configuration> = await response.json();
+  if (!response.ok) {
+    throw new Error("Failed to fetch catalog items");
+  }
+  const data: CdbViewResponse<Config> = await response.json();
 
   return data.rows.map((item) => item.value);
 }

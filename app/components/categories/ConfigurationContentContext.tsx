@@ -1,10 +1,10 @@
 import { Box, Flex } from "@radix-ui/themes";
 import { useState } from "react";
+import type { FilterGroup } from "~/api/sccs/types.gen";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import AssignedBooks from "../configurations/AssignedBooks";
 import ContentPreview from "../configurations/ContentPreview";
 import type ClassNameProps from "../shared/ClassNameProps";
-import type { FilterGroup } from "~/api/sccs/types.gen";
 
 interface ConfigurationContentContextProps {
   categoryID: string;

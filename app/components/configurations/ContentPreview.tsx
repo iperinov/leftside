@@ -1,10 +1,10 @@
 import { Box, Text } from "@radix-ui/themes";
+import type { FilterGroup, FiltersTypeInteger, FiltersTypeString, GroupType, OrderType, TimeString } from "~/api/sccs/types.gen";
 import type { FilteredGameGroup, Game } from "~/api/ssm/ssm.types";
 import { useContentFiltered } from "~/hooks/useContentFiltered";
+import { isAllFilter } from "../categories/AllItemData";
 import InfoBanner from "../shared/InfoBanner";
 import LoadingIndicator from "../shared/LoadingIndicator";
-import type { FilterGroup, FiltersTypeInteger, FiltersTypeString, GroupType, OrderType, TimeString } from "~/api/sccs/types.gen";
-import { isAllFilter } from "../categories/AllItemData";
 
 interface ContentPreviewProps {
   filterGroups: FilterGroup[];
@@ -32,13 +32,20 @@ const getGroupKey = (game: Game, groupBy: GroupType): string[] => {
 
 function toHours(timeString: TimeString): number {
   switch (timeString) {
-    case "1h": return 1;
-    case "3h": return 3;
-    case "6h": return 6;
-    case "12h": return 12;
-    case "1d": return 24;
-    case "2d": return 48;
-    case "3d": return 72;
+    case "1h":
+      return 1;
+    case "3h":
+      return 3;
+    case "6h":
+      return 6;
+    case "12h":
+      return 12;
+    case "1d":
+      return 24;
+    case "2d":
+      return 48;
+    case "3d":
+      return 72;
   }
 }
 

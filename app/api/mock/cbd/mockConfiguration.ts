@@ -1,5 +1,3 @@
-
-
 export const mockConfigurationCategoriesJson = `{
   "total_rows": 1,
   "offset": 0,

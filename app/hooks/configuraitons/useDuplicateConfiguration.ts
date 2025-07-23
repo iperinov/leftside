@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient, type DefaultError } from "@tanstack/react-query";
+import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 import { duplicateConfigMutation, duplicateConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { DuplicateConfigResponse } from "~/api/sccs/types.gen";
 
@@ -24,4 +24,4 @@ export function useDuplicateConfiguration({ onError, onSuccess, onSettled }: Dup
       onSettled?.();
     },
   });
-};
+}

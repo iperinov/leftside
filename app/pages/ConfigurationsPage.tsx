@@ -10,9 +10,9 @@ import { RenameConfiguration } from "../components/configurations/RenameConfigur
 export default function ConfigurationsPage() {
   const navigate = useNavigate();
   const [createAction, setCreateAction] = useState(false);
-  const [renameAction, setRenameAction] = useState<{ id: string, _rev: string, name: string }>();
-  const [duplicateAction, setDuplicateAction] = useState<{ id: string, _rev: string, name: string }>();
-  const [deleteAction, setDeleteAction] = useState<{ id: string, _rev: string, name: string }>();
+  const [renameAction, setRenameAction] = useState<{ id: string; _rev: string; name: string }>();
+  const [duplicateAction, setDuplicateAction] = useState<{ id: string; _rev: string; name: string }>();
+  const [deleteAction, setDeleteAction] = useState<{ id: string; _rev: string; name: string }>();
 
   return (
     <>

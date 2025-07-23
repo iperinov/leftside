@@ -1,8 +1,8 @@
+import type { LeagueFilter, SportFilter } from "~/api/sccs/types.gen";
 import { isAllFilter } from "~/components/categories/AllItemData";
 import { useCatalog } from "./catalog/useCatalog";
 import { useEvents } from "./useEvents";
 import { useLeagueByEvent } from "./useLeagueByEvent";
-import type { LeagueFilter, SportFilter } from "~/api/sccs/types.gen";
 
 export default function useFilteredMarketsBy(sportFilter: SportFilter, leagueFilter: LeagueFilter) {
   const { data: events, isLoading: isLoadingEvents, error: errorEvents } = useEvents();

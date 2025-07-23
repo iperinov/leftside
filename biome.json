@@ -20,7 +20,8 @@
   "files" : {
     "ignore": [
       "app/styles/awesome/",
-      "app/api/sccs/"
+      "app/api/ocs",
+      "app/api/sccs"
     ]
   }
 }

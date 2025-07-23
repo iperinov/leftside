@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import type { CreateConfigResponse } from "~/api/sccs/types.gen";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
 import { useCreateConfiguration } from "~/hooks/configuraitons/useCreateConfiguration";
 import EditNameDialog from "../dialogs/EditNameDialog";
-import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
 
 export interface CreateConfigurationProps {

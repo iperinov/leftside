@@ -1,4 +1,3 @@
-
 export const mockCatalogItemsJson = `
 {
   "total_rows": 519,

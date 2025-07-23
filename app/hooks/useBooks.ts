@@ -4,6 +4,6 @@ import { ocsClient } from "~/lib/clients/ocsClient";
 
 export const useBooks = () => {
   return useQuery({
-    ...getConfigBooksOptions({client: ocsClient}),
+    ...getConfigBooksOptions({ client: ocsClient }),
   });
 };

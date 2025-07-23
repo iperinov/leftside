@@ -6,10 +6,10 @@ import type {
   Config,
   Filter,
   FilterGroup,
+  FilterType,
   FiltersTypeBool,
   FiltersTypeInteger,
   FiltersTypeString,
-  FilterType,
   GameFilter,
   GroupType,
   LeagueFilter,
@@ -28,7 +28,7 @@ import { findItem, findItemParent, findItemSiblings, findItemTrail } from "~/com
 import iterateItem from "~/components/tree/common/iterateItem";
 
 interface CategoryTreeState {
-  configuration: Config
+  configuration: Config;
   rootCategory: CategoryTreeItem;
 }
 
@@ -48,7 +48,7 @@ interface CategoryTreeGetters {
   filter: (
     categoryUUID: string,
     filterGroupUUID: string,
-    type: FilterType
+    type: FilterType,
   ) => SportFilter | RegionFilter | GameFilter | LeagueFilter | PeriodFilter | MarketFilter | StatusFilter | TimeFilter;
   sportFilters: (categoryUUID: string, filterGroupUUID: string) => SportFilter;
   leagueFilters: (categoryUUID: string, filterGroupUUID: string) => LeagueFilter;
@@ -73,7 +73,12 @@ interface CategoryTreeMutations {
   duplicateFilterGroup: (categoryUUID: string, groupUUID: string) => boolean;
   moveFilterGroupTo: (categoryUUID: string, groupUUID: string, moveOnPlaceOfGroupUUID: string) => boolean;
 
-  updateFilters: <S extends FiltersTypeString | FiltersTypeInteger | TimeString | boolean | AllFilter, F extends Filter>(categoryUUID: string, filterGroupUUID: string, type: FilterType, selected: S) => void;
+  updateFilters: <S extends FiltersTypeString | FiltersTypeInteger | TimeString | boolean | AllFilter, F extends Filter>(
+    categoryUUID: string,
+    filterGroupUUID: string,
+    type: FilterType,
+    selected: S,
+  ) => void;
   updateSportsFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[] | AllFilter) => void;
   updateLeaguesFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[] | AllFilter) => void;
   updateMarketsFilter: (categoryUUID: string, filterGroupUUID: string, selected: number[] | AllFilter) => void;
@@ -278,7 +283,12 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     return true;
   },
 
-  updateFilters: <S extends FiltersTypeString | FiltersTypeInteger | TimeString | boolean | AllFilter, F extends Filter>(categoryUUID: string, filterGroupUUID: string, type: FilterType, selected: S) => {
+  updateFilters: <S extends FiltersTypeString | FiltersTypeInteger | TimeString | boolean | AllFilter, F extends Filter>(
+    categoryUUID: string,
+    filterGroupUUID: string,
+    type: FilterType,
+    selected: S,
+  ) => {
     const rootCategory = structuredClone(get().rootCategory);
     const category = findItem(categoryUUID, rootCategory);
     if (!category) return;
@@ -286,7 +296,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     if (!filterGroup) return;
 
     const existingFilter = filterGroup.filters.find((filter) => filter.type === type);
-    const isAllFilter = 
+    const isAllFilter =
       (selected as FiltersTypeString).find((item) => item === allItemString.id) ||
       (selected as FiltersTypeInteger).find((item) => item === allItemNumber.id) ||
       selected === allItemString.id;

@@ -1,8 +1,8 @@
-import { useDuplicateConfiguration } from "../../hooks/configuraitons/useDuplicateConfiguration";
-import LoadDataDecorator from "../loading/LoadDataDecorator";
-import EditNameDialog from "../dialogs/EditNameDialog";
-import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
 import { toast } from "sonner";
+import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
+import { useDuplicateConfiguration } from "../../hooks/configuraitons/useDuplicateConfiguration";
+import EditNameDialog from "../dialogs/EditNameDialog";
+import LoadDataDecorator from "../loading/LoadDataDecorator";
 
 export interface DuplicateConfigurationProps {
   onClose: () => void;

@@ -1,10 +1,10 @@
 import { useMemo } from "react";
+import type { FiltersTypeInteger, FiltersTypeString, MarketFilter, SportFilter } from "~/api/sccs/types.gen";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
 import { isAllFilter } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
-import type { FiltersTypeInteger, FiltersTypeString, MarketFilter, SportFilter } from "~/api/sccs/types.gen";
 
 function generateChoices(sportFilter: SportFilter, marketFilter: MarketFilter): ItemData<string>[] {
   const isAllMarketsSelected = isAllFilter(marketFilter);
@@ -12,7 +12,7 @@ function generateChoices(sportFilter: SportFilter, marketFilter: MarketFilter): 
 
   const isAllSportsSelected = isAllFilter(sportFilter);
   const sportsSelected = isAllSportsSelected ? -1 : (sportFilter.value as FiltersTypeString).length;
-  
+
   switch (true) {
     case !isAllSportsSelected && sportsSelected === 1 && marketsSelected === 0:
       return [
@@ -25,7 +25,7 @@ function generateChoices(sportFilter: SportFilter, marketFilter: MarketFilter): 
         { id: "sportDay", name: "Sport/Day" },
       ];
     default: //case sportsSelected > 0 && marketsSelected > 0
-      return [{ id: "dayGame", name: "Day/Game" }];;
+      return [{ id: "dayGame", name: "Day/Game" }];
   }
 }
 
@@ -39,7 +39,7 @@ export default function GroupByFilter(props: FilterGroupProps) {
   const sportsFilter = sportFilters(categoryUUID, filterGroupUUID);
   const marketsFilter = marketFilters(categoryUUID, filterGroupUUID);
   const choices = useMemo(() => generateChoices(sportsFilter, marketsFilter), [sportsFilter, marketsFilter]);
-  
+
   return (
     <SingleSelectionFilter
       keyStr={"groupBy"}

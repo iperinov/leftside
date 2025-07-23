@@ -5,19 +5,24 @@ import { ocsClient } from "~/lib/clients/ocsClient";
 import type { LeagueByEvent } from "~/types/sport/types";
 
 function toLeagueByEvent(data?: LeagueByEventArray): LeagueByEvent[] {
-  return data?.map(item => ({
-      id: item.eid,
-      leagueId: item.lid,
-      leagueUUID: item.luuid,
-      realSportId: item.rsid,
-      realSportUUID: item.rsuuid,
-      gameTypeId: item.gtid,
-  } as LeagueByEvent)) || [];
+  return (
+    data?.map(
+      (item) =>
+        ({
+          id: item.eid,
+          leagueId: item.lid,
+          leagueUUID: item.luuid,
+          realSportId: item.rsid,
+          realSportUUID: item.rsuuid,
+          gameTypeId: item.gtid,
+        }) as LeagueByEvent,
+    ) || []
+  );
 }
 
 export const useLeagueByEvent = () => {
   const result = useQuery({
-    ...getConfigLeaguesByEventsOptions({client: ocsClient}),
+    ...getConfigLeaguesByEventsOptions({ client: ocsClient }),
   });
-  return {...result, data: toLeagueByEvent(result.data)};
+  return { ...result, data: toLeagueByEvent(result.data) };
 };

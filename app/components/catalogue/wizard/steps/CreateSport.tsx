@@ -1,7 +1,7 @@
 import { Checkbox, Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import type { RealSport } from "~/types/sport/types";
 import { BaseDialog } from "~/components/shared/BaseDialog";
+import type { RealSport } from "~/types/sport/types";
 
 export interface CreateSportProps {
   handler: (cfg: RealSport) => void;

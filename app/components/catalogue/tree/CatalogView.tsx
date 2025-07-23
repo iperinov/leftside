@@ -1,9 +1,9 @@
 import { Box, Flex, ScrollArea, Separator } from "@radix-ui/themes";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import type { RenameLeagueApiIn, RenameLeagueRegionApiIn, RenameRealSportApiIn } from "~/types/sport/types";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import type { CreateLeagueRequest } from "~/stores/createLeagueStore";
+import type { RenameLeagueApiIn, RenameLeagueRegionApiIn, RenameRealSportApiIn } from "~/types/sport/types";
 import SearchBar from "../../SearchBar";
 import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import Tree from "../../tree/Tree";

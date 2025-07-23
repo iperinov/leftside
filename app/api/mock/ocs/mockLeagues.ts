@@ -1,6 +1,5 @@
 import type { League } from "~/types/sport/types";
 
-
 export const mockLeagues: League[] = [
   {
     id: 16535,

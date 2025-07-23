@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
+import type { FilterGroup } from "~/api/sccs/types.gen";
 import { TemplateType } from "~/components/categories/TemplateType";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type CategoryTreeItem from "../tree/CategoryTreeItem";
 import AddNewCategoryDialog from "./AddNewCategoryDialog";
-import type { FilterGroup } from "~/api/sccs/types.gen";
 
 interface AddNewCategoryProps {
   parentUUID: string;

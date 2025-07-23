@@ -1,4 +1,3 @@
-
 import type { Event } from "~/types/sport/types";
 
 export const mockEvents: Event[] = [

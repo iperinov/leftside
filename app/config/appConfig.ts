@@ -39,7 +39,7 @@ export interface AppConfig {
 
 export const defaultAppConfig: AppConfig = {
   sccs: {
-    baseUrl: import.meta.env.VITE_SCS_BASE_URL || "http://localhost:3000",
+    baseUrl: import.meta.env.VITE_SCS_BASE_URL || "http://sccs-integ.im.priv/",
     timeout: 10000,
   },
   ocs: {

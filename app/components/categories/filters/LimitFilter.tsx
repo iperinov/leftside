@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
+import { allItemNumber } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
-import { allItemNumber } from "../AllItemData";
 
 export default function LimitFilter(props: FilterGroupProps) {
   const limitFilter = useCategoryTreeStore((state) => state.limitFilter);

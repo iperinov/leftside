@@ -1,7 +1,7 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
+import { mockConfigurationCategoriesJson } from "../mock/cbd/mockConfiguration";
 import type { Config } from "../sccs/types.gen";
 import type { CdbViewResponse } from "./cdb.types";
-import { mockConfigurationCategoriesJson } from "../mock/cbd/mockConfiguration";
 
 export const getConfiguration = async (configID: string): Promise<Config> => {
   const cdbUrl = getAppConfig().cdb.baseUrl;
@@ -11,22 +11,22 @@ export const getConfiguration = async (configID: string): Promise<Config> => {
   console.log("getCategories: ", cdbUrl, url);
 
   // MOCK:
-  await new Promise((res) => setTimeout(res, 500));
-  const data = JSON.parse(mockConfigurationCategoriesJson) as CdbViewResponse<Config>;
-  
-  // const headers = new Headers();
-  // if (auth) {
-  //   headers.set("Authorization", `Basic ${btoa(`${auth.username}:${auth.password}`)}`);
-  // }
-  // const response = await fetch(url, {
-  //   method: "GET",
-  //   headers,
-  // });
+  // await new Promise((res) => setTimeout(res, 500));
+  // const data = JSON.parse(mockConfigurationCategoriesJson) as CdbViewResponse<Config>;
 
-  // if (!response.ok) {
-  //   throw new Error("Failed to fetch catalog items");
-  // }
-  // const data: CdbViewResponse<CatalogItem> = await response.json();
-  
+  const headers = new Headers();
+  if (auth) {
+    headers.set("Authorization", `Basic ${btoa(`${auth.username}:${auth.password}`)}`);
+  }
+  const response = await fetch(url, {
+    method: "GET",
+    headers,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch catalog items");
+  }
+  const data: CdbViewResponse<Config> = await response.json();
+
   return data.rows[0].value;
 };

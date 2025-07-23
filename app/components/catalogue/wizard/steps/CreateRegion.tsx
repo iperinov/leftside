@@ -1,8 +1,8 @@
 import { Box, Checkbox, Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import type { LeagueRegion } from "~/types/sport/types";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { CreationStep } from "~/stores/createLeagueStore";
+import type { LeagueRegion } from "~/types/sport/types";
 
 export interface CreateRegionProps {
   handler: (cfg: LeagueRegion) => void;

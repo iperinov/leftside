@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient, type DefaultError } from "@tanstack/react-query";
+import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteConfigMutation, deleteConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { DeleteConfigResponse } from "~/api/sccs/types.gen";
 
@@ -13,20 +13,20 @@ interface DeleteConfigurationProps {
   onSettled?: () => void;
 }
 
-export const useDeleteConfiguration = ({onError, onSuccess, onSettled}: DeleteConfigurationProps) => {
-    const queryClient = useQueryClient();
-    return useMutation({
-      ...deleteConfigMutation(),
-      onSuccess: (data, variables) => {
-        const created = data as DeleteConfigResponse;
-        queryClient.invalidateQueries({ queryKey: deleteConfigQueryKey(variables) });
-        onSuccess?.(created);
-      },
-      onError: (error) => {
-        onError?.(error);
-      },
-      onSettled: () => {
-        onSettled?.();
-      }
-    });
+export const useDeleteConfiguration = ({ onError, onSuccess, onSettled }: DeleteConfigurationProps) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    ...deleteConfigMutation(),
+    onSuccess: (data, variables) => {
+      const created = data as DeleteConfigResponse;
+      queryClient.invalidateQueries({ queryKey: deleteConfigQueryKey(variables) });
+      onSuccess?.(created);
+    },
+    onError: (error) => {
+      onError?.(error);
+    },
+    onSettled: () => {
+      onSettled?.();
+    },
+  });
 };

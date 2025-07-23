@@ -5,16 +5,21 @@ import { ocsClient } from "~/lib/clients/ocsClient";
 import type { Event } from "~/types/sport/types";
 
 function toEvents(data?: EventsArray): Event[] {
-  return data ? data.map(event => ({
-    id: event.eid,
-    name: event.ed,
-    date: event.egd,
-  } as Event)) : [];
+  return data
+    ? data.map(
+        (event) =>
+          ({
+            id: event.eid,
+            name: event.ed,
+            date: event.egd,
+          }) as Event,
+      )
+    : [];
 }
 
 export const useEvents = () => {
   const result = useQuery({
-    ...getConfigEventsOptions({client: ocsClient}),
+    ...getConfigEventsOptions({ client: ocsClient }),
   });
-  return {...result, data: toEvents(result.data)};
+  return { ...result, data: toEvents(result.data) };
 };

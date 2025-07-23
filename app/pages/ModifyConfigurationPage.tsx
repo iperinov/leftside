@@ -7,10 +7,10 @@ import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import { useInitConfigStore } from "~/hooks/categories/useInitConfigStore";
-import styles from "./ModifyConfigurationPage.module.css";
 import { useUpdateConfiguration } from "~/hooks/configuraitons/useUpdateConfiguration";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { useAuthStore } from "~/stores/useAuthStore";
+import styles from "./ModifyConfigurationPage.module.css";
 
 interface ModifyConfigurationPageProps {
   uuid?: string;
@@ -45,14 +45,14 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
 
   const onSave = async () => {
     updateConfig.mutate({
-      path: {uuid: selectedUUID},
+      path: { uuid: selectedUUID },
       body: {
         uuid: uuid,
         _rev: configuration._rev,
         name: configuration.name,
         categories: rootCategory.children || [],
         lmt: Date.now(),
-        lmu: email
+        lmu: email,
       },
     });
   };

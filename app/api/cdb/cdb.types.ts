@@ -24,7 +24,7 @@ export interface CatalogItem extends CbdBase {
 }
 
 export interface BookPerConfiguration extends CbdBase {
-  configID: string; 
+  configID: string;
   bookID: number;
 }
 

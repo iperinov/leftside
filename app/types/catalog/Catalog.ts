@@ -1,7 +1,7 @@
 import type { CatalogItem } from "~/api/cdb/cdb.types";
-import type { BasicEntity, League, RealSport, LeagueRegion as Region } from "~/types/sport/types";
 import type { LeagueFilter, SportFilter } from "~/api/sccs/types.gen";
 import { isAllFilter } from "~/components/categories/AllItemData";
+import type { BasicEntity, League, RealSport, LeagueRegion as Region } from "~/types/sport/types";
 
 export interface LeagueCatalogItem extends BasicEntity {}
 

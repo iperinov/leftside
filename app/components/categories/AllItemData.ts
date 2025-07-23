@@ -1,5 +1,5 @@
+import type { AllFilter } from "~/api/sccs/types.gen";
 import type ItemData from "~/types/ItemData";
-import { type AllFilter } from "~/api/sccs/types.gen";
 
 export const allFilter: AllFilter = "all";
 const allFilterNumberValue = -1;
@@ -25,5 +25,5 @@ export function isAllItem<T extends string | number>(item: ItemData<T>): boolean
 }
 
 export function isAllItemID<T extends string | number>(id: T): boolean {
-  return  id === (typeof id === "number" ? allItemNumber.id : allItemString.id);
+  return id === (typeof id === "number" ? allItemNumber.id : allItemString.id);
 }

@@ -1,12 +1,12 @@
-import type { BasicEntity, RealSport } from "~/types/sport/types";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type ItemData from "~/types/ItemData";
+import type { BasicEntity, RealSport } from "~/types/sport/types";
+import { allItemString, isAllFilter } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import styles from "./Filters.module.css";
 import MultiSelectionFilter from "./MultiSelectionFilter";
-import { allItemString, isAllFilter } from "../AllItemData";
 
 interface SportFilterProps {
   onChange?: (selectedUUIDs: string[]) => void;
@@ -20,8 +20,8 @@ export default function SportsFilter({ categoryUUID, filterGroupUUID, onChange }
   const { data: catalog, isLoading, error } = useCatalog();
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const updateSportsFilters = useCategoryTreeStore((state) => state.updateSportsFilter);
-  const filterValue = sportFilters(categoryUUID, filterGroupUUID).value
-  const selections = isAllFilter(filterValue) ? [allItemString.id] : filterValue as string[];
+  const filterValue = sportFilters(categoryUUID, filterGroupUUID).value;
+  const selections = isAllFilter(filterValue) ? [allItemString.id] : (filterValue as string[]);
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>

@@ -1,6 +1,5 @@
-
-import { useDeleteConfiguration } from "../../hooks/configuraitons/useDeleteConfiguration";
 import { toast } from "sonner";
+import { useDeleteConfiguration } from "../../hooks/configuraitons/useDeleteConfiguration";
 import EditNameDialog from "../dialogs/EditNameDialog";
 
 export interface DeleteConfigurationProps {
@@ -25,7 +24,7 @@ export const DeleteConfiguration = ({ onClose, id, _rev, name }: DeleteConfigura
   });
 
   const handleConfirm = () => {
-    deleteConfig.mutate({path: { uuid: id }, body: { _rev } });
+    deleteConfig.mutate({ path: { uuid: id }, body: { _rev } });
   };
 
   return (

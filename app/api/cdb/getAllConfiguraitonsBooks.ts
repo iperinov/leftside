@@ -1,8 +1,8 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import type { BookPerConfiguration, CdbViewResponse } from "./cdb.types";
 import { mockCatalogItemsJson } from "../mock/cbd/mockBooks";
+import type { BookPerConfiguration, CdbViewResponse } from "./cdb.types";
 
-export default async function getAllConfigurationsBooks(): Promise<{configID: string, books: number[]}[]> {
+export default async function getAllConfigurationsBooks(): Promise<{ configID: string; books: number[] }[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
@@ -10,29 +10,35 @@ export default async function getAllConfigurationsBooks(): Promise<{configID: st
   console.log("getBooks: ", cdbUrl, url);
 
   // MOCK:
-  await new Promise((res) => setTimeout(res, 500));
-  const data = JSON.parse(mockCatalogItemsJson) as CdbViewResponse<BookPerConfiguration>;
+  // await new Promise((res) => setTimeout(res, 500));
+  // const data = JSON.parse(mockCatalogItemsJson) as CdbViewResponse<BookPerConfiguration>;
 
-  // const headers = new Headers();
-  // if (auth) {
-  //   headers.set("Authorization", `Basic ${btoa(`${auth.username}:${auth.password}`)}`);
-  // }
-  // const response = await fetch(url, {
-  //   method: "GET",
-  //   headers,
-  // });
+  const headers = new Headers();
+  if (auth) {
+    headers.set("Authorization", `Basic ${btoa(`${auth.username}:${auth.password}`)}`);
+  }
+  const response = await fetch(url, {
+    method: "GET",
+    headers,
+  });
 
-  // if (!response.ok) {
-  //   throw new Error("Failed to fetch catalog items");
-  // }
-  //const data: CdbViewResponse<CatalogItem> = await response.json();
+  if (!response.ok) {
+    throw new Error("Failed to fetch catalog items");
+  }
+  const data: CdbViewResponse<BookPerConfiguration> = await response.json();
 
-  return Object.values(data.rows.map((item) => item.value).reduce((acc, { configID, bookID }) => {
-    if (!acc[configID]) {
-      acc[configID] = { configID, books: [] };
-    }
-    acc[configID].books.push(bookID);
-    return acc;
-  }, {} as Record<string, { configID: string; books: number[] }>)
-)
+  return Object.values(
+    data.rows
+      .map((item) => item.value)
+      .reduce(
+        (acc, { configID, bookID }) => {
+          if (!acc[configID]) {
+            acc[configID] = { configID, books: [] };
+          }
+          acc[configID].books.push(bookID);
+          return acc;
+        },
+        {} as Record<string, { configID: string; books: number[] }>,
+      ),
+  );
 }

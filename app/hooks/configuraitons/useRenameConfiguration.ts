@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient, type DefaultError } from "@tanstack/react-query";
+import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 import { renameConfigMutation, renameConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { RenameConfigResponse } from "~/api/sccs/types.gen";
 

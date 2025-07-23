@@ -1,6 +1,5 @@
 import type { Team } from "~/types/sport/types";
 
-
 export const mockTeams: Team[] = [
   { id: 5444, name: "San Jose State", longName: "San Jose State" },
   { id: 30279, name: "Central Michigan", longName: "Central Michigan" },

@@ -1,13 +1,13 @@
 import { Box, Card, Flex, Text } from "@radix-ui/themes";
 import React from "react";
+import type { Configuration } from "~/api/cdb/cdb.types";
 import DropdownContextMenu from "~/components/dropdownContextMenu/DropdownContextMenu";
 import type { MenuItem } from "~/components/dropdownContextMenu/DropdownContextMenu";
 import { useBooks } from "~/hooks/useBooks";
 import { formatDateTime } from "~/utils/date";
 import { useConfigurations } from "../../hooks/configuraitons/useConfigurations";
-import styles from "./ConfigurationList.module.css";
-import type { Configuration } from "~/api/cdb/cdb.types";
 import LoadDataDecorator from "../loading/LoadDataDecorator";
+import styles from "./ConfigurationList.module.css";
 
 export interface ConfigurationListProps {
   onEdit: (id: string, name: string) => void;
@@ -45,7 +45,7 @@ export const ConfigurationList = ({ onEdit, onRename, onDuplicate, onDelete }: C
             return (
               <Card key={config.uuid} variant="classic" style={{ borderRadius: 6 }}>
                 <Flex direction="row" justify="between" align="center" p="2">
-                  <Flex direction="row"  justify="between" style={{ width: "100%" }}>
+                  <Flex direction="row" justify="between" style={{ width: "100%" }}>
                     <Box style={{ flexBasis: "33%", paddingRight: "1rem", alignContent: "center" }}>
                       <Text weight="bold" size="2" mb="1" style={{ color: "var(--accent-11)" }}>
                         {config.name}

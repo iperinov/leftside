@@ -5,22 +5,27 @@ import { ocsClient } from "~/lib/clients/ocsClient";
 import type { League } from "~/types/sport/types";
 
 function toLeague(data?: LeagueArray): League[] {
-  return data?.map(league => ({
-      id: league.lid,
-      uuid: league.luuid,
-      name: league.ln,
-      shortDesc: league.lsd,
-      takeBackProfile: league.tbp,
-      realSportId: league.rsid,
-      realSportUUID: league.rsuuid,
-      sportId: league.sid,
-      hideForMaster: league.hfm,
-  } as League)) || [];
+  return (
+    data?.map(
+      (league) =>
+        ({
+          id: league.lid,
+          uuid: league.luuid,
+          name: league.ln,
+          shortDesc: league.lsd,
+          takeBackProfile: league.tbp,
+          realSportId: league.rsid,
+          realSportUUID: league.rsuuid,
+          sportId: league.sid,
+          hideForMaster: league.hfm,
+        }) as League,
+    ) || []
+  );
 }
 
-export const useLeagues= () => {
+export const useLeagues = () => {
   const result = useQuery({
-    ...getConfigLeaguesOptions({client: ocsClient}),
+    ...getConfigLeaguesOptions({ client: ocsClient }),
   });
-  return {...result, data: toLeague(result.data)};
+  return { ...result, data: toLeague(result.data) };
 };

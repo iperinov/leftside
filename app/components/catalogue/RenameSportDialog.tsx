@@ -1,7 +1,7 @@
 import { Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import type { RenameRealSportApiIn } from "~/types/sport/types";
 import { BaseDialog } from "~/components/shared/BaseDialog";
+import type { RenameRealSportApiIn } from "~/types/sport/types";
 
 interface RenameRealSportProps {
   sport: RenameRealSportApiIn;
