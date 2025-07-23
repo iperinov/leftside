@@ -511,11 +511,6 @@ components:
         - $ref: '#/components/schemas/MarketFilterType'
         - $ref: '#/components/schemas/TimeFilterType'
         - $ref: '#/components/schemas/StatusFilterType'
-
-    AllFilter:
-      type: string
-      enum: [all]
-      x-enumNames: [All]
       
     SportFilterType:
       type: string
@@ -529,9 +524,9 @@ components:
         type:
           $ref: '#/components/schemas/SportFilterType'
         value:
-          oneOf:
-            - $ref: '#/components/schemas/FiltersTypeString'
-            - $ref: '#/components/schemas/AllFilter'
+          type: 
+            $ref: '#/components/schemas/FiltersTypeString'
+            
 
     RegionFilterType:
       type: string
@@ -545,9 +540,8 @@ components:
         type:
           $ref: '#/components/schemas/RegionFilterType'
         value:
-          oneOf:
-            - $ref: '#/components/schemas/FiltersTypeString'
-            - $ref: '#/components/schemas/AllFilter'
+          type: 
+            $ref: '#/components/schemas/FiltersTypeString'
           
     LeagueFilterType:
       type: string
@@ -561,9 +555,8 @@ components:
         type:
           $ref: '#/components/schemas/LeagueFilterType'
         value:
-          oneOf:
-            - $ref: '#/components/schemas/FiltersTypeString'
-            - $ref: '#/components/schemas/AllFilter'
+          type: 
+            $ref: '#/components/schemas/FiltersTypeString'
 
     MarketFilterType:
       type: string
@@ -577,9 +570,8 @@ components:
         type:
           $ref: '#/components/schemas/MarketFilterType'
         value:
-          oneOf:
-            - $ref: '#/components/schemas/FiltersTypeInteger'
-            - $ref: '#/components/schemas/AllFilter'
+          type: 
+            $ref: '#/components/schemas/FiltersTypeInteger'
 
     GameFilterType:
       type: string
@@ -593,9 +585,8 @@ components:
         type:
           $ref: '#/components/schemas/GameFilterType'
         value:
-          oneOf:
-            - $ref: '#/components/schemas/FiltersTypeString'
-            - $ref: '#/components/schemas/AllFilter'
+          type: 
+            $ref: '#/components/schemas/FiltersTypeString'
 
     PeriodFilterType:
       type: string
@@ -609,14 +600,8 @@ components:
         type:
           $ref: '#/components/schemas/PeriodFilterType'
         value:
-          oneOf:
-            - $ref: '#/components/schemas/FiltersTypeInteger'
-            - $ref: '#/components/schemas/AllFilter'
-
-    TimeString:
-      type: string
-      enum: [1h, 3h, 6h, 12h, 1d, 2d, 3d]
-      x-enumNames: [1h, 3h, 6h, 12h, 1d, 2d, 3d]
+          type: 
+            $ref: '#/components/schemas/FiltersTypeInteger'
 
     TimeFilterType:
       type: string
@@ -630,10 +615,8 @@ components:
         type:
           $ref: '#/components/schemas/TimeFilterType'
         value:
-          oneOf:
-            - $ref: '#/components/schemas/TimeString'
-            - $ref: '#/components/schemas/AllFilter'
-
+          type: integer
+          
     StatusFilterType:
       type: string
       enum: [status]
@@ -646,9 +629,7 @@ components:
         type:
           $ref: '#/components/schemas/StatusFilterType' 
         value:
-          oneOf:
-            - type: boolean
-            - $ref: '#/components/schemas/AllFilter'
+          type: boolean
 
     Filter:
       oneOf:
@@ -678,19 +659,12 @@ components:
         $ref: '#/components/schemas/Filter'
         
     GroupType:
-      type: string
-      enum: 
-        - leagueDay
-        - dayLeague
-        - sportDay
-        - sportLeague
-        - dayGame
-      x-enumNames:
-        - "ByLeagueByDay"
-        - "ByDayByLeague"
-        - "BySportByDay"
-        - "BySportByLeague"
-        - "ByDayByGame"
+      type: array
+      uniqueItems: true
+      items:
+        type: string
+        minLength: 1
+      description: "Possible values: leagueDay, dayLeague, sportDay, sportLeague, dayGame"
     
     OrderType:
       type: string
