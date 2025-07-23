@@ -1,9 +1,9 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
 import { mockConfigurationsJson } from "../mock/cbd/mockConfigurations";
-import type { Config } from "../sccs/types.gen";
+import type { StoredConfig } from "../sccs/types.gen";
 import type { CdbViewResponse, Configuration } from "./cdb.types";
 
-export default async function getAllConfigurations(): Promise<Config[]> {
+export default async function getAllConfigurations(): Promise<StoredConfig[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
@@ -26,7 +26,7 @@ export default async function getAllConfigurations(): Promise<Config[]> {
   if (!response.ok) {
     throw new Error("Failed to fetch catalog items");
   }
-  const data: CdbViewResponse<Config> = await response.json();
+  const data: CdbViewResponse<StoredConfig> = await response.json();
 
   return data.rows.map((item) => item.value);
 }

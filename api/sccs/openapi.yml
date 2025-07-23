@@ -499,137 +499,95 @@ components:
       items:
         type: integer
 
-
-       
-    FilterType:
-      oneOf:
-        - $ref: '#/components/schemas/SportFilterType'
-        - $ref: '#/components/schemas/RegionFilterType'
-        - $ref: '#/components/schemas/LeagueFilterType'
-        - $ref: '#/components/schemas/GameFilterType'
-        - $ref: '#/components/schemas/PeriodFilterType'
-        - $ref: '#/components/schemas/MarketFilterType'
-        - $ref: '#/components/schemas/TimeFilterType'
-        - $ref: '#/components/schemas/StatusFilterType'
-      
-    SportFilterType:
-      type: string
-      enum: [sport]
-      x-enumNames: [Sport]
-
     SportFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          $ref: '#/components/schemas/SportFilterType'
+          type: string
+          enum: [sport]
+          x-enumNames: [Sport]
         value:
-          type: 
-            $ref: '#/components/schemas/FiltersTypeString'
-            
-
-    RegionFilterType:
-      type: string
-      enum: [region]
-      x-enumNames: [Region]
+          $ref: '#/components/schemas/FiltersTypeString'
 
     RegionFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          $ref: '#/components/schemas/RegionFilterType'
+          type: string
+          enum: [region]
+          x-enumNames: [Region]
         value:
-          type: 
-            $ref: '#/components/schemas/FiltersTypeString'
-          
-    LeagueFilterType:
-      type: string
-      enum: [league]
-      x-enumNames: [League]
+          $ref: '#/components/schemas/FiltersTypeString'
 
     LeagueFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          $ref: '#/components/schemas/LeagueFilterType'
+          type: string
+          enum: [league]
+          x-enumNames: [League]
         value:
-          type: 
-            $ref: '#/components/schemas/FiltersTypeString'
-
-    MarketFilterType:
-      type: string
-      enum: [market]
-      x-enumNames: [Market]
+          $ref: '#/components/schemas/FiltersTypeString'
 
     MarketFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          $ref: '#/components/schemas/MarketFilterType'
+          type: string
+          enum: [market]
+          x-enumNames: [Market]
         value:
-          type: 
-            $ref: '#/components/schemas/FiltersTypeInteger'
-
-    GameFilterType:
-      type: string
-      enum: [game]
-      x-enumNames: [Game]
+          $ref: '#/components/schemas/FiltersTypeInteger'
 
     GameFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          $ref: '#/components/schemas/GameFilterType'
+          type: string
+          enum: [game]
+          x-enumNames: [Game]
         value:
-          type: 
-            $ref: '#/components/schemas/FiltersTypeString'
-
-    PeriodFilterType:
-      type: string
-      enum: [period]
-      x-enumNames: [Period]
+          $ref: '#/components/schemas/FiltersTypeString'
 
     PeriodFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          $ref: '#/components/schemas/PeriodFilterType'
+          type: string
+          enum: [period]
+          x-enumNames: [Period]
         value:
-          type: 
-            $ref: '#/components/schemas/FiltersTypeInteger'
-
-    TimeFilterType:
-      type: string
-      enum: [time]
-      x-enumNames: [Time]
+          $ref: '#/components/schemas/FiltersTypeInteger'
 
     TimeFilter:
       type: object
       required: [type, value]
       properties:
         type:
-          $ref: '#/components/schemas/TimeFilterType'
+          type: string
+          enum: [time]
+          x-enumNames: [Time]
         value:
           type: integer
-          
-    StatusFilterType:
-      type: string
-      enum: [status]
-      x-enumNames: [Status]
+          description: "number of hours"
 
     StatusFilter:
       type: object
       required: [type, value]
       properties:
-        type:
-          $ref: '#/components/schemas/StatusFilterType' 
+        type: 
+          type: string
+          enum: [status]
+          x-enumNames: [Status]
         value:
           type: boolean
+          description: "True for live and false for pregame"
 
     Filter:
       oneOf:
@@ -738,51 +696,65 @@ components:
           type: string
           minLength: 1
           
-    Config:
+    BaseConfig:
       type: object
       required:
         - uuid
-        - _rev
         - name
         - categories
-        - lmt
-        - lmu
       properties:
         uuid:
           $ref: '#/components/schemas/UUID'
-        _rev:
-          $ref: '#/components/schemas/Revision'
         name:
           type: string
           minLength: 1
         categories:
           $ref: '#/components/schemas/Categories'
-        lmt:
-          $ref: '#/components/schemas/UnixTimestamp'
-        lmu:
-          $ref: '#/components/schemas/Username'
+          
+    UpdateConfig:
+      allOf:
+        - $ref: '#/components/schemas/BaseConfig'
+        - type: object
+          required:
+            - rev
+          properties:
+            rev:
+              $ref: '#/components/schemas/Revision'
+          
+    StoredConfig:
+      allOf:
+        - $ref: '#/components/schemas/UpdateConfig'
+        - type: object
+          required:
+            - lmt
+            - lmu
+          properties:
+            lmt:
+              $ref: '#/components/schemas/UnixTimestamp'
+            lmu:
+              $ref: '#/components/schemas/Username'
 ## Requests
     CreateConfigRequest:
       $ref: '#/components/schemas/ConfigName'
 
     UpdateConfigRequest:
-      $ref: '#/components/schemas/Config'
+      $ref: '#/components/schemas/UpdateConfig'
 
     DeleteConfigRequest:
       type: object
       required:
-        - _rev
+        - rev
       properties:
-        _rev:
+        rev:
           $ref: '#/components/schemas/Revision'
 
     RenameConfigRequest:
       type: object
       required:
-        - _rev
+        - rev
         - name
       properties:
-        _rev:
+        rev:
           $ref: '#/components/schemas/Revision'
         name: 
           type: string
@@ -791,14 +763,10 @@ components:
     DuplicateConfigRequest:
       type: object
       required:
-        - _rev
-        - name
+        - rev
       properties:
-        _rev:
+        rev:
           $ref: '#/components/schemas/Revision'
-        name: 
-          type: string
-          minLength: 1
 
 ## Responses
     CreateConfigResponse:
@@ -807,21 +775,18 @@ components:
         - type: object
           required:
             - uuid
-            - _rev
           properties:
             uuid:
               $ref: '#/components/schemas/UUID'
-            _rev:
-              $ref: '#/components/schemas/Revision'
 
     UpdateConfigResponse:
       allOf:
         - $ref: '#/components/schemas/ResponseOK'
         - type: object
           required:
-            - _rev
+            - rev
           properties:
-            _rev:
+            rev:
               $ref: '#/components/schemas/Revision'
     
     DeleteConfigResponse:
@@ -832,9 +797,9 @@ components:
         - $ref: '#/components/schemas/ResponseOK'
         - type: object
           required:
-            - _rev
+            - rev
           properties:
-            _rev:
+            rev:
               $ref: '#/components/schemas/Revision'
       
     DuplicateConfigResponse:
@@ -843,27 +808,20 @@ components:
         - type: object
           required:
             - uuid
-            - _rev
-            - name
           properties:
             uuid:
               $ref: '#/components/schemas/UUID'
-            _rev:
-              $ref: '#/components/schemas/Revision'
-            name:
-              type: string
-              minLength: 1
 ########################### BOOKS #######################################
     Book:
       type: object
       required:
         - id
         - config
-        - _rev
+        - rev
       properties:
         id: 
           type: integer
-        _rev:
+        rev:
           $ref: '#/components/schemas/Revision'
         config: 
           $ref: '#/components/schemas/UUID'
@@ -877,11 +835,11 @@ components:
       type: object
       required:
         - id
-        - _rev
+        - rev
       properties:
         id: 
           type: integer
-        _rev:
+        rev:
           $ref: '#/components/schemas/Revision'
           
     BookRevs:
@@ -900,5 +858,4 @@ components:
           properties:
             revs:
               $ref: '#/components/schemas/BookRevs'
-        
 

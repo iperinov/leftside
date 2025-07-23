@@ -1,5 +1,4 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import { mockCatalogItemsJson } from "../mock/cbd/mockBooks";
 import type { CatalogItem, CdbViewResponse } from "./cdb.types";
 //import { mockCatalogItemsJson } from "./mock/mockCatalogItems";
 
