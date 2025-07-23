@@ -1,9 +1,9 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
 import { mockConfigurationCategoriesJson } from "../mock/cbd/mockConfiguration";
-import type { Config } from "../sccs/types.gen";
+import type { StoredConfig } from "../sccs/types.gen";
 import type { CdbViewResponse } from "./cdb.types";
 
-export const getConfiguration = async (configID: string): Promise<Config> => {
+export const getConfiguration = async (configID: string): Promise<StoredConfig> => {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
@@ -12,7 +12,7 @@ export const getConfiguration = async (configID: string): Promise<Config> => {
 
   // MOCK:
   // await new Promise((res) => setTimeout(res, 500));
-  // const data = JSON.parse(mockConfigurationCategoriesJson) as CdbViewResponse<Config>;
+  // const data = JSON.parse(mockConfigurationCategoriesJson) as CdbViewResponse<StoredConfig>;
 
   const headers = new Headers();
   if (auth) {
@@ -26,7 +26,7 @@ export const getConfiguration = async (configID: string): Promise<Config> => {
   if (!response.ok) {
     throw new Error("Failed to fetch catalog items");
   }
-  const data: CdbViewResponse<Config> = await response.json();
+  const data: CdbViewResponse<StoredConfig> = await response.json();
 
   return data.rows[0].value;
 };

@@ -8,11 +8,11 @@ import LoadDataDecorator from "../loading/LoadDataDecorator";
 interface RenameConfigurationProps {
   onClose: () => void;
   id: string;
-  _rev: string;
+  rev: string;
   name: string;
 }
 
-export const RenameConfiguration = ({ onClose, id, _rev, name }: RenameConfigurationProps) => {
+export const RenameConfiguration = ({ onClose, id, rev, name }: RenameConfigurationProps) => {
   const { data: configurations, isLoading, error } = useConfigurations();
   const renameConfiguration = useRenameConfiguration({
     onSuccess: (response) => {
@@ -27,7 +27,7 @@ export const RenameConfiguration = ({ onClose, id, _rev, name }: RenameConfigura
     },
   });
   const handleConfirm = (name: string) => {
-    renameConfiguration.mutate({ path: { uuid: id }, body: { _rev, name } });
+    renameConfiguration.mutate({ path: { uuid: id }, body: { rev, name } });
   };
 
   return (

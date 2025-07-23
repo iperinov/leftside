@@ -1,5 +1,5 @@
 import type { LeagueFilter, SportFilter } from "~/api/sccs/types.gen";
-import { isAllFilter } from "~/components/categories/AllItemData";
+import { allItemString, isAllFilter } from "~/components/categories/AllItemData";
 import { useCatalog } from "./catalog/useCatalog";
 import { useEvents } from "./useEvents";
 import { useLeagueByEvent } from "./useLeagueByEvent";
@@ -21,7 +21,7 @@ export default function useFilteredMarketsBy(sportFilter: SportFilter, leagueFil
   if (isLoading || error) return { data: undefined, isLoading, error };
   if (!events || !leagueByEvent || !catalog) return { data: [], isLoading, error };
 
-  const sportsForSelectedLeagues = catalog.filteredSportsBy(leagueFilter);
+  const sportsForSelectedLeagues = catalog.filteredSportsBy(isAllLeaguesSelected ? [allItemString.id] : leagueFilter.value as string[]);
   const filteredSports = isAllSportsSelected
     ? sportsForSelectedLeagues.map((sport) => String(sport.id))
     : (sportFilter.value as string[]).filter((sportUUID) => sportsForSelectedLeagues.find((sport) => sportUUID === sport.uuid));

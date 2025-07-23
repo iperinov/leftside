@@ -7,11 +7,11 @@ import LoadDataDecorator from "../loading/LoadDataDecorator";
 export interface DuplicateConfigurationProps {
   onClose: () => void;
   id: string;
-  _rev: string;
+  rev: string;
   name: string;
 }
 
-export const DuplicateConfiguration = ({ onClose, id, _rev, name }: DuplicateConfigurationProps) => {
+export const DuplicateConfiguration = ({ onClose, id, rev, name }: DuplicateConfigurationProps) => {
   const { data: configurations, isLoading, error } = useConfigurations();
   const duplicateConfiguration = useDuplicateConfiguration({
     onSuccess: (response) => {
@@ -29,7 +29,7 @@ export const DuplicateConfiguration = ({ onClose, id, _rev, name }: DuplicateCon
   const handleConfirm = (name: string) => {
     duplicateConfiguration.mutate({
       path: { uuid: id },
-      body: { _rev, name },
+      body: { rev, name },
     });
   };
 

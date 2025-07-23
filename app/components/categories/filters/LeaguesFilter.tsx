@@ -26,7 +26,7 @@ export default function LeaguesFilter({ categoryUUID, filterGroupUUID, onChange 
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const sportFilter = sportFilters(categoryUUID, filterGroupUUID);
   const { data: catalog, isLoading, error } = useCatalog();
-  const leagues = catalog?.filteredLeaguesBy(sportFilter);
+  const leagues = catalog?.filteredLeaguesBy(isAllFilter(sportFilter) ? [allFilter] : (sportFilter.value as FiltersTypeString)) || [];
   const filterValue = leagueFilters(categoryUUID, filterGroupUUID).value;
   const selections = isAllFilter(filterValue) ? [allItemString.id] : (filterValue as string[]);
 

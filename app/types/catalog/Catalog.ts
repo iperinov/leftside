@@ -1,6 +1,5 @@
 import type { CatalogItem } from "~/api/cdb/cdb.types";
-import type { LeagueFilter, SportFilter } from "~/api/sccs/types.gen";
-import { isAllFilter } from "~/components/categories/AllItemData";
+import { isAllArray, isAllFilter } from "~/components/categories/AllItemData";
 import type { BasicEntity, League, RealSport, LeagueRegion as Region } from "~/types/sport/types";
 
 export interface LeagueCatalogItem extends BasicEntity {}
@@ -23,8 +22,8 @@ export interface CatalogActions {
   findRegion(uuid: string): RegionCatalogItem | undefined;
   findLeague(uuid: string): LeagueCatalogItem | undefined;
 
-  filteredLeaguesBy(sportFilter: SportFilter): LeagueCatalogItem[];
-  filteredSportsBy(leagueFilter: LeagueFilter): SportCatalogItem[];
+  filteredLeaguesBy(sports: string[]): LeagueCatalogItem[];
+  filteredSportsBy(leagues: string[]): SportCatalogItem[];
   //filteredRegionsBy(leagueUUIDs: string[]): BasicEntity[];
 }
 
@@ -105,17 +104,13 @@ export class Catalog implements CatalogActions {
     return this.sports.flatMap((sport) => sport.regions.flatMap((region) => region.leagues.find((league) => league.uuid === uuid))).at(0);
   }
 
-  filteredLeaguesBy(sportFilter: SportFilter): LeagueCatalogItem[] {
-    const isAllSportsSelected = isAllFilter(sportFilter);
-    const sportUUIDs = isAllSportsSelected ? [] : (sportFilter.value as string[]);
-    return isAllSportsSelected
+  filteredLeaguesBy(UUIDs: string[]): LeagueCatalogItem[] {
+    return isAllArray(UUIDs)
       ? this.sports.flatMap((sport) => sport.regions.flatMap((region) => region.leagues))
-      : this.sports.flatMap((sport) => (sportUUIDs.includes(String(sport.uuid)) ? sport.regions.flatMap((region) => region.leagues) : []));
+      : this.sports.flatMap((sport) => (UUIDs.includes(String(sport.uuid)) ? sport.regions.flatMap((region) => region.leagues) : []));
   }
-  filteredSportsBy(leagueFilter: LeagueFilter): SportCatalogItem[] {
-    const isAllLeaguesSelected = isAllFilter(leagueFilter);
-    const leagueUUIDs = isAllLeaguesSelected ? [] : (leagueFilter.value as string[]);
-    return isAllLeaguesSelected
+  filteredSportsBy(leagueUUIDs: string[]): SportCatalogItem[] {
+    return isAllArray(leagueUUIDs)
       ? this.sports
       : this.sports.filter((sport) => sport.regions.find((region) => region.leagues.find((league) => leagueUUIDs.includes(league.uuid))));
   }

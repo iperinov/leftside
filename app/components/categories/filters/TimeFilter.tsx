@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import { allItemString, isAllFilter } from "../AllItemData";
+import { allItemNumber, allItemString, isAllFilter } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 
@@ -10,17 +10,19 @@ export default function TimeFilter({ categoryUUID, filterGroupUUID }: FilterGrou
   const statusFilter = useCategoryTreeStore((state) => state.statusFilter);
   const filterValue = statusFilter(categoryUUID, filterGroupUUID).value;
   const isLiveStatusSelected = isAllFilter(filterValue) ? false : (filterValue as boolean);
+  const timeFilterValue = timeFilter(categoryUUID, filterGroupUUID).value;
+  const isAllTimeSelected = isAllFilter(timeFilterValue);
 
   const choices = useMemo(
     () => [
-      allItemString,
-      { id: "1h", name: "1h" },
-      { id: "3h", name: "3h" },
-      { id: "6h", name: "6h" },
-      { id: "12h", name: "12h" },
-      { id: "1d", name: "1 day" },
-      { id: "2d", name: "2 days" },
-      { id: "3d", name: "3 days" },
+      allItemNumber,
+      { id: 1, name: "1h" },
+      { id: 3, name: "3h" },
+      { id: 6, name: "6h" },
+      { id: 12, name: "12h" },
+      { id: 24, name: "24h" },
+      { id: 48, name: "48h" },
+      { id: 72, name: "72h" },
     ],
     [],
   );
@@ -31,7 +33,7 @@ export default function TimeFilter({ categoryUUID, filterGroupUUID }: FilterGrou
       label={"Time"}
       title={"Select Time"}
       items={choices}
-      selection={timeFilter(categoryUUID, filterGroupUUID).value}
+      selection={isAllTimeSelected ? allItemNumber.id : timeFilterValue}
       updateFilterSelection={updateTimeFilters}
       disabled={isLiveStatusSelected}
       categoryUUID={categoryUUID}

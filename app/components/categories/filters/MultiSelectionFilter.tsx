@@ -1,11 +1,11 @@
 import { useState } from "react";
-import type { AllFilter } from "~/api/sccs/types.gen";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import type ItemData from "~/types/ItemData";
-import { allFilter, isAllItemID } from "../AllItemData";
+import { allFilter, isAllArray} from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
 import styles from "./Filters.module.css";
+import type { AllFilter } from "~/api/sccs/types.gen";
 
 interface MultiSelectionFilterProps<T extends string | number> {
   keyStr: string;
@@ -50,7 +50,7 @@ export default function MultiSelectionFilter<T extends string | number>({
           items={items}
           includeAllItem={true}
           onConfirm={(selectedIDs) => {
-            updateFilterSelection(categoryUUID, filterGroupUUID, selectedIDs.length === 1 && isAllItemID(selectedIDs[0]) ? allFilter : selectedIDs);
+            updateFilterSelection(categoryUUID, filterGroupUUID, isAllArray(selectedIDs) ? allFilter : selectedIDs);
             setShow(false);
           }}
           onCancel={() => setShow(false)}

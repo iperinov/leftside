@@ -13,19 +13,9 @@ export interface RealSport extends BasicEntity {
   enabled?: boolean; // maps from `enabled`
 }
 
-export interface RenameRealSportApiIn {
-  uuid: string; // maps from `lruuid`
-  name: string; // maps from `rsd`
-}
-
 export interface LeagueRegion extends BasicEntity {
   order: number; // maps from `lrro`
   enabled: boolean; // maps from `enabled`
-}
-
-export interface RenameLeagueRegionApiIn {
-  uuid: string; // maps from `lruuid`
-  name: string; // maps from `lrd`
 }
 
 export interface League extends BasicEntity {

@@ -32,6 +32,7 @@ export interface Configuration extends CbdBase {
   uuid: string;
   name: string;
   books: number[];
+  rev: string; 
   lmt: number;
   lmu: string;
 }

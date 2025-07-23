@@ -16,16 +16,16 @@ function generateChoices(sportFilter: SportFilter, marketFilter: MarketFilter): 
   switch (true) {
     case !isAllSportsSelected && sportsSelected === 1 && marketsSelected === 0:
       return [
-        { id: "leagueDay", name: "League/Day" },
-        { id: "dayLeague", name: "Day/League" },
+        { id: "league.day", name: "League/Day" },
+        { id: "day.league", name: "Day/League" },
       ];
     case (isAllSportsSelected || sportsSelected > 1) && marketsSelected === 0:
       return [
-        { id: "sportLeague", name: "Sport/League" },
-        { id: "sportDay", name: "Sport/Day" },
+        { id: "sport.league", name: "Sport/League" },
+        { id: "sport.day", name: "Sport/Day" },
       ];
     default: //case sportsSelected > 0 && marketsSelected > 0
-      return [{ id: "dayGame", name: "Day/Game" }];
+      return [{ id: "day.game", name: "Day/Game" }];
   }
 }
 
@@ -46,8 +46,8 @@ export default function GroupByFilter(props: FilterGroupProps) {
       label={"Group By"}
       title={"Group by"}
       items={choices}
-      selection={groupByFilter(props.categoryUUID, props.filterGroupUUID)}
-      updateFilterSelection={updateGroupByFilters}
+      selection={groupByFilter(props.categoryUUID, props.filterGroupUUID)?.join(".") || ""}
+      updateFilterSelection={(categoryUUID, filterGroupUUID, selected) => updateGroupByFilters(categoryUUID, filterGroupUUID, selected !== "" ? selected.split(".") : [])}
       {...props}
     />
   );

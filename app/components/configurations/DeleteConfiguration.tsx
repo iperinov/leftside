@@ -5,11 +5,11 @@ import EditNameDialog from "../dialogs/EditNameDialog";
 export interface DeleteConfigurationProps {
   onClose: () => void;
   id: string;
-  _rev: string;
+  rev: string;
   name: string;
 }
 
-export const DeleteConfiguration = ({ onClose, id, _rev, name }: DeleteConfigurationProps) => {
+export const DeleteConfiguration = ({ onClose, id, rev, name }: DeleteConfigurationProps) => {
   const deleteConfig = useDeleteConfiguration({
     onSuccess: (response) => {
       toast.success("Configuration deleted successfully");
@@ -24,7 +24,7 @@ export const DeleteConfiguration = ({ onClose, id, _rev, name }: DeleteConfigura
   });
 
   const handleConfirm = () => {
-    deleteConfig.mutate({ path: { uuid: id }, body: { _rev } });
+    deleteConfig.mutate({ path: { uuid: id }, body: { rev } });
   };
 
   return (

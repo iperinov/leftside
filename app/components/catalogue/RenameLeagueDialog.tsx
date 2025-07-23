@@ -1,16 +1,16 @@
 import { Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import { BaseDialog } from "~/components/shared/BaseDialog";
-import type { RenameLeagueApiIn } from "~/types/sport/types";
 
 interface RenameLeagueProps {
-  league: RenameLeagueApiIn;
+  uuid: string; 
+  name: string;
   onClose: () => void;
   onRename: (newName: string) => void;
 }
 
-export function RenameLeagueDialog({ league, onClose, onRename }: RenameLeagueProps) {
-  const [name, setName] = useState(league.name);
+export function RenameLeagueDialog({ uuid, name, onClose, onRename }: RenameLeagueProps) {
+  const [newName, setNewName] = useState(name);
 
   return (
     <BaseDialog
@@ -18,7 +18,7 @@ export function RenameLeagueDialog({ league, onClose, onRename }: RenameLeaguePr
       onClose={onClose}
       title="Rename League"
       confirmLabel="Rename"
-      disableConfirm={!name.trim() || name === league.name}
+      disableConfirm={!newName.trim() || newName === name}
       onConfirm={() => onRename(name)}
     >
       <Flex direction="column" gap="3" mb="4">
@@ -26,7 +26,7 @@ export function RenameLeagueDialog({ league, onClose, onRename }: RenameLeaguePr
           League Name
         </Text>
 
-        <TextField.Root value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter new name" variant="soft" />
+        <TextField.Root value={name} onChange={(e) => setNewName(e.target.value)} placeholder="Enter new name" variant="soft" />
       </Flex>
     </BaseDialog>
   );

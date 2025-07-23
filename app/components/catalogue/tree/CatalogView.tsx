@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import type { CreateLeagueRequest } from "~/stores/createLeagueStore";
-import type { RenameLeagueApiIn, RenameLeagueRegionApiIn, RenameRealSportApiIn } from "~/types/sport/types";
 import SearchBar from "../../SearchBar";
 import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import Tree from "../../tree/Tree";
@@ -39,9 +38,9 @@ export default function CatalogView() {
   const [creating, setCreating] = useState<boolean>(false);
   const [realSport, setRealSport] = useState<string>("");
   const [region, setRegion] = useState<string>("");
-  const [renameSport, setRenameSport] = useState<RenameRealSportApiIn | null>(null);
-  const [renameRegion, setRenameRegion] = useState<RenameLeagueRegionApiIn | null>(null);
-  const [renameLeague, setRenameLeague] = useState<RenameLeagueApiIn | null>(null);
+  const [renameSport, setRenameSport] = useState<{ uuid: string; name: string } | null>(null);
+  const [renameRegion, setRenameRegion] = useState<{ uuid: string; name: string } | null>(null);
+  const [renameLeague, setRenameLeague] = useState<{ uuid: string; name: string } | null>(null);
   const { data: catalog, isLoading, error } = useCatalog();
   const catalogRoot = useMemo(() => (catalog ? buildCatalogueTree(catalog) : undefined), [catalog]);
 
@@ -190,7 +189,7 @@ export default function CatalogView() {
 
       {renameSport && (
         <RenameSportDialog
-          sport={renameSport}
+          {...renameSport}
           onClose={() => setRenameSport(null)}
           onRename={(newName) => {
             console.log("Renamed sport to:", newName);
@@ -202,7 +201,7 @@ export default function CatalogView() {
 
       {renameRegion && (
         <RenameRegionDialog
-          region={renameRegion}
+          {...renameRegion}
           onClose={() => setRenameRegion(null)}
           onRename={(newName) => {
             console.log("Renamed region to:", newName);
@@ -214,7 +213,7 @@ export default function CatalogView() {
 
       {renameLeague && (
         <RenameLeagueDialog
-          league={renameLeague}
+          {...renameLeague}
           onClose={() => setRenameLeague(null)}
           onRename={(newName) => {
             console.log("Renamed league to:", newName);

@@ -1,8 +1,7 @@
 import { Box, Text } from "@radix-ui/themes";
-import type { FilterGroup, FiltersTypeInteger, FiltersTypeString, GroupType, OrderType, TimeString } from "~/api/sccs/types.gen";
+import type { FilterGroup, GroupType, OrderType } from "~/api/sccs/types.gen";
 import type { FilteredGameGroup, Game } from "~/api/ssm/ssm.types";
 import { useContentFiltered } from "~/hooks/useContentFiltered";
-import { isAllFilter } from "../categories/AllItemData";
 import InfoBanner from "../shared/InfoBanner";
 import LoadingIndicator from "../shared/LoadingIndicator";
 
@@ -11,104 +10,31 @@ interface ContentPreviewProps {
 }
 
 const getGroupKey = (game: Game, groupBy: GroupType): string[] => {
-  const date = new Date(game.startTime).toLocaleDateString();
-  const league = game.leagueName;
-  const sport = game.realSportName;
-  switch (groupBy) {
-    case "leagueDay":
-      return [league, date];
-    case "dayLeague":
-      return [date, league];
-    case "sportLeague":
-      return [sport, league];
-    case "sportDay":
-      return [sport, date];
-    case "dayGame":
-      return [date, game.gameUUID];
-    default:
-      return [league];
-  }
-};
-
-function toHours(timeString: TimeString): number {
-  switch (timeString) {
-    case "1h":
-      return 1;
-    case "3h":
-      return 3;
-    case "6h":
-      return 6;
-    case "12h":
-      return 12;
-    case "1d":
-      return 24;
-    case "2d":
-      return 48;
-    case "3d":
-      return 72;
-  }
-}
-
-// Use for real-time notifications when it is implemented.
-const matchesFilterGroup = (game: Game, filterGroup: FilterGroup): boolean => {
-  return filterGroup.filters.every((filter) => {
-    if (isAllFilter(filter)) return true;
-
-    switch (filter.type) {
-      case "sport":
-        return (filter.value as FiltersTypeString).includes(game.realSportUUID);
-      case "league":
-        return (filter.value as FiltersTypeString).includes(game.leagueUUID);
-      case "market":
-        if (game.eventId === null || game.eventId === undefined) {
-          return false;
-        }
-        return (filter.value as FiltersTypeInteger).includes(game.eventId);
-      case "period":
-        if (game.eventId !== null && game.eventId !== undefined) {
-          return false;
-        }
-        return (filter.value as FiltersTypeInteger).includes(game.periodId);
-      // case "region":
-      //   return (filter.value as FiltersTypeString).includes(game.regionUUID);
-      case "game":
-        return (filter.value as FiltersTypeString).includes(game.gameUUID);
-      case "status":
-        return (filter.value as boolean) === game.liveGame;
-      case "time": {
-        const now = Date.now();
-        const hours = toHours(filter.type as TimeString);
-        return new Date(game.startTime).getTime() - now <= hours * 3600000;
-      }
-      default:
-        return true;
-    }
+  return groupBy.flatMap((group) => {
+    if (group === "league") return game.leagueName;
+    if (group === "sport") return game.realSportName;
+    if (group === "date") return new Date(game.startTime).toLocaleDateString();
+    if (group === "game") return game.gameUUID;
+    return [];
   });
 };
 
 const renderGroupLabel = (groupBy: GroupType, labelParts: string[]) => {
-  switch (groupBy) {
-    case "leagueDay":
-    case "dayLeague":
-    case "sportLeague":
-    case "sportDay":
-      return (
-        <>
-          <Box mb="2">
-            <Text size="2" weight="bold">
-              {labelParts[0]}
-            </Text>
-          </Box>
-          <Box mb="2">
-            <Text size="2" weight="bold">
-              {labelParts[1]}
-            </Text>
-          </Box>
-        </>
-      );
-    default:
-      return null;
-  }
+  // TODO: check and implement
+  return (
+    <>
+      <Box mb="2">
+        <Text size="2" weight="bold">
+          {labelParts[0]}
+        </Text>
+      </Box>
+      <Box mb="2">
+        <Text size="2" weight="bold">
+          {labelParts[1]}
+        </Text>
+      </Box>
+    </>
+  );
 };
 
 const renderGameCard = (game: Game, showBanner: boolean) => (

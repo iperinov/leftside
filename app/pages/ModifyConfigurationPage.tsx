@@ -48,11 +48,9 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
       path: { uuid: selectedUUID },
       body: {
         uuid: uuid,
-        _rev: configuration._rev,
+        rev: configuration.rev,
         name: configuration.name,
         categories: rootCategory.children || [],
-        lmt: Date.now(),
-        lmu: email,
       },
     });
   };

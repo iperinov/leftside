@@ -694,9 +694,10 @@ components:
     FilterGroup:
       type: object
       required:
-          - filters
-          - groupBy
-          - order
+        - uuid
+        - filters
+        - groupBy
+        - order
       properties:
         uuid:
           $ref: '#/components/schemas/UUID'
@@ -822,9 +823,13 @@ components:
       type: object
       required:
         - rev
+        - name
       properties:
         rev:
           $ref: '#/components/schemas/Revision'
+        name:
+          type: string
+          minLength: 1
 
 ## Responses
     CreateConfigResponse:

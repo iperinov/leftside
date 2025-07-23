@@ -3,11 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import type {
   AllFilter,
-  Config,
+  StoredConfig,
   Filter,
   FilterGroup,
   FilterType,
-  FiltersTypeBool,
   FiltersTypeInteger,
   FiltersTypeString,
   GameFilter,
@@ -20,7 +19,6 @@ import type {
   SportFilter,
   StatusFilter,
   TimeFilter,
-  TimeString,
 } from "~/api/sccs/types.gen";
 import { allFilter, allItemNumber, allItemString } from "~/components/categories/AllItemData";
 import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
@@ -28,7 +26,7 @@ import { findItem, findItemParent, findItemSiblings, findItemTrail } from "~/com
 import iterateItem from "~/components/tree/common/iterateItem";
 
 interface CategoryTreeState {
-  configuration: Config;
+  configuration: StoredConfig;
   rootCategory: CategoryTreeItem;
 }
 
@@ -61,7 +59,7 @@ interface CategoryTreeGetters {
 }
 
 interface CategoryTreeMutations {
-  reset: (configuration: Config, categoriesTree: CategoryTreeItem[]) => void;
+  reset: (configuration: StoredConfig, categoriesTree: CategoryTreeItem[]) => void;
   addCategory: (parentID: string, newItem: CategoryTreeItem) => boolean;
   renameCategory: (uuid: string, newName: string) => boolean;
   deleteCategory: (uuid: string) => boolean;
@@ -73,7 +71,7 @@ interface CategoryTreeMutations {
   duplicateFilterGroup: (categoryUUID: string, groupUUID: string) => boolean;
   moveFilterGroupTo: (categoryUUID: string, groupUUID: string, moveOnPlaceOfGroupUUID: string) => boolean;
 
-  updateFilters: <S extends FiltersTypeString | FiltersTypeInteger | TimeString | boolean | AllFilter, F extends Filter>(
+  updateFilters: <S extends FiltersTypeString | FiltersTypeInteger | boolean | number | AllFilter, F extends Filter>(
     categoryUUID: string,
     filterGroupUUID: string,
     type: FilterType,
@@ -83,7 +81,7 @@ interface CategoryTreeMutations {
   updateLeaguesFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[] | AllFilter) => void;
   updateMarketsFilter: (categoryUUID: string, filterGroupUUID: string, selected: number[] | AllFilter) => void;
   updateStatusFilter: (categoryUUID: string, filterGroupUUID: string, selected: boolean | AllFilter) => void;
-  updateTimeFilter: (categoryUUID: string, filterGroupUUID: string, selected: TimeString | AllFilter) => void;
+  updateTimeFilter: (categoryUUID: string, filterGroupUUID: string, selected: number | AllFilter) => void;
   updateSortByFilter: (categoryUUID: string, filterGroupUUID: string, selected: OrderType) => void;
   updateLimitFilter: (categoryUUID: string, filterGroupUUID: string, selected: number | undefined) => void;
   updateGroupByFilter: (categoryUUID: string, filterGroupUUID: string, selected: GroupType) => void;
@@ -97,7 +95,7 @@ function newItemUUID(): string {
 
 export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGetters & CategoryTreeMutations & ConfigurationMutations>((set, get) => ({
   // State
-  configuration: {} as Config,
+  configuration: {} as StoredConfig,
   rootCategory: { id: rootCategoryUUID, name: "", type: "nested", children: [] },
 
   // Configuration Mutations
@@ -233,9 +231,8 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     const emptyFilterGroup = {
       uuid: newItemUUID(),
       filters: [],
-      groupBy: "dayLeague",
+      groupBy: [],
       order: "asc",
-      limit: 1,
     } as FilterGroup;
     if (category.filterGroups) {
       category.filterGroups.push(emptyFilterGroup);
@@ -283,7 +280,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     return true;
   },
 
-  updateFilters: <S extends FiltersTypeString | FiltersTypeInteger | TimeString | boolean | AllFilter, F extends Filter>(
+  updateFilters: <S extends FiltersTypeString | FiltersTypeInteger | boolean | number | AllFilter, F extends Filter>(
     categoryUUID: string,
     filterGroupUUID: string,
     type: FilterType,
@@ -324,7 +321,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     get().updateFilters(categoryUUID, filterGroupUUID, "status", selected);
   },
 
-  updateTimeFilter: (categoryUUID: string, filterGroupUUID: string, selected: TimeString | AllFilter) => {
+  updateTimeFilter: (categoryUUID: string, filterGroupUUID: string, selected: number | AllFilter) => {
     get().updateFilters(categoryUUID, filterGroupUUID, "time", selected);
   },
 

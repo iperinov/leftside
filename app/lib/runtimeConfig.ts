@@ -19,9 +19,9 @@ export function getAppConfig(): AppConfig {
   return {
     ...defaultAppConfig,
     ...runtimeOverrides,
-    scs: {
-      ...defaultAppConfig.scs,
-      ...runtimeOverrides.scs,
+    sccs: {
+      ...defaultAppConfig.sccs,
+      ...runtimeOverrides.sccs,
     },
     features: {
       ...defaultAppConfig.features,

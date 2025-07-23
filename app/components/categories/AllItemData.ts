@@ -24,6 +24,12 @@ export function isAllItem<T extends string | number>(item: ItemData<T>): boolean
   return item.id === (typeof item.id === "number" ? allItemNumber.id : allItemString.id);
 }
 
-export function isAllItemID<T extends string | number>(id: T): boolean {
+export function isAll<T extends string | number>(id: T): boolean {
   return id === (typeof id === "number" ? allItemNumber.id : allItemString.id);
+}
+
+export function isAllArray<T extends string | number>(ids: T[]): boolean {
+  if (ids.length === 0) return false;
+  const allID = allItemData<T>().id;
+  return ids.includes(allID);
 }

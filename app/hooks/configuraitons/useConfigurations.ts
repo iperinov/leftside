@@ -31,7 +31,7 @@ export const useConfigurations = () => {
               name: config.name,
               lmt: config.lmt,
               lmu: config.lmu,
-              _rev: config._rev,
+              rev: config.rev,
               books: books.find((b) => b.configID === config.uuid)?.books || [],
             }) as Configuration,
         )
