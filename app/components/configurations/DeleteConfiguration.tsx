@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { useDeleteConfiguration } from "../../hooks/configuraitons/useDeleteConfiguration";
 import EditNameDialog from "../dialogs/EditNameDialog";
+import LoadDataDecorator from "../loading/LoadDataDecorator";
 
 export interface DeleteConfigurationProps {
   onClose: () => void;
@@ -28,15 +29,17 @@ export const DeleteConfiguration = ({ onClose, id, rev, name }: DeleteConfigurat
   };
 
   return (
-    <EditNameDialog
-      title="Delete configuration"
-      description={`Enter 'DELETE' to delete ${name} configuration:`}
-      confirmText="Delete"
-      destructive={true}
-      open={true}
-      onConfirm={handleConfirm}
-      onCancel={onClose}
-      validName={(name) => name.trim() === "DELETE"}
-    />
+    <LoadDataDecorator isLoading={deleteConfig.isPending}>
+      <EditNameDialog
+        title="Delete configuration"
+        description={`Enter 'DELETE' to delete ${name} configuration:`}
+        confirmText="Delete"
+        destructive={true}
+        open={true}
+        onConfirm={handleConfirm}
+        onCancel={onClose}
+        validName={(name) => name.trim() === "DELETE"}
+      />
+    </LoadDataDecorator>
   );
 };

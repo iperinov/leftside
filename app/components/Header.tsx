@@ -1,6 +1,7 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { Box, Button, Flex, Separator, Text } from "@radix-ui/themes";
 import { NavLink, type NavLinkProps, useNavigate } from "react-router";
+import useLogout from "~/hooks/auth/useLogout";
 import { useAuthStore } from "~/stores/useAuthStore";
 
 function NavItem({ to, children, ...props }: NavLinkProps) {
@@ -28,10 +29,17 @@ function NavItem({ to, children, ...props }: NavLinkProps) {
 export default function Header() {
   const email = useAuthStore((s) => s.auth?.email);
   const navigate = useNavigate();
-
+  const logout = useLogout({
+    onError: (error) => {
+      console.error("Logout failed:", error);
+    },
+    onSettled: () => {
+      navigate("/");
+    }
+  });
   const handleLogout = () => {
-    useAuthStore.getState().clearAuth();
-    navigate("/");
+    useAuthStore.getState().logout();
+    logout.mutate({});
   };
 
   return (

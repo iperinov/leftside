@@ -5,9 +5,7 @@ import Header from "~/components/Header";
 import { useAuthStore } from "../stores/useAuthStore";
 
 export async function clientLoader() {
-  const loggedIn = useAuthStore.getState().loadAuth();
-
-  if (!loggedIn) {
+  if (!useAuthStore.getState().isLoggedIn()) {
     return redirect("/auth");
   }
 

@@ -10,8 +10,7 @@ export function meta() {
 export async function clientLoader(_args: Route.ClientActionArgs) {
   await loadRuntimeConfig();
 
-  const loggedIn = useAuthStore.getState().loadAuth();
-  return loggedIn ? redirect("/catalog") : redirect("/auth");
+  return useAuthStore.getState().isLoggedIn() ? redirect("/catalog") : redirect("/auth");
 }
 
 export default function Home() {

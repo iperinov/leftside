@@ -34,7 +34,7 @@ export const DuplicateConfiguration = ({ onClose, id, rev, name }: DuplicateConf
   };
 
   return (
-    <LoadDataDecorator isLoading={isLoading /*|| duplicateConfiguration.isPending*/} error={error}>
+    <LoadDataDecorator isLoading={isLoading || duplicateConfiguration.isPending} error={error}>
       <EditNameDialog
         title="Duplicate category"
         description="Enter a new name for the duplicated category:"

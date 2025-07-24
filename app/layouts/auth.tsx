@@ -2,9 +2,7 @@ import { Outlet, redirect } from "react-router";
 import { useAuthStore } from "~/stores/useAuthStore";
 
 export async function clientLoader() {
-  const loggedIn = useAuthStore.getState().loadAuth();
-
-  if (loggedIn) {
+  if (useAuthStore.getState().isLoggedIn()) {
     return redirect("/");
   }
 
