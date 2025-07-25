@@ -1,7 +1,7 @@
 import { Checkbox, Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
+import type { RealSport } from "~/api/sccs/types.gen";
 import { BaseDialog } from "~/components/shared/BaseDialog";
-import type { RealSport } from "~/types/sport/types";
 
 export interface CreateSportProps {
   handler: (cfg: RealSport) => void;
@@ -32,12 +32,10 @@ export const CreateSport = ({ handler, onClose }: CreateSportProps) => {
       disableConfirm={!isFormValid}
       onConfirm={() => {
         handler({
-          id: 0,
-          uuid: "",
-          name: name.trim(),
-          gameDelayPregame: parsedPregame,
-          gameDelayLive: parsedLive,
-          shortDesc: shortDesc.trim(),
+          description: name.trim(),
+          short: shortDesc.trim(),
+          preGameDelay: parsedPregame,
+          liveDelay: parsedLive,
           enabled,
         });
       }}

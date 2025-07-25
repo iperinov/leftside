@@ -4,19 +4,19 @@ import SearchBar from "~/components/SearchBar";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
 import { CreationStep } from "~/stores/createLeagueStore";
-import type { BasicEntity } from "~/types/sport/types";
 import { SingleSelect } from "../../../shared/SingleSelect";
+import type { ExistingRegion } from "~/api/sccs/types.gen";
 
 interface SelectRegionProps {
   onClose: () => void;
   onBack?: (step: number) => void;
-  onConfirm: (region: BasicEntity) => void;
+  onConfirm: (region: ExistingRegion) => void;
   onNew: (step: number) => void;
 }
 
 export function SelectRegion({ onClose, onBack, onConfirm, onNew }: SelectRegionProps) {
   const { data: catalog, isLoading, error } = useCatalog();
-  const [selected, setSelected] = useState<BasicEntity | null>(null);
+  const [selected, setSelected] = useState<ExistingRegion | null>(null);
   const [search, setSearch] = useState("");
 
   const filtered = catalog

@@ -1,15 +1,5 @@
 import { create } from "zustand";
-import type { League, LeagueRegion, RealSport } from "~/types/sport/types";
-
-type ExistingEntity = {
-  uuid: string;
-};
-
-export type CreateLeagueRequest = {
-  realSport: RealSport | ExistingEntity;
-  region: LeagueRegion | ExistingEntity;
-  league: League;
-};
+import type { CreateLeagueRequest, ExistingRealSport, ExistingRegion, League, RealSport, Region } from "~/api/sccs/types.gen";
 
 export type CreateLeagueData = Partial<CreateLeagueRequest>;
 
@@ -20,16 +10,15 @@ export enum CreationStep {
   CreateRegion = 3,
   CreateLeague = 4,
   Confirm = 5,
-  Final = 6,
 }
 
 interface LeagueStore {
   data: CreateLeagueData;
   step: CreationStep;
-  setSport: (cofig: RealSport | ExistingEntity) => void;
-  setSportRegion: (cofig: RealSport | ExistingEntity) => void;
-  setRegion: (cofig: LeagueRegion | ExistingEntity) => void;
-  setSelectRegion: (cofig: LeagueRegion | ExistingEntity) => void;
+  setSport: (cofig: RealSport | ExistingRealSport) => void;
+  setSportRegion: (cofig: RealSport | ExistingRealSport) => void;
+  setRegion: (cofig: Region | ExistingRegion) => void;
+  setSelectRegion: (cofig: Region | ExistingRegion) => void;
   setLeague: (cofig: League) => void;
   setGoToStep: (step: CreationStep) => void;
   getRequest: () => CreateLeagueRequest | undefined;

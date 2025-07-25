@@ -466,6 +466,7 @@ components:
       required: 
         - region
         - realSport
+        - league
       properties:
         region:
           oneOf:

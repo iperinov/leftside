@@ -1,11 +1,11 @@
-import { Box, Checkbox, Flex, Text, TextField } from "@radix-ui/themes";
+import { Checkbox, Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
+import type { Region } from "~/api/sccs/types.gen";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { CreationStep } from "~/stores/createLeagueStore";
-import type { LeagueRegion } from "~/types/sport/types";
 
 export interface CreateRegionProps {
-  handler: (cfg: LeagueRegion) => void;
+  handler: (cfg: Region) => void;
   onBack?: (step: number) => void;
   onClose: () => void;
   showCancel?: boolean;
@@ -31,9 +31,7 @@ export const CreateRegion = ({ handler, onBack, onClose, showCancel = false }: C
       disableConfirm={!isFormValid}
       onConfirm={() => {
         handler({
-          id: 0,
-          uuid: "",
-          name: name.trim(),
+          description: name.trim(),
           order: parsedOrder,
           enabled,
         });

@@ -1,8 +1,8 @@
 import { Box, Checkbox, Flex, Select, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
+import type { League } from "~/api/sccs/types.gen";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { useTakeBackProfile } from "~/hooks/useTakeBackProfile";
-import type { League } from "~/types/sport/types";
 
 export interface CreateLeagueProps {
   handler: (cfg: League) => void;
@@ -39,20 +39,14 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
       disableConfirm={!isFormValid}
       onConfirm={() => {
         handler({
-          id: 0,
-          uuid: "",
-          name,
-          shortDesc,
-          takeBackProfile: Number.parseInt(takeBackProfile),
-          realSportId: 0,
-          realSportUUID: "",
-          sportId: "",
-          hideForMaster,
-          regionId: 0,
-          regionUUID: "",
+          sport: "",
+          description: name,
+          short: shortDesc,
           order: parsedOrder,
-          teamFKRequired,
-          enabled,
+          teamFkRequired: teamFKRequired,
+          takebackProfile: Number.parseInt(takeBackProfile),
+          hideForMaster: hideForMaster,
+          enabled
         });
       }}
     >

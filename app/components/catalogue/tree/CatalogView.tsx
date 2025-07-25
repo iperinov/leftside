@@ -182,10 +182,11 @@ export default function CatalogView() {
             >
               {catalogRoot && <Tree root={catalogRoot} level={0} {...treeConfig} />}
             </ScrollArea>
-            <WizzardRoot open={creating} create={createLeague} sportId={realSport} regionId={region} onClose={() => setCreating(false)} />
           </Box>
         </LoadDataDecorator>
       </Flex>
+
+      {creating && <WizzardRoot create={createLeague} sportId={realSport} regionId={region} onClose={() => setCreating(false)} />}
 
       {renameSport && (
         <RenameSportDialog
