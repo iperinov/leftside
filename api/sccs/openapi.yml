@@ -1,8 +1,10 @@
 openapi: 3.0.3
+
 info:
   title: Sportsbook Content Configurations Service
   description: "The following document describes the REST API that will be exposed by the Sportsbook Content Configurations service."
   version: 0.0.1
+
 tags:
   - name: auth
     description: "Authentication endpoints"
@@ -10,8 +12,6 @@ tags:
     description: "Catalogue related endpoints"
   - name: config
     description: "Configs related endpoints"
-  - name: books
-    description: "Books related endpoints"
 
 paths:
 ########################### AUTH #######################################
@@ -231,13 +231,19 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/DuplicateConfigResponse'
                   - $ref: '#/components/schemas/ResponseOK'
-########################### BOOKS #######################################
-  /sccs/books/assign:
+
+  /sccs/config/{uuid}/assign:
     post:
       tags:
-        - books
+        - config
       summary: Assigns a config to books
-      operationId: assignBooks
+      operationId: assignConfig
+      parameters: 
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UUID'
       requestBody:
         required: true
         content:
@@ -253,6 +259,7 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/AssignBooksResponse'
                   - $ref: '#/components/schemas/ResponseOK'
+########################### BOOKS #######################################
 #Security
 security:
   - sessionKey: []
@@ -347,20 +354,13 @@ components:
       type: object
       required: 
         - description
-        - short
-        - preGameDelay
-        - liveDelay
+        - order
         - enabled
       properties:
         description:
           minLength: 1
           type: string
-        short:
-          minLength: 1
-          type: string
-        preGameDelay:
-          type: integer
-        liveDelay:
+        order:
           type: integer
         enabled:
           type: boolean
@@ -377,16 +377,24 @@ components:
       type: object
       required: 
         - description
+        - short
+        - preGameDelay
+        - liveDelay
         - order
         - enabled
       properties:
         description:
           minLength: 1
           type: string
-        order:
+        short:
+          minLength: 1
+          type: string
+        preGameDelay:
           type: integer
+        liveDelay:
+          type: integer           
         enabled:
-          type: boolean
+          type: boolean         
           
     ExistingRealSport:
       type: object
@@ -404,7 +412,7 @@ components:
         - short
         - order
         - teamFkRequired
-        - takeBackProfile
+        - takebackProfile
         - hideForMaster
         - enabled
       properties:
@@ -880,19 +888,43 @@ components:
       required:
         - id
         - config
-        - rev
       properties:
         id: 
           type: integer
-        rev:
-          $ref: '#/components/schemas/Revision'
         config: 
           $ref: '#/components/schemas/UUID'
+          
+    UpdateBook:
+      allOf:
+        - $ref: '#/components/schemas/Book'
+        - type: object
+          required:
+            - rev
+          properties:
+            rev:
+                $ref: '#/components/schemas/Revision'
+
+    StoredBook:
+      allOf:
+        - $ref: '#/components/schemas/UpdateBook'
+        - type: object
+          required:
+            - lmt
+            - lmu
+          properties:
+            lmt:
+              $ref: '#/components/schemas/UnixTimestamp'
+            lmu:
+              $ref: '#/components/schemas/Username'  
+    UpdateBooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/UpdateBook'
 
     Books:
       type: array
       items: 
-        $ref: '#/components/schemas/Book'
+        $ref: '#/components/schemas/StoredBook'
         
     BookRev:
       type: object
@@ -912,13 +944,14 @@ components:
         
 ## Requests
     AssignBooksRequest:
-      $ref: '#/components/schemas/Books'
+      $ref: '#/components/schemas/BookRevs'
 ## Responses
     AssignBooksResponse:
       allOf:
         - $ref: '#/components/schemas/ResponseOK'
         - type: object
+          required:
+            - revs
           properties:
             revs:
               $ref: '#/components/schemas/BookRevs'
-
