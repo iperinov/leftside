@@ -1,11 +1,11 @@
 import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateConfigMutation, updateConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
-import type { UpdateConfigResponse } from "~/api/sccs/types.gen";
+import type { UpdateConfigRequest, UpdateConfigResponse } from "~/api/sccs/types.gen";
 import { client } from "~/lib/clients/sccs/client";
 
 interface UpdateConfigurationProps {
   onError?: (error: DefaultError) => void;
-  onSuccess?: (data: UpdateConfigResponse) => void;
+  onSuccess?: (response: UpdateConfigResponse, request: UpdateConfigRequest) => void;
   onSettled?: () => void;
 }
 
@@ -14,9 +14,13 @@ export function useUpdateConfiguration({ onError, onSuccess, onSettled }: Update
   return useMutation({
     ...updateConfigMutation({client: client}),
     onSuccess: (data, variables) => {
-      const updated = data as UpdateConfigResponse;
-      queryClient.invalidateQueries({ queryKey: updateConfigQueryKey(variables) });
-      onSuccess?.(updated);
+      const response = data as UpdateConfigResponse;
+      if (response.code !== 200) {
+        onError?.(new Error(`Login failed: ${response.description}`));
+      } else {
+        queryClient.invalidateQueries({ queryKey: updateConfigQueryKey(variables) });
+        onSuccess?.(response, variables.body);
+      }
     },
     onError: (error) => {
       onError?.(error);

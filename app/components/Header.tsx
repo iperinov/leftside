@@ -1,6 +1,7 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { Box, Button, Flex, Separator, Text } from "@radix-ui/themes";
 import { NavLink, type NavLinkProps, useNavigate } from "react-router";
+import { toast } from "sonner";
 import useLogout from "~/hooks/auth/useLogout";
 import { useAuthStore } from "~/stores/useAuthStore";
 
@@ -30,15 +31,17 @@ export default function Header() {
   const email = useAuthStore((s) => s.auth?.email);
   const navigate = useNavigate();
   const logout = useLogout({
+    onSuccess: () => {
+      useAuthStore.getState().logout();
+      toast.success("Logged out successfully");
+      navigate("/auth");
+    },
     onError: (error) => {
       console.error("Logout failed:", error);
+      toast.error(`Logout failed: ${error.message}`);
     },
-    onSettled: () => {
-      navigate("/");
-    }
   });
   const handleLogout = () => {
-    useAuthStore.getState().logout();
     logout.mutate({});
   };
 

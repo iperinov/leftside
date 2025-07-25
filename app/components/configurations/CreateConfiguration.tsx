@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import type { CreateConfigResponse } from "~/api/sccs/types.gen";
+import type { CreateConfigRequest, CreateConfigResponse } from "~/api/sccs/types.gen";
 import { useConfigurations } from "~/hooks/configuraitons/useConfigurations";
 import { useCreateConfiguration } from "~/hooks/configuraitons/useCreateConfiguration";
 import EditNameDialog from "../dialogs/EditNameDialog";
@@ -15,7 +15,7 @@ export const CreateConfiguration = ({ onClose }: CreateConfigurationProps) => {
   const { data: configurations, isLoading, error } = useConfigurations();
 
   const createConfig = useCreateConfiguration({
-    onSuccess: (response: CreateConfigResponse) => {
+    onSuccess: (response: CreateConfigResponse, request: CreateConfigRequest) => {
       toast.success("Configuration created successfully");
       navigate(`/configuration/${response.uuid}`, {
         state: {

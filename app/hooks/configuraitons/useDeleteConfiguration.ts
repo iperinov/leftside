@@ -1,6 +1,6 @@
 import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteConfigMutation, deleteConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
-import type { DeleteConfigResponse } from "~/api/sccs/types.gen";
+import type { DeleteConfigRequest, DeleteConfigResponse } from "~/api/sccs/types.gen";
 import { client } from "~/lib/clients/sccs/client";
 
 export interface DeleteConfig {
@@ -10,7 +10,7 @@ export interface DeleteConfig {
 
 interface DeleteConfigurationProps {
   onError?: (error: DefaultError) => void;
-  onSuccess?: (response: DeleteConfigResponse) => void;
+  onSuccess?: (response: DeleteConfigResponse, request: DeleteConfigRequest) => void;
   onSettled?: () => void;
 }
 
@@ -19,9 +19,13 @@ export const useDeleteConfiguration = ({ onError, onSuccess, onSettled }: Delete
   return useMutation({
     ...deleteConfigMutation({client: client}),
     onSuccess: (data, variables) => {
-      const created = data as DeleteConfigResponse;
-      queryClient.invalidateQueries({ queryKey: deleteConfigQueryKey(variables) });
-      onSuccess?.(created);
+      const response = data as DeleteConfigResponse;
+      if (response.code !== 200) {
+        onError?.(new Error(`Login failed: ${response.description}`));
+      } else {
+        queryClient.invalidateQueries({ queryKey: deleteConfigQueryKey(variables) });
+        onSuccess?.(response, variables.body);
+      }
     },
     onError: (error) => {
       onError?.(error);
