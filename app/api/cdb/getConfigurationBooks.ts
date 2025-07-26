@@ -15,7 +15,7 @@ export default async function getConfigurationBooks(configID: string): Promise<n
 
   const response = await fetch(url, {
     method: "GET",
-    credentials: 'include', // Ensure cookies are sent if needed
+    credentials: "include", // Ensure cookies are sent if needed
   });
 
   if (!response.ok) {

@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import type {
   AllFilter,
-  StoredConfig,
   Filter,
   FilterGroup,
   FilterType,
@@ -18,6 +17,7 @@ import type {
   RegionFilter,
   SportFilter,
   StatusFilter,
+  StoredConfig,
   TimeFilter,
 } from "~/api/sccs/types.gen";
 import { allFilter, allItemNumber, allItemString } from "~/components/categories/AllItemData";

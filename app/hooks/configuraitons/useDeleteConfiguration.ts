@@ -17,11 +17,11 @@ interface DeleteConfigurationProps {
 export const useDeleteConfiguration = ({ onError, onSuccess, onSettled }: DeleteConfigurationProps) => {
   const queryClient = useQueryClient();
   return useMutation({
-    ...deleteConfigMutation({client: client}),
+    ...deleteConfigMutation({ client: client }),
     onSuccess: (data, variables) => {
       const response = data as DeleteConfigResponse;
       if (response.code !== 200) {
-        onError?.(new Error(`Login failed: ${response.description}`));
+        onError?.(new Error(`Delete configuration failed with code (${response.code}): ${response.description}`));
       } else {
         queryClient.invalidateQueries({ queryKey: deleteConfigQueryKey(variables) });
         onSuccess?.(response, variables.body);

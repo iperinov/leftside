@@ -16,7 +16,7 @@ export default function useLogout({ onError, onSuccess, onSettled }: LogoutProps
     onSuccess: (data, variables) => {
       const response = data as LogoutResponse;
       if (response.code !== 200) {
-        onError?.(new Error(`Login failed: ${response.description}`));
+        onError?.(new Error(`Logout failed with code (${response.code}): ${response.description}`));
       } else {
         queryClient.invalidateQueries({ queryKey: logoutQueryKey(variables) });
         onSuccess?.(response);

@@ -16,7 +16,7 @@ export const getConfiguration = async (configID: string): Promise<StoredConfig> 
 
   const response = await fetch(url, {
     method: "GET",
-    credentials: 'include', // Ensure cookies are sent if needed
+    credentials: "include", // Ensure cookies are sent if needed
   });
 
   if (!response.ok) {

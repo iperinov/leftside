@@ -21,7 +21,7 @@ export default function useFilteredMarketsBy(sportFilter: SportFilter, leagueFil
   if (isLoading || error) return { data: undefined, isLoading, error };
   if (!events || !leagueByEvent || !catalog) return { data: [], isLoading, error };
 
-  const sportsForSelectedLeagues = catalog.filteredSportsBy(isAllLeaguesSelected ? [allItemString.id] : leagueFilter.value as string[]);
+  const sportsForSelectedLeagues = catalog.filteredSportsBy(isAllLeaguesSelected ? [allItemString.id] : (leagueFilter.value as string[]));
   const filteredSports = isAllSportsSelected
     ? sportsForSelectedLeagues.map((sport) => String(sport.id))
     : (sportFilter.value as string[]).filter((sportUUID) => sportsForSelectedLeagues.find((sport) => sportUUID === sport.uuid));

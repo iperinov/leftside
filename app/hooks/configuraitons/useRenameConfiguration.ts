@@ -12,11 +12,11 @@ interface RenameConfigurationProps {
 export function useRenameConfiguration({ onError, onSuccess, onSettled }: RenameConfigurationProps) {
   const queryClient = useQueryClient();
   return useMutation({
-    ...renameConfigMutation({client: client}),
+    ...renameConfigMutation({ client: client }),
     onSuccess: (data, variables) => {
       const response = data as RenameConfigResponse;
       if (response.code !== 200) {
-        onError?.(new Error(`Login failed: ${response.description}`));
+        onError?.(new Error(`Rename configuration failed with code (${response.code}): ${response.description}`));
       } else {
         queryClient.invalidateQueries({ queryKey: renameConfigQueryKey(variables) });
         onSuccess?.(response, variables.body);

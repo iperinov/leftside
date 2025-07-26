@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 
 interface RenameLeagueProps {
-  uuid: string; 
+  uuid: string;
   name: string;
   onClose: () => void;
   onRename: (newName: string) => void;

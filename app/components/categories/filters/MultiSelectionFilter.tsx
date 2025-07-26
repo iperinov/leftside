@@ -1,11 +1,11 @@
 import { useState } from "react";
+import type { AllFilter } from "~/api/sccs/types.gen";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import type ItemData from "~/types/ItemData";
-import { allFilter, isAllArray} from "../AllItemData";
+import { allFilter, isAllArray } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
 import styles from "./Filters.module.css";
-import type { AllFilter } from "~/api/sccs/types.gen";
 
 interface MultiSelectionFilterProps<T extends string | number> {
   keyStr: string;

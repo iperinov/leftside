@@ -43,7 +43,7 @@ export const defaultAppConfig: AppConfig = {
     timeout: 10000,
   },
   ocs: {
-    baseUrl: import.meta.env.VITE_OCS_BASE_URL || "http://integ-fbsd-apps.im.priv:8080",
+    baseUrl: import.meta.env.VITE_OCS_BASE_URL || "http://ocs-integ.im.priv",
     timeout: 10000,
   },
   ssm: {

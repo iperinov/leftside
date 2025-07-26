@@ -14,10 +14,14 @@ interface MarketFilterProps {
 }
 
 function choices(markets: Event[]): ItemData<number>[] {
-  return markets.flatMap((market) => ( market.id && market.description ? {
-    id: market.id,
-    name: market.description,
-  } : []));
+  return markets.flatMap((market) =>
+    market.id && market.description
+      ? {
+          id: market.id,
+          name: market.description,
+        }
+      : [],
+  );
 }
 
 export default function MarketFilter({ categoryUUID, filterGroupUUID, onChange }: MarketFilterProps & FilterGroupProps) {

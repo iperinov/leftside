@@ -1,8 +1,8 @@
 import { Box, Flex, ScrollArea, Separator } from "@radix-ui/themes";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import type { CreateLeagueRequest } from "~/api/sccs/types.gen";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
-import type { CreateLeagueRequest } from "~/stores/createLeagueStore";
 import SearchBar from "../../SearchBar";
 import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import Tree from "../../tree/Tree";

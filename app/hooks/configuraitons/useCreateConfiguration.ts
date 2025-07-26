@@ -12,11 +12,11 @@ interface CreateConfigurationProps {
 export function useCreateConfiguration({ onError, onSuccess, onSettled }: CreateConfigurationProps) {
   const queryClient = useQueryClient();
   return useMutation({
-    ...createConfigMutation({client: client}),
+    ...createConfigMutation({ client: client }),
     onSuccess: (data, variables) => {
       const response = data as CreateConfigResponse;
       if (response.code !== 200) {
-        onError?.(new Error(`Login failed: ${response.description}`));
+        onError?.(new Error(`Create configuration failed with code (${response.code}): ${response.description}`));
       } else {
         queryClient.invalidateQueries({ queryKey: createConfigQueryKey(variables) });
         onSuccess?.(response, variables.body);

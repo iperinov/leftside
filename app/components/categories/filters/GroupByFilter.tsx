@@ -47,7 +47,9 @@ export default function GroupByFilter(props: FilterGroupProps) {
       title={"Group by"}
       items={choices}
       selection={groupByFilter(props.categoryUUID, props.filterGroupUUID)?.join(".") || ""}
-      updateFilterSelection={(categoryUUID, filterGroupUUID, selected) => updateGroupByFilters(categoryUUID, filterGroupUUID, selected !== "" ? selected.split(".") : [])}
+      updateFilterSelection={(categoryUUID, filterGroupUUID, selected) =>
+        updateGroupByFilters(categoryUUID, filterGroupUUID, selected !== "" ? selected.split(".") : [])
+      }
       {...props}
     />
   );

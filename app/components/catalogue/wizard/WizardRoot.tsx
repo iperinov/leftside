@@ -2,16 +2,16 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Dialog } from "radix-ui";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import type { CreateLeagueRequest, ExistingRegion, League, RealSport, Region } from "~/api/sccs/types.gen";
+import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import { useCatalog } from "~/hooks/catalog/useCatalog";
+import { useCreateLeague } from "~/hooks/catalog/useCreateLeague";
 import { CreationStep, useCreateLeagueStore } from "~/stores/createLeagueStore";
 import { ConfirmSubmission } from "./steps/ConfirmSubmission";
 import { CreateLeague } from "./steps/CreateLeague";
 import { CreateRegion } from "./steps/CreateRegion";
 import { CreateSport } from "./steps/CreateSport";
 import { SelectRegion } from "./steps/SelectRegion";
-import { useCreateLeague } from "~/hooks/catalog/useCreateLeague";
-import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import type { CreateLeagueRequest, ExistingRegion, League, RealSport, Region } from "~/api/sccs/types.gen";
 
 export interface WizzardProps {
   onClose: () => void;

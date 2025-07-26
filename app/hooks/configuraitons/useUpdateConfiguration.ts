@@ -12,11 +12,11 @@ interface UpdateConfigurationProps {
 export function useUpdateConfiguration({ onError, onSuccess, onSettled }: UpdateConfigurationProps) {
   const queryClient = useQueryClient();
   return useMutation({
-    ...updateConfigMutation({client: client}),
+    ...updateConfigMutation({ client: client }),
     onSuccess: (data, variables) => {
       const response = data as UpdateConfigResponse;
       if (response.code !== 200) {
-        onError?.(new Error(`Login failed: ${response.description}`));
+        onError?.(new Error(`Update configuration failed with code (${response.code}): ${response.description}`));
       } else {
         queryClient.invalidateQueries({ queryKey: updateConfigQueryKey(variables) });
         onSuccess?.(response, variables.body);

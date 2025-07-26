@@ -32,6 +32,7 @@ export class Catalog implements CatalogActions {
 
   constructor(catalogItems: CatalogItem[], realSports: RealSport[], regions: Region[], leagues: League[]) {
     this.sports = [];
+    console.log("construct catalog with: ", catalogItems);
     for (const item of catalogItems) {
       const sport = realSports.find((s) => s.uuid === item.realSportUUID);
       const region = regions.find((r) => r.uuid === item.regionUUID);

@@ -46,7 +46,7 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
           teamFkRequired: teamFKRequired,
           takebackProfile: Number.parseInt(takeBackProfile),
           hideForMaster: hideForMaster,
-          enabled
+          enabled,
         });
       }}
     >

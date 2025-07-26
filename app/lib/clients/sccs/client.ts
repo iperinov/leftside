@@ -1,6 +1,9 @@
 import { createClient } from "~/api/ocs/client/client";
 import { defaultAppConfig } from "~/config/appConfig";
+import { createClientConfig } from "./customFetch";
 
-export const client = createClient({
-  baseUrl: defaultAppConfig.sccs.baseUrl,
-});
+export const client = createClient(
+  createClientConfig({
+    baseUrl: defaultAppConfig.sccs.baseUrl,
+  }),
+);

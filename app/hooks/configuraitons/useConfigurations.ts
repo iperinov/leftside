@@ -5,11 +5,19 @@ import getConfigurations from "~/api/cdb/getAllConfigurations";
 import { queryKeys } from "../../lib/queryKeys";
 
 export const useConfigurations = () => {
-  const { data: configs, isLoading: isConfigsLoading, error: errorConfigs } = useQuery({
+  const {
+    data: configs,
+    isLoading: isConfigsLoading,
+    error: errorConfigs,
+  } = useQuery({
     queryKey: queryKeys.configurations(),
     queryFn: getConfigurations,
   });
-  const { data: books, isLoading: isLoadingBooks, error: errorBooks } = useQuery({
+  const {
+    data: books,
+    isLoading: isLoadingBooks,
+    error: errorBooks,
+  } = useQuery({
     queryKey: queryKeys.configurationsBooks(),
     queryFn: getAllConfigurationsBooks,
   });
@@ -25,7 +33,7 @@ export const useConfigurations = () => {
               lmu: config.lmu,
               rev: config.rev,
               books: books.find((b) => b.configID === config.uuid)?.books || [],
-            } as Configuration)
+            }) as Configuration,
         )
       : undefined;
 

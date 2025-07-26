@@ -11,7 +11,9 @@ export default function ConfigurationHeader({ edit, className }: ConfigurationHe
   //const updateConfigurationName = useCategoryTreeStore((state) => state.updateConfigurationName);
   return (
     <Flex align={"center"} gap="2" className={className}>
-      <Text>{`${edit ? "Edit:" : "Create:"}`} {edit ? "Edit:" : "Create:"}</Text>
+      <Text>
+        {`${edit ? "Edit:" : "Create:"}`} {edit ? "Edit:" : "Create:"}
+      </Text>
       <Text>{configurationName}</Text>
       {/*<TextField.Root style={{ width: "300px" }} value={configurationName} onChange={(e) => updateConfigurationName(e.target.value)} />*/}
     </Flex>
