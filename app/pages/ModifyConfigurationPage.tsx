@@ -11,6 +11,8 @@ import { useUpdateConfiguration } from "~/hooks/configuraitons/useUpdateConfigur
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { useAuthStore } from "~/stores/useAuthStore";
 import styles from "./ModifyConfigurationPage.module.css";
+import { useAssignConfig } from "~/hooks/configuraitons/useAssignConfig";
+import type { BookRev } from "~/api/sccs/types.gen";
 
 interface ModifyConfigurationPageProps {
   uuid?: string;
@@ -23,6 +25,7 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
   const navigate = useNavigate();
   const configuration = useCategoryTreeStore((state) => state.configuration);
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
+  const assignedBooks = useCategoryTreeStore((state) => state.assignedBooks);
   const email = useAuthStore((state) => state.auth?.email);
   const updateConfig = useUpdateConfiguration({
     onSuccess: (response) => {
@@ -30,6 +33,18 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
     },
     onError: (error) => {
       toast.error("Failed to update configuration");
+      console.error(error);
+    },
+    onSettled: () => {
+      navigate("/configurations/");
+    },
+  });
+  const assignConfig = useAssignConfig({
+    onSuccess: (response) => {
+      toast.success("Configuration assigned successfully");
+    },
+    onError: (error) => {
+      toast.error("Failed to assign configuration");
       console.error(error);
     },
     onSettled: () => {
@@ -53,10 +68,17 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
         categories: rootCategory.children || [],
       },
     });
+    assignConfig.mutate({
+      path: { uuid: selectedUUID },
+      body: assignedBooks.map((book) => ({
+          id: book.id,
+          rev: book.rev,
+      } as BookRev))
+    });
   };
 
   return (
-    <LoadDataDecorator error={error} isLoading={isLoading || updateConfig.isPending}>
+    <LoadDataDecorator error={error} isLoading={isLoading || updateConfig.isPending || assignConfig.isPending}>
       <Flex direction="column" className={styles.page}>
         <ConfigurationHeader edit={edit} className={styles.header} />
         <ConfigurationContent selectedUUID={selectedUUID} setSelectedID={setSelectedUUID} className={styles.content} />

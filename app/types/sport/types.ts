@@ -70,4 +70,5 @@ export interface Book {
   name: string; // maps from 'name'
   webColumnId: number; // maps from 'wcid'
   enabled: boolean; // maps from 'enabled'
+  rev: string;
 }

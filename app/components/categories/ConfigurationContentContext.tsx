@@ -1,20 +1,20 @@
 import { Box, Flex } from "@radix-ui/themes";
-import { useState } from "react";
-import type { FilterGroup } from "~/api/sccs/types.gen";
+import { useRef, useState } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import AssignedBooks from "../configurations/AssignedBooks";
 import ContentPreview from "../configurations/ContentPreview";
 import type ClassNameProps from "../shared/ClassNameProps";
+import type { Book } from "~/types/sport/types";
 
 interface ConfigurationContentContextProps {
   categoryID: string;
+  books?: Book[];
 }
 
-export default function ConfigurationContentContext({ categoryID, className }: ConfigurationContentContextProps & ClassNameProps) {
+export default function ConfigurationContentContext({ categoryID, className, books }: ConfigurationContentContextProps & ClassNameProps) {
   const findCategory = useCategoryTreeStore((state) => state.findCategory);
-  const books = [1, 16, 26, 27, 28];
-  const [assignedBooks, setAssignedBooks] = useState<number[]>(books);
-  const [originalAssignedBooks, setOriginalAssignedBooks] = useState<number[]>(books);
+  const assignBooks = useCategoryTreeStore((state) => state.assignBooks);
+  const assignedBooks = useCategoryTreeStore((state) => state.assignedBooks);
   const category = findCategory(categoryID);
   const filterGroups = category?.filterGroups;
 
@@ -32,7 +32,7 @@ export default function ConfigurationContentContext({ categoryID, className }: C
       }}
     >
       <Box style={{ backgroundColor: "var(--accent-4)" }}>
-        <AssignedBooks assignedBooks={assignedBooks} originalAssignedBooks={originalAssignedBooks} onUpdate={setAssignedBooks} />
+        <AssignedBooks assignedBooks={assignedBooks} onChange={assignBooks} />
       </Box>
 
       <Box style={{ height: "1px", backgroundColor: "var(--accent-11)" }} />

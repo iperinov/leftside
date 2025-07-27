@@ -6,7 +6,7 @@ export default async function getConfigurationBooks(configID: string): Promise<n
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
-  const url = new URL(`sccs/_design/books/_view/by_id?key=${configID}`, cdbUrl);
+  const url = new URL(`sccs/_design/books/_view/by_config?key=${configID}`, cdbUrl);
   console.log("getBooks: ", cdbUrl, url);
 
   // MOCK:
@@ -23,5 +23,5 @@ export default async function getConfigurationBooks(configID: string): Promise<n
   }
   const data: CdbViewResponse<BookPerConfiguration> = await response.json();
 
-  return data.rows.map((item) => item.value).flatMap((item) => item.bookID);
+  return data.rows.flatMap((item) => item.value).flatMap((item) => item.bookID);
 }

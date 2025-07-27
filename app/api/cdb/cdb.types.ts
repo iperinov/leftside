@@ -1,4 +1,4 @@
-interface CbdBase {
+export interface CbdBase {
   _id: string;
   _rev: string;
 }
