@@ -53,12 +53,12 @@ interface CategoryTreeGetters {
     categoryUUID: string,
     filterGroupUUID: string,
     type: FilterType,
-  ) => SportFilter | RegionFilter | GameFilter | LeagueFilter | PeriodFilter | MarketFilter | StatusFilter | TimeFilter;
-  sportFilters: (categoryUUID: string, filterGroupUUID: string) => SportFilter;
-  leagueFilters: (categoryUUID: string, filterGroupUUID: string) => LeagueFilter;
-  marketFilters: (categoryUUID: string, filterGroupUUID: string) => MarketFilter;
-  statusFilter: (categoryUUID: string, filterGroupUUID: string) => StatusFilter;
-  timeFilter: (categoryUUID: string, filterGroupUUID: string) => TimeFilter;
+  ) => SportFilter | RegionFilter | GameFilter | LeagueFilter | PeriodFilter | MarketFilter | StatusFilter | TimeFilter | undefined;
+  sportFilters: (categoryUUID: string, filterGroupUUID: string) => SportFilter | undefined;
+  leagueFilters: (categoryUUID: string, filterGroupUUID: string) => LeagueFilter | undefined;
+  marketFilters: (categoryUUID: string, filterGroupUUID: string) => MarketFilter | undefined;
+  statusFilter: (categoryUUID: string, filterGroupUUID: string) => StatusFilter | undefined;
+  timeFilter: (categoryUUID: string, filterGroupUUID: string) => TimeFilter | undefined;
   sortByFilter: (categoryUUID: string, filterGroupUUID: string) => OrderType | undefined;
   limitFilter: (categoryUUID: string, filterGroupUUID: string) => number | undefined;
   groupByFilter: (categoryUUID: string, filterGroupUUID: string) => GroupType | undefined;
@@ -131,7 +131,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
       const filter = get()
         .getFilterGroup(categoryUUID, filterGroupUUID)
         ?.filters.find((filter) => filter.type === type);
-      if (!filter) throw new Error(`Filter of type ${type} not found in category ${categoryUUID} and group ${filterGroupUUID}`);
+      if (!filter) return undefined;
 
       switch (type) {
         case "sport":

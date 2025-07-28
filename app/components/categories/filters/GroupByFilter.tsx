@@ -6,11 +6,11 @@ import { isAllFilter } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 
-function generateChoices(sportFilter: SportFilter, marketFilter: MarketFilter): ItemData<string>[] {
-  const isAllMarketsSelected = isAllFilter(marketFilter);
+function generateChoices(sportFilter?: SportFilter, marketFilter?: MarketFilter): ItemData<string>[] {
+  const isAllMarketsSelected = !marketFilter || isAllFilter(marketFilter);
   const marketsSelected = isAllMarketsSelected ? -1 : (marketFilter.value as FiltersTypeInteger).length;
 
-  const isAllSportsSelected = isAllFilter(sportFilter);
+  const isAllSportsSelected = !sportFilter || isAllFilter(sportFilter);
   const sportsSelected = isAllSportsSelected ? -1 : (sportFilter.value as FiltersTypeString).length;
 
   switch (true) {

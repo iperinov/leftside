@@ -20,8 +20,8 @@ export default function SportsFilter({ categoryUUID, filterGroupUUID, onChange }
   const { data: catalog, isLoading, error } = useCatalog();
   const sportFilters = useCategoryTreeStore((state) => state.sportFilters);
   const updateSportsFilters = useCategoryTreeStore((state) => state.updateSportsFilter);
-  const filterValue = sportFilters(categoryUUID, filterGroupUUID).value;
-  const selections = isAllFilter(filterValue) ? [allItemString.id] : (filterValue as string[]);
+  const filterValue = sportFilters(categoryUUID, filterGroupUUID)?.value;
+  const selections = filterValue === undefined ? [] : isAllFilter(filterValue) ? [allItemString.id] : (filterValue as string[]);
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>

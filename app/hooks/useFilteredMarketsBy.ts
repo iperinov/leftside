@@ -4,13 +4,13 @@ import { useCatalog } from "./catalog/useCatalog";
 import { useEvents } from "./useEvents";
 import { useLeagueByEvent } from "./useLeagueByEvent";
 
-export default function useFilteredMarketsBy(sportFilter: SportFilter, leagueFilter: LeagueFilter) {
+export default function useFilteredMarketsBy(sportFilter?: SportFilter, leagueFilter?: LeagueFilter) {
   const { data: events, isLoading: isLoadingEvents, error: errorEvents } = useEvents();
   const { data: leagueByEvent, isLoading: isLoadingLeagueByEvent, error: errorLeagueByEvent } = useLeagueByEvent();
   const { data: catalog, isLoading: isLoadingCatalog, error: errorCatalog } = useCatalog();
 
-  const isAllSportsSelected = isAllFilter(sportFilter.value);
-  const isAllLeaguesSelected = isAllFilter(leagueFilter.value);
+  const isAllSportsSelected = !sportFilter || isAllFilter(sportFilter.value);
+  const isAllLeaguesSelected = !leagueFilter || isAllFilter(leagueFilter.value);
   if (isAllSportsSelected && isAllLeaguesSelected) {
     // all
     return { data: events, isLoading: isLoadingEvents, error: errorEvents };
