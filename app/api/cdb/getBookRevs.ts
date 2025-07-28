@@ -1,14 +1,15 @@
 import { getAppConfig } from "~/lib/runtimeConfig";
-import type { CbdBase, CdbViewResponse } from "./cdb.types";
 import type { BookRev } from "../sccs/types.gen";
+import type { CbdBase, CdbViewResponse } from "./cdb.types";
 
-type CdbBook = CbdBase & BookRev
+type CdbBook = CbdBase & BookRev;
 
 export default async function getBookRevs(): Promise<BookRev[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
-  const url = new URL(`sccs/_design/books/_view/by_id`, cdbUrl);
+  //TODO: Make it more flexible /sccsdb/sccs - should be in config 
+  const url = new URL("/sccsdb/sccs/_design/books/_view/by_id", cdbUrl);
   console.log("getBooks: ", cdbUrl, url);
 
   const response = await fetch(url, {
@@ -20,5 +21,5 @@ export default async function getBookRevs(): Promise<BookRev[]> {
 
   const data: CdbViewResponse<CdbBook> = await response.json();
 
-  return data.rows.flatMap((item) => item.value).map((item) => ({id: item.id, rev: item.rev}));
+  return data.rows.flatMap((item) => item.value).map((item) => ({ id: item.id, rev: item.rev }));
 }

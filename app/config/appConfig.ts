@@ -39,11 +39,11 @@ export interface AppConfig {
 
 export const defaultAppConfig: AppConfig = {
   sccs: {
-    baseUrl: import.meta.env.VITE_SCS_BASE_URL || "http://sccs-integ.im.priv/",
+    baseUrl: import.meta.env.VITE_SCS_BASE_URL || "https://scdashboard.integ/sccs-service",
     timeout: 10000,
   },
   ocs: {
-    baseUrl: import.meta.env.VITE_OCS_BASE_URL || "http://ocs-integ.im.priv",
+    baseUrl: import.meta.env.VITE_OCS_BASE_URL || "https://scdashboard.integ/oro-service",
     timeout: 10000,
   },
   ssm: {
@@ -51,7 +51,7 @@ export const defaultAppConfig: AppConfig = {
     timeout: 10000,
   },
   cdb: {
-    baseUrl: import.meta.env.VITE_CDB_BASE_URL || "http://couchdb-integ.im.priv",
+    baseUrl: import.meta.env.VITE_CDB_BASE_URL || "https://scdashboard.integ/sccsdb",
     timeout: 10000,
   },
   features: {

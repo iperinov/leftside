@@ -53,7 +53,7 @@ interface CategoryTreeGetters {
   filter: (
     categoryUUID: string,
     filterGroupUUID: string,
-    type: FilterType
+    type: FilterType,
   ) => SportFilter | RegionFilter | GameFilter | LeagueFilter | PeriodFilter | MarketFilter | StatusFilter | TimeFilter;
   sportFilters: (categoryUUID: string, filterGroupUUID: string) => SportFilter;
   leagueFilters: (categoryUUID: string, filterGroupUUID: string) => LeagueFilter;
@@ -82,7 +82,7 @@ interface CategoryTreeMutations {
     categoryUUID: string,
     filterGroupUUID: string,
     type: FilterType,
-    selected: S
+    selected: S,
   ) => void;
   updateSportsFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[] | AllFilter) => void;
   updateLeaguesFilter: (categoryUUID: string, filterGroupUUID: string, selected: string[] | AllFilter) => void;
@@ -115,7 +115,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
     },
 
     // Assigned Books Mutations
-    assignBook: (book) =>  set((state) => ({ assignedBooks: [...state.assignedBooks, book] })),
+    assignBook: (book) => set((state) => ({ assignedBooks: [...state.assignedBooks, book] })),
     assignBooks: (books) => set({ assignedBooks: books }),
 
     // Getters
@@ -298,7 +298,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
       categoryUUID: string,
       filterGroupUUID: string,
       type: FilterType,
-      selected: S
+      selected: S,
     ) => {
       const rootCategory = structuredClone(get().rootCategory);
       const category = findItem(categoryUUID, rootCategory);
@@ -371,7 +371,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
       filterGroup.groupBy = selected;
       set({ rootCategory: rootCategory });
     },
-  })
+  }),
 );
 
 // export const useCategoryTreeStore = (selector: (state: CategoryTreeState & CategoryTreeGetters & CategoryTreeMutations) => any) =>

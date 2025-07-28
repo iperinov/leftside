@@ -2,6 +2,7 @@ import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-
 import { duplicateConfigMutation, duplicateConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { DuplicateConfigRequest, DuplicateConfigResponse } from "~/api/sccs/types.gen";
 import { client } from "~/lib/clients/sccs/client";
+import { queryKeys } from "~/lib/queryKeys";
 
 interface DuplicateConfigurationProps {
   onError?: (error: DefaultError) => void;
@@ -18,7 +19,7 @@ export function useDuplicateConfiguration({ onError, onSuccess, onSettled }: Dup
       if (response.code !== 200) {
         onError?.(new Error(`Login failed with code (${response.code}): ${response.description}`));
       } else {
-        queryClient.invalidateQueries({ queryKey: duplicateConfigQueryKey(variables) });
+        queryClient.invalidateQueries({ queryKey: queryKeys.configurations() });
         onSuccess?.(response, variables.body);
       }
     },

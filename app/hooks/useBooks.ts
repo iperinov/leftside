@@ -17,7 +17,7 @@ function toBooks(data?: BookArray): Book[] {
             name: book.name,
             webColumnId: book.wcid,
             enabled: book.enabled,
-          } as Book)
+          }) as Book,
       )
     : [];
 }
@@ -39,7 +39,6 @@ export const useBooks = () => {
     queryFn: getBookRevs,
   });
 
-
   const data: Book[] | undefined =
     bookNames && bookRevs
       ? bookNames.map(
@@ -50,7 +49,7 @@ export const useBooks = () => {
               webColumnId: name.wcid,
               enabled: name.enabled,
               rev: bookRevs.find((rev) => rev.id === name.bid)?.rev || "",
-            } as Book)
+            }) as Book,
         )
       : undefined;
 

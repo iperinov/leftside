@@ -2,17 +2,17 @@ import { Flex } from "@radix-ui/themes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import type { BookRev } from "~/api/sccs/types.gen";
 import ConfigurationContent from "~/components/categories/ConfigurationContent";
 import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
 import { useInitConfigStore } from "~/hooks/categories/useInitConfigStore";
+import { useAssignConfig } from "~/hooks/configuraitons/useAssignConfig";
 import { useUpdateConfiguration } from "~/hooks/configuraitons/useUpdateConfiguration";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { useAuthStore } from "~/stores/useAuthStore";
 import styles from "./ModifyConfigurationPage.module.css";
-import { useAssignConfig } from "~/hooks/configuraitons/useAssignConfig";
-import type { BookRev } from "~/api/sccs/types.gen";
 
 interface ModifyConfigurationPageProps {
   uuid?: string;
@@ -70,10 +70,13 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
     });
     assignConfig.mutate({
       path: { uuid: selectedUUID },
-      body: assignedBooks.map((book) => ({
-          id: book.id,
-          rev: book.rev,
-      } as BookRev))
+      body: assignedBooks.map(
+        (book) =>
+          ({
+            id: book.id,
+            rev: book.rev,
+          }) as BookRev,
+      ),
     });
   };
 

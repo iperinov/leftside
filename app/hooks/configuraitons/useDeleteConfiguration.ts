@@ -2,6 +2,7 @@ import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-
 import { deleteConfigMutation, deleteConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { DeleteConfigRequest, DeleteConfigResponse } from "~/api/sccs/types.gen";
 import { client } from "~/lib/clients/sccs/client";
+import { queryKeys } from "~/lib/queryKeys";
 
 export interface DeleteConfig {
   uuid: string;
@@ -23,7 +24,7 @@ export const useDeleteConfiguration = ({ onError, onSuccess, onSettled }: Delete
       if (response.code !== 200) {
         onError?.(new Error(`Delete configuration failed with code (${response.code}): ${response.description}`));
       } else {
-        queryClient.invalidateQueries({ queryKey: deleteConfigQueryKey(variables) });
+        queryClient.invalidateQueries({ queryKey: queryKeys.configurations() });
         onSuccess?.(response, variables.body);
       }
     },

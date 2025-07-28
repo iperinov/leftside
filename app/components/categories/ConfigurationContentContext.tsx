@@ -1,10 +1,10 @@
 import { Box, Flex } from "@radix-ui/themes";
 import { useRef, useState } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
+import type { Book } from "~/types/sport/types";
 import AssignedBooks from "../configurations/AssignedBooks";
 import ContentPreview from "../configurations/ContentPreview";
 import type ClassNameProps from "../shared/ClassNameProps";
-import type { Book } from "~/types/sport/types";
 
 interface ConfigurationContentContextProps {
   categoryID: string;

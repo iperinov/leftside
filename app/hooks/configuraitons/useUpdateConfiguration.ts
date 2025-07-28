@@ -2,6 +2,7 @@ import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-
 import { updateConfigMutation, updateConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { UpdateConfigRequest, UpdateConfigResponse } from "~/api/sccs/types.gen";
 import { client } from "~/lib/clients/sccs/client";
+import { queryKeys } from "~/lib/queryKeys";
 
 interface UpdateConfigurationProps {
   onError?: (error: DefaultError) => void;
@@ -18,7 +19,7 @@ export function useUpdateConfiguration({ onError, onSuccess, onSettled }: Update
       if (response.code !== 200) {
         onError?.(new Error(`Update configuration failed with code (${response.code}): ${response.description}`));
       } else {
-        queryClient.invalidateQueries({ queryKey: updateConfigQueryKey(variables) });
+        queryClient.invalidateQueries({ queryKey: queryKeys.configurations() });
         onSuccess?.(response, variables.body);
       }
     },

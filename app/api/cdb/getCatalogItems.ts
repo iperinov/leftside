@@ -6,7 +6,8 @@ export default async function getCatalogItems(): Promise<CatalogItem[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
-  const url = new URL("/sccs/_design/catalogue/_view/by_league", cdbUrl);
+  //TODO: Make it more flexible /sccsdb/sccs - should be in config 
+  const url = new URL("/sccsdb/sccs/_design/catalogue/_view/by_league", cdbUrl);
   console.log("getLeagues: ", cdbUrl, url);
 
   // MOCK:

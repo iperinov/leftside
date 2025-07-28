@@ -6,7 +6,8 @@ export default async function getAllConfigurationsBooks(): Promise<{ configID: s
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
-  const url = new URL("sccs/_design/books/_view/by_config", cdbUrl);
+  //TODO: Make it more flexible /sccsdb/sccs - should be in config 
+  const url = new URL("/sccsdb/sccs/_design/books/_view/by_config", cdbUrl);
   console.log("getBooks: ", cdbUrl, url);
 
   // MOCK:

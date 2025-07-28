@@ -2,6 +2,7 @@ import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-
 import { createConfigMutation, createConfigQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { CreateConfigRequest, CreateConfigResponse } from "~/api/sccs/types.gen";
 import { client } from "~/lib/clients/sccs/client";
+import { queryKeys } from "~/lib/queryKeys";
 
 interface CreateConfigurationProps {
   onError?: (error: DefaultError) => void;
@@ -18,7 +19,7 @@ export function useCreateConfiguration({ onError, onSuccess, onSettled }: Create
       if (response.code !== 200) {
         onError?.(new Error(`Create configuration failed with code (${response.code}): ${response.description}`));
       } else {
-        queryClient.invalidateQueries({ queryKey: createConfigQueryKey(variables) });
+        queryClient.invalidateQueries({ queryKey: queryKeys.configurations() });
         onSuccess?.(response, variables.body);
       }
     },

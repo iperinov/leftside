@@ -16,7 +16,7 @@ export default function AssignedBooks({ assignedBooks, onChange }: AssignedBooks
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newlySelected, setNewlySelected] = useState<Book[]>([]);
   const originalAssignedBooks = useRef<Book[]>(assignedBooks);
-  
+
   const columnCount = 3;
   const columnWidth = 200;
 
