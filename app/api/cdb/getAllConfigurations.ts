@@ -7,7 +7,7 @@ export default async function getAllConfigurations(): Promise<StoredConfig[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
-  //TODO: Make it more flexible /sccsdb/sccs - should be in config 
+  //TODO: Make it more flexible /sccsdb/sccs - should be in config
   const url = new URL("/sccsdb/sccs/_design/config/_view/by_uuid", cdbUrl);
   console.log("getLeagues: ", cdbUrl, url);
 

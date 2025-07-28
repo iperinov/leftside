@@ -13,11 +13,7 @@ export const useConfigurations = () => {
     queryKey: queryKeys.configurations(),
     queryFn: getConfigurations,
   });
-  const {
-    data: books,
-    isLoading: isLoadingBooks,
-    error: errorBooks,
-  } = useAllConfigurationsBooks()
+  const { data: books, isLoading: isLoadingBooks, error: errorBooks } = useAllConfigurationsBooks();
 
   const data: Configuration[] | undefined =
     configs && books

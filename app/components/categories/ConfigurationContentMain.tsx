@@ -13,10 +13,11 @@ interface ConfigurationContentMainProps {
 }
 
 export default function ConfigurationContentMain({ categoryUUID, className }: ConfigurationContentMainProps & ClassNameProps) {
-  const category = useCategoryTreeStore((state) => state.findCategory(categoryUUID));
+  const findCategory = useCategoryTreeStore((state) => state.findCategory);
   const addEmptyFilterGroup = useCategoryTreeStore((state) => state.addEmptyFilterGroup);
   const [duplicateItemData, setDuplicateItemData] = useState<{ categoryUUID: string; filterGroupUUID: string }>();
   const [deleteItemData, setDeleteItemData] = useState<{ categoryUUID: string; filterGroupUUID: string }>();
+  const category = findCategory(categoryUUID);
   const isFlatCategory = category?.type === "flat";
   const hasFilters = isFlatCategory && category?.filterGroups ? category.filterGroups?.length > 0 : false;
 

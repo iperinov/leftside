@@ -53,12 +53,11 @@ export default function LoginForm({ onSuccess, onFail }: LoginFormProps) {
       >
         <Flex direction="column" gap="1" py="2">
           <Text size="2">Username</Text>
-          <TextField.Root ref={usernameRef} name="username" defaultValue="iperinov@dev.priv" required placeholder="Username" autoComplete="username" />
+          <TextField.Root ref={usernameRef} name="username" required placeholder="Username" autoComplete="username" />
           <Text size="2">Password</Text>
           <TextField.Root
             ref={passwordRef}
             name="password"
-            defaultValue="Informatika221005"
             type="password"
             required
             placeholder="Password"

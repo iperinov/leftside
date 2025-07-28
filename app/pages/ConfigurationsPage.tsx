@@ -54,7 +54,7 @@ export default function ConfigurationsPage() {
             <Separator size="4" my="3" />
 
             <ConfigurationList
-              onEdit={(id, name) => navigate(`/configuration/${id}`, { state: { id, edit: true } })}
+              onEdit={(id, rev, name) => navigate(`/configuration/${id}`, { state: { id, edit: true } })}
               onRename={(id, rev, name) => setRenameAction({ id, rev, name })}
               onDuplicate={(id, rev, name) => setDuplicateAction({ id, rev, name })}
               onDelete={(id, rev, name) => setDeleteAction({ id, rev, name })}

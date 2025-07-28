@@ -1,5 +1,4 @@
 import { Box, Flex } from "@radix-ui/themes";
-import { useRef, useState } from "react";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import type { Book } from "~/types/sport/types";
 import AssignedBooks from "../configurations/AssignedBooks";

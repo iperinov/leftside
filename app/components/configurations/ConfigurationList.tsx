@@ -10,7 +10,7 @@ import LoadDataDecorator from "../loading/LoadDataDecorator";
 import styles from "./ConfigurationList.module.css";
 
 export interface ConfigurationListProps {
-  onEdit: (id: string, name: string) => void;
+  onEdit: (id: string, rev: string, name: string) => void;
   onRename: (id: string, rev: string, name: string) => void;
   onDuplicate: (id: string, rev: string, name: string) => void;
   onDelete: (id: string, rev: string, name: string) => void;
@@ -27,14 +27,14 @@ export const ConfigurationList = ({ onEdit, onRename, onDuplicate, onDelete }: C
   }, [booksData]);
 
   const menuItemsWithoutDelete: MenuItem<Configuration>[] = [
-    { name: "Edit", action: (context) => context && onEdit(context.uuid, context.name) },
-    { name: "Rename", action: (context) => context && onRename(context.uuid, context._rev, context.name) },
-    { name: "Duplicate", action: (context) => context && onDuplicate(context.uuid, context._rev, context.name) },
+    { name: "Edit", action: (context) => context && onEdit(context.uuid, context.rev, context.name) },
+    { name: "Rename", action: (context) => context && onRename(context.uuid, context.rev, context.name) },
+    { name: "Duplicate", action: (context) => context && onDuplicate(context.uuid, context.rev, context.name) },
   ];
 
   const menuItems: MenuItem<Configuration>[] = [
     ...menuItemsWithoutDelete,
-    { name: "Delete", action: (context) => context && onDelete(context.uuid, context._rev, context.name) },
+    { name: "Delete", action: (context) => context && onDelete(context.uuid, context.rev, context.name) },
   ];
 
   return (

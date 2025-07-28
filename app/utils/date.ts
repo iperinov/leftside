@@ -1,5 +1,5 @@
 export const formatDateTime = (timestamp: number, locale = "en-US", timeZone?: string): string => {
-  const date = new Date(timestamp);
+  const date = new Date(timestamp * 1000);
 
   const options: Intl.DateTimeFormatOptions = {
     year: "2-digit",

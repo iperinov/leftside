@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { config } from "process";
 import getConfigurationBooks from "~/api/cdb/getConfigurationBooks";
 import { queryKeys } from "~/lib/queryKeys";
 

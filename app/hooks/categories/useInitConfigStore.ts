@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { getConfiguration } from "~/api/cdb/getConfiguration";
 import type { Category } from "~/api/sccs/types.gen";
 import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
@@ -20,18 +21,21 @@ function toCategoryTree(categories: Category[]): CategoryTreeItem[] {
 }
 
 export const useInitConfigStore = (configUUID: string) => {
+  const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   const resetTreeStore = useCategoryTreeStore((state) => state.reset);
-  const {data: assignedBooks, isLoading: isBooksLoading, error: errorBooks } = useConfigurationBooks(configUUID);
+  const { data: assignedBooks, isLoading: isBooksLoading, error: errorBooks } = useConfigurationBooks(configUUID);
 
-  const { data: configuration, isLoading: isConfigurationLoading, error: errorConfiguration } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.configurationCategories(configUUID),
-    queryFn: () => getConfiguration(configUUID),
+    queryFn: async () => {
+      const configuration = await getConfiguration(configUUID);
+      const tree = toCategoryTree(configuration.categories);
+      if (!assignedBooks) throw new Error("Invalid assign books");
+      resetTreeStore(configuration, tree, assignedBooks || []);
+      return rootCategory;
+    },
+    enabled: !!assignedBooks,
   });
 
-  if (configuration && assignedBooks) {
-    const tree = toCategoryTree(configuration.categories);
-    resetTreeStore(configuration, tree, assignedBooks);
-  }
-  
-  return { isLoading: isConfigurationLoading || isBooksLoading, error: errorBooks || errorConfiguration };
+  return { data: data, isLoading: isLoading || isBooksLoading, error: error || errorBooks };
 };

@@ -39,7 +39,7 @@ export const CreateLeague = ({ handler, onClose }: CreateLeagueProps) => {
       disableConfirm={!isFormValid}
       onConfirm={() => {
         handler({
-          sport: "",
+          sport: "SOC", // TODO: load sports and implement real choice
           description: name,
           short: shortDesc,
           order: parsedOrder,

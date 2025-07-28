@@ -8,7 +8,7 @@ export default async function getBookRevs(): Promise<BookRev[]> {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
-  //TODO: Make it more flexible /sccsdb/sccs - should be in config 
+  //TODO: Make it more flexible /sccsdb/sccs - should be in config
   const url = new URL("/sccsdb/sccs/_design/books/_view/by_id", cdbUrl);
   console.log("getBooks: ", cdbUrl, url);
 

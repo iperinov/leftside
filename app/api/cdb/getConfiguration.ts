@@ -8,7 +8,7 @@ export const getConfiguration = async (configUUID: string): Promise<StoredConfig
   const auth = getAppConfig().cdb.auth;
 
   //TODO: Make it more flexible /sccsdb/sccs - should be in config
-  const url = new URL(`/sccsdb/sccs/_design/config/_view/by_uuid?key=${configUUID}`, cdbUrl);
+  const url = new URL(`/sccsdb/sccs/_design/config/_view/by_uuid?key="${configUUID}"`, cdbUrl);
   console.log("getCategories: ", cdbUrl, url);
 
   // MOCK:
