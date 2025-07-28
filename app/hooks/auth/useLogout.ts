@@ -18,7 +18,6 @@ export default function useLogout({ onError, onSuccess, onSettled }: LogoutProps
       if (response.code !== 200) {
         onError?.(new Error(`Logout failed with code (${response.code}): ${response.description}`));
       } else {
-        queryClient.invalidateQueries({ queryKey: logoutQueryKey(variables) });
         onSuccess?.(response);
       }
     },

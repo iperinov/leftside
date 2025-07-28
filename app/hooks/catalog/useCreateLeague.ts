@@ -2,6 +2,7 @@ import { type DefaultError, useMutation, useQueryClient } from "@tanstack/react-
 import { createLeagueMutation, createLeagueQueryKey } from "~/api/sccs/@tanstack/react-query.gen";
 import type { CreateLeagueResponse } from "~/api/sccs/types.gen";
 import { client } from "~/lib/clients/sccs/client";
+import { queryKeys } from "~/lib/queryKeys";
 
 interface CreateLeagueProps {
   onError?: (error: DefaultError) => void;
@@ -15,7 +16,9 @@ export function useCreateLeague({ onError, onSuccess, onSettled }: CreateLeagueP
     ...createLeagueMutation({ client: client }),
     onSuccess: (data, variables) => {
       const created = data as CreateLeagueResponse;
-      queryClient.invalidateQueries({ queryKey: createLeagueQueryKey(variables) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.realSports() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.regions() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.leagues() });
       onSuccess?.(created);
     },
     onError: (error) => {

@@ -5,12 +5,13 @@ import { client } from "~/lib/clients/sccs/client";
 import { queryKeys } from "~/lib/queryKeys";
 
 interface UpdateConfigurationProps {
+  configUUID: string;
   onError?: (error: DefaultError) => void;
   onSuccess?: (response: UpdateConfigResponse, request: UpdateConfigRequest) => void;
   onSettled?: () => void;
 }
 
-export function useUpdateConfiguration({ onError, onSuccess, onSettled }: UpdateConfigurationProps) {
+export function useUpdateConfiguration({ configUUID, onError, onSuccess, onSettled }: UpdateConfigurationProps) {
   const queryClient = useQueryClient();
   return useMutation({
     ...updateConfigMutation({ client: client }),
@@ -20,6 +21,7 @@ export function useUpdateConfiguration({ onError, onSuccess, onSettled }: Update
         onError?.(new Error(`Update configuration failed with code (${response.code}): ${response.description}`));
       } else {
         queryClient.invalidateQueries({ queryKey: queryKeys.configurations() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.configurationCategories(configUUID) });
         onSuccess?.(response, variables.body);
       }
     },

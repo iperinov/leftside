@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Configuration } from "~/api/cdb/cdb.types";
-import getAllConfigurationsBooks from "~/api/cdb/getAllConfiguraitonsBooks";
 import getConfigurations from "~/api/cdb/getAllConfigurations";
 import { queryKeys } from "../../lib/queryKeys";
+import { useAllConfigurationsBooks } from "../useAllConfigurationsBooks";
 
 export const useConfigurations = () => {
   const {
@@ -17,10 +17,7 @@ export const useConfigurations = () => {
     data: books,
     isLoading: isLoadingBooks,
     error: errorBooks,
-  } = useQuery({
-    queryKey: queryKeys.configurationsBooks(),
-    queryFn: getAllConfigurationsBooks,
-  });
+  } = useAllConfigurationsBooks()
 
   const data: Configuration[] | undefined =
     configs && books

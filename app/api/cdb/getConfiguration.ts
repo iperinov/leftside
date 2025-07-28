@@ -3,12 +3,12 @@ import { mockConfigurationCategoriesJson } from "../mock/cbd/mockConfiguration";
 import type { StoredConfig } from "../sccs/types.gen";
 import type { CdbViewResponse } from "./cdb.types";
 
-export const getConfiguration = async (configID: string): Promise<StoredConfig> => {
+export const getConfiguration = async (configUUID: string): Promise<StoredConfig> => {
   const cdbUrl = getAppConfig().cdb.baseUrl;
   const auth = getAppConfig().cdb.auth;
 
-  //TODO: Make it more flexible /sccsdb/sccs - should be in config 
-  const url = new URL(`/sccsdb/sccs/_design/config/_view/by_uuid?key=${configID}`, cdbUrl);
+  //TODO: Make it more flexible /sccsdb/sccs - should be in config
+  const url = new URL(`/sccsdb/sccs/_design/config/_view/by_uuid?key=${configUUID}`, cdbUrl);
   console.log("getCategories: ", cdbUrl, url);
 
   // MOCK:

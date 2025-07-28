@@ -2,47 +2,47 @@ import { CaretDownIcon } from "@radix-ui/react-icons";
 import { Box, Button, Checkbox, Flex, Text } from "@radix-ui/themes";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
+import type { BookRev } from "~/api/sccs/types.gen";
 import { BaseDialog } from "~/components/shared/BaseDialog";
 import { useBooks } from "~/hooks/useBooks";
-import type { Book } from "~/types/sport/types";
 
 interface AssignedBooksProps {
-  assignedBooks: Book[];
-  onChange: (selected: Book[]) => void;
+  assignedBooks: BookRev[];
+  onChange: (selected: BookRev[]) => void;
 }
 
 export default function AssignedBooks({ assignedBooks, onChange }: AssignedBooksProps) {
   const { data: books = [] } = useBooks();
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [newlySelected, setNewlySelected] = useState<Book[]>([]);
-  const originalAssignedBooks = useRef<Book[]>(assignedBooks);
+  const [selected, setSelected] = useState<BookRev[]>([]);
+  const originalAssignedBooks = useRef<BookRev[]>(assignedBooks);
 
   const columnCount = 3;
   const columnWidth = 200;
 
   useEffect(() => {
     if (dialogOpen) {
-      setNewlySelected(assignedBooks);
+      setSelected(assignedBooks);
     }
   }, [dialogOpen, assignedBooks]);
 
-  const toggleSelection = (book: Book) => {
+  const toggleSelection = (book: BookRev) => {
     if (originalAssignedBooks.current.includes(book)) return;
-    setNewlySelected((prev) => (prev.includes(book) ? prev.filter((v) => v !== book) : [...prev, book]));
+    setSelected((prev) => (prev.includes(book) ? prev.filter((v) => v !== book) : [...prev, book]));
   };
 
   const handleConfirm = () => {
-    onChange(newlySelected);
+    onChange(selected);
     setDialogOpen(false);
   };
 
   const selectionLabel = assignedBooks.length === 0 ? "Assign to books" : `${assignedBooks.length} selection${assignedBooks.length > 1 ? "s" : ""}`;
 
   const hasChanges = useMemo(() => {
-    const sortedA = [...newlySelected].sort();
+    const sortedA = [...selected].sort();
     const sortedB = [...assignedBooks].sort();
     return sortedA.length !== sortedB.length || sortedA.some((val, i) => val !== sortedB[i]);
-  }, [newlySelected, assignedBooks]);
+  }, [selected, assignedBooks]);
 
   const rowCount = Math.ceil(books.length / columnCount);
 
@@ -51,7 +51,7 @@ export default function AssignedBooks({ assignedBooks, onChange }: AssignedBooks
     if (index >= books.length) return null;
 
     const book = books[index];
-    const checked = newlySelected.findIndex((b) => b.id === book.id) !== -1;
+    const checked = selected.findIndex((b) => b.id === book.id) !== -1;
     const locked = originalAssignedBooks.current.findIndex((b) => b.id === book.id) !== -1;
     const checkboxId = `book-checkbox-${book.id}`;
 

@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import type {
   AllFilter,
+  BookRev,
   Filter,
   FilterGroup,
   FilterType,
@@ -24,11 +25,9 @@ import { allFilter, allItemNumber, allItemString } from "~/components/categories
 import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
 import { findItem, findItemParent, findItemSiblings, findItemTrail } from "~/components/tree/common/findItem";
 import iterateItem from "~/components/tree/common/iterateItem";
-import type { Book } from "~/types/sport/types";
-
 interface CategoryTreeState {
   configuration: StoredConfig;
-  assignedBooks: Book[];
+  assignedBooks: BookRev[];
   rootCategory: CategoryTreeItem;
 }
 
@@ -37,8 +36,8 @@ interface ConfigurationMutations {
 }
 
 interface AssignedBookMutations {
-  assignBook: (book: Book) => void;
-  assignBooks: (books: Book[]) => void;
+  assignBook: (book: BookRev) => void;
+  assignBooks: (books: BookRev[]) => void;
 }
 
 interface CategoryTreeGetters {
@@ -66,7 +65,7 @@ interface CategoryTreeGetters {
 }
 
 interface CategoryTreeMutations {
-  reset: (configuration: StoredConfig, categoriesTree: CategoryTreeItem[], assignedBooks: Book[]) => void;
+  reset: (configuration: StoredConfig, categoriesTree: CategoryTreeItem[], assignedBooks: BookRev[]) => void;
   addCategory: (parentID: string, newItem: CategoryTreeItem) => boolean;
   renameCategory: (uuid: string, newName: string) => boolean;
   deleteCategory: (uuid: string) => boolean;

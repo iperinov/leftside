@@ -28,6 +28,7 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
   const assignedBooks = useCategoryTreeStore((state) => state.assignedBooks);
   const email = useAuthStore((state) => state.auth?.email);
   const updateConfig = useUpdateConfiguration({
+    configUUID: uuid,
     onSuccess: (response) => {
       toast.success("Configuration updated successfully");
     },
@@ -40,6 +41,7 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
     },
   });
   const assignConfig = useAssignConfig({
+    configUUID: uuid,
     onSuccess: (response) => {
       toast.success("Configuration assigned successfully");
     },

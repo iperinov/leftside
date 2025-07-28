@@ -17,7 +17,7 @@ export function useDuplicateConfiguration({ onError, onSuccess, onSettled }: Dup
     onSuccess: (data, variables) => {
       const response = data as DuplicateConfigResponse;
       if (response.code !== 200) {
-        onError?.(new Error(`Login failed with code (${response.code}): ${response.description}`));
+        onError?.(new Error(`Rename configuration failed with code (${response.code}): ${response.description}`));
       } else {
         queryClient.invalidateQueries({ queryKey: queryKeys.configurations() });
         onSuccess?.(response, variables.body);

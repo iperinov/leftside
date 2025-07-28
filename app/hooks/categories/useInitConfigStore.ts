@@ -4,8 +4,7 @@ import type { Category } from "~/api/sccs/types.gen";
 import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
 import { queryKeys } from "~/lib/queryKeys";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
-import { useAllConfigurationsBooks } from "../useAllConfigurationsBooks";
-import { useAssignConfig } from "../configuraitons/useAssignConfig";
+import { useConfigurationBooks } from "../useConfigurationBooks";
 
 function toCategoryTree(categories: Category[]): CategoryTreeItem[] {
   return categories.map(
@@ -22,16 +21,17 @@ function toCategoryTree(categories: Category[]): CategoryTreeItem[] {
 
 export const useInitConfigStore = (configUUID: string) => {
   const resetTreeStore = useCategoryTreeStore((state) => state.reset);
-  const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
-  const assingedBooks = useAssignedBooks()
+  const {data: assignedBooks, isLoading: isBooksLoading, error: errorBooks } = useConfigurationBooks(configUUID);
 
-  return useQuery({
+  const { data: configuration, isLoading: isConfigurationLoading, error: errorConfiguration } = useQuery({
     queryKey: queryKeys.configurationCategories(configUUID),
-    queryFn: async () => {
-      const configuration = await getConfiguration(configUUID);
-      const tree = toCategoryTree(configuration.categories);
-      resetTreeStore(configuration, tree, assingedBooks);
-      return { root: rootCategory };
-    },
+    queryFn: () => getConfiguration(configUUID),
   });
+
+  if (configuration && assignedBooks) {
+    const tree = toCategoryTree(configuration.categories);
+    resetTreeStore(configuration, tree, assignedBooks);
+  }
+  
+  return { isLoading: isConfigurationLoading || isBooksLoading, error: errorBooks || errorConfiguration };
 };
