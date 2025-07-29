@@ -7,11 +7,11 @@ import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import SingleSelectionFilter from "./SingleSelectionFilter";
 
 function generateChoices(sportFilter?: SportFilter, marketFilter?: MarketFilter): ItemData<string>[] {
-  const isAllMarketsSelected = !marketFilter || isAllFilter(marketFilter);
-  const marketsSelected = isAllMarketsSelected ? -1 : (marketFilter.value as FiltersTypeInteger).length;
+  const isAllMarketsSelected = marketFilter && isAllFilter(marketFilter);
+  const marketsSelected = isAllMarketsSelected ? -1 : marketFilter ? (marketFilter.value as FiltersTypeInteger).length : 0;
 
-  const isAllSportsSelected = !sportFilter || isAllFilter(sportFilter);
-  const sportsSelected = isAllSportsSelected ? -1 : (sportFilter.value as FiltersTypeString).length;
+  const isAllSportsSelected = sportFilter && isAllFilter(sportFilter);
+  const sportsSelected = isAllSportsSelected ? -1 : sportFilter ? (sportFilter.value as FiltersTypeString).length : 0;
 
   switch (true) {
     case !isAllSportsSelected && sportsSelected === 1 && marketsSelected === 0:

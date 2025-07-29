@@ -34,6 +34,7 @@ export default function MarketFilter({ categoryUUID, filterGroupUUID, onChange }
   const { data: markets, isLoading, error } = useFilteredMarketsBy(sportFilter, leagueFilter);
   const filterValue = marketFilters(categoryUUID, filterGroupUUID)?.value;
   const selections = filterValue === undefined ? [] : isAllFilter(filterValue) ? [allItemNumber.id] : (filterValue as number[]);
+  const disabled = sportFilter === undefined || (!isAllFilter(sportFilter) && (sportFilter.value as FiltersTypeString).length === 0);
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
@@ -47,7 +48,7 @@ export default function MarketFilter({ categoryUUID, filterGroupUUID, onChange }
         selections={selections}
         updateFilterSelection={updateMarketsFilter}
         onChange={onChange}
-        disabled={!isAllFilter(sportFilter) || (sportFilter.value as FiltersTypeString).length === 0}
+        disabled={disabled}
       />
     </LoadDataDecorator>
   );

@@ -13,6 +13,7 @@ function toTakeBackProfile(data?: TakeBackProfileArray): TakeBackProfile[] {
           moneyLine: profile.ml,
           spread: profile.sp,
           total: profile.tot,
+          description: `${profile.pid} (ml: ${profile.ml}, sp: ${profile.sp}, tot: ${profile.tot})`, // TODO: replace wit hreal profile name
         }) as TakeBackProfile,
     ) || []
   );

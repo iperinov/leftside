@@ -19,6 +19,7 @@ export function SelectRegion({ onClose, onBack, onConfirm, onNew }: SelectRegion
   const [selected, setSelected] = useState<ExistingRegion | null>(null);
   const [search, setSearch] = useState("");
 
+  //TODO: Select region should display all regions in the system (ocs.Regions)
   const filtered = catalog
     ?.allUniqueRegions()
     .filter((r) => r.name.toLowerCase().includes(search.toLowerCase()))

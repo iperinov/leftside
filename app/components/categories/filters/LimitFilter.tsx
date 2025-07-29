@@ -20,7 +20,7 @@ export default function LimitFilter(props: FilterGroupProps) {
   }, []);
 
   return (
-    <SingleSelectionFilter<number | undefined>
+    <SingleSelectionFilter<number>
       keyStr={"limit"}
       label={"Limit"}
       title={"Select Limit"}

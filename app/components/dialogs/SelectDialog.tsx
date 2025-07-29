@@ -4,14 +4,14 @@ import type ItemData from "~/types/ItemData";
 import SelectComponent from "../shared/SelectComponent";
 import type DialogBasicProps from "./DialogBasicProps";
 
-interface SelectDialogProps<T> extends DialogBasicProps {
+interface SelectDialogProps<T extends string | number> extends DialogBasicProps {
   items: ItemData<T>[];
   defaultSelectedID?: T;
   onConfirm: (selectedID?: T) => void;
   valid?: (value: T) => boolean;
 }
 
-export default function SelectDialog<T>({
+export default function SelectDialog<T extends string | number>({
   title,
   description,
   confirmText = "Confirm",

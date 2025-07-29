@@ -24,8 +24,8 @@ export interface CatalogItem extends CbdBase {
 }
 
 export interface BookPerConfiguration extends CbdBase {
-  configID: string;
-  bookID: number;
+  config: string; // maps from `config`
+  id: number; // maps from `id`
 }
 
 export interface Configuration extends CbdBase {

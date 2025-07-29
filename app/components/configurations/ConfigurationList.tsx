@@ -19,7 +19,7 @@ export interface ConfigurationListProps {
 export const ConfigurationList = ({ onEdit, onRename, onDuplicate, onDelete }: ConfigurationListProps) => {
   const { data: booksData, isLoading: isLoadingBooks, error: errorBooks } = useBooks();
   const { data: configurations, isLoading: isLoadingConfigs, error: errorConfigs } = useConfigurations();
-
+  console.log("ConfigurationList.booksData", booksData);
   const resolveBookNames = React.useMemo(() => {
     return (ids: number[]): string[] => {
       return booksData ? (ids.map((bid) => booksData.find((b) => b.id === bid)?.name).filter(Boolean) as string[]) : [];

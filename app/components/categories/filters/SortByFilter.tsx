@@ -5,11 +5,11 @@ import SingleSelectionFilter from "./SingleSelectionFilter";
 
 export default function SortByFilter(props: FilterGroupProps) {
   const sortByFilter = useCategoryTreeStore((state) => state.sortByFilter);
-  const updateSortByFilters = useCategoryTreeStore((state) => state.updateSortByFilter);
+  const updateSortByFilter = useCategoryTreeStore((state) => state.updateSortByFilter);
   const choices = useMemo(
     () => [
-      { id: "time", name: "Start Time" },
-      { id: "alpha", name: "Alphabetical" },
+      { id: "asc", name: "Ascending" },
+      { id: "desc", name: "Descending" },
     ],
     [],
   );
@@ -21,7 +21,7 @@ export default function SortByFilter(props: FilterGroupProps) {
       title={"Sort by"}
       items={choices}
       selection={sortByFilter(props.categoryUUID, props.filterGroupUUID)}
-      updateFilterSelection={updateSortByFilters}
+      updateFilterSelection={updateSortByFilter}
       {...props}
     />
   );

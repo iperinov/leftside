@@ -110,6 +110,9 @@ export default function AddNewCategoryDialog({
       const leaguesIDs = catalog?.filteredLeaguesBy(selectedIDs).map((l) => l.uuid) || [];
       setSelectedSportsIDs(selectedIDs);
       setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
+      if (selectedIDs.length >= 1) {
+        setSelectedIconID(selectedIDs[0]);
+      }
     },
     [selectedLeagueIDs, catalog],
   );
@@ -148,21 +151,16 @@ export default function AddNewCategoryDialog({
               <ItemTypeSelect value={type} level={level + 1} onChange={(type) => setType(type)} />
             </FormRow>
             {type === TemplateType.Parent && level === 0 && (
-              <>
-                <FormRow label="Select sport (optional)">
-                  <MultiSelectDropdown
-                    items={sportItems}
-                    placeholder="Select sport (optional)"
-                    defaultSelectedIDs={selectedSportIDs}
-                    onSelectionChange={handlMetaSportSelectionChange}
-                    maxSelections={1}
-                    showAs="plain"
-                  />
-                </FormRow>
-                <FormRow label="Select icon">
-                  <AwesomeIconSelect sports={sportItems} selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
-                </FormRow>
-              </>
+              <FormRow label="Select sport (optional)">
+                <MultiSelectDropdown
+                  items={sportItems}
+                  placeholder="Select sport (optional)"
+                  defaultSelectedIDs={selectedSportIDs}
+                  onSelectionChange={handlMetaSportSelectionChange}
+                  maxSelections={1}
+                  showAs="plain"
+                />
+              </FormRow>
             )}
             {(type === TemplateType.AllLeagues || type === TemplateType.LiveAndUpcoming) && (
               <FormRow label="Select sport">
@@ -176,6 +174,11 @@ export default function AddNewCategoryDialog({
                   defaultSelectedIDs={selectedLeagueIDs}
                   onSelectionChange={handleLeaguesSelectionChange}
                 />
+              </FormRow>
+            )}
+            {level === 0 && (
+              <FormRow label="Select icon">
+                <AwesomeIconSelect sports={sportItems} selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
               </FormRow>
             )}
           </Flex>

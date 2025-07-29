@@ -5,7 +5,7 @@ import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
 import styles from "./Filters.module.css";
 
-interface SingleSelectionFilterProps<T> {
+interface SingleSelectionFilterProps<T extends string | number> {
   keyStr: string;
   label: string;
   title: string;
@@ -16,7 +16,7 @@ interface SingleSelectionFilterProps<T> {
   updateFilterSelection(categoryUUID: string, filterGroupUUID: string, selected: T): void;
 }
 
-export default function SingleSelectionFilter<T>({
+export default function SingleSelectionFilter<T extends string | number>({
   categoryUUID,
   filterGroupUUID,
   keyStr,
@@ -29,14 +29,14 @@ export default function SingleSelectionFilter<T>({
   updateFilterSelection,
 }: SingleSelectionFilterProps<T> & FilterGroupProps) {
   const [show, setShow] = useState(false);
-  const selectionName = selection ? items.find((item) => item.id === selection)?.name : undefined;
+  const selectionName = selection !== undefined ? items.find((item) => item.id === selection)?.name : undefined;
 
   return (
     <>
       <Filter
         key={keyStr}
         label={label}
-        values={selectionName ? [selectionName] : []}
+        values={disabled ? [] : selectionName ? [selectionName] : []}
         onClick={() => setShow(true)}
         disabled={disabled}
         className={`${styles.filter}`}
@@ -46,7 +46,12 @@ export default function SingleSelectionFilter<T>({
         <SelectDialog
           items={items}
           onConfirm={(selectedID) => {
-            selectedID !== undefined && updateFilterSelection(categoryUUID, filterGroupUUID, selectedID);
+            if (selectedID !== undefined) {
+              const selectedItem = items.find((item) => item.id.toString() === selectedID.toString());
+              if (selectedItem) {
+                updateFilterSelection(categoryUUID, filterGroupUUID, selectedItem.id);
+              }
+            }
             setShow(false);
           }}
           onCancel={() => setShow(false)}

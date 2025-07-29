@@ -217,6 +217,7 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
       const newItem = { ...structuredClone(parent.children[itemIndex]), name, focusAttention: true };
       iterateItem<CategoryTreeItem>(newItem, (item) => {
         item.id = newItemUUID();
+        return true;
       });
 
       parent.children.splice(itemIndex + 1, 0, newItem);
@@ -306,10 +307,17 @@ export const useCategoryTreeStore = create<CategoryTreeState & CategoryTreeGette
       if (!filterGroup) return;
 
       const existingFilter = filterGroup.filters.find((filter) => filter.type === type);
-      const isAllFilter =
-        (selected as FiltersTypeString).find((item) => item === allItemString.id) ||
-        (selected as FiltersTypeInteger).find((item) => item === allItemNumber.id) ||
-        selected === allItemString.id;
+      let isAllFilter = false;
+      if (Array.isArray(selected)) {
+        if (selected.every((x) => typeof x === "string")) {
+          isAllFilter = (selected as string[]).includes(allItemString.id);
+        } else if (selected.every((x) => typeof x === "number")) {
+          isAllFilter = (selected as number[]).includes(allItemNumber.id);
+        }
+      } else {
+        isAllFilter = selected === allItemString.id;
+      }
+
       if (existingFilter) {
         existingFilter.value = isAllFilter ? allFilter : selected;
       } else {

@@ -12,15 +12,15 @@ export default function StatusFilter(props: FilterGroupProps) {
   const selection = filterValue === undefined ? undefined : isAllFilter(filterValue) ? allItemNumber.id : (filterValue as boolean) ? 1 : 0;
 
   return (
-    <SingleSelectionFilter
+    <SingleSelectionFilter<number>
       keyStr={"status"}
       label={"Status"}
       title={"Select Status"}
       items={choices}
       selection={selection}
-      updateFilterSelection={(categoryUUID, filterGroupUUID, selection) =>
-        updateStatusFilters(categoryUUID, filterGroupUUID, selection === allItemNumber.id ? allFilter : selection === 1)
-      }
+      updateFilterSelection={(categoryUUID, filterGroupUUID, selection) => {
+        updateStatusFilters(categoryUUID, filterGroupUUID, selection === allItemNumber.id ? allFilter : selection === 1);
+      }}
       {...props}
     />
   );

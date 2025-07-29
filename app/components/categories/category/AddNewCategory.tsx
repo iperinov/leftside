@@ -48,6 +48,8 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
                 { type: "sport", value: sports },
                 { type: "league", value: leagues },
               ],
+              groupBy: ["day", "league"],
+              order: "desc",
             } as FilterGroup,
           ],
         });
@@ -62,6 +64,8 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
                 { type: "sport", value: sports },
                 { type: "league", value: ["all"] },
               ],
+              groupBy: ["league", "day"],
+              order: "asc",
             } as FilterGroup,
           ],
         });

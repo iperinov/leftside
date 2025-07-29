@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getConfiguration } from "~/api/cdb/getConfiguration";
 import type { Category } from "~/api/sccs/types.gen";
 import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
+import { queryClient } from "~/lib/queryClient";
 import { queryKeys } from "~/lib/queryKeys";
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { useConfigurationBooks } from "../useConfigurationBooks";
@@ -35,6 +35,10 @@ export const useInitConfigStore = (configUUID: string) => {
       return rootCategory;
     },
     enabled: !!assignedBooks,
+    gcTime: 0,
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
   });
 
   return { data: data, isLoading: isLoading || isBooksLoading, error: error || errorBooks };

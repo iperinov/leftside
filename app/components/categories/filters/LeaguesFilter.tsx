@@ -28,7 +28,8 @@ export default function LeaguesFilter({ categoryUUID, filterGroupUUID, onChange 
   const { data: catalog, isLoading, error } = useCatalog();
   const leagues = catalog?.filteredLeaguesBy(!sportFilter || isAllFilter(sportFilter) ? [allFilter] : (sportFilter.value as FiltersTypeString)) || [];
   const filterValue = leagueFilters(categoryUUID, filterGroupUUID)?.value;
-  const selections = filterValue === undefined ? [] :isAllFilter(filterValue) ? [allItemString.id] : (filterValue as string[]);
+  const selections = filterValue === undefined ? [] : isAllFilter(filterValue) ? [allItemString.id] : (filterValue as string[]);
+  const disabled = sportFilter === undefined || (!isAllFilter(sportFilter) && (sportFilter.value as FiltersTypeString).length === 0);
 
   return (
     <LoadDataDecorator error={error} isLoading={isLoading} className={`${styles.filter}`}>
@@ -42,7 +43,7 @@ export default function LeaguesFilter({ categoryUUID, filterGroupUUID, onChange 
         selections={selections}
         updateFilterSelection={updateLeaguesFilter}
         onChange={onChange}
-        disabled={!isAllFilter(sportFilter) || (sportFilter.value as FiltersTypeString).length === 0}
+        disabled={disabled}
       />
     </LoadDataDecorator>
   );

@@ -55,14 +55,7 @@ export default function LoginForm({ onSuccess, onFail }: LoginFormProps) {
           <Text size="2">Username</Text>
           <TextField.Root ref={usernameRef} name="username" required placeholder="Username" autoComplete="username" />
           <Text size="2">Password</Text>
-          <TextField.Root
-            ref={passwordRef}
-            name="password"
-            type="password"
-            required
-            placeholder="Password"
-            autoComplete="current-password"
-          />
+          <TextField.Root ref={passwordRef} name="password" type="password" required placeholder="Password" autoComplete="current-password" />
           <Flex justify="end" align="center" pt="1">
             <Button id="login" type="submit" loading={login.isPending} variant="outline">
               Log In

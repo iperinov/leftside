@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { AllFilter } from "~/api/sccs/types.gen";
 import MultiSelectDialog from "~/components/dialogs/MultiSelectDialog";
 import type ItemData from "~/types/ItemData";
-import { allFilter, isAllArray } from "../AllItemData";
+import { allFilter, isAllArray, isAllItemDataArray } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
 import styles from "./Filters.module.css";
@@ -33,17 +33,10 @@ export default function MultiSelectionFilter<T extends string | number>({
   onChange,
 }: MultiSelectionFilterProps<T> & FilterGroupProps) {
   const [show, setShow] = useState(false);
-
+  const values = isAllArray(selections) ? ["All"] : items.flatMap((item) => (selections.includes(item.id) ? item.name : []));
   return (
     <>
-      <Filter
-        key={keyStr}
-        label={label}
-        values={items.flatMap((item) => (selections.includes(item.id) ? item.name : []))}
-        onClick={() => setShow(true)}
-        className={`${styles.filter}`}
-        disabled={disabled}
-      />
+      <Filter key={keyStr} label={label} values={values} onClick={() => setShow(true)} className={`${styles.filter}`} disabled={disabled} />
 
       {show && items && (
         <MultiSelectDialog<T>

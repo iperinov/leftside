@@ -14,7 +14,7 @@ export const useConfigurations = () => {
     queryFn: getConfigurations,
   });
   const { data: books, isLoading: isLoadingBooks, error: errorBooks } = useAllConfigurationsBooks();
-
+  console.log("useAllConfigurationsBooks.books", books);
   const data: Configuration[] | undefined =
     configs && books
       ? configs.map(

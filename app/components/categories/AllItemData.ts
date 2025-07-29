@@ -33,3 +33,9 @@ export function isAllArray<T extends string | number>(ids: T[]): boolean {
   const allID = allItemData<T>().id;
   return ids.includes(allID);
 }
+
+export function isAllItemDataArray<T extends string | number>(ids: ItemData<T>[]): boolean {
+  if (ids.length === 0) return false;
+  const allID = allItemData<T>().id;
+  return ids.findIndex((item) => item.id === allID) !== -1;
+}

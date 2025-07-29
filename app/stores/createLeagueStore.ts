@@ -102,15 +102,42 @@ export const useCreateLeagueStore = create<LeagueStore>((set, get) => ({
     });
   },
   getRequest: () => {
-    const config = get().data;
-    console.log(config);
-    if (config.realSport && config.region && config.league)
-      return {
-        realSport: config.realSport,
-        region: config.region,
-        league: config.league,
+    const { realSport, region, league } = get().data;
+    console.log({ realSport, region, league });
+
+    if (!realSport || !region || !league) return undefined;
+
+    let normalizedRealSport: RealSport | ExistingRealSport;
+    if ("uuid" in realSport && realSport.uuid) {
+      normalizedRealSport = { uuid: realSport.uuid };
+    } else {
+      const newSport = realSport as RealSport;
+      normalizedRealSport = {
+        description: newSport.description,
+        short: newSport.short,
+        preGameDelay: newSport.preGameDelay,
+        liveDelay: newSport.liveDelay,
+        enabled: newSport.enabled,
       };
-    return undefined;
+    }
+
+    let normalizedRegion: Region | ExistingRegion;
+    if ("uuid" in region && region.uuid) {
+      normalizedRegion = { uuid: region.uuid };
+    } else {
+      const newRegion = region as Region;
+      normalizedRegion = {
+        description: newRegion.description,
+        order: newRegion.order,
+        enabled: newRegion.enabled,
+      };
+    }
+
+    return {
+      realSport: normalizedRealSport,
+      region: normalizedRegion,
+      league,
+    };
   },
   clearState: () => {
     set(() => {

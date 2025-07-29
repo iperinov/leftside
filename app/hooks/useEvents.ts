@@ -10,8 +10,8 @@ function toEvents(data?: EventsArray): Event[] {
         (event) =>
           ({
             id: event.eid,
-            name: event.ed,
-            date: event.egd,
+            description: event.ed,
+            gameDescription: event.egd,
           }) as Event,
       )
     : [];

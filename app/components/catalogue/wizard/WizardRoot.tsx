@@ -97,6 +97,7 @@ export const WizzardRoot = ({ onClose, create, sportId, regionId }: WizzardProps
     return "description" in sport ? sport.description : catalog?.findSport(sport.uuid)?.name;
   };
 
+  //TODO: getRegionName should try to find regionfrom all regions in the system (ocs.Regions)
   const getRegionName = (region: Region | ExistingRegion | undefined): string | undefined => {
     if (!region) return undefined;
     return "description" in region ? region.description : catalog?.findRegion(region.uuid)?.name;

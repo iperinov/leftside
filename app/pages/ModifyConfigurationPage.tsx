@@ -1,12 +1,16 @@
 import { Flex } from "@radix-ui/themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import type { BookRev } from "~/api/sccs/types.gen";
+import type { BookRev, FiltersTypeString } from "~/api/sccs/types.gen";
+import { isAllFilter } from "~/components/categories/AllItemData";
 import ConfigurationContent from "~/components/categories/ConfigurationContent";
 import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
+import InfoDialog from "~/components/dialogs/InfoDialog";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
+import { findItemParent } from "~/components/tree/common/findItem";
+import iterateItem from "~/components/tree/common/iterateItem";
 import { useInitConfigStore } from "~/hooks/categories/useInitConfigStore";
 import { useAssignConfig } from "~/hooks/configuraitons/useAssignConfig";
 import { useUpdateConfiguration } from "~/hooks/configuraitons/useUpdateConfiguration";
@@ -27,13 +31,16 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
   const rootCategory = useCategoryTreeStore((state) => state.rootCategory);
   const assignedBooks = useCategoryTreeStore((state) => state.assignedBooks);
   const email = useAuthStore((state) => state.auth?.email);
+  const [validateError, setValidateError] = useState("");
+  const [updateConfigStatus, setUpdateConfigStatus] = useState<{ message?: string; error?: Error }>();
+  const [assignConfigStatus, setAssignConfigStatus] = useState<{ message?: string; error?: Error }>();
   const updateConfig = useUpdateConfiguration({
     configUUID: uuid,
     onSuccess: (response) => {
-      toast.success("Configuration updated successfully");
+      setUpdateConfigStatus({ message: "Configuration updated successfully" });
     },
-    onError: (error) => {
-      toast.error("Failed to update configuration");
+    onError: (_error) => {
+      setUpdateConfigStatus({ message: `Failed to update configuration: ${_error.message}`, error: _error });
       console.error(error);
     },
     onSettled: () => {
@@ -43,10 +50,10 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
   const assignConfig = useAssignConfig({
     configUUID: uuid,
     onSuccess: (response) => {
-      toast.success("Configuration assigned successfully");
+      setUpdateConfigStatus({ message: "Books assigned successfully" });
     },
-    onError: (error) => {
-      toast.error("Failed to assign configuration");
+    onError: (_error) => {
+      setUpdateConfigStatus({ message: `Failed to assign books: ${_error.message}`, error: _error });
       console.error(error);
     },
     onSettled: () => {
@@ -60,9 +67,64 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
     navigate("/configurations/");
   };
 
+  useEffect(() => {
+    if (updateConfigStatus !== undefined && (assignConfigStatus !== undefined || assignedBooks.length === 0)) {
+      if (updateConfigStatus.error === undefined && assignConfigStatus?.error === undefined) {
+        toast.success(
+          `${updateConfigStatus.message}
+          ${assignConfigStatus?.message || ""}`,
+        );
+      } else {
+        toast.error(
+          `${updateConfigStatus.message}
+          ${assignConfigStatus?.message || ""}`,
+        );
+      }
+    }
+  }, [updateConfigStatus, assignConfigStatus, assignedBooks.length]);
+
+  const validateConfig = () => {
+    let error = "";
+    iterateItem(rootCategory, (category) => {
+      switch (category.type) {
+        case "nested":
+          if (category.children && category.children.length === 0) {
+            if (category.id === rootCategory.id) {
+              error = "No categories.";
+            } else {
+              error = `${category.name}: All parent categories must have at least one child.`;
+            }
+            return false;
+          }
+          return true;
+        case "flat":
+          if (category.filterGroups === undefined || category.filterGroups.length === 0) {
+            error = `${category.name}: All child categories must have at least one filter group.`;
+            return false;
+          }
+          if (
+            !category.filterGroups.find(
+              (filter) =>
+                filter.filters.findIndex(
+                  (filter) => filter.type === "sport" && (isAllFilter(filter.value) || (filter.value as FiltersTypeString).length > 0),
+                ) !== -1,
+            )
+          ) {
+            error = `${category.name}: All filter groups must have at least one sport or 'All' sports selected`;
+            return false;
+          }
+          return true;
+      }
+    });
+    setValidateError(error);
+    return error === "";
+  };
+
   const onSave = async () => {
+    if (!validateConfig()) return;
+
     updateConfig.mutate({
-      path: { uuid: selectedUUID },
+      path: { uuid: uuid },
       body: {
         uuid: uuid,
         rev: configuration.rev,
@@ -70,25 +132,32 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
         categories: rootCategory.children || [],
       },
     });
-    assignConfig.mutate({
-      path: { uuid: selectedUUID },
-      body: assignedBooks.map(
-        (book) =>
-          ({
-            id: book.id,
-            rev: book.rev,
-          }) as BookRev,
-      ),
-    });
+
+    if (assignedBooks.length > 0) {
+      assignConfig.mutate({
+        path: { uuid: uuid },
+        body: assignedBooks.map(
+          (book) =>
+            ({
+              id: book.id,
+              rev: book.rev,
+            }) as BookRev,
+        ),
+      });
+    }
   };
 
   return (
-    <LoadDataDecorator error={error} isLoading={isLoading || updateConfig.isPending || assignConfig.isPending}>
-      <Flex direction="column" className={styles.page}>
-        <ConfigurationHeader edit={edit} className={styles.header} />
-        <ConfigurationContent selectedUUID={selectedUUID} setSelectedID={setSelectedUUID} className={styles.content} />
-        <ConfigurationFooter onCancel={onCancel} onSave={onSave} className={styles.footer} isProcessing={updateConfig.isPending} />
-      </Flex>
-    </LoadDataDecorator>
+    <>
+      <LoadDataDecorator error={error} isLoading={isLoading || updateConfig.isPending || assignConfig.isPending}>
+        <Flex direction="column" className={styles.page}>
+          <ConfigurationHeader edit={edit} className={styles.header} />
+          <ConfigurationContent selectedUUID={selectedUUID} setSelectedID={setSelectedUUID} className={styles.content} />
+          <ConfigurationFooter onCancel={onCancel} onSave={onSave} className={styles.footer} isProcessing={updateConfig.isPending} />
+        </Flex>
+      </LoadDataDecorator>
+
+      {validateError && <InfoDialog title="Validation error" description={validateError} onClose={() => setValidateError("")} />}
+    </>
   );
 }

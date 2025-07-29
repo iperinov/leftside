@@ -7,6 +7,10 @@ export default defineConfig({
     !process.env.VITEST && reactRouter(),
     tsconfigPaths(),
   ],
+  build: {
+    minify: false, // <-- disables minification
+    sourcemap: true, // optional: generates source maps
+  },  
   test: {
     globals: true,
     environment: "jsdom",

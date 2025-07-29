@@ -18,20 +18,24 @@ export default async function getAllConfigurationsBooks(): Promise<{ configID: s
     method: "GET",
     credentials: "include", // Ensure cookies are sent if needed
   });
-
   if (!response.ok) {
     throw new Error("Failed to fetch catalog items");
   }
   const data: CdbViewResponse<BookPerConfiguration> = await response.json();
 
+  console.log("getAllConfigurationsBooks by_config", url, data);
   return Object.values(
     data.rows
       .map((item) => item.value)
       .reduce(
-        (acc, { configID, bookID }) => {
+        (acc, value) => {
+          const configID = value.config;
+          const bookID = value.id;
+
           if (!acc[configID]) {
             acc[configID] = { configID, books: [] };
           }
+
           acc[configID].books.push(bookID);
           return acc;
         },
