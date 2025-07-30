@@ -1,48 +1,37 @@
 import { Flex, Popover } from "@radix-ui/themes";
 import { useState } from "react";
-import type ItemData from "~/types/ItemData";
-import { isClassAvailable } from "~/utils/isClassAvailable";
-import SportAwesomeIcon, { awesomeIconClassStyles, DefaultSportAwesomeIcon, getAwesomeIconClassForSport } from "../SportAwesomeIcon";
+import SportAwesomeIcon, { DefaultSportAwesomeIcon } from "../SportAwesomeIcon";
 import styles from "./AwesomeIconSelect.module.css";
+import { sportIconsConfig } from "~/lib/sportIconsConfig";
 
 interface AwesomeIconSelectProps {
-  sports: ItemData<string>[];
   selectedID?: string;
-  fallbackIconID?: string;
-  onSelect?: (iconID: string) => void;
+  onSelect?: (iconName: string) => void;
 }
 
-export default function AwesomeIconSelect({ sports, selectedID, fallbackIconID = "fa-sportsgeneric", onSelect }: AwesomeIconSelectProps) {
+export default function AwesomeIconSelect({ selectedID, onSelect }: AwesomeIconSelectProps) {
   const [open, setOpen] = useState(false);
-  const iconSize = "3";
-  const fallbackAwesomeIconClass = `${awesomeIconClassStyles(iconSize)} ${fallbackIconID}`;
-  const availableIconClasses = [
-    ...sports.flatMap((sport) => {
-      const iconClassForSport = getAwesomeIconClassForSport(sport.id, iconSize);
-      return iconClassForSport && isClassAvailable(iconClassForSport) ? { id: sport.id, value: iconClassForSport } : [];
-    }),
-    { id: "", value: fallbackAwesomeIconClass },
-  ];
+  const iconSize = 3;
 
   return (
     <Popover.Root open={open} onOpenChange={setOpen} modal={true}>
       <Popover.Trigger>
         <span>
-          {selectedID ? <SportAwesomeIcon sportUUID={selectedID} fallbackAwesomeIconClass={fallbackIconID} size="3" /> : <DefaultSportAwesomeIcon size="3" />}
+          {selectedID ? <SportAwesomeIcon sportIcon={selectedID} size={iconSize} /> : <DefaultSportAwesomeIcon size={iconSize} />}
         </span>
       </Popover.Trigger>
       <Popover.Content className={styles.iconContent} maxWidth="300px" sideOffset={5} align="start">
         <Flex gap="2" wrap="wrap" justify="between">
-          {availableIconClasses.map((iconClass) => (
+          {sportIconsConfig?.availableIcons.map((icon) => (
             <SportAwesomeIcon
-              sportUUID={iconClass.id}
-              key={iconClass.id}
-              className={`${styles.icon} ${iconClass.value}`}
+              sportIcon={icon}
+              key={icon}
+              className={`${styles.icon}`}
               onClick={() => {
-                onSelect?.(iconClass.id);
+                onSelect?.(icon);
                 setOpen(false);
               }}
-              selected={selectedID === iconClass.id}
+              selected={selectedID === icon}
             />
           ))}
         </Flex>

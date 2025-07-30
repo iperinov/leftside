@@ -8,6 +8,7 @@ import LoadDataDecorator from "../../loading/LoadDataDecorator";
 import MultiSelectDropdown from "../../multiSelectDropdown/MultiSelectDropdown";
 import { TemplateType } from "../TemplateType";
 import styles from "./AddNewCategoryDialog.module.css";
+import { sportIconsConfig } from "~/lib/sportIconsConfig";
 
 interface ItemTypeSelectProps {
   value?: TemplateType;
@@ -64,9 +65,12 @@ interface AddNewCategoryDialogProps {
 
 function getDefaultName(type: TemplateType): string {
   switch (type) {
-    case TemplateType.AllLeagues: return "All Leagues";
-    case TemplateType.LiveAndUpcoming: return "Live and Upcoming";
-    default: return "";
+    case TemplateType.AllLeagues:
+      return "All Leagues";
+    case TemplateType.LiveAndUpcoming:
+      return "Live and Upcoming";
+    default:
+      return "";
   }
 }
 
@@ -93,7 +97,7 @@ export default function AddNewCategoryDialog({
       //setName("");
       onCancel();
     },
-    [onCancel],
+    [onCancel]
   );
 
   const handleSave = useCallback(() => {
@@ -101,11 +105,15 @@ export default function AddNewCategoryDialog({
     setIsOpen(false);
   }, [name, type, selectedLeagueIDs, selectedSportIDs, selectedMetaSportID, selectedIconID, onConfirm]);
 
+  const setIconForSport = (sportUUID: string) => {
+    setSelectedIconID(sportIconsConfig?.getIconFor(catalog?.findSport(sportUUID)?.name || ""));
+  };
+
   const handlMetaSportSelectionChange = useCallback((selectedIDs: string[]) => {
     if (selectedIDs.length > 1) throw new Error("Only one meta sport can be selected");
     setSelectedMetaSportID(selectedIDs.length >= 1 ? selectedIDs[0] : undefined);
     if (selectedIDs.length >= 1) {
-      setSelectedIconID(selectedIDs[0]);
+      setIconForSport(selectedIDs[0]);
     }
   }, []);
 
@@ -119,10 +127,10 @@ export default function AddNewCategoryDialog({
       setSelectedSportsIDs(selectedIDs);
       setSelectedLeaguesIDs(selectedLeagueIDs.filter((id) => leaguesIDs.includes(id)));
       if (selectedIDs.length >= 1) {
-        setSelectedIconID(selectedIDs[0]);
+        setIconForSport(selectedIDs[0]);
       }
     },
-    [selectedLeagueIDs, catalog],
+    [selectedLeagueIDs, catalog]
   );
 
   const handleLeaguesSelectionChange = useCallback((selectedIDs: string[]) => {
@@ -172,7 +180,12 @@ export default function AddNewCategoryDialog({
             )}
             {(type === TemplateType.AllLeagues || type === TemplateType.LiveAndUpcoming) && (
               <FormRow label="Select sport">
-                <MultiSelectDropdown items={sportItems} defaultSelectedIDs={selectedSportIDs} onSelectionChange={handleSportsSelectionChange} />
+                <MultiSelectDropdown
+                  items={sportItems}
+                  defaultSelectedIDs={selectedSportIDs}
+                  includeAllItem={true}
+                  onSelectionChange={handleSportsSelectionChange}
+                />
               </FormRow>
             )}
             {type === TemplateType.LiveAndUpcoming && (
@@ -180,13 +193,14 @@ export default function AddNewCategoryDialog({
                 <MultiSelectDropdown
                   items={getLeagueItems(selectedSportIDs)}
                   defaultSelectedIDs={selectedLeagueIDs}
+                  includeAllItem={true}
                   onSelectionChange={handleLeaguesSelectionChange}
                 />
               </FormRow>
             )}
             {level === 0 && (
               <FormRow label="Select icon">
-                <AwesomeIconSelect sports={sportItems} selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
+                <AwesomeIconSelect selectedID={selectedIconID} onSelect={handleIconSelectionChange} />
               </FormRow>
             )}
           </Flex>
