@@ -1,0 +1,20 @@
+.spinnerIcon {
+  animation: spin 1s linear infinite;
+  height: 32px;
+  width: 32px;
+  color: var(--accent-8);
+}
+
+.spinnerBg {
+  opacity: 0.25;
+}
+
+.spinnerFg {
+  opacity: 0.75;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

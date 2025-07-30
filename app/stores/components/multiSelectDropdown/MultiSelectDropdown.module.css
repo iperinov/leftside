@@ -1,0 +1,57 @@
+.multiSelectDropdown {
+  width: 100%;
+}
+
+.multiSelectDropdownTextField {
+  width: 100%;
+  padding: 1px;
+}
+
+.multiSelectDropdownTextFieldSlot {
+  max-width: 85%;
+  overflow-x: auto;
+}
+
+.multiSelectDropdownItemList {
+  position: fixed;
+  height: 400px;
+  z-index: 1000;
+  overflow: hidden;
+  background-color: var(--color-background);
+  color: var(--accent-12);
+  box-shadow: 0 2px 8px var(--gray-8);
+  border-radius: 0.4rem;
+  animation: multiSelectDropDownSlideUpAndFade 150ms ease-in-out;
+}
+
+.multiSelectDropdownItem {
+  align-content: center;
+  min-height: 35px;
+  border-radius: 0.4rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.multiSelectDropdownItem,
+.multiSelectDropdownItem:hover {
+  padding: 0.0rem 0.5rem 0.0rem 0.5rem;
+}
+.multiSelectDropdownItem:hover {
+  background-color: var(--accent-4);
+}
+
+.multiSelectDropdownItem[data-selected] {
+  background-color: var(--accent-8);
+  color: var(--accent-12);
+}
+
+@keyframes multiSelectDropDownSlideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

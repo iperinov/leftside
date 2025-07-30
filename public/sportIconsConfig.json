@@ -9,7 +9,7 @@
   { "sport": "FUTSAL", "iconName": "futsal" },
   { "sport": "GOLF", "iconName": "golf" },
   { "sport": "HANDBALL", "iconName": "handball" },
-  { "sport": "ICE-HOCKEY", "iconName": "ice-hock" },
+  { "sport": "ICE HOCKEY", "iconName": "ice-hock" },
   { "sport": "JAIALAI", "iconName": "jaialai" },
   { "sport": "MMA", "iconName": "mma" },
   { "sport": "MOTORSPORT", "iconName": "motorsport" },
@@ -18,7 +18,9 @@
   { "sport": "SNOOKER", "iconName": "snooker" },
   { "sport": "SOCCER", "iconName": "soccer" },
   { "sport": "SPORTGENERIC", "iconName": "sportgeneric" },
-  { "sport": "TABLE-TENNNIS", "iconName": "table-tenn" },
+  { "sport": "TABLE TENNIS", "iconName": "table-tenn" },
   { "sport": "TENNIS", "iconName": "tennis" },
-  { "sport": "VOLLEYBALL", "iconName": "volley" }
+  { "sport": "VOLLEYBALL", "iconName": "volley" },
+  { "sport": "FOOTBALL", "iconName": "football" },
+  { "sport": "AUSSIE RULES", "iconName": "football" }
 ]

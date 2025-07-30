@@ -1,0 +1,30 @@
+.filter {
+  background-color: var(--accent-1);
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+}
+
+.filter[data-no-values] {
+  border: 1px dashed var(--accent-11);
+}
+
+.filter[data-disabled] {
+  background-color: inherit;
+  border: 1px dashed var(--accent-11);
+}
+
+.filter[data-disabled] button {
+  display: none;
+}
+
+.filtersGroup {
+  flex: 1;
+  background-color: var(--accent-6);
+  border-radius: 0.3rem;
+  border: 1px solid var(--accent-11);
+  padding: 0.3rem;
+}
+
+.emptyFiltersGroupRow {
+  max-height: 100px;
+}
