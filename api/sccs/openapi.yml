@@ -726,9 +726,9 @@ components:
         - flat
         - nested
       x-enumNames:
-            - "Flat"
-            - "Nested"
-        
+        - "Flat"
+        - "Nested"
+
     Category:
       type: object
       required:

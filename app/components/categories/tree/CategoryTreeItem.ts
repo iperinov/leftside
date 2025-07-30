@@ -1,9 +1,9 @@
-import type { FilterGroup } from "~/api/sccs/types.gen";
+import type { CategoryType, FilterGroup } from "~/api/sccs/types.gen";
 import type TreeItemData from "../../tree/TreeItemData";
 
 interface InternalFlags {
   focusAttention?: boolean;
-  type: "flat" | "nested";
+  type: CategoryType;
 }
 
 interface Metadata {

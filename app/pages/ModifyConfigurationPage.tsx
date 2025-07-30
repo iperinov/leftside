@@ -2,7 +2,7 @@ import { Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import type { BookRev, FiltersTypeString } from "~/api/sccs/types.gen";
+import type { BookRev, Category, FiltersTypeString } from "~/api/sccs/types.gen";
 import { isAllFilter } from "~/components/categories/AllItemData";
 import ConfigurationContent from "~/components/categories/ConfigurationContent";
 import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
@@ -17,10 +17,21 @@ import { useUpdateConfiguration } from "~/hooks/configuraitons/useUpdateConfigur
 import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import { useAuthStore } from "~/stores/useAuthStore";
 import styles from "./ModifyConfigurationPage.module.css";
+import type CategoryTreeItem from "~/components/categories/tree/CategoryTreeItem";
 
 interface ModifyConfigurationPageProps {
   uuid?: string;
   edit?: boolean;
+}
+
+function toCategory(item: CategoryTreeItem): Category {
+  return {
+    uuid: item.id,
+    name: item.name,
+    type: item.type,
+    filterGroups: item.filterGroups,
+    children: item.children?.map(toCategory) || [],
+  } as Category;
 }
 
 export default function ModifyConfigurationPage({ uuid = "", edit = false }: ModifyConfigurationPageProps) {
@@ -129,7 +140,7 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
         uuid: uuid,
         rev: configuration.rev,
         name: configuration.name,
-        categories: rootCategory.children || [],
+        categories: rootCategory.children?.map(toCategory) || [],
       },
     });
 

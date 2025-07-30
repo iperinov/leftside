@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
+    "build": "npm run api && react-router build",
     "api:sccs": "openapi-ts --file openapi-ts.sccs.config.ts",
     "api:ocs": "openapi-ts --file openapi-ts.ocs.config.ts",
     "api": "npm run api:sccs && npm run api:ocs",
