@@ -9,7 +9,6 @@ import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
 import ConfigurationHeader from "~/components/categories/ConfigurationHeader";
 import InfoDialog from "~/components/dialogs/InfoDialog";
 import LoadDataDecorator from "~/components/loading/LoadDataDecorator";
-import { findItemParent } from "~/components/tree/common/findItem";
 import iterateItem from "~/components/tree/common/iterateItem";
 import { useInitConfigStore } from "~/hooks/categories/useInitConfigStore";
 import { useAssignConfig } from "~/hooks/configuraitons/useAssignConfig";

@@ -62,6 +62,14 @@ interface AddNewCategoryDialogProps {
   validName?: (name: string) => boolean;
 }
 
+function getDefaultName(type: TemplateType): string {
+  switch (type) {
+    case TemplateType.AllLeagues: return "All Leagues";
+    case TemplateType.LiveAndUpcoming: return "Live and Upcoming";
+    default: return "";
+  }
+}
+
 export default function AddNewCategoryDialog({
   open = true,
   level,
@@ -72,7 +80,7 @@ export default function AddNewCategoryDialog({
 }: AddNewCategoryDialogProps) {
   const { data: catalog, isLoading, error } = useCatalog();
   const [isOpen, setIsOpen] = useState(open);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(getDefaultName(templateType));
   const [type, setType] = useState<TemplateType>(templateType);
   const [selectedSportIDs, setSelectedSportsIDs] = useState<string[]>([]);
   const [selectedIconID, setSelectedIconID] = useState<string | undefined>(undefined);
