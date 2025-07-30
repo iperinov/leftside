@@ -763,13 +763,20 @@ components:
         name:
           type: string
           minLength: 1
-          
+
+    Icons:
+      type: array
+      items:
+        type: string
+        minLength: 1
+
     BaseConfig:
       type: object
       required:
         - uuid
         - name
         - categories
+        - icons
       properties:
         uuid:
           $ref: '#/components/schemas/UUID'
@@ -778,6 +785,9 @@ components:
           minLength: 1
         categories:
           $ref: '#/components/schemas/Categories'
+        icons:
+          $ref: '#/components/schemas/Icons'
+          description: "icons and categories should be with the same length since they are matched by index"
           
     UpdateConfig:
       allOf:

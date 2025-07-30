@@ -140,6 +140,7 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
         rev: configuration.rev,
         name: configuration.name,
         categories: rootCategory.children?.map(toCategory) || [],
+        icons: rootCategory.children?.map((item) => item.iconID || "") || [],
       },
     });
 
