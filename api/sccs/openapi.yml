@@ -764,11 +764,23 @@ components:
           type: string
           minLength: 1
 
-    Icons:
+    ConfigMetadataValue:
+      type: object
+      required:
+        - icon
+      properties:
+        icon:
+          type: string
+          minLength: 1
+        sport:
+          type: string
+          minLength: 1
+
+    ConfigMetadata:
       type: array
       items:
-        type: string
-        minLength: 1
+        $ref: '#/components/schemas/ConfigMetadataValue'
+        
 
     BaseConfig:
       type: object
@@ -776,7 +788,7 @@ components:
         - uuid
         - name
         - categories
-        - icons
+        - metadata
       properties:
         uuid:
           $ref: '#/components/schemas/UUID'
@@ -785,9 +797,9 @@ components:
           minLength: 1
         categories:
           $ref: '#/components/schemas/Categories'
-        icons:
-          $ref: '#/components/schemas/Icons'
-          description: "icons and categories should be with the same length since they are matched by index"
+        metadata:
+          $ref: '#/components/schemas/ConfigMetadata'
+          description: "metadata and categories should be with the same length since they are matched by index"
           
     UpdateConfig:
       allOf:

@@ -24,6 +24,7 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
       id: uuidv4(),
       name,
       type: "flat",
+      iconID: icon,
     } as CategoryTreeItem;
     switch (type) {
       case TemplateType.Parent:
@@ -36,7 +37,15 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
         });
         break;
       case TemplateType.Child:
-        addCategory(parentUUID, { ...baseCategory, filterGroups: [] });
+        addCategory(parentUUID, {
+          ...baseCategory,
+          filterGroups: [
+            {
+              uuid: uuidv4(),
+              filters: [{ type: "sport", value: sports }],
+            } as FilterGroup,
+          ],
+        });
         break;
       case TemplateType.LiveAndUpcoming:
         addCategory(parentUUID, {
@@ -81,6 +90,7 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
     <AddNewCategoryDialog
       level={level}
       open={true}
+      templateType={level !== 2 ? TemplateType.Parent : TemplateType.Child}
       onConfirm={onAddConfirmed}
       onCancel={onCanceled}
       validName={(name) => name !== "" && !siblings.find((item) => item.name === name.trim())}

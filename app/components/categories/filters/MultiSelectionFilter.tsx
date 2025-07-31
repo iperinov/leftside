@@ -5,7 +5,7 @@ import type ItemData from "~/types/ItemData";
 import { allFilter, isAllArray, isAllItemDataArray } from "../AllItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
-import styles from "./Filters.module.css";
+
 
 interface MultiSelectionFilterProps<T extends string | number> {
   keyStr: string;
@@ -36,7 +36,7 @@ export default function MultiSelectionFilter<T extends string | number>({
   const values = isAllArray(selections) ? ["All"] : items.flatMap((item) => (selections.includes(item.id) ? item.name : []));
   return (
     <>
-      <Filter key={keyStr} label={label} values={values} onClick={() => setShow(true)} className={`${styles.filter}`} disabled={disabled} />
+      <Filter key={keyStr} label={label} values={values} onClick={() => setShow(true)} disabled={disabled} />
 
       {show && items && (
         <MultiSelectDialog<T>

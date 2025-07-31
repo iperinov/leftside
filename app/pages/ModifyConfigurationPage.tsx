@@ -2,7 +2,7 @@ import { Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import type { BookRev, Category, FiltersTypeString } from "~/api/sccs/types.gen";
+import type { AllFilter, BookRev, Category, ConfigMetadata, ConfigMetadataValue, FilterGroup, FilterType, FiltersTypeInteger, FiltersTypeString } from "~/api/sccs/types.gen";
 import { isAllFilter } from "~/components/categories/AllItemData";
 import ConfigurationContent from "~/components/categories/ConfigurationContent";
 import ConfigurationFooter from "~/components/categories/ConfigurationFooter";
@@ -31,6 +31,15 @@ function toCategory(item: CategoryTreeItem): Category {
     filterGroups: item.filterGroups,
     children: item.children?.map(toCategory) || [],
   } as Category;
+}
+
+function toMetadata(item: CategoryTreeItem): ConfigMetadataValue {
+  if (!item.iconID) throw new Error(`First level category(${item.name}) without icon`);
+
+  return {
+    icon: item.iconID,
+    sport: item.sportID,
+  } as ConfigMetadataValue;
 }
 
 export default function ModifyConfigurationPage({ uuid = "", edit = false }: ModifyConfigurationPageProps) {
@@ -93,6 +102,27 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
     }
   }, [updateConfigStatus, assignConfigStatus, assignedBooks.length]);
 
+
+  
+  const checkFilterGroup = (
+    filterGroups: FilterGroup[], 
+    valid: (filterGroup: FilterGroup) => boolean
+  ): boolean => {
+    return !!filterGroups.find((filterGroup) => valid(filterGroup))
+  } 
+
+  const checkFilterValue = (
+    filterGroups: FilterGroup[], 
+    filterType: FilterType, 
+    valid: (filterValue: FiltersTypeString | FiltersTypeInteger | boolean | number | AllFilter) => boolean
+  ): boolean => {
+    return checkFilterGroup(filterGroups, (filter) =>
+      filter.filters.findIndex(
+        (filter) => filter.type === filterType && valid(filter.value),
+      ) !== -1,
+    )
+  } 
+
   const validateConfig = () => {
     let error = "";
     iterateItem(rootCategory, (category) => {
@@ -112,15 +142,16 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
             error = `${category.name}: All child categories must have at least one filter group.`;
             return false;
           }
-          if (
-            !category.filterGroups.find(
-              (filter) =>
-                filter.filters.findIndex(
-                  (filter) => filter.type === "sport" && (isAllFilter(filter.value) || (filter.value as FiltersTypeString).length > 0),
-                ) !== -1,
-            )
-          ) {
-            error = `${category.name}: All filter groups must have at least one sport or 'All' sports selected`;
+          if (!checkFilterValue(category.filterGroups, "sport", (value) => (isAllFilter(value) || (value as FiltersTypeString).length > 0))) {
+            error = `${category.name}: All filter groups must have at least one sport or 'All' sports selected.`;
+            return false;
+          }
+          if (!checkFilterGroup(category.filterGroups, (filterGroup) => filterGroup.groupBy !== undefined && filterGroup.groupBy.length > 0)) {
+            error = `${category.name}: All filter groups must have group by selected.`;
+            return false;
+          }
+          if (!checkFilterGroup(category.filterGroups, (filterGroup) => filterGroup.order === "asc" || filterGroup.order === "desc")) {
+            error = `${category.name}: All filter groups must have sort by selected.`;
             return false;
           }
           return true;
@@ -140,7 +171,7 @@ export default function ModifyConfigurationPage({ uuid = "", edit = false }: Mod
         rev: configuration.rev,
         name: configuration.name,
         categories: rootCategory.children?.map(toCategory) || [],
-        icons: rootCategory.children?.map((item) => item.iconID || "") || [],
+        metadata: rootCategory.children?.map(toMetadata) || [],
       },
     });
 

@@ -4,7 +4,7 @@ import { useCategoryTreeStore } from "~/stores/categoryTreeStore";
 import ConfirmDialog from "../dialogs/ConfirmDialog.";
 import type ClassNameProps from "../shared/ClassNameProps";
 import TwoStateIconWithHint from "../shared/TwoStateIconWithHintProps";
-import SportAwesomeIcon from "./SportAwesomeIcon";
+import SportAwesomeIcon, { DefaultSportAwesomeIcon } from "./SportAwesomeIcon";
 import AddNewCategory from "./category/AddNewCategory";
 import DeleteCategory from "./category/DeleteCategory";
 import DuplicateCategory from "./category/DuplicateCategory";
@@ -81,22 +81,25 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
     const isItemPreselected = preselected.some((preselectedItem) => preselectedItem.uuid === item.id);
     const isItemMainPreselected = mainPreselected === item.id;
 
-    const icons = [
-      {
-        key: "pre",
-        node: (
-          <TwoStateIconWithHint
-            selected={isItemPreselected}
-            hint={{ title: "Preselected", desc: "This category will be automatically opened, when its top-level parent is selected by the user." }}
-            SelectedIcon={BookmarkFilledIcon}
-            NotSelectedIcon={BookmarkIcon}
-            onSelected={() => onPreselected(item)}
-          />
-        ),
-      },
-    ];
+    const icons =
+      level !== 0
+        ? [
+            {
+              key: "pre",
+              node: (
+                <TwoStateIconWithHint
+                  selected={isItemPreselected}
+                  hint={{ title: "Preselected", desc: "This category will be automatically opened, when its top-level parent is selected by the user." }}
+                  SelectedIcon={BookmarkFilledIcon}
+                  NotSelectedIcon={BookmarkIcon}
+                  onSelected={() => onPreselected(item)}
+                />
+              ),
+            },
+          ]
+        : [];
 
-    if (isItemPreselected) {
+    if (isItemPreselected || level === 0) {
       icons.push({
         key: "main",
         node: (
@@ -115,8 +118,13 @@ export default function ConfigurationContentSidebar({ selectedUUID, onSelected, 
   };
 
   const sportIconFor = (sportCategory: CategoryTreeItem, level: number) => {
-    if (level !== 0 || sportCategory.type !== "nested") return [];
-    return sportCategory.iconID ? [{ key: sportCategory.iconID, node: <SportAwesomeIcon sportIcon={sportCategory.iconID} size={1} /> }] : [];
+    if (level !== 0) return [];
+    return [
+      {
+        key: sportCategory.id,
+        node: sportCategory.iconID ? <SportAwesomeIcon sportIcon={sportCategory.iconID} size={1} /> : <DefaultSportAwesomeIcon size={1} />,
+      },
+    ];
   };
 
   const optionalNodes = (item: CategoryTreeItem, level: number) => [...preselectionIconsFor(item, level), ...sportIconFor(item, level)];

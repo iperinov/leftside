@@ -3,7 +3,7 @@ import SelectDialog from "~/components/dialogs/SelectDialog";
 import type ItemData from "~/types/ItemData";
 import type { FilterGroupProps } from "../filterGroup/FiltersGroup";
 import Filter from "./Filter";
-import styles from "./Filters.module.css";
+
 
 interface SingleSelectionFilterProps<T extends string | number> {
   keyStr: string;
@@ -39,7 +39,6 @@ export default function SingleSelectionFilter<T extends string | number>({
         values={disabled ? [] : selectionName ? [selectionName] : []}
         onClick={() => setShow(true)}
         disabled={disabled}
-        className={`${styles.filter}`}
       />
 
       {show && (

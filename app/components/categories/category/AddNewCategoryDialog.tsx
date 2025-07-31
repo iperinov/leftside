@@ -101,7 +101,7 @@ export default function AddNewCategoryDialog({
   );
 
   const handleSave = useCallback(() => {
-    onConfirm(name.trim(), type, selectedSportIDs, selectedLeagueIDs, selectedMetaSportID, selectedIconID);
+    onConfirm(name.trim(), type, selectedSportIDs, selectedLeagueIDs, selectedMetaSportID, selectedIconID || sportIconsConfig?.genericIconName);
     setIsOpen(false);
   }, [name, type, selectedLeagueIDs, selectedSportIDs, selectedMetaSportID, selectedIconID, onConfirm]);
 
@@ -184,7 +184,7 @@ export default function AddNewCategoryDialog({
                 />
               </FormRow>
             )}
-            {(type === TemplateType.AllLeagues || type === TemplateType.LiveAndUpcoming) && (
+            {(type === TemplateType.AllLeagues || type === TemplateType.LiveAndUpcoming || type === TemplateType.Child) && (
               <FormRow label="Select sport">
                 <MultiSelectDropdown
                   items={sportItems}

@@ -3,6 +3,7 @@ import type ClassNameProps from "../shared/ClassNameProps";
 import type MouseClickProps from "../shared/MouseClickProps";
 import "~/styles/awesome/sportsKit/css/custom-icons.min.css";
 import "~/styles/awesome/sportsKit/css/all.min.css";
+import { sportIconsConfig } from "~/lib/sportIconsConfig";
 interface SportAwesomeIconProps {
   sportIcon: string;
   selected?: boolean;
@@ -43,7 +44,7 @@ interface DefaultAwesomeIconProps {
 export function DefaultSportAwesomeIcon({ size, className, onClick }: DefaultAwesomeIconProps & ClassNameProps & MouseClickProps) {
   return (
     <Button variant="ghost" onClick={onClick} className={"nohover noselect"}>
-      <i className={`${awesomeIconClassStyles(size || 1)} fa-sportgeneric ${className}`} />
+      <i className={`${awesomeIconClassStyles(size || 1)} fa-${sportIconsConfig?.genericIconName} ${className}`} />
     </Button>
   );
 }
