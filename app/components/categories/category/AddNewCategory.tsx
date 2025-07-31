@@ -14,8 +14,11 @@ interface AddNewCategoryProps {
 
 export default function AddNewCategory({ parentUUID, level, onCompleted, onCanceled }: AddNewCategoryProps) {
   const findCategory = useCategoryTreeStore((state) => state.findCategory);
+  const findFirstLevelParent = useCategoryTreeStore((state) => state.findFirstLevelParent);
   const addCategory = useCategoryTreeStore((state) => state.addCategory);
   const parent = findCategory(parentUUID);
+  const firstLevelParent = level >= 2 ? findFirstLevelParent(parentUUID) : parent;
+
   if (!parent || parent.type !== "nested") throw new Error(`Parent with ID ${parentUUID} not found or not nested type`);
   const siblings = parent.children || [];
 
@@ -91,6 +94,7 @@ export default function AddNewCategory({ parentUUID, level, onCompleted, onCance
       level={level}
       open={true}
       templateType={level !== 2 ? TemplateType.Parent : TemplateType.Child}
+      topLevelParentSportUUID={firstLevelParent?.sportID}
       onConfirm={onAddConfirmed}
       onCancel={onCanceled}
       validName={(name) => name !== "" && !siblings.find((item) => item.name === name.trim())}

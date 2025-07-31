@@ -22,6 +22,7 @@ interface MultiSelectDropdownProps<T extends string | number> {
   includeAllItem?: boolean;
   onSelectionChange?: (selectedIDs: T[]) => void;
   positionPreference?: "above" | "below";
+  disabled?: boolean;
   ResultsPanel?: (props: ResultsSelectionProps<T>) => React.ReactNode;
 }
 
@@ -35,6 +36,7 @@ export default function MultiSelectDropdown<T extends string | number>({
   includeAllItem = false,
   onSelectionChange,
   positionPreference = "below",
+  disabled = false,
   ResultsPanel = PillsSelections,
 }: MultiSelectDropdownProps<T>) {
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -46,7 +48,7 @@ export default function MultiSelectDropdown<T extends string | number>({
   const dropdownItems = includeAllItem ? [allItem, ...items] : items;
 
   const filteredItems = searchValue.length === 0 ? dropdownItems : dropdownItems.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
-  const preventShowingDropdownList = filteredItems.length === 0;
+  const preventShowingDropdownList = filteredItems.length === 0 || disabled;
 
   const onAddItemClicked = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
